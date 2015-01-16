@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 16/Jan/2015 15:20:27 by Hibernate Tools 4.0.0
+// Generated 16/Jan/2015 16:00:05 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +11,6 @@ import java.util.Set;
 public class Publications implements java.io.Serializable {
 
 	private Long id;
-	private PublicationsIdType publicationsIdType;
-	private String otherId;
 	private String title;
 	private String authors;
 	private String type;
@@ -30,6 +28,7 @@ public class Publications implements java.io.Serializable {
 	private String notes;
 	private Set<AnnotationsLog> annotationsLogs = new HashSet<AnnotationsLog>(0);
 	private Set<QueriesHasPublications> queriesHasPublicationses = new HashSet<QueriesHasPublications>(0);
+	private Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources = new HashSet<PublicationsHasPublicationsSource>(0);
 	private Set<Annotations> annotationses = new HashSet<Annotations>(0);
 	private Set<PublicationFields> publicationFieldses = new HashSet<PublicationFields>(0);
 	private Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses = new HashSet<PublicationsHasPublicationLabels>(0);
@@ -39,11 +38,9 @@ public class Publications implements java.io.Serializable {
 	public Publications() {
 	}
 
-	public Publications(PublicationsIdType publicationsIdType, String otherId, String title, String authors, String type, Integer date, String fulldate, String status, String journal, String volume, String issue, String pages, String abstract_, String externalLinks,
-			Boolean availablePdf, String fulltext, String notes, Set<AnnotationsLog> annotationsLogs, Set<QueriesHasPublications> queriesHasPublicationses, Set<Annotations> annotationses, Set<PublicationFields> publicationFieldses,
+	public Publications(String title, String authors, String type, Integer date, String fulldate, String status, String journal, String volume, String issue, String pages, String abstract_, String externalLinks, Boolean availablePdf, String fulltext, String notes,
+			Set<AnnotationsLog> annotationsLogs, Set<QueriesHasPublications> queriesHasPublicationses, Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources, Set<Annotations> annotationses, Set<PublicationFields> publicationFieldses,
 			Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses, Set<DocumentRelevance> documentRelevances, Set<CorpusHasPublications> corpusHasPublicationses) {
-		this.publicationsIdType = publicationsIdType;
-		this.otherId = otherId;
 		this.title = title;
 		this.authors = authors;
 		this.type = type;
@@ -61,6 +58,7 @@ public class Publications implements java.io.Serializable {
 		this.notes = notes;
 		this.annotationsLogs = annotationsLogs;
 		this.queriesHasPublicationses = queriesHasPublicationses;
+		this.publicationsHasPublicationsSources = publicationsHasPublicationsSources;
 		this.annotationses = annotationses;
 		this.publicationFieldses = publicationFieldses;
 		this.publicationsHasPublicationLabelses = publicationsHasPublicationLabelses;
@@ -74,22 +72,6 @@ public class Publications implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public PublicationsIdType getPublicationsIdType() {
-		return this.publicationsIdType;
-	}
-
-	public void setPublicationsIdType(PublicationsIdType publicationsIdType) {
-		this.publicationsIdType = publicationsIdType;
-	}
-
-	public String getOtherId() {
-		return this.otherId;
-	}
-
-	public void setOtherId(String otherId) {
-		this.otherId = otherId;
 	}
 
 	public String getTitle() {
@@ -226,6 +208,14 @@ public class Publications implements java.io.Serializable {
 
 	public void setQueriesHasPublicationses(Set<QueriesHasPublications> queriesHasPublicationses) {
 		this.queriesHasPublicationses = queriesHasPublicationses;
+	}
+
+	public Set<PublicationsHasPublicationsSource> getPublicationsHasPublicationsSources() {
+		return this.publicationsHasPublicationsSources;
+	}
+
+	public void setPublicationsHasPublicationsSources(Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources) {
+		this.publicationsHasPublicationsSources = publicationsHasPublicationsSources;
 	}
 
 	public Set<Annotations> getAnnotationses() {
