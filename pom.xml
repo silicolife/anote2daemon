@@ -5,7 +5,7 @@
 	<artifactId>anote2daemon</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>anote2daemon Maven Webapp</name>
+	<name>anote2daemon</name>
 	<url>http://maven.apache.org</url>
 
 	<!-- add some properties to maven dependencies -->
