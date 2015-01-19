@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ResourceElementsRelation" table="resource_elements_relation" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ResourceElementsRelationId">
+            <key-property name="idresourceElementsB" type="long">
+                <column name="idresource_elements_b" />
+            </key-property>
+            <key-property name="idresourceElementsA" type="long">
+                <column name="idresource_elements_a" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="relationType" class="com.silicolife.anote2daemon.model.pojo.RelationType" fetch="select">
+            <column name="relation_type_idrelation_type" not-null="true" />
+        </many-to-one>
+        <many-to-one name="resourceElementsByIdresourceElementsA" class="com.silicolife.anote2daemon.model.pojo.ResourceElements" update="false" insert="false" fetch="select">
+            <column name="idresource_elements_a" not-null="true" />
+        </many-to-one>
+        <many-to-one name="resourceElementsByIdresourceElementsB" class="com.silicolife.anote2daemon.model.pojo.ResourceElements" update="false" insert="false" fetch="select">
+            <column name="idresource_elements_b" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

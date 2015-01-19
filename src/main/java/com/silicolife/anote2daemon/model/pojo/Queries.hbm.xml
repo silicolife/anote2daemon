@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Queries" table="queries" catalog="anote2_db">
+        <id name="idqueries" type="java.lang.Long">
+            <column name="idqueries" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="queryType" class="com.silicolife.anote2daemon.model.pojo.QueryType" fetch="select">
+            <column name="query_type_id" not-null="true" />
+        </many-to-one>
+        <property name="date" type="timestamp">
+            <column name="date" length="19" not-null="true" />
+        </property>
+        <property name="keywords" type="string">
+            <column name="keywords" not-null="true" />
+        </property>
+        <property name="organism" type="string">
+            <column name="organism" length="500" />
+        </property>
+        <property name="matchingPublications" type="java.lang.Integer">
+            <column name="matching_publications" />
+        </property>
+        <property name="availableAbstracts" type="java.lang.Integer">
+            <column name="available_abstracts" />
+        </property>
+        <property name="downloadedPublications" type="java.lang.Integer">
+            <column name="downloaded_publications" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="500" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" not-null="true" />
+        </property>
+        <set name="queriesHasPublicationses" table="queries_has_publications" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="queries_idqueries" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesHasPublications" />
+        </set>
+        <set name="queriesPropertieses" table="queries_properties" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="queries_idqueries" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesProperties" />
+        </set>
+        <set name="queriesHasClustersProcesses" table="queries_has_clusters_process" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="queries_idqueries" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesHasClustersProcess" />
+        </set>
+        <set name="documentRelevances" table="document_relevance" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="queries_idqueries" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.DocumentRelevance" />
+        </set>
+    </class>
+</hibernate-mapping>

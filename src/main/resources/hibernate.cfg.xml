@@ -4,21 +4,132 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
+		<property name="hibernate.c3p0.idle_test_period">3000</property>
+		<property name="hibernate.c3p0.max_size">5</property>
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.timeout">300</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote2_db</property>
-		<property name="hibernate.default_schema">anote2_db</property>
 		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.default_catalog">anote2_db</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.search.autoregister_listeners">false</property>
 		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.use_sql_comments">true</property>
 
-		<property name="hibernate.c3p0.min_size">1</property>
-		<property name="hibernate.c3p0.max_size">5</property>
-		<property name="hibernate.c3p0.timeout">300</property>
-		<property name="hibernate.c3p0.max_statements">50</property>
-		<property name="hibernate.c3p0.idle_test_period">3000</property>
-
-		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
-
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/DataObject.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/AnnotationsProperties.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourceElementsExtenalId.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/HypherLinksSubmenus.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessGeneralResumeStats.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/RelationType.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClustersProcessHasClustersLabels.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClustersLabels.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/GroupsHasAccessLevels.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/QueriesProperties.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Sources.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Queries.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/CodesAccessLevels.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/QueryType.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesClassStats.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesTotalElementsSynonyms.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/HypherLinkMenuSourceAssociation.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessEntitiesStats.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Annotations.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/AccessLevels.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Groups.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/CorpusHasProcesses.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Synonyms.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesClassSynonymsCount.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClassHierarchy.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Processes.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Resources.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/PublicationsHasPublicationLabels.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/PublicationLabels.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/HypherLinksMenu.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesContent.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/TypeResources.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Classes.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessEntitiesClassStats.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/AnnotationsLog.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Corpus.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessCluesStats.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Version.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/DocumentRelevance.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Log.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/PublicationsHasPublicationsSource.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesTotalElements.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClustersProcess.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/QueriesHasClustersProcess.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/PublicationsIdType.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourceElements.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClustersLabelsDocuments.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/PublicationsSource.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessProperties.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessesType.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourceElementsRelation.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/AnnotationsSide.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/CorpusProperties.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/UsersHasDataObject.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/PublicationFields.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesElementsPrioreties.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ProcessOrigin.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Users.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/QueriesHasPublications.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/CorpusHasPublications.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ResourcesType.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClassesColors.hbm.xml" />
+		<mapping resource="com/silicolife/anote2daemon/model/pojo/Publications.hbm.xml" />
+		<mapping
+			resource="com/silicolife/anote2daemon/model/pojo/ClustersProperties.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

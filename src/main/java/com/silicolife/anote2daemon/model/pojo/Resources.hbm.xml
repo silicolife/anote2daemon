@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Resources" table="resources" catalog="anote2_db">
+        <id name="idresources" type="java.lang.Long">
+            <column name="idresources" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="resourcesType" class="com.silicolife.anote2daemon.model.pojo.ResourcesType" fetch="select">
+            <column name="resources_type_idresources_type" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="500" not-null="true" />
+        </property>
+        <property name="note" type="string">
+            <column name="note" length="500" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" not-null="true" />
+        </property>
+        <set name="resourceElementses" table="resource_elements" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="resources_idresources" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourceElements" />
+        </set>
+        <set name="resourcesContents" table="resources_content" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="resources_idresources" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourcesContent" />
+        </set>
+    </class>
+</hibernate-mapping>

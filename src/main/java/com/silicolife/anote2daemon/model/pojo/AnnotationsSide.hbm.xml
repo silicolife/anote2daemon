@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.AnnotationsSide" table="annotations_side" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.AnnotationsSideId">
+            <key-property name="idannotations" type="long">
+                <column name="idannotations" />
+            </key-property>
+            <key-property name="idannotationsSub" type="long">
+                <column name="idannotations_sub" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="annotationsByIdannotationsSub" class="com.silicolife.anote2daemon.model.pojo.Annotations" update="false" insert="false" fetch="select">
+            <column name="idannotations_sub" not-null="true" />
+        </many-to-one>
+        <many-to-one name="annotationsByIdannotations" class="com.silicolife.anote2daemon.model.pojo.Annotations" update="false" insert="false" fetch="select">
+            <column name="idannotations" not-null="true" />
+        </many-to-one>
+        <many-to-one name="annotationsByAnnotationsIdannotations" class="com.silicolife.anote2daemon.model.pojo.Annotations" fetch="select">
+            <column name="annotations_idannotations" not-null="true" />
+        </many-to-one>
+        <property name="type" type="string">
+            <column name="type" length="5" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

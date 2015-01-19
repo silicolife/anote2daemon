@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Synonyms" table="synonyms" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.SynonymsId">
+            <key-property name="resourceElementsIdresourceElements" type="long">
+                <column name="resource_elements_idresource_elements" />
+            </key-property>
+            <key-property name="synonym" type="string">
+                <column name="synonym" length="500" />
+            </key-property>
+            <key-property name="active" type="boolean">
+                <column name="active" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="resourceElements" class="com.silicolife.anote2daemon.model.pojo.ResourceElements" update="false" insert="false" fetch="select">
+            <column name="resource_elements_idresource_elements" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

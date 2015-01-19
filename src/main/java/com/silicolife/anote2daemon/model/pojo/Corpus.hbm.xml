@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Corpus" table="corpus" catalog="anote2_db">
+        <id name="idcorpus" type="java.lang.Long">
+            <column name="idcorpus" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="500" not-null="true" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" not-null="true" />
+        </property>
+        <set name="corpusHasPublicationses" table="corpus_has_publications" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="corpus_idcorpus" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.CorpusHasPublications" />
+        </set>
+        <set name="annotationsLogs" table="annotations_log" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="corpus_idcorpus" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsLog" />
+        </set>
+        <set name="corpusPropertieses" table="corpus_properties" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="corpus_idcorpus" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.CorpusProperties" />
+        </set>
+        <set name="annotationses" table="annotations" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="corpus_idcorpus" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Annotations" />
+        </set>
+        <set name="corpusHasProcesseses" table="corpus_has_processes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="corpus_idcorpus" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.CorpusHasProcesses" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.DocumentRelevance" table="document_relevance" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.DocumentRelevanceId">
+            <key-property name="publicationsId" type="long">
+                <column name="publications_id" />
+            </key-property>
+            <key-property name="queriesIdqueries" type="long">
+                <column name="queries_idqueries" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="queries" class="com.silicolife.anote2daemon.model.pojo.Queries" update="false" insert="false" fetch="select">
+            <column name="queries_idqueries" not-null="true" />
+        </many-to-one>
+        <many-to-one name="publications" class="com.silicolife.anote2daemon.model.pojo.Publications" update="false" insert="false" fetch="select">
+            <column name="publications_id" not-null="true" />
+        </many-to-one>
+        <property name="relevance" type="string">
+            <column name="relevance" length="250" not-null="true" />
+        </property>
+        <property name="relevanceEnum" type="string">
+            <column name="relevance_enum" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

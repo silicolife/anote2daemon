@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.PublicationsSource" table="publications_source" catalog="anote2_db">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="description" type="string">
+            <column name="description" not-null="true" unique="true" />
+        </property>
+        <set name="publicationsHasPublicationsSources" table="publications_has_publications_source" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_source_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.PublicationsHasPublicationsSource" />
+        </set>
+    </class>
+</hibernate-mapping>

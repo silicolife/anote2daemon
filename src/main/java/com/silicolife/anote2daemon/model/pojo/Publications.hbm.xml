@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Publications" table="publications" catalog="anote2_db">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="title" type="string">
+            <column name="title" length="65535" />
+        </property>
+        <property name="authors" type="string">
+            <column name="authors" length="65535" />
+        </property>
+        <property name="type" type="string">
+            <column name="type" length="200" />
+        </property>
+        <property name="date" type="java.lang.Integer">
+            <column name="date" />
+        </property>
+        <property name="fulldate" type="string">
+            <column name="fulldate" length="25" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="25" />
+        </property>
+        <property name="journal" type="string">
+            <column name="journal" length="500" />
+        </property>
+        <property name="volume" type="string">
+            <column name="volume" length="20" />
+        </property>
+        <property name="issue" type="string">
+            <column name="issue" length="20" />
+        </property>
+        <property name="pages" type="string">
+            <column name="pages" length="75" />
+        </property>
+        <property name="abstract_" type="string">
+            <column name="abstract" />
+        </property>
+        <property name="externalLinks" type="string">
+            <column name="external_links" length="65535" />
+        </property>
+        <property name="availablePdf" type="java.lang.Boolean">
+            <column name="available_pdf" />
+        </property>
+        <property name="fulltext" type="string">
+            <column name="fulltext" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" length="16777215" />
+        </property>
+        <set name="annotationsLogs" table="annotations_log" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsLog" />
+        </set>
+        <set name="queriesHasPublicationses" table="queries_has_publications" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesHasPublications" />
+        </set>
+        <set name="publicationsHasPublicationsSources" table="publications_has_publications_source" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.PublicationsHasPublicationsSource" />
+        </set>
+        <set name="annotationses" table="annotations" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Annotations" />
+        </set>
+        <set name="publicationFieldses" table="publication_fields" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.PublicationFields" />
+        </set>
+        <set name="publicationsHasPublicationLabelses" table="publications_has_publication_labels" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.PublicationsHasPublicationLabels" />
+        </set>
+        <set name="documentRelevances" table="document_relevance" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.DocumentRelevance" />
+        </set>
+        <set name="corpusHasPublicationses" table="corpus_has_publications" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="publications_id" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.CorpusHasPublications" />
+        </set>
+    </class>
+</hibernate-mapping>

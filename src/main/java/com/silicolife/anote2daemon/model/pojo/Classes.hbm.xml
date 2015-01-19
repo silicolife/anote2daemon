@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Classes" table="classes" catalog="anote2_db">
+        <id name="idclasses" type="java.lang.Long">
+            <column name="idclasses" />
+            <generator class="identity" />
+        </id>
+        <property name="class_" type="string">
+            <column name="class" length="300" not-null="true" />
+        </property>
+        <set name="resourcesContents" table="resources_content" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="classes_idclasses" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourcesContent" />
+        </set>
+        <one-to-one name="classesColors" class="com.silicolife.anote2daemon.model.pojo.ClassesColors"></one-to-one>
+        <set name="annotationses" table="annotations" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="classes_idclasses" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Annotations" />
+        </set>
+        <set name="classHierarchiesForClassesIdclasses" table="class_hierarchy" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="classes_idclasses" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ClassHierarchy" />
+        </set>
+        <set name="classHierarchiesForSuperclass" table="class_hierarchy" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="superclass" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ClassHierarchy" />
+        </set>
+    </class>
+</hibernate-mapping>

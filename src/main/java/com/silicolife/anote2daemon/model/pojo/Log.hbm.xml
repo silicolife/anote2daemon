@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Log" table="log" catalog="anote2_db">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="users" class="com.silicolife.anote2daemon.model.pojo.Users" fetch="select">
+            <column name="create_user_id" not-null="true" />
+        </many-to-one>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true" />
+        </property>
+        <property name="operation" type="string">
+            <column name="operation" length="7" not-null="true" />
+        </property>
+        <property name="tableChanged" type="string">
+            <column name="table_changed" length="128" not-null="true" />
+        </property>
+        <property name="sqlCommand" type="string">
+            <column name="sql_command" length="16777215" />
+        </property>
+        <property name="notes" type="string">
+            <column name="notes" length="16777215" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.PublicationFields" table="publication_fields" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.PublicationFieldsId">
+            <key-property name="field" type="string">
+                <column name="field" length="50" />
+            </key-property>
+            <key-property name="publicationsId" type="long">
+                <column name="publications_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="publications" class="com.silicolife.anote2daemon.model.pojo.Publications" update="false" insert="false" fetch="select">
+            <column name="publications_id" not-null="true" />
+        </many-to-one>
+        <property name="start" type="int">
+            <column name="start" not-null="true" />
+        </property>
+        <property name="end" type="int">
+            <column name="end" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

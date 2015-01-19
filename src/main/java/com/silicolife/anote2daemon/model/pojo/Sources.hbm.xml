@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.Sources" table="sources" catalog="anote2_db">
+        <id name="idsources" type="java.lang.Long">
+            <column name="idsources" />
+            <generator class="identity" />
+        </id>
+        <property name="sourceName" type="string">
+            <column name="source_name" length="200" not-null="true" />
+        </property>
+        <set name="resourceElementsExtenalIds" table="resource_elements_extenal_id" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sources_idsources" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourceElementsExtenalId" />
+        </set>
+        <set name="hypherLinkMenuSourceAssociations" table="hypher_link_menu_source_association" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="sources_idsources" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.HypherLinkMenuSourceAssociation" />
+        </set>
+    </class>
+</hibernate-mapping>

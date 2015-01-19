@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ClustersLabelsDocuments" table="clusters_labels_documents" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ClustersLabelsDocumentsId">
+            <key-property name="clustersLabelsId" type="long">
+                <column name="clusters_labels_id" />
+            </key-property>
+            <key-property name="queriesIdqueries" type="long">
+                <column name="queries_idqueries" />
+            </key-property>
+            <key-property name="publicationsId" type="long">
+                <column name="publications_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="queriesHasPublications" class="com.silicolife.anote2daemon.model.pojo.QueriesHasPublications" update="false" insert="false" fetch="select">
+            <column name="queries_idqueries" not-null="true" />
+            <column name="publications_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="clustersLabels" class="com.silicolife.anote2daemon.model.pojo.ClustersLabels" update="false" insert="false" fetch="select">
+            <column name="clusters_labels_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

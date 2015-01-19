@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.HypherLinkMenuSourceAssociation" table="hypher_link_menu_source_association" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.HypherLinkMenuSourceAssociationId">
+            <key-property name="hypherLinksMenuId" type="long">
+                <column name="hypher_links_menu_id" />
+            </key-property>
+            <key-property name="sourcesIdsources" type="long">
+                <column name="sources_idsources" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="sources" class="com.silicolife.anote2daemon.model.pojo.Sources" update="false" insert="false" fetch="select">
+            <column name="sources_idsources" not-null="true" />
+        </many-to-one>
+        <many-to-one name="hypherLinksMenu" class="com.silicolife.anote2daemon.model.pojo.HypherLinksMenu" update="false" insert="false" fetch="select">
+            <column name="hypher_links_menu_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

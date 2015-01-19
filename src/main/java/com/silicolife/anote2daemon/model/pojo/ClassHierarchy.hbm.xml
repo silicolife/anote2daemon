@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ClassHierarchy" table="class_hierarchy" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ClassHierarchyId">
+            <key-property name="classesIdclasses" type="long">
+                <column name="classes_idclasses" />
+            </key-property>
+            <key-property name="superclass" type="long">
+                <column name="superclass" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="classesBySuperclass" class="com.silicolife.anote2daemon.model.pojo.Classes" update="false" insert="false" fetch="select">
+            <column name="superclass" not-null="true" />
+        </many-to-one>
+        <many-to-one name="classesByClassesIdclasses" class="com.silicolife.anote2daemon.model.pojo.Classes" update="false" insert="false" fetch="select">
+            <column name="classes_idclasses" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

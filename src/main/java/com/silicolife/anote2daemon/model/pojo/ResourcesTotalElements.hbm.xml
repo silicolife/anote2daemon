@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ResourcesTotalElements" table="resources_total_elements" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ResourcesTotalElementsId">
+            <key-property name="resourcesIdresources" type="long">
+                <column name="resources_idresources" />
+            </key-property>
+            <key-property name="numberElements" type="long">
+                <column name="numberElements" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

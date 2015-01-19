@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ClustersProcessHasClustersLabels" table="clusters_process_has_clusters_labels" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ClustersProcessHasClustersLabelsId">
+            <key-property name="clustersProcessId" type="long">
+                <column name="clusters_process_id" />
+            </key-property>
+            <key-property name="clustersLabelsId" type="long">
+                <column name="clusters_labels_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="clustersProcess" class="com.silicolife.anote2daemon.model.pojo.ClustersProcess" update="false" insert="false" fetch="select">
+            <column name="clusters_process_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="clustersLabels" class="com.silicolife.anote2daemon.model.pojo.ClustersLabels" update="false" insert="false" fetch="select">
+            <column name="clusters_labels_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

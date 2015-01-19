@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.GroupsHasAccessLevels" table="groups_has_access_levels" catalog="anote2_db">
+        <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.GroupsHasAccessLevelsId">
+            <key-property name="groupsId" type="long">
+                <column name="groups_id" />
+            </key-property>
+            <key-property name="accessLevelsId" type="long">
+                <column name="access_levels_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="groups" class="com.silicolife.anote2daemon.model.pojo.Groups" update="false" insert="false" fetch="select">
+            <column name="groups_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="accessLevels" class="com.silicolife.anote2daemon.model.pojo.AccessLevels" update="false" insert="false" fetch="select">
+            <column name="access_levels_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

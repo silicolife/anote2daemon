@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ProcessesType" table="processes_type" catalog="anote2_db">
+        <id name="idprocessesType" type="java.lang.Long">
+            <column name="idprocesses_type" />
+            <generator class="identity" />
+        </id>
+        <property name="type" type="string">
+            <column name="type" length="250" not-null="true" />
+        </property>
+        <set name="processeses" table="processes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="processes_type_idprocesses_type" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Processes" />
+        </set>
+    </class>
+</hibernate-mapping>

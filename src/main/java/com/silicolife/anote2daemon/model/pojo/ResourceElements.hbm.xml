@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.silicolife.anote2daemon.model.pojo.ResourceElements" table="resource_elements" catalog="anote2_db">
+        <id name="idresourceElements" type="java.lang.Long">
+            <column name="idresource_elements" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="resources" class="com.silicolife.anote2daemon.model.pojo.Resources" fetch="select">
+            <column name="resources_idresources" not-null="true" />
+        </many-to-one>
+        <property name="classesIdclasses" type="java.lang.Long">
+            <column name="classes_idclasses" />
+        </property>
+        <property name="element" type="string">
+            <column name="element" length="500" not-null="true" />
+        </property>
+        <property name="priorety" type="java.lang.Integer">
+            <column name="priorety" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="active" not-null="true" />
+        </property>
+        <one-to-one name="resourcesElementsPrioreties" class="com.silicolife.anote2daemon.model.pojo.ResourcesElementsPrioreties"></one-to-one>
+        <set name="annotationses" table="annotations" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="resource_elements_id" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Annotations" />
+        </set>
+        <set name="resourceElementsRelationsForIdresourceElementsA" table="resource_elements_relation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idresource_elements_a" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourceElementsRelation" />
+        </set>
+        <set name="resourceElementsExtenalIds" table="resource_elements_extenal_id" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="resource_elements_idresource_elements" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourceElementsExtenalId" />
+        </set>
+        <set name="synonymses" table="synonyms" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="resource_elements_idresource_elements" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Synonyms" />
+        </set>
+        <set name="resourceElementsRelationsForIdresourceElementsB" table="resource_elements_relation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idresource_elements_b" not-null="true" />
+            </key>
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourceElementsRelation" />
+        </set>
+    </class>
+</hibernate-mapping>
