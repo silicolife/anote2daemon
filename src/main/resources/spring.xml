@@ -22,6 +22,10 @@
 	<beans:bean id="publicationService"
 		class="com.silicolife.anote2daemon.service.PublicationsServiceImpl">
 	</beans:bean>
+	
+	<beans:bean id="queriesService"
+		class="com.silicolife.anote2daemon.service.QueriesServiceImpl">
+	</beans:bean>
 
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">

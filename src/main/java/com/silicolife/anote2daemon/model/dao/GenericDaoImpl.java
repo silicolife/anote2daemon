@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.silicolife.anote2daemon.model.dao.core.GenericDao;
 
 @Repository
-public class GenericDaoImpl implements GenericDao {
+public class GenericDaoImpl<T> implements GenericDao<T> {
 
 	private SessionFactory sessionFactory;
 
@@ -21,7 +21,7 @@ public class GenericDaoImpl implements GenericDao {
 	}
 
 	@Override
-	public <T> T find(Class<T> klass, Serializable id) {
+	public T find(Class<T> klass, Serializable id) {
 		@SuppressWarnings("unchecked")
 		T T = (T) sessionFactory.getCurrentSession().get(klass, id);
 		return T;
@@ -29,9 +29,23 @@ public class GenericDaoImpl implements GenericDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> findAll(Class<T> klass) {
+	public List<T> findAll(Class<T> klass) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(klass);
 		return c.list();
 	}
 
+	@Override
+	public void save(Object object) {
+		sessionFactory.getCurrentSession().save(object);
+	}
+
+	@Override
+	public void update(Object object) {
+		sessionFactory.getCurrentSession().update(object);
+	}
+
+	@Override
+	public void delete(Object object) {
+		sessionFactory.getCurrentSession().delete(object);
+	}
 }
