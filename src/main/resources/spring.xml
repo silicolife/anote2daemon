@@ -22,9 +22,13 @@
 	<beans:bean id="publicationService"
 		class="com.silicolife.anote2daemon.service.PublicationsServiceImpl">
 	</beans:bean>
-	
+
 	<beans:bean id="queriesService"
 		class="com.silicolife.anote2daemon.service.QueriesServiceImpl">
+	</beans:bean>
+	
+	<beans:bean id="queriesTypeService"
+		class="com.silicolife.anote2daemon.service.QueriesTypeServiceImpl">
 	</beans:bean>
 
 	<beans:bean id="transactionManager"

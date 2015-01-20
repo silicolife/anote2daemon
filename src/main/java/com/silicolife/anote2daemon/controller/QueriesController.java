@@ -7,23 +7,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.silicolife.anote2daemon.service.core.PublicationsService;
 import com.silicolife.anote2daemon.service.core.QueriesService;
+import com.silicolife.anote2daemon.service.core.QueriesTypeService;
 import com.silicolife.anote2daemon.utils.DaemonResponse;
 
-@RequestMapping(value = "/publications")
+@RequestMapping(value = "/queries")
 @ResponseBody
 @Controller
-public class PublicationsController {
+public class QueriesController {
 
-	@Autowired
-	private PublicationsService publicationService;
 	@Autowired
 	private QueriesService queriesService;
 
+	@Autowired
+	private QueriesTypeService queriesTypeService;
+
 	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
-	public DaemonResponse getPublications(@PathVariable Long id) {
-		DaemonResponse response = publicationService.getById(id);
+	public DaemonResponse getQuery(@PathVariable Long id) {
+		DaemonResponse response = queriesService.getById(id);
+		return response;
+	}
+
+	@RequestMapping(value = "/createQueryType/{description}", method = RequestMethod.GET)
+	public DaemonResponse createQueryType(@PathVariable String description) {
+		DaemonResponse response = queriesTypeService.create(description);
 		return response;
 	}
 }

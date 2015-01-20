@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.silicolife.anote2daemon.model.dao.core.GenericDao;
 import com.silicolife.anote2daemon.model.pojo.Queries;
 import com.silicolife.anote2daemon.service.core.QueriesService;
+import com.silicolife.anote2daemon.utils.DaemonResponse;
 
 @EnableTransactionManagement
 @Service
@@ -19,7 +20,21 @@ public class QueriesServiceImpl implements QueriesService {
 	private final static Class<Queries> className = Queries.class;
 
 	@Override
-	public Queries getById(Long id) {
-		return genericDao.find(className, id);
+	public DaemonResponse getById(Long id) {
+		Queries query = genericDao.findById(className, id);
+		DaemonResponse response = new DaemonResponse(query, null);
+		return response;
+	}
+
+	@Override
+	public DaemonResponse update() {
+		return null;
+
+	}
+
+	@Override
+	public DaemonResponse create() {
+		return null;
+
 	}
 }
