@@ -14,9 +14,9 @@ import com.silicolife.anote2daemon.utils.DaemonResponse;
 @Service
 @Transactional(readOnly = true)
 public class QueriesServiceImpl implements QueriesService {
+	
 	@Autowired
 	private GenericDao<Queries> genericDao;
-
 	private final static Class<Queries> className = Queries.class;
 
 	@Override

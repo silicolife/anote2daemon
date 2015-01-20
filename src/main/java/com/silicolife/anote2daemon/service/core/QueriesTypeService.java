@@ -6,10 +6,12 @@ public interface QueriesTypeService {
 
 	public DaemonResponse getById(Long id);
 
-	public DaemonResponse update();
+	public DaemonResponse update(Long id, String description);
 
 	public DaemonResponse create(String description);
 
-	public DaemonResponse findByOrAttributes(Long id, String description);
+	public DaemonResponse getByOrAttributes(Long id, String description);
+
+	public DaemonResponse getByAttributes(Long id, String description);
 
 }
