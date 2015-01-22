@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.RelationType" table="relation_type" catalog="anote2_db">
-        <id name="idrelationType" type="java.lang.Long">
-            <column name="idrelation_type" />
-            <generator class="identity" />
+    <class name="com.silicolife.anote2daemon.model.pojo.RelationType" table="relation_type">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
         <property name="type" type="string">
-            <column name="type" length="250" not-null="true" />
+            <column name="type" length="250" not-null="true" unique="true" />
         </property>
         <set name="resourceElementsRelations" table="resource_elements_relation" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="relation_type_idrelation_type" not-null="true" />
+                <column name="relation_type_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.ResourceElementsRelation" />
         </set>

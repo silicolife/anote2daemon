@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,36 +10,38 @@ import java.util.Set;
  */
 public class Classes implements java.io.Serializable {
 
-	private Long idclasses;
+	private long id;
 	private String class_;
 	private Set<ResourcesContent> resourcesContents = new HashSet<ResourcesContent>(0);
 	private ClassesColors classesColors;
 	private Set<Annotations> annotationses = new HashSet<Annotations>(0);
-	private Set<ClassHierarchy> classHierarchiesForClassesIdclasses = new HashSet<ClassHierarchy>(0);
-	private Set<ClassHierarchy> classHierarchiesForSuperclass = new HashSet<ClassHierarchy>(0);
+	private Set<ClassHierarchy> classHierarchiesForClassesId = new HashSet<ClassHierarchy>(0);
+	private Set<ClassHierarchy> classHierarchiesForSuperClassId = new HashSet<ClassHierarchy>(0);
 
 	public Classes() {
 	}
 
-	public Classes(String class_) {
+	public Classes(long id, String class_) {
+		this.id = id;
 		this.class_ = class_;
 	}
 
-	public Classes(String class_, Set<ResourcesContent> resourcesContents, ClassesColors classesColors, Set<Annotations> annotationses, Set<ClassHierarchy> classHierarchiesForClassesIdclasses, Set<ClassHierarchy> classHierarchiesForSuperclass) {
+	public Classes(long id, String class_, Set<ResourcesContent> resourcesContents, ClassesColors classesColors, Set<Annotations> annotationses, Set<ClassHierarchy> classHierarchiesForClassesId, Set<ClassHierarchy> classHierarchiesForSuperClassId) {
+		this.id = id;
 		this.class_ = class_;
 		this.resourcesContents = resourcesContents;
 		this.classesColors = classesColors;
 		this.annotationses = annotationses;
-		this.classHierarchiesForClassesIdclasses = classHierarchiesForClassesIdclasses;
-		this.classHierarchiesForSuperclass = classHierarchiesForSuperclass;
+		this.classHierarchiesForClassesId = classHierarchiesForClassesId;
+		this.classHierarchiesForSuperClassId = classHierarchiesForSuperClassId;
 	}
 
-	public Long getIdclasses() {
-		return this.idclasses;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdclasses(Long idclasses) {
-		this.idclasses = idclasses;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getClass_() {
@@ -74,20 +76,20 @@ public class Classes implements java.io.Serializable {
 		this.annotationses = annotationses;
 	}
 
-	public Set<ClassHierarchy> getClassHierarchiesForClassesIdclasses() {
-		return this.classHierarchiesForClassesIdclasses;
+	public Set<ClassHierarchy> getClassHierarchiesForClassesId() {
+		return this.classHierarchiesForClassesId;
 	}
 
-	public void setClassHierarchiesForClassesIdclasses(Set<ClassHierarchy> classHierarchiesForClassesIdclasses) {
-		this.classHierarchiesForClassesIdclasses = classHierarchiesForClassesIdclasses;
+	public void setClassHierarchiesForClassesId(Set<ClassHierarchy> classHierarchiesForClassesId) {
+		this.classHierarchiesForClassesId = classHierarchiesForClassesId;
 	}
 
-	public Set<ClassHierarchy> getClassHierarchiesForSuperclass() {
-		return this.classHierarchiesForSuperclass;
+	public Set<ClassHierarchy> getClassHierarchiesForSuperClassId() {
+		return this.classHierarchiesForSuperClassId;
 	}
 
-	public void setClassHierarchiesForSuperclass(Set<ClassHierarchy> classHierarchiesForSuperclass) {
-		this.classHierarchiesForSuperclass = classHierarchiesForSuperclass;
+	public void setClassHierarchiesForSuperClassId(Set<ClassHierarchy> classHierarchiesForSuperClassId) {
+		this.classHierarchiesForSuperClassId = classHierarchiesForSuperClassId;
 	}
 
 }

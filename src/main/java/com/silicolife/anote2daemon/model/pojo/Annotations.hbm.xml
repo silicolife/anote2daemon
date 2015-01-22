@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.Annotations" table="annotations" catalog="anote2_db">
-        <id name="idannotations" type="java.lang.Long">
-            <column name="idannotations" />
-            <generator class="identity" />
+    <class name="com.silicolife.anote2daemon.model.pojo.Annotations" table="annotations">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-        <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" fetch="select">
-            <column name="corpus_idcorpus" not-null="true" />
+        <many-to-one name="resourceElements" class="com.silicolife.anote2daemon.model.pojo.ResourceElements" fetch="select">
+            <column name="resource_elements_id" />
+        </many-to-one>
+        <many-to-one name="processes" class="com.silicolife.anote2daemon.model.pojo.Processes" fetch="select">
+            <column name="processes_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="classes" class="com.silicolife.anote2daemon.model.pojo.Classes" fetch="select">
+            <column name="classes_id" />
         </many-to-one>
         <many-to-one name="publications" class="com.silicolife.anote2daemon.model.pojo.Publications" fetch="select">
             <column name="publications_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="processes" class="com.silicolife.anote2daemon.model.pojo.Processes" fetch="select">
-            <column name="processes_idprocesses" not-null="true" />
-        </many-to-one>
-        <many-to-one name="resourceElements" class="com.silicolife.anote2daemon.model.pojo.ResourceElements" fetch="select">
-            <column name="resource_elements_id" />
-        </many-to-one>
-        <many-to-one name="classes" class="com.silicolife.anote2daemon.model.pojo.Classes" fetch="select">
-            <column name="classes_idclasses" />
+        <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" fetch="select">
+            <column name="corpus_id" not-null="true" />
         </many-to-one>
         <property name="start" type="int">
             <column name="start" not-null="true" />
@@ -53,21 +53,18 @@
         <property name="endSentenceOffset" type="java.lang.Integer">
             <column name="end_sentence_offset" />
         </property>
-        <set name="annotationsSidesForAnnotationsIdannotations" table="annotations_side" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="annotations_idannotations" not-null="true" />
-            </key>
-            <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsSide" />
-        </set>
+        <property name="notes" type="string">
+            <column name="notes" length="200" />
+        </property>
         <set name="annotationsPropertieses" table="annotations_properties" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idannotations" not-null="true" />
+                <column name="id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsProperties" />
         </set>
-        <set name="annotationsSidesForIdannotationsSub" table="annotations_side" inverse="true" lazy="true" fetch="select">
+        <set name="annotationsSidesForIdannotationsSubId" table="annotations_side" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idannotations_sub" not-null="true" />
+                <column name="idannotations_sub_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsSide" />
         </set>
@@ -77,9 +74,9 @@
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsLog" />
         </set>
-        <set name="annotationsSidesForIdannotations" table="annotations_side" inverse="true" lazy="true" fetch="select">
+        <set name="annotationsSidesForAnnotationsId" table="annotations_side" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idannotations" not-null="true" />
+                <column name="annotations_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.AnnotationsSide" />
         </set>

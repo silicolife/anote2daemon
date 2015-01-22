@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +10,10 @@ import java.util.Set;
  */
 public class Resources implements java.io.Serializable {
 
-	private Long idresources;
+	private long id;
 	private ResourcesType resourcesType;
 	private String name;
-	private String note;
+	private String notes;
 	private boolean active;
 	private Set<ResourceElements> resourceElementses = new HashSet<ResourceElements>(0);
 	private Set<ResourcesContent> resourcesContents = new HashSet<ResourcesContent>(0);
@@ -21,27 +21,29 @@ public class Resources implements java.io.Serializable {
 	public Resources() {
 	}
 
-	public Resources(ResourcesType resourcesType, String name, boolean active) {
+	public Resources(long id, ResourcesType resourcesType, String name, boolean active) {
+		this.id = id;
 		this.resourcesType = resourcesType;
 		this.name = name;
 		this.active = active;
 	}
 
-	public Resources(ResourcesType resourcesType, String name, String note, boolean active, Set<ResourceElements> resourceElementses, Set<ResourcesContent> resourcesContents) {
+	public Resources(long id, ResourcesType resourcesType, String name, String notes, boolean active, Set<ResourceElements> resourceElementses, Set<ResourcesContent> resourcesContents) {
+		this.id = id;
 		this.resourcesType = resourcesType;
 		this.name = name;
-		this.note = note;
+		this.notes = notes;
 		this.active = active;
 		this.resourceElementses = resourceElementses;
 		this.resourcesContents = resourcesContents;
 	}
 
-	public Long getIdresources() {
-		return this.idresources;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdresources(Long idresources) {
-		this.idresources = idresources;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public ResourcesType getResourcesType() {
@@ -60,12 +62,12 @@ public class Resources implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getNote() {
-		return this.note;
+	public String getNotes() {
+		return this.notes;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public boolean isActive() {

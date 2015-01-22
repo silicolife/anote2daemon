@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.ClassesColors" table="classes_colors" catalog="anote2_db">
-        <id name="classesIdclasses" type="long">
-            <column name="classes_idclasses" />
+    <class name="com.silicolife.anote2daemon.model.pojo.ClassesColors" table="classes_colors">
+        <id name="classesId" type="long">
+            <column name="classes_id" />
             <generator class="foreign">
                 <param name="property">classes</param>
             </generator>

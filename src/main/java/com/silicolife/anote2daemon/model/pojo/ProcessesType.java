@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,28 +10,30 @@ import java.util.Set;
  */
 public class ProcessesType implements java.io.Serializable {
 
-	private Long idprocessesType;
+	private long id;
 	private String type;
 	private Set<Processes> processeses = new HashSet<Processes>(0);
 
 	public ProcessesType() {
 	}
 
-	public ProcessesType(String type) {
+	public ProcessesType(long id, String type) {
+		this.id = id;
 		this.type = type;
 	}
 
-	public ProcessesType(String type, Set<Processes> processeses) {
+	public ProcessesType(long id, String type, Set<Processes> processeses) {
+		this.id = id;
 		this.type = type;
 		this.processeses = processeses;
 	}
 
-	public Long getIdprocessesType() {
-		return this.idprocessesType;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdprocessesType(Long idprocessesType) {
-		this.idprocessesType = idprocessesType;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getType() {

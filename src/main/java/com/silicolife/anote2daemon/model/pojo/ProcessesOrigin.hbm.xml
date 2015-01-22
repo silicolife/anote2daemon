@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.PublicationLabels" table="publication_labels" catalog="anote2_db">
+    <class name="com.silicolife.anote2daemon.model.pojo.ProcessesOrigin" table="processes_origin">
         <id name="id" type="long">
             <column name="id" />
             <generator class="assigned" />
@@ -11,11 +11,11 @@
         <property name="description" type="string">
             <column name="description" not-null="true" unique="true" />
         </property>
-        <set name="publicationsHasPublicationLabelses" table="publications_has_publication_labels" inverse="true" lazy="true" fetch="select">
+        <set name="processeses" table="processes" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="publication_labels_id" not-null="true" />
+                <column name="process_origin_id" not-null="true" />
             </key>
-            <one-to-many class="com.silicolife.anote2daemon.model.pojo.PublicationsHasPublicationLabels" />
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.Processes" />
         </set>
     </class>
 </hibernate-mapping>

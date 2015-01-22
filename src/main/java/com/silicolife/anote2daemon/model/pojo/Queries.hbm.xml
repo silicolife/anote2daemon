@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.Queries" table="queries" catalog="anote2_db">
-        <id name="idqueries" type="java.lang.Long">
-            <column name="idqueries" />
-            <generator class="identity" />
+    <class name="com.silicolife.anote2daemon.model.pojo.Queries" table="queries">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-        <many-to-one name="queryType" class="com.silicolife.anote2daemon.model.pojo.QueryType" fetch="select">
+        <many-to-one name="queriesType" class="com.silicolife.anote2daemon.model.pojo.QueriesType" fetch="select">
             <column name="query_type_id" not-null="true" />
         </many-to-one>
         <property name="date" type="timestamp">
@@ -19,6 +19,9 @@
         </property>
         <property name="organism" type="string">
             <column name="organism" length="500" />
+        </property>
+        <property name="completeQuery" type="string">
+            <column name="complete_query" length="500" />
         </property>
         <property name="matchingPublications" type="java.lang.Integer">
             <column name="matching_publications" />
@@ -37,27 +40,27 @@
         </property>
         <set name="queriesHasPublicationses" table="queries_has_publications" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="queries_idqueries" not-null="true" />
+                <column name="queries_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesHasPublications" />
         </set>
         <set name="queriesPropertieses" table="queries_properties" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="queries_idqueries" not-null="true" />
+                <column name="queries_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesProperties" />
         </set>
         <set name="queriesHasClustersProcesses" table="queries_has_clusters_process" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="queries_idqueries" not-null="true" />
+                <column name="queries_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.QueriesHasClustersProcess" />
         </set>
-        <set name="documentRelevances" table="document_relevance" inverse="true" lazy="true" fetch="select">
+        <set name="publictaionQueryRelevances" table="publictaion_query_relevance" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="queries_idqueries" not-null="true" />
+                <column name="queries_id" not-null="true" />
             </key>
-            <one-to-many class="com.silicolife.anote2daemon.model.pojo.DocumentRelevance" />
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.PublictaionQueryRelevance" />
         </set>
     </class>
 </hibernate-mapping>

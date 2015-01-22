@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,49 +10,51 @@ import java.util.Set;
  */
 public class ResourceElements implements java.io.Serializable {
 
-	private Long idresourceElements;
+	private long id;
 	private Resources resources;
-	private Long classesIdclasses;
+	private Long classesId;
 	private String element;
 	private Integer priorety;
 	private boolean active;
 	private ResourcesElementsPrioreties resourcesElementsPrioreties;
 	private Set<Annotations> annotationses = new HashSet<Annotations>(0);
-	private Set<ResourceElementsRelation> resourceElementsRelationsForIdresourceElementsA = new HashSet<ResourceElementsRelation>(0);
+	private Set<ResourceElementsRelation> resourceElementsRelationsForResourceElementsIdA = new HashSet<ResourceElementsRelation>(0);
 	private Set<ResourceElementsExtenalId> resourceElementsExtenalIds = new HashSet<ResourceElementsExtenalId>(0);
 	private Set<Synonyms> synonymses = new HashSet<Synonyms>(0);
-	private Set<ResourceElementsRelation> resourceElementsRelationsForIdresourceElementsB = new HashSet<ResourceElementsRelation>(0);
+	private Set<ResourceElementsRelation> resourceElementsRelationsForResourceElementsIdB = new HashSet<ResourceElementsRelation>(0);
 
 	public ResourceElements() {
 	}
 
-	public ResourceElements(Resources resources, String element, boolean active) {
+	public ResourceElements(long id, Resources resources, String element, boolean active) {
+		this.id = id;
 		this.resources = resources;
 		this.element = element;
 		this.active = active;
 	}
 
-	public ResourceElements(Resources resources, Long classesIdclasses, String element, Integer priorety, boolean active, ResourcesElementsPrioreties resourcesElementsPrioreties, Set<Annotations> annotationses,
-			Set<ResourceElementsRelation> resourceElementsRelationsForIdresourceElementsA, Set<ResourceElementsExtenalId> resourceElementsExtenalIds, Set<Synonyms> synonymses, Set<ResourceElementsRelation> resourceElementsRelationsForIdresourceElementsB) {
+	public ResourceElements(long id, Resources resources, Long classesId, String element, Integer priorety, boolean active, ResourcesElementsPrioreties resourcesElementsPrioreties, Set<Annotations> annotationses,
+			Set<ResourceElementsRelation> resourceElementsRelationsForResourceElementsIdA, Set<ResourceElementsExtenalId> resourceElementsExtenalIds, Set<Synonyms> synonymses, Set<ResourceElementsRelation> resourceElementsRelationsForResourceElementsIdB) {
+		this.id = id;
 		this.resources = resources;
-		this.classesIdclasses = classesIdclasses;
+		this.classesId = classesId;
 		this.element = element;
 		this.priorety = priorety;
 		this.active = active;
 		this.resourcesElementsPrioreties = resourcesElementsPrioreties;
 		this.annotationses = annotationses;
-		this.resourceElementsRelationsForIdresourceElementsA = resourceElementsRelationsForIdresourceElementsA;
+		this.resourceElementsRelationsForResourceElementsIdA = resourceElementsRelationsForResourceElementsIdA;
 		this.resourceElementsExtenalIds = resourceElementsExtenalIds;
 		this.synonymses = synonymses;
-		this.resourceElementsRelationsForIdresourceElementsB = resourceElementsRelationsForIdresourceElementsB;
+		this.resourceElementsRelationsForResourceElementsIdB = resourceElementsRelationsForResourceElementsIdB;
 	}
 
-	public Long getIdresourceElements() {
-		return this.idresourceElements;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdresourceElements(Long idresourceElements) {
-		this.idresourceElements = idresourceElements;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public Resources getResources() {
@@ -63,12 +65,12 @@ public class ResourceElements implements java.io.Serializable {
 		this.resources = resources;
 	}
 
-	public Long getClassesIdclasses() {
-		return this.classesIdclasses;
+	public Long getClassesId() {
+		return this.classesId;
 	}
 
-	public void setClassesIdclasses(Long classesIdclasses) {
-		this.classesIdclasses = classesIdclasses;
+	public void setClassesId(Long classesId) {
+		this.classesId = classesId;
 	}
 
 	public String getElement() {
@@ -111,12 +113,12 @@ public class ResourceElements implements java.io.Serializable {
 		this.annotationses = annotationses;
 	}
 
-	public Set<ResourceElementsRelation> getResourceElementsRelationsForIdresourceElementsA() {
-		return this.resourceElementsRelationsForIdresourceElementsA;
+	public Set<ResourceElementsRelation> getResourceElementsRelationsForResourceElementsIdA() {
+		return this.resourceElementsRelationsForResourceElementsIdA;
 	}
 
-	public void setResourceElementsRelationsForIdresourceElementsA(Set<ResourceElementsRelation> resourceElementsRelationsForIdresourceElementsA) {
-		this.resourceElementsRelationsForIdresourceElementsA = resourceElementsRelationsForIdresourceElementsA;
+	public void setResourceElementsRelationsForResourceElementsIdA(Set<ResourceElementsRelation> resourceElementsRelationsForResourceElementsIdA) {
+		this.resourceElementsRelationsForResourceElementsIdA = resourceElementsRelationsForResourceElementsIdA;
 	}
 
 	public Set<ResourceElementsExtenalId> getResourceElementsExtenalIds() {
@@ -135,12 +137,12 @@ public class ResourceElements implements java.io.Serializable {
 		this.synonymses = synonymses;
 	}
 
-	public Set<ResourceElementsRelation> getResourceElementsRelationsForIdresourceElementsB() {
-		return this.resourceElementsRelationsForIdresourceElementsB;
+	public Set<ResourceElementsRelation> getResourceElementsRelationsForResourceElementsIdB() {
+		return this.resourceElementsRelationsForResourceElementsIdB;
 	}
 
-	public void setResourceElementsRelationsForIdresourceElementsB(Set<ResourceElementsRelation> resourceElementsRelationsForIdresourceElementsB) {
-		this.resourceElementsRelationsForIdresourceElementsB = resourceElementsRelationsForIdresourceElementsB;
+	public void setResourceElementsRelationsForResourceElementsIdB(Set<ResourceElementsRelation> resourceElementsRelationsForResourceElementsIdB) {
+		this.resourceElementsRelationsForResourceElementsIdB = resourceElementsRelationsForResourceElementsIdB;
 	}
 
 }

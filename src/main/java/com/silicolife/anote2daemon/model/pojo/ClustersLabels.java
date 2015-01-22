@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,34 +10,34 @@ import java.util.Set;
  */
 public class ClustersLabels implements java.io.Serializable {
 
-	private long id;
+	private long clustersLabelId;
 	private String name;
 	private Double score;
-	private Set<ClustersLabelsDocuments> clustersLabelsDocumentses = new HashSet<ClustersLabelsDocuments>(0);
+	private Set<ClustersLabelsPublications> clustersLabelsPublicationses = new HashSet<ClustersLabelsPublications>(0);
 	private Set<ClustersProcessHasClustersLabels> clustersProcessHasClustersLabelses = new HashSet<ClustersProcessHasClustersLabels>(0);
 
 	public ClustersLabels() {
 	}
 
-	public ClustersLabels(long id, String name) {
-		this.id = id;
+	public ClustersLabels(long clustersLabelId, String name) {
+		this.clustersLabelId = clustersLabelId;
 		this.name = name;
 	}
 
-	public ClustersLabels(long id, String name, Double score, Set<ClustersLabelsDocuments> clustersLabelsDocumentses, Set<ClustersProcessHasClustersLabels> clustersProcessHasClustersLabelses) {
-		this.id = id;
+	public ClustersLabels(long clustersLabelId, String name, Double score, Set<ClustersLabelsPublications> clustersLabelsPublicationses, Set<ClustersProcessHasClustersLabels> clustersProcessHasClustersLabelses) {
+		this.clustersLabelId = clustersLabelId;
 		this.name = name;
 		this.score = score;
-		this.clustersLabelsDocumentses = clustersLabelsDocumentses;
+		this.clustersLabelsPublicationses = clustersLabelsPublicationses;
 		this.clustersProcessHasClustersLabelses = clustersProcessHasClustersLabelses;
 	}
 
-	public long getId() {
-		return this.id;
+	public long getClustersLabelId() {
+		return this.clustersLabelId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setClustersLabelId(long clustersLabelId) {
+		this.clustersLabelId = clustersLabelId;
 	}
 
 	public String getName() {
@@ -56,12 +56,12 @@ public class ClustersLabels implements java.io.Serializable {
 		this.score = score;
 	}
 
-	public Set<ClustersLabelsDocuments> getClustersLabelsDocumentses() {
-		return this.clustersLabelsDocumentses;
+	public Set<ClustersLabelsPublications> getClustersLabelsPublicationses() {
+		return this.clustersLabelsPublicationses;
 	}
 
-	public void setClustersLabelsDocumentses(Set<ClustersLabelsDocuments> clustersLabelsDocumentses) {
-		this.clustersLabelsDocumentses = clustersLabelsDocumentses;
+	public void setClustersLabelsPublicationses(Set<ClustersLabelsPublications> clustersLabelsPublicationses) {
+		this.clustersLabelsPublicationses = clustersLabelsPublicationses;
 	}
 
 	public Set<ClustersProcessHasClustersLabels> getClustersProcessHasClustersLabelses() {

@@ -1,40 +1,43 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.Processes" table="processes" catalog="anote2_db">
-        <id name="idprocesses" type="java.lang.Long">
-            <column name="idprocesses" />
-            <generator class="identity" />
+    <class name="com.silicolife.anote2daemon.model.pojo.Processes" table="processes">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
         </id>
-        <many-to-one name="processOrigin" class="com.silicolife.anote2daemon.model.pojo.ProcessOrigin" fetch="select">
-            <column name="process_origin_id" not-null="true" />
-        </many-to-one>
         <many-to-one name="processesType" class="com.silicolife.anote2daemon.model.pojo.ProcessesType" fetch="select">
-            <column name="processes_type_idprocesses_type" not-null="true" />
+            <column name="processes_type_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="processesOrigin" class="com.silicolife.anote2daemon.model.pojo.ProcessesOrigin" fetch="select">
+            <column name="process_origin_id" not-null="true" />
         </many-to-one>
         <property name="name" type="string">
             <column name="name" length="500" />
         </property>
+        <property name="notes" type="string">
+            <column name="notes" length="65535" />
+        </property>
         <property name="active" type="boolean">
             <column name="active" not-null="true" />
         </property>
-        <set name="processPropertieses" table="process_properties" inverse="true" lazy="true" fetch="select">
+        <set name="processesPropertieses" table="processes_properties" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="processes_idprocesses" not-null="true" />
+                <column name="processes_id" not-null="true" />
             </key>
-            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ProcessProperties" />
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ProcessesProperties" />
         </set>
         <set name="corpusHasProcesseses" table="corpus_has_processes" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="processes_idprocesses" not-null="true" />
+                <column name="processes_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.CorpusHasProcesses" />
         </set>
         <set name="annotationses" table="annotations" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="processes_idprocesses" not-null="true" />
+                <column name="processes_id" not-null="true" />
             </key>
             <one-to-many class="com.silicolife.anote2daemon.model.pojo.Annotations" />
         </set>

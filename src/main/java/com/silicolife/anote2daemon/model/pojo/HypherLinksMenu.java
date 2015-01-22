@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class HypherLinksMenu implements java.io.Serializable {
 
-	private Long id;
+	private long id;
 	private String menuName;
 	private String hypherLinkMenu;
 	private byte[] icon;
@@ -22,14 +22,16 @@ public class HypherLinksMenu implements java.io.Serializable {
 	public HypherLinksMenu() {
 	}
 
-	public HypherLinksMenu(String menuName, String hypherLinkMenu, String menuLevel) {
+	public HypherLinksMenu(long id, String menuName, String hypherLinkMenu, String menuLevel) {
+		this.id = id;
 		this.menuName = menuName;
 		this.hypherLinkMenu = hypherLinkMenu;
 		this.menuLevel = menuLevel;
 	}
 
-	public HypherLinksMenu(String menuName, String hypherLinkMenu, byte[] icon, String menuLevel, Set<HypherLinkMenuSourceAssociation> hypherLinkMenuSourceAssociations, Set<HypherLinksSubmenus> hypherLinksSubmenusesForHypherLinksMenuId,
+	public HypherLinksMenu(long id, String menuName, String hypherLinkMenu, byte[] icon, String menuLevel, Set<HypherLinkMenuSourceAssociation> hypherLinkMenuSourceAssociations, Set<HypherLinksSubmenus> hypherLinksSubmenusesForHypherLinksMenuId,
 			Set<HypherLinksSubmenus> hypherLinksSubmenusesForHypherLinksSubmenuId) {
+		this.id = id;
 		this.menuName = menuName;
 		this.hypherLinkMenu = hypherLinkMenu;
 		this.icon = icon;
@@ -39,11 +41,11 @@ public class HypherLinksMenu implements java.io.Serializable {
 		this.hypherLinksSubmenusesForHypherLinksSubmenuId = hypherLinksSubmenusesForHypherLinksSubmenuId;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

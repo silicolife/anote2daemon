@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.CorpusProperties" table="corpus_properties" catalog="anote2_db">
+    <class name="com.silicolife.anote2daemon.model.pojo.CorpusProperties" table="corpus_properties">
         <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.CorpusPropertiesId">
-            <key-property name="corpusIdcorpus" type="long">
-                <column name="corpus_idcorpus" />
+            <key-property name="corpusId" type="long">
+                <column name="corpus_id" />
             </key-property>
-            <key-property name="propertyKey" type="string">
-                <column name="property_key" length="250" />
+            <key-property name="key" type="string">
+                <column name="key" length="250" />
             </key-property>
         </composite-id>
         <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" update="false" insert="false" fetch="select">
-            <column name="corpus_idcorpus" not-null="true" />
+            <column name="corpus_id" not-null="true" />
         </many-to-one>
-        <property name="propertyValue" type="string">
-            <column name="property_value" not-null="true" />
+        <property name="value" type="string">
+            <column name="value" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

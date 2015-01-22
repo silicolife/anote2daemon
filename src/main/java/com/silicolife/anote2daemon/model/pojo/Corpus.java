@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,9 +10,10 @@ import java.util.Set;
  */
 public class Corpus implements java.io.Serializable {
 
-	private Long idcorpus;
+	private long id;
 	private String name;
 	private boolean active;
+	private String notes;
 	private Set<CorpusHasPublications> corpusHasPublicationses = new HashSet<CorpusHasPublications>(0);
 	private Set<AnnotationsLog> annotationsLogs = new HashSet<AnnotationsLog>(0);
 	private Set<CorpusProperties> corpusPropertieses = new HashSet<CorpusProperties>(0);
@@ -22,14 +23,17 @@ public class Corpus implements java.io.Serializable {
 	public Corpus() {
 	}
 
-	public Corpus(String name, boolean active) {
+	public Corpus(long id, String name, boolean active) {
+		this.id = id;
 		this.name = name;
 		this.active = active;
 	}
 
-	public Corpus(String name, boolean active, Set<CorpusHasPublications> corpusHasPublicationses, Set<AnnotationsLog> annotationsLogs, Set<CorpusProperties> corpusPropertieses, Set<Annotations> annotationses, Set<CorpusHasProcesses> corpusHasProcesseses) {
+	public Corpus(long id, String name, boolean active, String notes, Set<CorpusHasPublications> corpusHasPublicationses, Set<AnnotationsLog> annotationsLogs, Set<CorpusProperties> corpusPropertieses, Set<Annotations> annotationses, Set<CorpusHasProcesses> corpusHasProcesseses) {
+		this.id = id;
 		this.name = name;
 		this.active = active;
+		this.notes = notes;
 		this.corpusHasPublicationses = corpusHasPublicationses;
 		this.annotationsLogs = annotationsLogs;
 		this.corpusPropertieses = corpusPropertieses;
@@ -37,12 +41,12 @@ public class Corpus implements java.io.Serializable {
 		this.corpusHasProcesseses = corpusHasProcesseses;
 	}
 
-	public Long getIdcorpus() {
-		return this.idcorpus;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdcorpus(Long idcorpus) {
-		this.idcorpus = idcorpus;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -59,6 +63,14 @@ public class Corpus implements java.io.Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getNotes() {
+		return this.notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public Set<CorpusHasPublications> getCorpusHasPublicationses() {

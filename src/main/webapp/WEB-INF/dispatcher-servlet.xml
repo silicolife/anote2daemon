@@ -10,19 +10,8 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<!-- Use the HibernateAware mapper instead of the default to not show 
-				lazy exceptions -->
-			<beans:bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<beans:property name="objectMapper">
-					<beans:bean
-						class="com.silicolife.anote2daemon.utils.HibernateAwareObjectMapper" />
-				</beans:property>
-			</beans:bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+	<mvc:annotation-driven />
+
 
 	<mvc:resources location="classpath:/META-INF/web-resources/"
 		mapping="/resources/**/*" />
@@ -30,10 +19,15 @@
 
 	<beans:import resource="classpath:spring.xml" />
 
+
+
+
 	<context:component-scan base-package="com.silicolife.anote2daemon.model.dao" />
 
 	<context:component-scan base-package="com.silicolife.anote2daemon.service" />
 
 	<context:component-scan base-package="com.silicolife.anote2daemon.controller" />
+
+	<context:component-scan base-package="com.silicolife.anote2daemon.exceptions" />
 
 </beans:beans>

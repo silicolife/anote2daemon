@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,11 +11,12 @@ import java.util.Set;
  */
 public class Queries implements java.io.Serializable {
 
-	private Long idqueries;
-	private QueryType queryType;
+	private long id;
+	private QueriesType queriesType;
 	private Date date;
 	private String keywords;
 	private String organism;
+	private String completeQuery;
 	private Integer matchingPublications;
 	private Integer availableAbstracts;
 	private Integer downloadedPublications;
@@ -24,24 +25,27 @@ public class Queries implements java.io.Serializable {
 	private Set<QueriesHasPublications> queriesHasPublicationses = new HashSet<QueriesHasPublications>(0);
 	private Set<QueriesProperties> queriesPropertieses = new HashSet<QueriesProperties>(0);
 	private Set<QueriesHasClustersProcess> queriesHasClustersProcesses = new HashSet<QueriesHasClustersProcess>(0);
-	private Set<DocumentRelevance> documentRelevances = new HashSet<DocumentRelevance>(0);
+	private Set<PublictaionQueryRelevance> publictaionQueryRelevances = new HashSet<PublictaionQueryRelevance>(0);
 
 	public Queries() {
 	}
 
-	public Queries(QueryType queryType, Date date, String keywords, boolean active) {
-		this.queryType = queryType;
+	public Queries(long id, QueriesType queriesType, Date date, String keywords, boolean active) {
+		this.id = id;
+		this.queriesType = queriesType;
 		this.date = date;
 		this.keywords = keywords;
 		this.active = active;
 	}
 
-	public Queries(QueryType queryType, Date date, String keywords, String organism, Integer matchingPublications, Integer availableAbstracts, Integer downloadedPublications, String name, boolean active, Set<QueriesHasPublications> queriesHasPublicationses,
-			Set<QueriesProperties> queriesPropertieses, Set<QueriesHasClustersProcess> queriesHasClustersProcesses, Set<DocumentRelevance> documentRelevances) {
-		this.queryType = queryType;
+	public Queries(long id, QueriesType queriesType, Date date, String keywords, String organism, String completeQuery, Integer matchingPublications, Integer availableAbstracts, Integer downloadedPublications, String name, boolean active,
+			Set<QueriesHasPublications> queriesHasPublicationses, Set<QueriesProperties> queriesPropertieses, Set<QueriesHasClustersProcess> queriesHasClustersProcesses, Set<PublictaionQueryRelevance> publictaionQueryRelevances) {
+		this.id = id;
+		this.queriesType = queriesType;
 		this.date = date;
 		this.keywords = keywords;
 		this.organism = organism;
+		this.completeQuery = completeQuery;
 		this.matchingPublications = matchingPublications;
 		this.availableAbstracts = availableAbstracts;
 		this.downloadedPublications = downloadedPublications;
@@ -50,23 +54,23 @@ public class Queries implements java.io.Serializable {
 		this.queriesHasPublicationses = queriesHasPublicationses;
 		this.queriesPropertieses = queriesPropertieses;
 		this.queriesHasClustersProcesses = queriesHasClustersProcesses;
-		this.documentRelevances = documentRelevances;
+		this.publictaionQueryRelevances = publictaionQueryRelevances;
 	}
 
-	public Long getIdqueries() {
-		return this.idqueries;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdqueries(Long idqueries) {
-		this.idqueries = idqueries;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public QueryType getQueryType() {
-		return this.queryType;
+	public QueriesType getQueriesType() {
+		return this.queriesType;
 	}
 
-	public void setQueryType(QueryType queryType) {
-		this.queryType = queryType;
+	public void setQueriesType(QueriesType queriesType) {
+		this.queriesType = queriesType;
 	}
 
 	public Date getDate() {
@@ -91,6 +95,14 @@ public class Queries implements java.io.Serializable {
 
 	public void setOrganism(String organism) {
 		this.organism = organism;
+	}
+
+	public String getCompleteQuery() {
+		return this.completeQuery;
+	}
+
+	public void setCompleteQuery(String completeQuery) {
+		this.completeQuery = completeQuery;
 	}
 
 	public Integer getMatchingPublications() {
@@ -157,12 +169,12 @@ public class Queries implements java.io.Serializable {
 		this.queriesHasClustersProcesses = queriesHasClustersProcesses;
 	}
 
-	public Set<DocumentRelevance> getDocumentRelevances() {
-		return this.documentRelevances;
+	public Set<PublictaionQueryRelevance> getPublictaionQueryRelevances() {
+		return this.publictaionQueryRelevances;
 	}
 
-	public void setDocumentRelevances(Set<DocumentRelevance> documentRelevances) {
-		this.documentRelevances = documentRelevances;
+	public void setPublictaionQueryRelevances(Set<PublictaionQueryRelevance> publictaionQueryRelevances) {
+		this.publictaionQueryRelevances = publictaionQueryRelevances;
 	}
 
 }

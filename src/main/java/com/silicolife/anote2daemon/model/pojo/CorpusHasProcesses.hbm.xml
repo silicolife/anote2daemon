@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.CorpusHasProcesses" table="corpus_has_processes" catalog="anote2_db">
+    <class name="com.silicolife.anote2daemon.model.pojo.CorpusHasProcesses" table="corpus_has_processes">
         <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.CorpusHasProcessesId">
-            <key-property name="corpusIdcorpus" type="long">
-                <column name="corpus_idcorpus" />
+            <key-property name="corpusId" type="long">
+                <column name="corpus_id" />
             </key-property>
-            <key-property name="processesIdprocesses" type="long">
-                <column name="processes_idprocesses" />
+            <key-property name="processesId" type="long">
+                <column name="processes_id" />
             </key-property>
         </composite-id>
-        <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" update="false" insert="false" fetch="select">
-            <column name="corpus_idcorpus" not-null="true" />
-        </many-to-one>
         <many-to-one name="processes" class="com.silicolife.anote2daemon.model.pojo.Processes" update="false" insert="false" fetch="select">
-            <column name="processes_idprocesses" not-null="true" />
+            <column name="processes_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" update="false" insert="false" fetch="select">
+            <column name="corpus_id" not-null="true" />
         </many-to-one>
     </class>
 </hibernate-mapping>

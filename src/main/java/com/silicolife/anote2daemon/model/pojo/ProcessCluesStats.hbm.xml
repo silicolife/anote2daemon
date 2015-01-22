@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.ProcessCluesStats" table="process_clues_stats" catalog="anote2_db">
+    <class name="com.silicolife.anote2daemon.model.pojo.ProcessCluesStats" table="process_clues_stats">
         <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ProcessCluesStatsId">
-            <key-property name="processesIdprocesses" type="long">
-                <column name="processes_idprocesses" />
+            <key-property name="processesId" type="long">
+                <column name="processes_id" />
             </key-property>
             <key-property name="clue" type="string">
                 <column name="clue" length="250" />

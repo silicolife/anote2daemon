@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ public class Version implements java.io.Serializable {
 
 	private long version;
 	private Date date;
-	private String comments;
+	private String notes;
 
 	public Version() {
 	}
@@ -21,10 +21,10 @@ public class Version implements java.io.Serializable {
 		this.date = date;
 	}
 
-	public Version(long version, Date date, String comments) {
+	public Version(long version, Date date, String notes) {
 		this.version = version;
 		this.date = date;
-		this.comments = comments;
+		this.notes = notes;
 	}
 
 	public long getVersion() {
@@ -43,12 +43,12 @@ public class Version implements java.io.Serializable {
 		this.date = date;
 	}
 
-	public String getComments() {
-		return this.comments;
+	public String getNotes() {
+		return this.notes;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 }

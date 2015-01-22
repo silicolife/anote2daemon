@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.ClustersLabels" table="clusters_labels" catalog="anote2_db">
-        <id name="id" type="long">
-            <column name="id" />
+    <class name="com.silicolife.anote2daemon.model.pojo.ClustersLabels" table="clusters_labels">
+        <id name="clustersLabelId" type="long">
+            <column name="clusters_label_id" />
             <generator class="assigned" />
         </id>
         <property name="name" type="string">
@@ -14,11 +14,11 @@
         <property name="score" type="java.lang.Double">
             <column name="score" precision="22" scale="0" />
         </property>
-        <set name="clustersLabelsDocumentses" table="clusters_labels_documents" inverse="true" lazy="true" fetch="select">
+        <set name="clustersLabelsPublicationses" table="clusters_labels_publications" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="clusters_labels_id" not-null="true" />
             </key>
-            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ClustersLabelsDocuments" />
+            <one-to-many class="com.silicolife.anote2daemon.model.pojo.ClustersLabelsPublications" />
         </set>
         <set name="clustersProcessHasClustersLabelses" table="clusters_process_has_clusters_labels" inverse="true" lazy="true" fetch="select">
             <key>

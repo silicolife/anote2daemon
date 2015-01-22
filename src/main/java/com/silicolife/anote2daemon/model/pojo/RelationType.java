@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,28 +10,30 @@ import java.util.Set;
  */
 public class RelationType implements java.io.Serializable {
 
-	private Long idrelationType;
+	private long id;
 	private String type;
 	private Set<ResourceElementsRelation> resourceElementsRelations = new HashSet<ResourceElementsRelation>(0);
 
 	public RelationType() {
 	}
 
-	public RelationType(String type) {
+	public RelationType(long id, String type) {
+		this.id = id;
 		this.type = type;
 	}
 
-	public RelationType(String type, Set<ResourceElementsRelation> resourceElementsRelations) {
+	public RelationType(long id, String type, Set<ResourceElementsRelation> resourceElementsRelations) {
+		this.id = id;
 		this.type = type;
 		this.resourceElementsRelations = resourceElementsRelations;
 	}
 
-	public Long getIdrelationType() {
-		return this.idrelationType;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdrelationType(Long idrelationType) {
-		this.idrelationType = idrelationType;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getType() {

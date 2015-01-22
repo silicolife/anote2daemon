@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.AnnotationsLog" table="annotations_log" catalog="anote2_db">
+    <class name="com.silicolife.anote2daemon.model.pojo.AnnotationsLog" table="annotations_log">
         <id name="id" type="long">
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" fetch="select">
-            <column name="corpus_idcorpus" not-null="true" />
-        </many-to-one>
         <many-to-one name="annotations" class="com.silicolife.anote2daemon.model.pojo.Annotations" fetch="select">
             <column name="annotations_idannotations" />
         </many-to-one>
@@ -19,6 +16,9 @@
         </many-to-one>
         <many-to-one name="processes" class="com.silicolife.anote2daemon.model.pojo.Processes" fetch="select">
             <column name="processes_idprocesses" not-null="true" />
+        </many-to-one>
+        <many-to-one name="corpus" class="com.silicolife.anote2daemon.model.pojo.Corpus" fetch="select">
+            <column name="corpus_idcorpus" not-null="true" />
         </many-to-one>
         <property name="type" type="string">
             <column name="type" length="14" not-null="true" />

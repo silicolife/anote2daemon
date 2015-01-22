@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,12 +10,13 @@ import java.util.Set;
  */
 public class Processes implements java.io.Serializable {
 
-	private Long idprocesses;
-	private ProcessOrigin processOrigin;
+	private long id;
 	private ProcessesType processesType;
+	private ProcessesOrigin processesOrigin;
 	private String name;
+	private String notes;
 	private boolean active;
-	private Set<ProcessProperties> processPropertieses = new HashSet<ProcessProperties>(0);
+	private Set<ProcessesProperties> processesPropertieses = new HashSet<ProcessesProperties>(0);
 	private Set<CorpusHasProcesses> corpusHasProcesseses = new HashSet<CorpusHasProcesses>(0);
 	private Set<Annotations> annotationses = new HashSet<Annotations>(0);
 	private Set<AnnotationsLog> annotationsLogs = new HashSet<AnnotationsLog>(0);
@@ -23,37 +24,33 @@ public class Processes implements java.io.Serializable {
 	public Processes() {
 	}
 
-	public Processes(ProcessOrigin processOrigin, ProcessesType processesType, boolean active) {
-		this.processOrigin = processOrigin;
+	public Processes(long id, ProcessesType processesType, ProcessesOrigin processesOrigin, boolean active) {
+		this.id = id;
 		this.processesType = processesType;
+		this.processesOrigin = processesOrigin;
 		this.active = active;
 	}
 
-	public Processes(ProcessOrigin processOrigin, ProcessesType processesType, String name, boolean active, Set<ProcessProperties> processPropertieses, Set<CorpusHasProcesses> corpusHasProcesseses, Set<Annotations> annotationses, Set<AnnotationsLog> annotationsLogs) {
-		this.processOrigin = processOrigin;
+	public Processes(long id, ProcessesType processesType, ProcessesOrigin processesOrigin, String name, String notes, boolean active, Set<ProcessesProperties> processesPropertieses, Set<CorpusHasProcesses> corpusHasProcesseses, Set<Annotations> annotationses,
+			Set<AnnotationsLog> annotationsLogs) {
+		this.id = id;
 		this.processesType = processesType;
+		this.processesOrigin = processesOrigin;
 		this.name = name;
+		this.notes = notes;
 		this.active = active;
-		this.processPropertieses = processPropertieses;
+		this.processesPropertieses = processesPropertieses;
 		this.corpusHasProcesseses = corpusHasProcesseses;
 		this.annotationses = annotationses;
 		this.annotationsLogs = annotationsLogs;
 	}
 
-	public Long getIdprocesses() {
-		return this.idprocesses;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdprocesses(Long idprocesses) {
-		this.idprocesses = idprocesses;
-	}
-
-	public ProcessOrigin getProcessOrigin() {
-		return this.processOrigin;
-	}
-
-	public void setProcessOrigin(ProcessOrigin processOrigin) {
-		this.processOrigin = processOrigin;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public ProcessesType getProcessesType() {
@@ -64,12 +61,28 @@ public class Processes implements java.io.Serializable {
 		this.processesType = processesType;
 	}
 
+	public ProcessesOrigin getProcessesOrigin() {
+		return this.processesOrigin;
+	}
+
+	public void setProcessesOrigin(ProcessesOrigin processesOrigin) {
+		this.processesOrigin = processesOrigin;
+	}
+
 	public String getName() {
 		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getNotes() {
+		return this.notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public boolean isActive() {
@@ -80,12 +93,12 @@ public class Processes implements java.io.Serializable {
 		this.active = active;
 	}
 
-	public Set<ProcessProperties> getProcessPropertieses() {
-		return this.processPropertieses;
+	public Set<ProcessesProperties> getProcessesPropertieses() {
+		return this.processesPropertieses;
 	}
 
-	public void setProcessPropertieses(Set<ProcessProperties> processPropertieses) {
-		this.processPropertieses = processPropertieses;
+	public void setProcessesPropertieses(Set<ProcessesProperties> processesPropertieses) {
+		this.processesPropertieses = processesPropertieses;
 	}
 
 	public Set<CorpusHasProcesses> getCorpusHasProcesseses() {

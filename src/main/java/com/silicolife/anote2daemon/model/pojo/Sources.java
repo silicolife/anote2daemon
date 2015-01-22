@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,38 +10,40 @@ import java.util.Set;
  */
 public class Sources implements java.io.Serializable {
 
-	private Long idsources;
-	private String sourceName;
+	private long id;
+	private String source;
 	private Set<ResourceElementsExtenalId> resourceElementsExtenalIds = new HashSet<ResourceElementsExtenalId>(0);
 	private Set<HypherLinkMenuSourceAssociation> hypherLinkMenuSourceAssociations = new HashSet<HypherLinkMenuSourceAssociation>(0);
 
 	public Sources() {
 	}
 
-	public Sources(String sourceName) {
-		this.sourceName = sourceName;
+	public Sources(long id, String source) {
+		this.id = id;
+		this.source = source;
 	}
 
-	public Sources(String sourceName, Set<ResourceElementsExtenalId> resourceElementsExtenalIds, Set<HypherLinkMenuSourceAssociation> hypherLinkMenuSourceAssociations) {
-		this.sourceName = sourceName;
+	public Sources(long id, String source, Set<ResourceElementsExtenalId> resourceElementsExtenalIds, Set<HypherLinkMenuSourceAssociation> hypherLinkMenuSourceAssociations) {
+		this.id = id;
+		this.source = source;
 		this.resourceElementsExtenalIds = resourceElementsExtenalIds;
 		this.hypherLinkMenuSourceAssociations = hypherLinkMenuSourceAssociations;
 	}
 
-	public Long getIdsources() {
-		return this.idsources;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdsources(Long idsources) {
-		this.idsources = idsources;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public String getSourceName() {
-		return this.sourceName;
+	public String getSource() {
+		return this.source;
 	}
 
-	public void setSourceName(String sourceName) {
-		this.sourceName = sourceName;
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 	public Set<ResourceElementsExtenalId> getResourceElementsExtenalIds() {

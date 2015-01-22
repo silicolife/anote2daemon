@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silicolife.anote2daemon.service.core.PublicationsService;
 import com.silicolife.anote2daemon.service.core.QueriesService;
-import com.silicolife.anote2daemon.utils.DaemonResponse;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 @RequestMapping(value = "/publications")
 @ResponseBody

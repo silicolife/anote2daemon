@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.utils;
+package com.silicolife.anote2daemon.webservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;

@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,28 +10,30 @@ import java.util.Set;
  */
 public class ResourcesType implements java.io.Serializable {
 
-	private Long idresourcesType;
+	private long id;
 	private String type;
 	private Set<Resources> resourceses = new HashSet<Resources>(0);
 
 	public ResourcesType() {
 	}
 
-	public ResourcesType(String type) {
+	public ResourcesType(long id, String type) {
+		this.id = id;
 		this.type = type;
 	}
 
-	public ResourcesType(String type, Set<Resources> resourceses) {
+	public ResourcesType(long id, String type, Set<Resources> resourceses) {
+		this.id = id;
 		this.type = type;
 		this.resourceses = resourceses;
 	}
 
-	public Long getIdresourcesType() {
-		return this.idresourcesType;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdresourcesType(Long idresourcesType) {
-		this.idresourcesType = idresourcesType;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getType() {

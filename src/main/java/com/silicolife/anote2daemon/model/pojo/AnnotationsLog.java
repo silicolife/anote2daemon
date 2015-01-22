@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 
@@ -10,10 +10,10 @@ import java.util.Date;
 public class AnnotationsLog implements java.io.Serializable {
 
 	private long id;
-	private Corpus corpus;
 	private Annotations annotations;
 	private Publications publications;
 	private Processes processes;
+	private Corpus corpus;
 	private String type;
 	private String old;
 	private String new_;
@@ -23,23 +23,23 @@ public class AnnotationsLog implements java.io.Serializable {
 	public AnnotationsLog() {
 	}
 
-	public AnnotationsLog(long id, Corpus corpus, Publications publications, Processes processes, String type, String old, String new_, Date date) {
+	public AnnotationsLog(long id, Publications publications, Processes processes, Corpus corpus, String type, String old, String new_, Date date) {
 		this.id = id;
-		this.corpus = corpus;
 		this.publications = publications;
 		this.processes = processes;
+		this.corpus = corpus;
 		this.type = type;
 		this.old = old;
 		this.new_ = new_;
 		this.date = date;
 	}
 
-	public AnnotationsLog(long id, Corpus corpus, Annotations annotations, Publications publications, Processes processes, String type, String old, String new_, String notes, Date date) {
+	public AnnotationsLog(long id, Annotations annotations, Publications publications, Processes processes, Corpus corpus, String type, String old, String new_, String notes, Date date) {
 		this.id = id;
-		this.corpus = corpus;
 		this.annotations = annotations;
 		this.publications = publications;
 		this.processes = processes;
+		this.corpus = corpus;
 		this.type = type;
 		this.old = old;
 		this.new_ = new_;
@@ -53,14 +53,6 @@ public class AnnotationsLog implements java.io.Serializable {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public Corpus getCorpus() {
-		return this.corpus;
-	}
-
-	public void setCorpus(Corpus corpus) {
-		this.corpus = corpus;
 	}
 
 	public Annotations getAnnotations() {
@@ -85,6 +77,14 @@ public class AnnotationsLog implements java.io.Serializable {
 
 	public void setProcesses(Processes processes) {
 		this.processes = processes;
+	}
+
+	public Corpus getCorpus() {
+		return this.corpus;
+	}
+
+	public void setCorpus(Corpus corpus) {
+		this.corpus = corpus;
 	}
 
 	public String getType() {

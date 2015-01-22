@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.silicolife.anote2daemon.model.dao.core.PublicationsDao;
 import com.silicolife.anote2daemon.model.pojo.Publications;
 import com.silicolife.anote2daemon.service.core.PublicationsService;
-import com.silicolife.anote2daemon.utils.DaemonResponse;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 @EnableTransactionManagement
 @Service
@@ -21,9 +21,9 @@ public class PublicationsServiceImpl implements PublicationsService {
 	private final static Class<Publications> className = Publications.class;
 
 	@Override
-	public DaemonResponse getById(Long id) {
+	public DaemonResponse<Publications> getById(Long id) {
 		Publications publication = publicationsDao.findById(className, id);
-		DaemonResponse response = new DaemonResponse(publication, null);
+		DaemonResponse<Publications> response = new DaemonResponse<Publications>(publication, null);
 		return response;
 	}
 }

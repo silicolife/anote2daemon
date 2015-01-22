@@ -1,7 +1,8 @@
 package com.silicolife.anote2daemon.service.core;
 
-import com.silicolife.anote2daemon.utils.DaemonResponse;
+import com.silicolife.anote2daemon.model.pojo.Publications;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 public interface PublicationsService {
-	public DaemonResponse getById(Long id);
+	public DaemonResponse<Publications> getById(Long id);
 }

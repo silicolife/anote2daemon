@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,12 +10,12 @@ import java.util.Set;
  */
 public class Annotations implements java.io.Serializable {
 
-	private Long idannotations;
-	private Corpus corpus;
-	private Publications publications;
-	private Processes processes;
+	private long id;
 	private ResourceElements resourceElements;
+	private Processes processes;
 	private Classes classes;
+	private Publications publications;
+	private Corpus corpus;
 	private int start;
 	private int end;
 	private String element;
@@ -26,33 +26,35 @@ public class Annotations implements java.io.Serializable {
 	private boolean active;
 	private Integer startSentenceOffset;
 	private Integer endSentenceOffset;
-	private Set<AnnotationsSide> annotationsSidesForAnnotationsIdannotations = new HashSet<AnnotationsSide>(0);
+	private String notes;
 	private Set<AnnotationsProperties> annotationsPropertieses = new HashSet<AnnotationsProperties>(0);
-	private Set<AnnotationsSide> annotationsSidesForIdannotationsSub = new HashSet<AnnotationsSide>(0);
+	private Set<AnnotationsSide> annotationsSidesForIdannotationsSubId = new HashSet<AnnotationsSide>(0);
 	private Set<AnnotationsLog> annotationsLogs = new HashSet<AnnotationsLog>(0);
-	private Set<AnnotationsSide> annotationsSidesForIdannotations = new HashSet<AnnotationsSide>(0);
+	private Set<AnnotationsSide> annotationsSidesForAnnotationsId = new HashSet<AnnotationsSide>(0);
 
 	public Annotations() {
 	}
 
-	public Annotations(Corpus corpus, Publications publications, Processes processes, int start, int end, String type, boolean active) {
-		this.corpus = corpus;
-		this.publications = publications;
+	public Annotations(long id, Processes processes, Publications publications, Corpus corpus, int start, int end, String type, boolean active) {
+		this.id = id;
 		this.processes = processes;
+		this.publications = publications;
+		this.corpus = corpus;
 		this.start = start;
 		this.end = end;
 		this.type = type;
 		this.active = active;
 	}
 
-	public Annotations(Corpus corpus, Publications publications, Processes processes, ResourceElements resourceElements, Classes classes, int start, int end, String element, String normalizationForm, String type, String clue, String classificationRe, boolean active,
-			Integer startSentenceOffset, Integer endSentenceOffset, Set<AnnotationsSide> annotationsSidesForAnnotationsIdannotations, Set<AnnotationsProperties> annotationsPropertieses, Set<AnnotationsSide> annotationsSidesForIdannotationsSub,
-			Set<AnnotationsLog> annotationsLogs, Set<AnnotationsSide> annotationsSidesForIdannotations) {
-		this.corpus = corpus;
-		this.publications = publications;
-		this.processes = processes;
+	public Annotations(long id, ResourceElements resourceElements, Processes processes, Classes classes, Publications publications, Corpus corpus, int start, int end, String element, String normalizationForm, String type, String clue, String classificationRe, boolean active,
+			Integer startSentenceOffset, Integer endSentenceOffset, String notes, Set<AnnotationsProperties> annotationsPropertieses, Set<AnnotationsSide> annotationsSidesForIdannotationsSubId, Set<AnnotationsLog> annotationsLogs,
+			Set<AnnotationsSide> annotationsSidesForAnnotationsId) {
+		this.id = id;
 		this.resourceElements = resourceElements;
+		this.processes = processes;
 		this.classes = classes;
+		this.publications = publications;
+		this.corpus = corpus;
 		this.start = start;
 		this.end = end;
 		this.element = element;
@@ -63,43 +65,19 @@ public class Annotations implements java.io.Serializable {
 		this.active = active;
 		this.startSentenceOffset = startSentenceOffset;
 		this.endSentenceOffset = endSentenceOffset;
-		this.annotationsSidesForAnnotationsIdannotations = annotationsSidesForAnnotationsIdannotations;
+		this.notes = notes;
 		this.annotationsPropertieses = annotationsPropertieses;
-		this.annotationsSidesForIdannotationsSub = annotationsSidesForIdannotationsSub;
+		this.annotationsSidesForIdannotationsSubId = annotationsSidesForIdannotationsSubId;
 		this.annotationsLogs = annotationsLogs;
-		this.annotationsSidesForIdannotations = annotationsSidesForIdannotations;
+		this.annotationsSidesForAnnotationsId = annotationsSidesForAnnotationsId;
 	}
 
-	public Long getIdannotations() {
-		return this.idannotations;
+	public long getId() {
+		return this.id;
 	}
 
-	public void setIdannotations(Long idannotations) {
-		this.idannotations = idannotations;
-	}
-
-	public Corpus getCorpus() {
-		return this.corpus;
-	}
-
-	public void setCorpus(Corpus corpus) {
-		this.corpus = corpus;
-	}
-
-	public Publications getPublications() {
-		return this.publications;
-	}
-
-	public void setPublications(Publications publications) {
-		this.publications = publications;
-	}
-
-	public Processes getProcesses() {
-		return this.processes;
-	}
-
-	public void setProcesses(Processes processes) {
-		this.processes = processes;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public ResourceElements getResourceElements() {
@@ -110,12 +88,36 @@ public class Annotations implements java.io.Serializable {
 		this.resourceElements = resourceElements;
 	}
 
+	public Processes getProcesses() {
+		return this.processes;
+	}
+
+	public void setProcesses(Processes processes) {
+		this.processes = processes;
+	}
+
 	public Classes getClasses() {
 		return this.classes;
 	}
 
 	public void setClasses(Classes classes) {
 		this.classes = classes;
+	}
+
+	public Publications getPublications() {
+		return this.publications;
+	}
+
+	public void setPublications(Publications publications) {
+		this.publications = publications;
+	}
+
+	public Corpus getCorpus() {
+		return this.corpus;
+	}
+
+	public void setCorpus(Corpus corpus) {
+		this.corpus = corpus;
 	}
 
 	public int getStart() {
@@ -198,12 +200,12 @@ public class Annotations implements java.io.Serializable {
 		this.endSentenceOffset = endSentenceOffset;
 	}
 
-	public Set<AnnotationsSide> getAnnotationsSidesForAnnotationsIdannotations() {
-		return this.annotationsSidesForAnnotationsIdannotations;
+	public String getNotes() {
+		return this.notes;
 	}
 
-	public void setAnnotationsSidesForAnnotationsIdannotations(Set<AnnotationsSide> annotationsSidesForAnnotationsIdannotations) {
-		this.annotationsSidesForAnnotationsIdannotations = annotationsSidesForAnnotationsIdannotations;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public Set<AnnotationsProperties> getAnnotationsPropertieses() {
@@ -214,12 +216,12 @@ public class Annotations implements java.io.Serializable {
 		this.annotationsPropertieses = annotationsPropertieses;
 	}
 
-	public Set<AnnotationsSide> getAnnotationsSidesForIdannotationsSub() {
-		return this.annotationsSidesForIdannotationsSub;
+	public Set<AnnotationsSide> getAnnotationsSidesForIdannotationsSubId() {
+		return this.annotationsSidesForIdannotationsSubId;
 	}
 
-	public void setAnnotationsSidesForIdannotationsSub(Set<AnnotationsSide> annotationsSidesForIdannotationsSub) {
-		this.annotationsSidesForIdannotationsSub = annotationsSidesForIdannotationsSub;
+	public void setAnnotationsSidesForIdannotationsSubId(Set<AnnotationsSide> annotationsSidesForIdannotationsSubId) {
+		this.annotationsSidesForIdannotationsSubId = annotationsSidesForIdannotationsSubId;
 	}
 
 	public Set<AnnotationsLog> getAnnotationsLogs() {
@@ -230,12 +232,12 @@ public class Annotations implements java.io.Serializable {
 		this.annotationsLogs = annotationsLogs;
 	}
 
-	public Set<AnnotationsSide> getAnnotationsSidesForIdannotations() {
-		return this.annotationsSidesForIdannotations;
+	public Set<AnnotationsSide> getAnnotationsSidesForAnnotationsId() {
+		return this.annotationsSidesForAnnotationsId;
 	}
 
-	public void setAnnotationsSidesForIdannotations(Set<AnnotationsSide> annotationsSidesForIdannotations) {
-		this.annotationsSidesForIdannotations = annotationsSidesForIdannotations;
+	public void setAnnotationsSidesForAnnotationsId(Set<AnnotationsSide> annotationsSidesForAnnotationsId) {
+		this.annotationsSidesForAnnotationsId = annotationsSidesForAnnotationsId;
 	}
 
 }

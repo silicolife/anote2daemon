@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0 -->
+<!-- Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
-    <class name="com.silicolife.anote2daemon.model.pojo.ClassHierarchy" table="class_hierarchy" catalog="anote2_db">
+    <class name="com.silicolife.anote2daemon.model.pojo.ClassHierarchy" table="class_hierarchy">
         <composite-id name="id" class="com.silicolife.anote2daemon.model.pojo.ClassHierarchyId">
-            <key-property name="classesIdclasses" type="long">
-                <column name="classes_idclasses" />
+            <key-property name="classesId" type="long">
+                <column name="classes_id" />
             </key-property>
-            <key-property name="superclass" type="long">
-                <column name="superclass" />
+            <key-property name="superClassId" type="long">
+                <column name="super_class_id" />
             </key-property>
         </composite-id>
-        <many-to-one name="classesBySuperclass" class="com.silicolife.anote2daemon.model.pojo.Classes" update="false" insert="false" fetch="select">
-            <column name="superclass" not-null="true" />
+        <many-to-one name="classesByClassesId" class="com.silicolife.anote2daemon.model.pojo.Classes" update="false" insert="false" fetch="select">
+            <column name="classes_id" not-null="true" />
         </many-to-one>
-        <many-to-one name="classesByClassesIdclasses" class="com.silicolife.anote2daemon.model.pojo.Classes" update="false" insert="false" fetch="select">
-            <column name="classes_idclasses" not-null="true" />
+        <many-to-one name="classesBySuperClassId" class="com.silicolife.anote2daemon.model.pojo.Classes" update="false" insert="false" fetch="select">
+            <column name="super_class_id" not-null="true" />
         </many-to-one>
     </class>
 </hibernate-mapping>

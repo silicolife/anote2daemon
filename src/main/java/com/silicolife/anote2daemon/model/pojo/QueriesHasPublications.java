@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,7 @@ public class QueriesHasPublications implements java.io.Serializable {
 	private QueriesHasPublicationsId id;
 	private Queries queries;
 	private Publications publications;
-	private Set<ClustersLabelsDocuments> clustersLabelsDocumentses = new HashSet<ClustersLabelsDocuments>(0);
+	private Set<ClustersLabelsPublications> clustersLabelsPublicationses = new HashSet<ClustersLabelsPublications>(0);
 
 	public QueriesHasPublications() {
 	}
@@ -24,11 +24,11 @@ public class QueriesHasPublications implements java.io.Serializable {
 		this.publications = publications;
 	}
 
-	public QueriesHasPublications(QueriesHasPublicationsId id, Queries queries, Publications publications, Set<ClustersLabelsDocuments> clustersLabelsDocumentses) {
+	public QueriesHasPublications(QueriesHasPublicationsId id, Queries queries, Publications publications, Set<ClustersLabelsPublications> clustersLabelsPublicationses) {
 		this.id = id;
 		this.queries = queries;
 		this.publications = publications;
-		this.clustersLabelsDocumentses = clustersLabelsDocumentses;
+		this.clustersLabelsPublicationses = clustersLabelsPublicationses;
 	}
 
 	public QueriesHasPublicationsId getId() {
@@ -55,12 +55,12 @@ public class QueriesHasPublications implements java.io.Serializable {
 		this.publications = publications;
 	}
 
-	public Set<ClustersLabelsDocuments> getClustersLabelsDocumentses() {
-		return this.clustersLabelsDocumentses;
+	public Set<ClustersLabelsPublications> getClustersLabelsPublicationses() {
+		return this.clustersLabelsPublicationses;
 	}
 
-	public void setClustersLabelsDocumentses(Set<ClustersLabelsDocuments> clustersLabelsDocumentses) {
-		this.clustersLabelsDocumentses = clustersLabelsDocumentses;
+	public void setClustersLabelsPublicationses(Set<ClustersLabelsPublications> clustersLabelsPublicationses) {
+		this.clustersLabelsPublicationses = clustersLabelsPublicationses;
 	}
 
 }

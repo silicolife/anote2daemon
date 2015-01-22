@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class ClustersProcess implements java.io.Serializable {
 
-	private Long id;
+	private long id;
 	private String description;
 	private boolean active;
 	private Set<ClustersProperties> clustersPropertieses = new HashSet<ClustersProperties>(0);
@@ -20,11 +20,13 @@ public class ClustersProcess implements java.io.Serializable {
 	public ClustersProcess() {
 	}
 
-	public ClustersProcess(boolean active) {
+	public ClustersProcess(long id, boolean active) {
+		this.id = id;
 		this.active = active;
 	}
 
-	public ClustersProcess(String description, boolean active, Set<ClustersProperties> clustersPropertieses, Set<QueriesHasClustersProcess> queriesHasClustersProcesses, Set<ClustersProcessHasClustersLabels> clustersProcessHasClustersLabelses) {
+	public ClustersProcess(long id, String description, boolean active, Set<ClustersProperties> clustersPropertieses, Set<QueriesHasClustersProcess> queriesHasClustersProcesses, Set<ClustersProcessHasClustersLabels> clustersProcessHasClustersLabelses) {
+		this.id = id;
 		this.description = description;
 		this.active = active;
 		this.clustersPropertieses = clustersPropertieses;
@@ -32,11 +34,11 @@ public class ClustersProcess implements java.io.Serializable {
 		this.clustersProcessHasClustersLabelses = clustersProcessHasClustersLabelses;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

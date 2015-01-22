@@ -9,15 +9,33 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+
+	<!-- Configure to plugin JSON as request and response in method handler -->
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:ref bean="jsonMessageConverter" />
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+
+	<beans:bean id="jsonMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<beans:property name="objectMapper">
+			<beans:bean
+				class="com.silicolife.anote2daemon.webservice.HibernateAwareObjectMapper" />
+		</beans:property>
+	</beans:bean>
+
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<beans:property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</beans:bean>
 
 
-
 	<!-- Data access objects -->
-	
 	<beans:bean id="queriesTypeDao"
 		class="com.silicolife.anote2daemon.model.dao.QueriesTypeDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
@@ -29,15 +47,7 @@
 	</beans:bean>
 
 
-
-
-
-
-
-
-
 	<!-- Services implementation -->
-
 	<beans:bean id="publicationService"
 		class="com.silicolife.anote2daemon.service.PublicationsServiceImpl">
 	</beans:bean>
@@ -50,9 +60,14 @@
 		class="com.silicolife.anote2daemon.service.QueriesTypeServiceImpl">
 	</beans:bean>
 
+
+
+
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
+
+	<tx:annotation-driven />
 
 </beans:beans>

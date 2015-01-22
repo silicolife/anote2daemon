@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 19/Jan/2015 15:19:18 by Hibernate Tools 4.0.0
+// Generated 21/Jan/2015 14:28:04 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class Publications implements java.io.Serializable {
 
-	private Long id;
+	private long id;
 	private String title;
 	private String authors;
 	private String type;
@@ -30,17 +30,22 @@ public class Publications implements java.io.Serializable {
 	private Set<QueriesHasPublications> queriesHasPublicationses = new HashSet<QueriesHasPublications>(0);
 	private Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources = new HashSet<PublicationsHasPublicationsSource>(0);
 	private Set<Annotations> annotationses = new HashSet<Annotations>(0);
-	private Set<PublicationFields> publicationFieldses = new HashSet<PublicationFields>(0);
+	private Set<PublicationsFields> publicationsFieldses = new HashSet<PublicationsFields>(0);
 	private Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses = new HashSet<PublicationsHasPublicationLabels>(0);
-	private Set<DocumentRelevance> documentRelevances = new HashSet<DocumentRelevance>(0);
+	private Set<PublictaionQueryRelevance> publictaionQueryRelevances = new HashSet<PublictaionQueryRelevance>(0);
 	private Set<CorpusHasPublications> corpusHasPublicationses = new HashSet<CorpusHasPublications>(0);
 
 	public Publications() {
 	}
 
-	public Publications(String title, String authors, String type, Integer date, String fulldate, String status, String journal, String volume, String issue, String pages, String abstract_, String externalLinks, Boolean availablePdf, String fulltext, String notes,
-			Set<AnnotationsLog> annotationsLogs, Set<QueriesHasPublications> queriesHasPublicationses, Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources, Set<Annotations> annotationses, Set<PublicationFields> publicationFieldses,
-			Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses, Set<DocumentRelevance> documentRelevances, Set<CorpusHasPublications> corpusHasPublicationses) {
+	public Publications(long id) {
+		this.id = id;
+	}
+
+	public Publications(long id, String title, String authors, String type, Integer date, String fulldate, String status, String journal, String volume, String issue, String pages, String abstract_, String externalLinks, Boolean availablePdf, String fulltext, String notes,
+			Set<AnnotationsLog> annotationsLogs, Set<QueriesHasPublications> queriesHasPublicationses, Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources, Set<Annotations> annotationses, Set<PublicationsFields> publicationsFieldses,
+			Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses, Set<PublictaionQueryRelevance> publictaionQueryRelevances, Set<CorpusHasPublications> corpusHasPublicationses) {
+		this.id = id;
 		this.title = title;
 		this.authors = authors;
 		this.type = type;
@@ -60,17 +65,17 @@ public class Publications implements java.io.Serializable {
 		this.queriesHasPublicationses = queriesHasPublicationses;
 		this.publicationsHasPublicationsSources = publicationsHasPublicationsSources;
 		this.annotationses = annotationses;
-		this.publicationFieldses = publicationFieldses;
+		this.publicationsFieldses = publicationsFieldses;
 		this.publicationsHasPublicationLabelses = publicationsHasPublicationLabelses;
-		this.documentRelevances = documentRelevances;
+		this.publictaionQueryRelevances = publictaionQueryRelevances;
 		this.corpusHasPublicationses = corpusHasPublicationses;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -226,12 +231,12 @@ public class Publications implements java.io.Serializable {
 		this.annotationses = annotationses;
 	}
 
-	public Set<PublicationFields> getPublicationFieldses() {
-		return this.publicationFieldses;
+	public Set<PublicationsFields> getPublicationsFieldses() {
+		return this.publicationsFieldses;
 	}
 
-	public void setPublicationFieldses(Set<PublicationFields> publicationFieldses) {
-		this.publicationFieldses = publicationFieldses;
+	public void setPublicationsFieldses(Set<PublicationsFields> publicationsFieldses) {
+		this.publicationsFieldses = publicationsFieldses;
 	}
 
 	public Set<PublicationsHasPublicationLabels> getPublicationsHasPublicationLabelses() {
@@ -242,12 +247,12 @@ public class Publications implements java.io.Serializable {
 		this.publicationsHasPublicationLabelses = publicationsHasPublicationLabelses;
 	}
 
-	public Set<DocumentRelevance> getDocumentRelevances() {
-		return this.documentRelevances;
+	public Set<PublictaionQueryRelevance> getPublictaionQueryRelevances() {
+		return this.publictaionQueryRelevances;
 	}
 
-	public void setDocumentRelevances(Set<DocumentRelevance> documentRelevances) {
-		this.documentRelevances = documentRelevances;
+	public void setPublictaionQueryRelevances(Set<PublictaionQueryRelevance> publictaionQueryRelevances) {
+		this.publictaionQueryRelevances = publictaionQueryRelevances;
 	}
 
 	public Set<CorpusHasPublications> getCorpusHasPublicationses() {

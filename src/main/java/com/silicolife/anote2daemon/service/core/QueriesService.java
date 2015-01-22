@@ -1,13 +1,14 @@
 package com.silicolife.anote2daemon.service.core;
 
-import com.silicolife.anote2daemon.utils.DaemonResponse;
+import com.silicolife.anote2daemon.model.pojo.Queries;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 public interface QueriesService {
 
-	public DaemonResponse getById(Long id);
+	public DaemonResponse<Queries> getById(Long id);
 
-	public DaemonResponse update();
+	public DaemonResponse<Queries> update();
 
-	public DaemonResponse create();
+	public DaemonResponse<Queries> create();
 
 }
