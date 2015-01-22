@@ -31,16 +31,4 @@ public class QueriesController {
 		DaemonResponse<QueriesType> response = queriesTypeService.create(queryType);
 		return new ResponseEntity<DaemonResponse<QueriesType>>(response, HttpStatus.OK);
 	}
-
-//	@ExceptionHandler({ KeysHandlerException.class, DataIntegrityViolationException.class })
-/*	public DaemonResponse<?> handleEmployeeNotFoundException(Exception ex) {
-
-		Map<String, String> errorCodes = new HashMap<String, String>();
-		errorCodes.put(ex.getMessage(), ExceptionsMessages.messages.get(ex.getMessage()));
-
-		DaemonResponse<?> response = new DaemonResponse<>();
-		response.setErrors(errorCodes);
-
-		return response;
-	}*/
 }

@@ -1,15 +1,15 @@
 package com.silicolife.anote2daemon.webservice;
 
-import java.util.Map;
+import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
 
 public class DaemonResponse<T> {
 
 	private T content;
-	private Map<String, String> errors;
+	private ExceptionInfo exception;
 
-	public DaemonResponse(T content, Map<String, String> errors) {
+	public DaemonResponse(T content, ExceptionInfo exception) {
 		this.content = content;
-		this.errors = errors;
+		this.exception = exception;
 	}
 
 	public DaemonResponse(T content) {
@@ -23,15 +23,15 @@ public class DaemonResponse<T> {
 		return content;
 	}
 
-	public Map<String, String> getErrors() {
-		return errors;
+	public ExceptionInfo getException() {
+		return exception;
 	}
 
 	public void setContent(T content) {
 		this.content = content;
 	}
 
-	public void setErrors(Map<String, String> errors) {
-		this.errors = errors;
+	public void setException(ExceptionInfo exception) {
+		this.exception = exception;
 	}
 }
