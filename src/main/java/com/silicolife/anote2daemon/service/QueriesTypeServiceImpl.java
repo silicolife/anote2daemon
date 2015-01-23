@@ -1,10 +1,5 @@
 package com.silicolife.anote2daemon.service;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +21,7 @@ public class QueriesTypeServiceImpl implements QueriesTypeService {
 	@Override
 	public DaemonResponse<QueriesType> create(QueriesType queryType) {
 		queriesTypeDao.save(queryType);
-		return new DaemonResponse<QueriesType>(queryType, null);
+		return new DaemonResponse<QueriesType>(queryType);
 	}
 
 	@Override
@@ -35,13 +30,11 @@ public class QueriesTypeServiceImpl implements QueriesTypeService {
 		return new DaemonResponse<QueriesType>(queryType);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
-	public DaemonResponse<List<QueriesType>> getByDescription(String name) {
-		Map<String, Serializable> map = new HashMap<String, Serializable>();
-		map.put("description", name);
-		List<QueriesType> queryTypeList = queriesTypeDao.findByAttributes(className, map);
-		if (queryTypeList.size() > 0)
-			queryTypeList = null;
-		return new DaemonResponse<List<QueriesType>>(queryTypeList);
+	public DaemonResponse<QueriesType> update(QueriesType queryType) {
+		queriesTypeDao.update(queryType);
+		return new DaemonResponse<QueriesType>(queryType);
 	}
+
 }

@@ -7,8 +7,8 @@ public interface QueriesService {
 
 	public DaemonResponse<Queries> getById(Long id);
 
-	public DaemonResponse<Queries> update();
+	public DaemonResponse<Queries> create(Queries query);
 
-	public DaemonResponse<Queries> create();
+	public DaemonResponse<Queries> update(Queries query);
 
 }
