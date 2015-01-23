@@ -1,12 +1,14 @@
 package com.silicolife.anote2daemon.exceptions.pojo;
 
+import java.io.Serializable;
+
 /**
  * Class to represent the exception. It is sent in JSON message
  * 
  * @author Joel Azevedo Costa
  *
  */
-public class ExceptionInfo implements java.io.Serializable {
+public class ExceptionInfo implements Serializable {
 
 	/**
 	 * 

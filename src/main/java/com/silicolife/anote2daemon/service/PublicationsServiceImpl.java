@@ -2,7 +2,6 @@ package com.silicolife.anote2daemon.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.silicolife.anote2daemon.model.dao.core.PublicationsDao;
@@ -10,7 +9,6 @@ import com.silicolife.anote2daemon.model.pojo.Publications;
 import com.silicolife.anote2daemon.service.core.PublicationsService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
-@EnableTransactionManagement
 @Service
 @Transactional(readOnly = true)
 public class PublicationsServiceImpl implements PublicationsService {
@@ -25,5 +23,19 @@ public class PublicationsServiceImpl implements PublicationsService {
 		Publications publication = publicationsDao.findById(className, id);
 		DaemonResponse<Publications> response = new DaemonResponse<Publications>(publication, null);
 		return response;
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public DaemonResponse<Publications> create(Publications publication) {
+		publicationsDao.save(publication);
+		return new DaemonResponse<Publications>(publication);
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public DaemonResponse<Publications> update(Publications publication) {
+		publicationsDao.update(publication);
+		return new DaemonResponse<Publications>(publication);
 	}
 }

@@ -37,8 +37,8 @@ public class DatabaseExceptionsHandler {
 
 		if (e.getMessage() != null)
 			message = e.getMessage();
-		if (e.getCause() != null)
-			rootCause = e.getCause().getMessage();
+		if (e.getRootCause() != null)
+			rootCause = e.getRootCause().getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.keyConstraintCode, message, rootCause);
 		response.setException(exception);
@@ -88,5 +88,4 @@ public class DatabaseExceptionsHandler {
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_IMPLEMENTED);
 	}
-
 }

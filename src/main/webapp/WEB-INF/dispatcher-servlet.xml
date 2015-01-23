@@ -10,11 +10,11 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
+	<!-- Spring context to allow for dispatching requests to Controllers. -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
-			<!-- Use the HibernateAware mapper instead of the default to not show 
-				lazy exceptions -->
-			<beans:bean
+		<!-- Convert user messages in objects from anote2daemon -->
+			<beans:bean id="jsonRequestConverter"
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<beans:property name="objectMapper">
 					<beans:bean

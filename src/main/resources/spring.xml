@@ -15,9 +15,16 @@
 		<beans:property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</beans:bean>
 
+
+
 	<!-- Data access objects -->
 	<beans:bean id="queriesTypeDao"
 		class="com.silicolife.anote2daemon.model.dao.QueriesTypeDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="queriesDao"
+		class="com.silicolife.anote2daemon.model.dao.QueriesDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 	</beans:bean>
 
@@ -25,6 +32,16 @@
 		class="com.silicolife.anote2daemon.model.dao.PublicationsDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 	</beans:bean>
+
+
+	<beans:bean id="queriesHasPublicationsDao"
+		class="com.silicolife.anote2daemon.model.dao.QueriesHasPublicationsDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+
+
+
 
 	<!-- Services implementation -->
 	<beans:bean id="publicationService"
@@ -38,6 +55,13 @@
 	<beans:bean id="queriesTypeService"
 		class="com.silicolife.anote2daemon.service.QueriesTypeServiceImpl">
 	</beans:bean>
+
+	<beans:bean id="queriesHasPublicationsService"
+		class="com.silicolife.anote2daemon.service.QueriesHasPublicationsServiceImpl">
+	</beans:bean>
+
+
+
 
 
 

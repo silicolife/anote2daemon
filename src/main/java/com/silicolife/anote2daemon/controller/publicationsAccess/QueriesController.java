@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller;
+package com.silicolife.anote2daemon.controller.publicationsAccess;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -15,6 +15,7 @@ public class QueriesTypeServiceImpl implements QueriesTypeService {
 
 	@Autowired
 	private QueriesTypeDao queriesTypeDao;
+	
 	private final static Class<QueriesType> className = QueriesType.class;
 
 	@Transactional(readOnly = false)
