@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(NullPointerException.class)
+//	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<DaemonResponse<?>> handleGeneralException(NullPointerException e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		String message = null;

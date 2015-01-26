@@ -39,17 +39,34 @@ public class QueriesHasPublicationsServiceImpl implements QueriesHasPublications
 	}
 
 	@Override
+	public DaemonResponse<QueriesHasPublications> getById(Long queriesId, Long publicationsId) {
+		QueriesHasPublicationsId id = new QueriesHasPublicationsId(queriesId, publicationsId);
+		QueriesHasPublications queriesHasPub = queriesHasPublicationsDao.findById(className, id);
+		if (queriesHasPub != null) {
+			Hibernate.initialize(queriesHasPub.getPublications());
+			Hibernate.initialize(queriesHasPub.getQueries());
+		}
+		return new DaemonResponse<QueriesHasPublications>(queriesHasPub);
+	}
+
+	@Transactional(readOnly = false)
+	@Override
 	public DaemonResponse<QueriesHasPublications> create(QueriesHasPublications queriesHasPub) {
 
-		DaemonResponse<Publications> publicationsResponse = publicationService.getById(queriesHasPub.getPublications().getId());
-		DaemonResponse<Queries> queriesResponse = queriesService.getById(queriesHasPub.getQueries().getId());
-		Publications publication = publicationsResponse.getContent();
-		Queries query = queriesResponse.getContent();
+		Publications publicationFromUser = queriesHasPub.getPublications();
+		Queries queryFromUser = queriesHasPub.getQueries();
 
-		if (publication != null)
-			publicationService.create(publication);
-		if (query != null)
-			queriesService.create(query);
+		if (publicationFromUser != null) {
+			DaemonResponse<Publications> publicationsResponse = publicationService.getById(publicationFromUser.getId());
+			if (publicationsResponse.getContent() == null)
+				publicationService.create(publicationFromUser);
+		}
+
+		if (queryFromUser != null) {
+			DaemonResponse<Queries> queriesResponse = queriesService.getById(queryFromUser.getId());
+			if (queriesResponse.getContent() == null)
+				queriesService.create(queryFromUser);
+		}
 
 		queriesHasPublicationsDao.save(queriesHasPub);
 		return new DaemonResponse<QueriesHasPublications>(queriesHasPub);

@@ -8,6 +8,8 @@ public interface QueriesHasPublicationsService {
 
 	public DaemonResponse<QueriesHasPublications> getById(QueriesHasPublicationsId id);
 
+	public DaemonResponse<QueriesHasPublications> getById(Long queriesId, Long publicationsId);
+
 	public DaemonResponse<QueriesHasPublications> create(QueriesHasPublications queriesHasPub);
 
 	public DaemonResponse<QueriesHasPublications> update(QueriesHasPublications queriesHasPub);

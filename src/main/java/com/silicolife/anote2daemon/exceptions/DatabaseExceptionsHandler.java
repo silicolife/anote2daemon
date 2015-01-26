@@ -73,6 +73,13 @@ public class DatabaseExceptionsHandler {
 	 * @param e
 	 * @return
 	 */
+	
+	
+	/*
+	 * SQLGrammarException
+	 */
+	
+	
 	@ExceptionHandler(HibernateException.class)
 	public ResponseEntity<DaemonResponse<?>> handlingHibernateExceptions(HibernateException e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
