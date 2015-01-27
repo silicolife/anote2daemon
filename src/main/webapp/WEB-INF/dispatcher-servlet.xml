@@ -13,7 +13,7 @@
 	<!-- Spring context to allow for dispatching requests to Controllers. -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
-		<!-- Convert user messages in objects from anote2daemon -->
+			<!-- Convert user messages in objects from anote2daemon -->
 			<beans:bean id="jsonRequestConverter"
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<beans:property name="objectMapper">
@@ -27,15 +27,13 @@
 	<mvc:resources location="classpath:/META-INF/web-resources/"
 		mapping="/resources/**/*" />
 
-
-	<beans:import resource="classpath:spring.xml" />
+	<beans:import resource="classpath:spring-database.xml" />
+	<beans:import resource="classpath:spring-dao.xml" />
+	<beans:import resource="classpath:spring-service.xml" />
 
 	<context:component-scan base-package="com.silicolife.anote2daemon.model.dao" />
-
 	<context:component-scan base-package="com.silicolife.anote2daemon.service" />
-
 	<context:component-scan base-package="com.silicolife.anote2daemon.controller" />
-
 	<context:component-scan base-package="com.silicolife.anote2daemon.exceptions" />
 
 </beans:beans>
