@@ -1,5 +1,8 @@
 package com.silicolife.anote2daemon.controller.publicationsAccess;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.silicolife.anote2daemon.model.pojo.DaemonUsers;
 import com.silicolife.anote2daemon.model.pojo.Queries;
 import com.silicolife.anote2daemon.model.pojo.QueriesHasPublications;
 import com.silicolife.anote2daemon.model.pojo.QueriesType;
@@ -31,6 +35,21 @@ public class QueriesController {
 	@Autowired
 	private QueriesHasPublicationsService queriesHasPublicationsService;
 
+	@RequestMapping(value = "/getAll", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Map<String, List<Queries>>>> getAll(@RequestBody DaemonRequest<?> request) {
+		DaemonUsers user = request.getUser();
+		DaemonResponse<Map<String, List<Queries>>> response = queriesService.getAll(user);
+		return new ResponseEntity<DaemonResponse<Map<String, List<Queries>>>>(response, HttpStatus.OK);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/createQueryType", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<QueriesType>> createQueryType(@RequestBody DaemonRequest<QueriesType> request) {
 		QueriesType queryType = request.getContent();
