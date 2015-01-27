@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 27/Jan/2015 13:51:08 by Hibernate Tools 4.0.0
+// Generated 27/Jan/2015 18:22:29 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

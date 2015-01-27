@@ -40,6 +40,27 @@
 	</beans:bean>
 
 
+	<beans:bean id="daemonUsersDao"
+		class="com.silicolife.anote2daemon.model.dao.DaemonUsersDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+
+
+
+	<beans:bean id="daemonUserHasDataObjectDao"
+		class="com.silicolife.anote2daemon.model.dao.DaemonUserHasDataObjectDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+
+
+	<beans:bean id="daemonTypeResourcesDao"
+		class="com.silicolife.anote2daemon.model.dao.DaemonTypeResourcesDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+
 
 
 
@@ -58,6 +79,20 @@
 
 	<beans:bean id="queriesHasPublicationsService"
 		class="com.silicolife.anote2daemon.service.QueriesHasPublicationsServiceImpl">
+	</beans:bean>
+
+
+	<beans:bean id="daemonTypeResourcesService"
+		class="com.silicolife.anote2daemon.service.DaemonTypeResourcesServiceImpl">
+	</beans:bean>
+
+	<beans:bean id="daemonUsersService"
+		class="com.silicolife.anote2daemon.service.DaemonUsersServiceImpl">
+	</beans:bean>
+
+
+	<beans:bean id="daemonUsersHasDataObjectService"
+		class="com.silicolife.anote2daemon.service.DaemonUsersHasDataObjectServiceImpl">
 	</beans:bean>
 
 
