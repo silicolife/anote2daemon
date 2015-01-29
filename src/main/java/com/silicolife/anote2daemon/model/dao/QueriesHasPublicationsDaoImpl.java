@@ -9,6 +9,7 @@ import com.silicolife.anote2daemon.model.pojo.QueriesHasPublications;
 
 @Repository
 public class QueriesHasPublicationsDaoImpl extends GenericDaoImpl<QueriesHasPublications> implements QueriesHasPublicationsDao {
+
 	@Autowired
 	public QueriesHasPublicationsDaoImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);

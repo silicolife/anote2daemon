@@ -8,6 +8,7 @@ import com.silicolife.anote2daemon.model.dao.core.PublicationsSourceDao;
 import com.silicolife.anote2daemon.model.pojo.PublicationsSource;
 @Repository
 public class PublicationsSourceDaoImpl extends GenericDaoImpl<PublicationsSource> implements PublicationsSourceDao {
+	
 	@Autowired
 	public PublicationsSourceDaoImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);

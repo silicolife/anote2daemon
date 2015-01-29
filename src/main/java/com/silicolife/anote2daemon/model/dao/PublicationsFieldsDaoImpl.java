@@ -9,6 +9,7 @@ import com.silicolife.anote2daemon.model.pojo.PublicationsFields;
 
 @Repository
 public class PublicationsFieldsDaoImpl extends GenericDaoImpl<PublicationsFields> implements PublicationsFieldsDao {
+	
 	@Autowired
 	public PublicationsFieldsDaoImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);

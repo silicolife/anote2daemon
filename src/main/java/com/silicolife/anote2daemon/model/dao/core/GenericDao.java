@@ -11,7 +11,9 @@ public interface GenericDao<T> {
 	public List<T> findAll(Class<T> klass);
 
 	public List<T> findByAttributes(Class<T> klass, Map<String, Serializable> eqRestrictions);
-	
+
+	public T findUniqueByAttribute(Class<T> klass, String attribute, Serializable value);
+
 	public List<T> findByOrAttributes(Class<T> klass, Map<String, Serializable> orRestrictions);
 
 	public void save(Object object);

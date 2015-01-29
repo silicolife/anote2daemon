@@ -1,6 +1,7 @@
 package com.silicolife.anote2daemon.model.dao;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,17 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 	public List<T> findAll(Class<T> klass) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(klass);
 		return c.list();
+	}
+
+	@Override
+	public T findUniqueByAttribute(Class<T> klass, String attribute, Serializable value) {
+		Map<String, Serializable> eqRestrictions = new HashMap<String, Serializable>();
+		eqRestrictions.put(attribute, value);
+		List<T> result = findByAttributes(klass, eqRestrictions);
+		if (result.size() == 1)
+			return result.get(0);
+
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
