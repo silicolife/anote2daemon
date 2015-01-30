@@ -1,0 +1,18 @@
+package com.silicolife.anote2daemon.model.dao.queries;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.silicolife.anote2daemon.model.dao.GenericDaoImpl;
+import com.silicolife.anote2daemon.model.dao.core.queries.QueriesDao;
+import com.silicolife.anote2daemon.model.pojo.Queries;
+
+@Repository
+public class QueriesDaoImpl extends GenericDaoImpl<Queries> implements QueriesDao {
+
+	@Autowired
+	public QueriesDaoImpl(SessionFactory sessionFactory) {
+		super(sessionFactory);
+	}
+}

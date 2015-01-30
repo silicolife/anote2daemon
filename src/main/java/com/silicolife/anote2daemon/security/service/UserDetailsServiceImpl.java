@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.silicolife.anote2daemon.model.dao.core.DaemonUsersDao;
+import com.silicolife.anote2daemon.model.dao.core.daemon.DaemonUsersDao;
 import com.silicolife.anote2daemon.model.pojo.DaemonUsers;
 import com.silicolife.anote2daemon.security.pojo.CustomSpringUser;
 

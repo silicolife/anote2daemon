@@ -13,9 +13,9 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
  * Generic class to handler with general exceptions generate by anote2daemon.
- * All exceptions are send to user in JSON Format
  * 
  * @author Joel Azevedo Costa
+ * @year 2015
  *
  */
 @ControllerAdvice
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-//	@ExceptionHandler(NullPointerException.class)
+	// @ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<DaemonResponse<?>> handleGeneralException(NullPointerException e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		String message = null;
@@ -44,29 +44,24 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * Method to handler with JSON formatter exceptions
+	 * JSON format exception
 	 * 
 	 * @param e
 	 * @return
 	 */
 	@ExceptionHandler(InvalidFormatException.class)
-	public ResponseEntity<DaemonResponse<?>> handleGeneralException(InvalidFormatException e) {
-		DaemonResponse<?> response = new DaemonResponse<>();
-		String message = null;
+	public ResponseEntity<ExceptionInfo> handleException(InvalidFormatException e) {
 		String rootCause = null;
-
-		if (e.getMessage() != null)
-			message = e.getMessage();
-		if (e.getCause() != null)
-			rootCause = e.getCause().getMessage();
-
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+		
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.parseJsonCode, message, rootCause);
-		response.setException(exception);
-		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.BAD_REQUEST);
 	}
-	
-	
-	//@ExceptionHandler(Exception.class)
+
+	// @ExceptionHandler(Exception.class)
 	public ResponseEntity<DaemonResponse<?>> handleGeneralException(Exception e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		String message = null;

@@ -35,7 +35,7 @@
 
 	<!-- Create DAO users to login -->
 	<beans:bean id="daemonUsersDao"
-		class="com.silicolife.anote2daemon.model.dao.DaemonUsersDaoImpl">
+		class="com.silicolife.anote2daemon.model.dao.daemon.DaemonUsersDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 	</beans:bean>
 
