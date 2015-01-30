@@ -6,4 +6,6 @@ public interface PublicationsDao extends GenericDao<Publications> {
 
 	public static final Class<Publications> className = Publications.class;
 
+	public Publications findFewColumnsById(Long id);
+
 }

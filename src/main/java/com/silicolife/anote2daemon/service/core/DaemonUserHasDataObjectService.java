@@ -6,17 +6,15 @@ import java.util.Map;
 
 import com.silicolife.anote2daemon.model.pojo.DaemonUsersHasDataObject;
 import com.silicolife.anote2daemon.model.pojo.DaemonUsersHasDataObjectId;
-import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 public interface DaemonUserHasDataObjectService {
 
-	public DaemonResponse<DaemonUsersHasDataObject> getById(DaemonUsersHasDataObjectId id);
+	public DaemonUsersHasDataObject getById(DaemonUsersHasDataObjectId id);
 
-	public DaemonResponse<List<DaemonUsersHasDataObject>> getByAttributes(Map<String, Serializable> eqRestrictions);
+	public List<DaemonUsersHasDataObject> getByAttributes(Map<String, Serializable> eqRestrictions);
 
-	public DaemonResponse<DaemonUsersHasDataObject> create(DaemonUsersHasDataObject daemonUserObject);
+	public DaemonUsersHasDataObject create(DaemonUsersHasDataObject daemonUserObject);
 
-	public DaemonResponse<DaemonUsersHasDataObject> update(DaemonUsersHasDataObject daemonUserObject);
+	public DaemonUsersHasDataObject update(DaemonUsersHasDataObject daemonUserObject);
 
-	public DaemonResponse<List<Object>> getObjectsByAttributes(Long id, Long resourceType);
 }

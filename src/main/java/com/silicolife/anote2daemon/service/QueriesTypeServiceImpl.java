@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.silicolife.anote2daemon.model.dao.core.QueriesTypeDao;
 import com.silicolife.anote2daemon.model.pojo.QueriesType;
 import com.silicolife.anote2daemon.service.core.QueriesTypeService;
-import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 @Transactional(readOnly = true)
 @Service
@@ -20,22 +19,22 @@ public class QueriesTypeServiceImpl implements QueriesTypeService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public DaemonResponse<QueriesType> create(QueriesType queryType) {
+	public QueriesType create(QueriesType queryType) {
 		queriesTypeDao.save(queryType);
-		return new DaemonResponse<QueriesType>(queryType);
+		return queryType;
 	}
 
 	@Override
-	public DaemonResponse<QueriesType> getById(Long id) {
+	public QueriesType getById(Long id) {
 		QueriesType queryType = queriesTypeDao.findById(className, id);
-		return new DaemonResponse<QueriesType>(queryType);
+		return queryType;
 	}
 
 	@Transactional(readOnly = false)
 	@Override
-	public DaemonResponse<QueriesType> update(QueriesType queryType) {
+	public QueriesType update(QueriesType queryType) {
 		queriesTypeDao.update(queryType);
-		return new DaemonResponse<QueriesType>(queryType);
+		return queryType;
 	}
 
 }

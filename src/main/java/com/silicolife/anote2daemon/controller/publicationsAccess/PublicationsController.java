@@ -23,7 +23,7 @@ public class PublicationsController {
 
 	@RequestMapping(value = "/getPublicationById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Publications>> getPublicationById(@PathVariable Long id) {
-		DaemonResponse<Publications> response = publicationService.getById(id);
+		DaemonResponse<Publications> response = new DaemonResponse<Publications>(publicationService.getById(id));
 		return new ResponseEntity<DaemonResponse<Publications>>(response, HttpStatus.OK);
 	}
 }

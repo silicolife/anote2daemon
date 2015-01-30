@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.exceptions;
+package com.silicolife.anote2daemon.exceptions.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
@@ -50,6 +51,23 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(InvalidFormatException.class)
 	public ResponseEntity<DaemonResponse<?>> handleGeneralException(InvalidFormatException e) {
+		DaemonResponse<?> response = new DaemonResponse<>();
+		String message = null;
+		String rootCause = null;
+
+		if (e.getMessage() != null)
+			message = e.getMessage();
+		if (e.getCause() != null)
+			rootCause = e.getCause().getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.parseJsonCode, message, rootCause);
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	//@ExceptionHandler(Exception.class)
+	public ResponseEntity<DaemonResponse<?>> handleGeneralException(Exception e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		String message = null;
 		String rootCause = null;
