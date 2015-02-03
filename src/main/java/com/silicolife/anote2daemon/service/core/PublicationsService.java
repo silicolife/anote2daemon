@@ -52,13 +52,13 @@ public interface PublicationsService {
 	 * @param documents
 	 */
 	public Boolean addPublications(List<Publications> publications);
-	
+
 	/**
-	 * Get all publications from a source
+	 * Get all SourceId from a publications
 	 * 
 	 * 
 	 * @param source
 	 * @return
 	 */
-	public Map<String,Publications> getAllPublicationsFromSource(String source);
+	public Map<String, Long> getAllPublicationsFromSource(String source);
 }

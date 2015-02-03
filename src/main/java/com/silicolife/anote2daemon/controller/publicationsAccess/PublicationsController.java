@@ -91,8 +91,8 @@ public class PublicationsController {
 	 */
 	@Secured("ROLE_EMPLOYEES")
 	@RequestMapping(value = "/getAllPublicationsFromSource/{source}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Map<String, Publications>>> getAllPublicationsFromSource(@PathVariable String source) {
-		DaemonResponse<Map<String, Publications>> response = new DaemonResponse<Map<String, Publications>>(publicationService.getAllPublicationsFromSource(source));
-		return new ResponseEntity<DaemonResponse<Map<String, Publications>>>(response, HttpStatus.OK);
+	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@PathVariable String source) {
+		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsFromSource(source));
+		return new ResponseEntity<DaemonResponse<Map<String, Long>>>(response, HttpStatus.OK);
 	}
 }

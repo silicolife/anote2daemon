@@ -3,6 +3,7 @@ package com.silicolife.anote2daemon.exceptions.handler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,7 +24,7 @@ import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
 public class SecurityExceptions {
 
 	/**
-	 * Access denied (login and roles) exceptions
+	 * Access denied (roles) exceptions
 	 * 
 	 * @param e
 	 * @return
@@ -37,6 +38,24 @@ public class SecurityExceptions {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.accessDeniedCode, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.UNAUTHORIZED);
+	}
+
+	/**
+	 * Bad credentials exceptions
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ExceptionInfo> handleException(BadCredentialsException e) {
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.badCredentialsCode, message, rootCause);
+		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.UNAUTHORIZED);
 	}
 }

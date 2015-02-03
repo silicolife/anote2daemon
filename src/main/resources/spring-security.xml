@@ -15,6 +15,7 @@
 	</http>
 
 
+
 	<!-- Entry point for REST service. -->
 	<beans:bean id="restServicesEntryPoint"
 		class="com.silicolife.anote2daemon.security.RestAuthenticationEntryPoint" />
@@ -45,12 +46,23 @@
 		<beans:constructor-arg ref="daemonUsersDao" />
 	</beans:bean>
 
+	<!-- Custom authentication provider -->
+	<beans:bean id="customAuthenticationProvider"
+		class="com.silicolife.anote2daemon.security.CustomAuthenticationProvider">
+		<beans:constructor-arg ref="userDetailsService" />
+		<beans:constructor-arg ref="passwordEncoder" />
+	</beans:bean>
+
+	<!-- Password encoder sha256 -->
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<beans:constructor-arg value="256" />
+	</beans:bean>
+
 
 	<!-- Authentication Manager -->
 	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="userDetailsService">
-			<password-encoder hash="plaintext" />
-		</authentication-provider>
+		<authentication-provider ref="customAuthenticationProvider" />
 	</authentication-manager>
 
 

@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		DaemonUsers userDomain = daemonUsersDao.findUniqueByAttribute(DaemonUsersDao.className, "username", username);
 		if (userDomain == null)
-			throw new UsernameNotFoundException("Bad Credentials");
+			return null;
 
 		boolean enabled = true;
 		boolean accountNonExpired = true;
@@ -42,7 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		boolean accountNonLocked = true;
 
 		Set<DaemonGroupsHasAccessLevels> accessLevelsFromUser = userDomain.getDaemonGroups().getDaemonGroupsHasAccessLevelses();
-
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		for (DaemonGroupsHasAccessLevels accessRole : accessLevelsFromUser) {
 			String code = accessRole.getDaemonAccessLevels().getCodesAccessLevels();
