@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
@@ -27,7 +26,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	// @ExceptionHandler(NullPointerException.class)
+	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<DaemonResponse<?>> handleGeneralException(NullPointerException e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		String message = null;
@@ -56,12 +55,18 @@ public class GlobalExceptionHandler {
 		Throwable cause = e.getCause();
 		if (cause != null)
 			rootCause = cause.getMessage();
-		
+
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.parseJsonCode, message, rootCause);
 		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.BAD_REQUEST);
 	}
 
-	// @ExceptionHandler(Exception.class)
+	/**
+	 * General Exceptions
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(Exception.class)
 	public ResponseEntity<DaemonResponse<?>> handleGeneralException(Exception e) {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		String message = null;
@@ -72,7 +77,7 @@ public class GlobalExceptionHandler {
 		if (e.getCause() != null)
 			rootCause = e.getCause().getMessage();
 
-		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.parseJsonCode, message, rootCause);
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.generalCode, message, rootCause);
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.BAD_REQUEST);
 	}
