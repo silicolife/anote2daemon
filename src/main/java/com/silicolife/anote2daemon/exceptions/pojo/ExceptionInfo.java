@@ -6,6 +6,7 @@ import java.io.Serializable;
  * Class to represent the exception. It is sent in JSON message
  * 
  * @author Joel Azevedo Costa
+ * @year 2015
  *
  */
 public class ExceptionInfo implements Serializable {

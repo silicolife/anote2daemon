@@ -1,9 +1,9 @@
-package com.silicolife.anote2daemon.service.core.queries;
+package com.silicolife.anote2daemon.service.core;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import com.silicolife.anote2daemon.model.RelevanceType;
 import com.silicolife.anote2daemon.model.pojo.Publications;
 import com.silicolife.anote2daemon.model.pojo.Queries;
 
@@ -22,14 +22,14 @@ public interface QueriesService {
 	 * @param id
 	 * @return
 	 */
-	public Map<String, Queries> getById(Long id);
+	public Queries getById(Long id);
 
 	/**
 	 * Get all queries associated from a user
 	 * 
 	 * @return
 	 */
-	public Map<String, Set<Queries>> getAll();
+	public List<Queries> getAll();
 
 	/**
 	 * Get all publications from a query
@@ -37,7 +37,7 @@ public interface QueriesService {
 	 * @param id
 	 * @return
 	 */
-	public Map<String, Set<Publications>> getAllPublications(Long id);
+	public List<Publications> getAllPublications(Long id);
 
 	/**
 	 * Create a query
@@ -63,5 +63,24 @@ public interface QueriesService {
 	 * @return
 	 */
 	public boolean addPublicationsToQuery(Long id, List<Long> publicationsIds);
+
+	/**
+	 * Update the relevance from a publication in a query
+	 * 
+	 * @param queryId
+	 * @param publicationId
+	 * @param relevance
+	 * @return
+	 */
+	public Boolean updateRelevance(Long queryId, Long publicationId, String relevance);
+	
+	/**
+	 * Get relevance from a publications from a query
+	 * 
+	 * 
+	 * @param queryId
+	 * @return
+	 */
+	public Map<Long, RelevanceType> getQueryPublicationsRelevance(Long queryId);
 
 }

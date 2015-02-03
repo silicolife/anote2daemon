@@ -74,36 +74,4 @@ public class DatabaseExceptionsHandler {
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeWrongValue, message, rootCause);
 		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.CONFLICT);
 	}
-
-	/*
-	 * @ExceptionHandler({ SQLException.class, DataAccessException.class })
-	 * public ResponseEntity<DaemonResponse<?>>
-	 * handlingDatabaseExceptions(Exception e) { DaemonResponse<?> response =
-	 * new DaemonResponse<>(); String message = null; String rootCause = null;
-	 * 
-	 * if (e.getMessage() != null) message = e.getMessage(); if (e.getCause() !=
-	 * null) rootCause = e.getCause().getMessage();
-	 * 
-	 * ExceptionInfo exception = new
-	 * ExceptionInfo(ExceptionsCodes.generalDbCode, message, rootCause);
-	 * response.setException(exception); return new
-	 * ResponseEntity<DaemonResponse<?>>(response,
-	 * HttpStatus.SERVICE_UNAVAILABLE); }
-	 * 
-	 * 
-	 * @ExceptionHandler(HibernateException.class) public
-	 * ResponseEntity<DaemonResponse<?>>
-	 * handlingHibernateExceptions(HibernateException e) { DaemonResponse<?>
-	 * response = new DaemonResponse<>(); String message = null; String
-	 * rootCause = null;
-	 * 
-	 * if (e.getMessage() != null) message = e.getMessage(); if (e.getCause() !=
-	 * null) rootCause = e.getCause().getMessage();
-	 * 
-	 * ExceptionInfo exception = new
-	 * ExceptionInfo(ExceptionsCodes.hibernateCode, message, rootCause);
-	 * response.setException(exception); return new
-	 * ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_IMPLEMENTED);
-	 * }
-	 */
 }

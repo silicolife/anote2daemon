@@ -1,6 +1,14 @@
 package com.silicolife.anote2daemon.exceptions;
 
-public class DaemonPublicationsException extends RuntimeException {
+/**
+ * Class to represent the queries exceptions
+ * 
+ * 
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ */
+public class DaemonException extends RuntimeException {
 
 	/**
 	 * 
@@ -8,7 +16,7 @@ public class DaemonPublicationsException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private String code;
 
-	public DaemonPublicationsException(String code, String message) {
+	public DaemonException(String code, String message) {
 		super(message);
 		this.code = code;
 	}

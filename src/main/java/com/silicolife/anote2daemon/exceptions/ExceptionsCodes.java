@@ -19,6 +19,8 @@ public class ExceptionsCodes {
 	public static final String codeNoPublication = "noPublication";
 	public static final String codeNoResourceType = "noResourceType";
 	public static final String codeQueryAccessDenied = "queryDenied";
+	public static final String codeQueryPublication = "noAssociationQueryPub";
+	public static final String codePublicationSource = "noPublicationSource";
 
 	/**
 	 * Error Messages
@@ -28,5 +30,7 @@ public class ExceptionsCodes {
 	public static final String msgNoPublication = "Publication does not exist in daemon";
 	public static final String msgNoResourceType = "Daemon resource type Queries does not exist";
 	public static final String msgQueryAccessDenied = "Query Access denied";
+	public static final String msgQueryPublication = "Association query publication does not exist";
+	public static final String msgPublicationSource = "Publication source does not exist";
 
 }

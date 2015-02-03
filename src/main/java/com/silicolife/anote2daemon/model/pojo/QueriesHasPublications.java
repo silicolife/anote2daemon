@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 27/Jan/2015 18:22:29 by Hibernate Tools 4.0.0
+// Generated 3/Fev/2015 12:37:09 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,6 +25,7 @@ public class QueriesHasPublications implements java.io.Serializable {
 	private QueriesHasPublicationsId id;
 	private Queries queries;
 	private Publications publications;
+	private String relevanceEnum;
 	private Set<ClustersLabelsPublications> clustersLabelsPublicationses = new HashSet<ClustersLabelsPublications>(0);
 
 	public QueriesHasPublications() {
@@ -36,10 +37,11 @@ public class QueriesHasPublications implements java.io.Serializable {
 		this.publications = publications;
 	}
 
-	public QueriesHasPublications(QueriesHasPublicationsId id, Queries queries, Publications publications, Set<ClustersLabelsPublications> clustersLabelsPublicationses) {
+	public QueriesHasPublications(QueriesHasPublicationsId id, Queries queries, Publications publications, String relevanceEnum, Set<ClustersLabelsPublications> clustersLabelsPublicationses) {
 		this.id = id;
 		this.queries = queries;
 		this.publications = publications;
+		this.relevanceEnum = relevanceEnum;
 		this.clustersLabelsPublicationses = clustersLabelsPublicationses;
 	}
 
@@ -71,6 +73,15 @@ public class QueriesHasPublications implements java.io.Serializable {
 
 	public void setPublications(Publications publications) {
 		this.publications = publications;
+	}
+
+	@Column(name = "relevance_enum", length = 10)
+	public String getRelevanceEnum() {
+		return this.relevanceEnum;
+	}
+
+	public void setRelevanceEnum(String relevanceEnum) {
+		this.relevanceEnum = relevanceEnum;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "queriesHasPublications")

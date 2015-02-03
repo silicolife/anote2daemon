@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.silicolife.anote2daemon.model.pojo.DaemonUsers;
 import com.silicolife.anote2daemon.security.pojo.CustomSpringUser;
 
-public class DaemonUserLogged {
+public class DaemonUserLoggedAuxiliar {
 
 	public static DaemonUsers getUserLogged() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

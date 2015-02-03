@@ -2,6 +2,7 @@ package com.silicolife.anote2daemon.security.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.silicolife.anote2daemon.model.dao.core.daemon.DaemonUsersDao;
+import com.silicolife.anote2daemon.model.pojo.DaemonGroupsHasAccessLevels;
 import com.silicolife.anote2daemon.model.pojo.DaemonUsers;
 import com.silicolife.anote2daemon.security.pojo.CustomSpringUser;
 
@@ -27,8 +29,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		this.daemonUsersDao = daemonUsersDao;
 	}
 
-	private static final String roleGlobal = "ROLE_ADMIN";
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -40,8 +40,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		boolean accountNonExpired = true;
 		boolean credentialsNonExpired = true;
 		boolean accountNonLocked = true;
+
+		Set<DaemonGroupsHasAccessLevels> accessLevelsFromUser = userDomain.getDaemonGroups().getDaemonGroupsHasAccessLevelses();
+
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-		authList.add(new SimpleGrantedAuthority(roleGlobal));
+		for (DaemonGroupsHasAccessLevels accessRole : accessLevelsFromUser) {
+			String code = accessRole.getDaemonAccessLevels().getCodesAccessLevels();
+			authList.add(new SimpleGrantedAuthority(code));
+		}
 
 		return new CustomSpringUser(userDomain.getUsername(), userDomain.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList, userDomain);
 	}

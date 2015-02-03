@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 27/Jan/2015 18:22:29 by Hibernate Tools 4.0.0
+// Generated 3/Fev/2015 12:37:09 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,7 +37,6 @@ public class Queries implements java.io.Serializable {
 	private Set<QueriesHasPublications> queriesHasPublicationses = new HashSet<QueriesHasPublications>(0);
 	private Set<QueriesProperties> queriesPropertieses = new HashSet<QueriesProperties>(0);
 	private Set<QueriesHasClustersProcess> queriesHasClustersProcesses = new HashSet<QueriesHasClustersProcess>(0);
-	private Set<PublicationsQueryRelevance> publicationsQueryRelevances = new HashSet<PublicationsQueryRelevance>(0);
 
 	public Queries() {
 	}
@@ -51,7 +50,7 @@ public class Queries implements java.io.Serializable {
 	}
 
 	public Queries(long id, QueriesType queriesType, Date date, String keywords, String organism, String completeQuery, Integer matchingPublications, Integer availableAbstracts, String name, boolean active, String notes, Set<QueriesHasPublications> queriesHasPublicationses,
-			Set<QueriesProperties> queriesPropertieses, Set<QueriesHasClustersProcess> queriesHasClustersProcesses, Set<PublicationsQueryRelevance> publicationsQueryRelevances) {
+			Set<QueriesProperties> queriesPropertieses, Set<QueriesHasClustersProcess> queriesHasClustersProcesses) {
 		this.id = id;
 		this.queriesType = queriesType;
 		this.date = date;
@@ -66,7 +65,6 @@ public class Queries implements java.io.Serializable {
 		this.queriesHasPublicationses = queriesHasPublicationses;
 		this.queriesPropertieses = queriesPropertieses;
 		this.queriesHasClustersProcesses = queriesHasClustersProcesses;
-		this.publicationsQueryRelevances = publicationsQueryRelevances;
 	}
 
 	@Id
@@ -196,15 +194,6 @@ public class Queries implements java.io.Serializable {
 
 	public void setQueriesHasClustersProcesses(Set<QueriesHasClustersProcess> queriesHasClustersProcesses) {
 		this.queriesHasClustersProcesses = queriesHasClustersProcesses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "queries")
-	public Set<PublicationsQueryRelevance> getPublicationsQueryRelevances() {
-		return this.publicationsQueryRelevances;
-	}
-
-	public void setPublicationsQueryRelevances(Set<PublicationsQueryRelevance> publicationsQueryRelevances) {
-		this.publicationsQueryRelevances = publicationsQueryRelevances;
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.model.pojo;
 
-// Generated 27/Jan/2015 18:22:29 by Hibernate Tools 4.0.0
+// Generated 3/Fev/2015 12:37:09 by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +20,11 @@ public class Publications implements java.io.Serializable {
 
 	private long id;
 	private String title;
-	private String authors;
-	private String type;
-	private Integer date;
+	private String pubauthors;
+	private String category;
+	private Integer pubdate;
 	private String fulldate;
-	private String status;
+	private String pubstatus;
 	private String journal;
 	private String volume;
 	private String issue;
@@ -32,7 +32,7 @@ public class Publications implements java.io.Serializable {
 	private String abstract_;
 	private String externalLinks;
 	private Boolean availablePdf;
-	private String fulltext;
+	private String fullContent;
 	private String notes;
 	private Set<AnnotationsLog> annotationsLogs = new HashSet<AnnotationsLog>(0);
 	private Set<QueriesHasPublications> queriesHasPublicationses = new HashSet<QueriesHasPublications>(0);
@@ -40,7 +40,6 @@ public class Publications implements java.io.Serializable {
 	private Set<Annotations> annotationses = new HashSet<Annotations>(0);
 	private Set<PublicationsFields> publicationsFieldses = new HashSet<PublicationsFields>(0);
 	private Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses = new HashSet<PublicationsHasPublicationLabels>(0);
-	private Set<PublicationsQueryRelevance> publicationsQueryRelevances = new HashSet<PublicationsQueryRelevance>(0);
 	private Set<CorpusHasPublications> corpusHasPublicationses = new HashSet<CorpusHasPublications>(0);
 
 	public Publications() {
@@ -50,16 +49,16 @@ public class Publications implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Publications(long id, String title, String authors, String type, Integer date, String fulldate, String status, String journal, String volume, String issue, String pages, String abstract_, String externalLinks, Boolean availablePdf, String fulltext, String notes,
-			Set<AnnotationsLog> annotationsLogs, Set<QueriesHasPublications> queriesHasPublicationses, Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources, Set<Annotations> annotationses, Set<PublicationsFields> publicationsFieldses,
-			Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses, Set<PublicationsQueryRelevance> publicationsQueryRelevances, Set<CorpusHasPublications> corpusHasPublicationses) {
+	public Publications(long id, String title, String pubauthors, String category, Integer pubdate, String fulldate, String pubstatus, String journal, String volume, String issue, String pages, String abstract_, String externalLinks, Boolean availablePdf, String fullContent,
+			String notes, Set<AnnotationsLog> annotationsLogs, Set<QueriesHasPublications> queriesHasPublicationses, Set<PublicationsHasPublicationsSource> publicationsHasPublicationsSources, Set<Annotations> annotationses, Set<PublicationsFields> publicationsFieldses,
+			Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses, Set<CorpusHasPublications> corpusHasPublicationses) {
 		this.id = id;
 		this.title = title;
-		this.authors = authors;
-		this.type = type;
-		this.date = date;
+		this.pubauthors = pubauthors;
+		this.category = category;
+		this.pubdate = pubdate;
 		this.fulldate = fulldate;
-		this.status = status;
+		this.pubstatus = pubstatus;
 		this.journal = journal;
 		this.volume = volume;
 		this.issue = issue;
@@ -67,7 +66,7 @@ public class Publications implements java.io.Serializable {
 		this.abstract_ = abstract_;
 		this.externalLinks = externalLinks;
 		this.availablePdf = availablePdf;
-		this.fulltext = fulltext;
+		this.fullContent = fullContent;
 		this.notes = notes;
 		this.annotationsLogs = annotationsLogs;
 		this.queriesHasPublicationses = queriesHasPublicationses;
@@ -75,7 +74,6 @@ public class Publications implements java.io.Serializable {
 		this.annotationses = annotationses;
 		this.publicationsFieldses = publicationsFieldses;
 		this.publicationsHasPublicationLabelses = publicationsHasPublicationLabelses;
-		this.publicationsQueryRelevances = publicationsQueryRelevances;
 		this.corpusHasPublicationses = corpusHasPublicationses;
 	}
 
@@ -98,31 +96,31 @@ public class Publications implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "authors", length = 65535)
-	public String getAuthors() {
-		return this.authors;
+	@Column(name = "pubauthors", length = 65535)
+	public String getPubauthors() {
+		return this.pubauthors;
 	}
 
-	public void setAuthors(String authors) {
-		this.authors = authors;
+	public void setPubauthors(String pubauthors) {
+		this.pubauthors = pubauthors;
 	}
 
-	@Column(name = "type", length = 200)
-	public String getType() {
-		return this.type;
+	@Column(name = "category", length = 200)
+	public String getCategory() {
+		return this.category;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	@Column(name = "date")
-	public Integer getDate() {
-		return this.date;
+	@Column(name = "pubdate")
+	public Integer getPubdate() {
+		return this.pubdate;
 	}
 
-	public void setDate(Integer date) {
-		this.date = date;
+	public void setPubdate(Integer pubdate) {
+		this.pubdate = pubdate;
 	}
 
 	@Column(name = "fulldate", length = 25)
@@ -134,13 +132,13 @@ public class Publications implements java.io.Serializable {
 		this.fulldate = fulldate;
 	}
 
-	@Column(name = "status", length = 25)
-	public String getStatus() {
-		return this.status;
+	@Column(name = "pubstatus", length = 25)
+	public String getPubstatus() {
+		return this.pubstatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setPubstatus(String pubstatus) {
+		this.pubstatus = pubstatus;
 	}
 
 	@Column(name = "journal", length = 500)
@@ -206,13 +204,13 @@ public class Publications implements java.io.Serializable {
 		this.availablePdf = availablePdf;
 	}
 
-	@Column(name = "fulltext")
-	public String getFulltext() {
-		return this.fulltext;
+	@Column(name = "fullContent")
+	public String getFullContent() {
+		return this.fullContent;
 	}
 
-	public void setFulltext(String fulltext) {
-		this.fulltext = fulltext;
+	public void setFullContent(String fullContent) {
+		this.fullContent = fullContent;
 	}
 
 	@Column(name = "notes", length = 16777215)
@@ -276,15 +274,6 @@ public class Publications implements java.io.Serializable {
 
 	public void setPublicationsHasPublicationLabelses(Set<PublicationsHasPublicationLabels> publicationsHasPublicationLabelses) {
 		this.publicationsHasPublicationLabelses = publicationsHasPublicationLabelses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publications")
-	public Set<PublicationsQueryRelevance> getPublicationsQueryRelevances() {
-		return this.publicationsQueryRelevances;
-	}
-
-	public void setPublicationsQueryRelevances(Set<PublicationsQueryRelevance> publicationsQueryRelevances) {
-		this.publicationsQueryRelevances = publicationsQueryRelevances;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "publications")

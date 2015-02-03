@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.silicolife.anote2daemon.exceptions.DaemonPublicationsException;
-import com.silicolife.anote2daemon.exceptions.DaemonQueriesException;
+import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
 
 /**
@@ -28,8 +27,8 @@ public class DaemonDataException {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(DaemonQueriesException.class)
-	public ResponseEntity<ExceptionInfo> handleException(DaemonQueriesException e) {
+	@ExceptionHandler(DaemonException.class)
+	public ResponseEntity<ExceptionInfo> handleException(DaemonException e) {
 
 		String code = e.getCode();
 		String rootCause = null;
@@ -41,26 +40,4 @@ public class DaemonDataException {
 		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
 		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.FORBIDDEN);
 	}
-
-	/**
-	 * 
-	 * DaemonPublications Exceptions
-	 * 
-	 * @param e
-	 * @return
-	 */
-	@ExceptionHandler(DaemonPublicationsException.class)
-	public ResponseEntity<ExceptionInfo> handleException(DaemonPublicationsException e) {
-
-		String code = e.getCode();
-		String rootCause = null;
-		String message = e.getMessage();
-		Throwable cause = e.getCause();
-		if (cause != null)
-			rootCause = cause.getMessage();
-
-		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.FORBIDDEN);
-	}
-
 }

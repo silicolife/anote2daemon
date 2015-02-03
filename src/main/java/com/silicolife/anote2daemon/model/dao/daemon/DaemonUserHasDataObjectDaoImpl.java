@@ -36,6 +36,10 @@ public class DaemonUserHasDataObjectDaoImpl extends GenericDaoImpl<DaemonUsersHa
 		qry.setParameter(1, resourceType);
 		qry.addEntity("daemon_users_has_data_object", DaemonUserHasDataObjectDao.className);
 	    qry.addEntity("queries", QueriesDao.className);
-		return qry.list();
+	    List<Object[]>  result = qry.list();
+	    if(result.size() == 0)
+	    	return null;
+	    
+		return result;
 	}
 }
