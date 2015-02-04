@@ -1,18 +1,24 @@
 package com.silicolife.anote2daemon.security;
 
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 public class GeneratePassword {
 
 	public static String generate(String password, Object salt) {
 		ShaPasswordEncoder pass = new ShaPasswordEncoder(256);
+		pass.setIterations(1000000);
 		String a = pass.encodePassword(password, salt);
 		return a;
 	}
-	
+
 	public static void main(String[] args) {
-		 
-		System.out.print(GeneratePassword.generate("teste", null));
-	 
-	  }
+
+		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+		encoder.setIterations(13);
+		String salt = encoder.encodePassword("1", null);
+		
+		System.out.print(GeneratePassword.generate("teste", salt));
+
+	}
 }
