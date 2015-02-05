@@ -55,11 +55,11 @@ public class QueriesServiceImpl implements QueriesService {
 	@Autowired
 	private QueriesHasPublicationsDao queriesHasPublicationsDao;
 	@Autowired
-	private DaemonUserHasDataObjectDao daemonUsersHasDataObjectDao;
+	private UsersHasDataObjectDao daemonUsersHasDataObjectDao;
 	@Autowired
 	private DaemonTypeResourcesDao daemonTypeResourcesDao;
 	@Autowired
-	private DaemonLogDao daemonLogDao;
+	private UsersLogDao daemonLogDao;
 	@Autowired
 	private DaemonDataObjectDao daemonDataObjectDao;
 
@@ -73,7 +73,7 @@ public class QueriesServiceImpl implements QueriesService {
 		Hibernate.initialize(query.getQueriesType());
 		DaemonTypeResources resource = getDaemonResourceType();
 		DaemonUsersHasDataObjectId idDataObject = new DaemonUsersHasDataObjectId(user.getId(), id, resource.getId());
-		DaemonUsersHasDataObject dataObject = daemonUsersHasDataObjectDao.findById(DaemonUserHasDataObjectDao.className, idDataObject);
+		DaemonUsersHasDataObject dataObject = daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className, idDataObject);
 		if (dataObject == null)
 			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
@@ -89,7 +89,7 @@ public class QueriesServiceImpl implements QueriesService {
 		DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
 		DaemonTypeResources resource = getDaemonResourceType();
 		DaemonUsersHasDataObjectId idDataObject = new DaemonUsersHasDataObjectId(user.getId(), query.getId(), resource.getId());
-		DaemonUsersHasDataObject dataObject = daemonUsersHasDataObjectDao.findById(DaemonUserHasDataObjectDao.className, idDataObject);
+		DaemonUsersHasDataObject dataObject = daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className, idDataObject);
 		if (dataObject == null)
 			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
@@ -159,7 +159,7 @@ public class QueriesServiceImpl implements QueriesService {
 		DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
 		DaemonTypeResources resource = getDaemonResourceType();
 		DaemonUsersHasDataObjectId dataObjectUsersId = new DaemonUsersHasDataObjectId(user.getId(), query.getId(), resource.getId());
-		DaemonUsersHasDataObject dataObjectUsers = daemonUsersHasDataObjectDao.findById(DaemonUserHasDataObjectDao.className, dataObjectUsersId);
+		DaemonUsersHasDataObject dataObjectUsers = daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className, dataObjectUsersId);
 
 		if (dataObjectUsers == null || dataObjectUsers.getAccesLevel().equals("read"))
 			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
@@ -215,7 +215,7 @@ public class QueriesServiceImpl implements QueriesService {
 		DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
 		DaemonTypeResources resource = getDaemonResourceType();
 		DaemonUsersHasDataObjectId dataObjectUsersId = new DaemonUsersHasDataObjectId(user.getId(), queryId, resource.getId());
-		DaemonUsersHasDataObject dataObjectUsers = daemonUsersHasDataObjectDao.findById(DaemonUserHasDataObjectDao.className, dataObjectUsersId);
+		DaemonUsersHasDataObject dataObjectUsers = daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className, dataObjectUsersId);
 		if (dataObjectUsers == null || dataObjectUsers.getAccesLevel().equals("read"))
 			throw new DaemonException(ExceptionsCodes.codeQueryPublication, ExceptionsCodes.msgQueryPublication);
 		/**
@@ -245,7 +245,7 @@ public class QueriesServiceImpl implements QueriesService {
 		DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
 		DaemonTypeResources resource = getDaemonResourceType();
 		DaemonUsersHasDataObjectId dataObjectUsersId = new DaemonUsersHasDataObjectId(user.getId(), queryId, resource.getId());
-		DaemonUsersHasDataObject dataObjectUsers = daemonUsersHasDataObjectDao.findById(DaemonUserHasDataObjectDao.className, dataObjectUsersId);
+		DaemonUsersHasDataObject dataObjectUsers = daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className, dataObjectUsersId);
 		if (dataObjectUsers == null)
 			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 		/**

@@ -22,17 +22,17 @@ import com.silicolife.anote2daemon.security.pojo.CustomSpringUser;
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	private DaemonUsersDao daemonUsersDao;
+	private UsersDao daemonUsersDao;
 
 	@Autowired
-	public UserDetailsServiceImpl(DaemonUsersDao daemonUsersDao) {
+	public UserDetailsServiceImpl(UsersDao daemonUsersDao) {
 		this.daemonUsersDao = daemonUsersDao;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		DaemonUsers userDomain = daemonUsersDao.findUniqueByAttribute(DaemonUsersDao.className, "username", username);
+		DaemonUsers userDomain = daemonUsersDao.findUniqueByAttribute(UsersDao.className, "username", username);
 		if (userDomain == null)
 			return null;
 
