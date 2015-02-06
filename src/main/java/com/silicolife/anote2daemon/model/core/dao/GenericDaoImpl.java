@@ -16,14 +16,16 @@ import org.springframework.stereotype.Repository;
 public class GenericDaoImpl<T> implements GenericDao<T> {
 
 	private SessionFactory sessionFactory;
+	private Class<T> klass;
 
 	@Autowired
-	public GenericDaoImpl(SessionFactory sessionFactory) {
+	public GenericDaoImpl(SessionFactory sessionFactory, Class<T> klass) {
 		this.sessionFactory = sessionFactory;
+		this.klass = klass;
 	}
 
 	@Override
-	public T findById(Class<T> klass, Serializable id) {
+	public T findById(Serializable id) {
 		@SuppressWarnings("unchecked")
 		T T = (T) sessionFactory.getCurrentSession().get(klass, id);
 		return T;
@@ -31,16 +33,16 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findAll(Class<T> klass) {
+	public List<T> findAll() {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(klass);
 		return c.list();
 	}
 
 	@Override
-	public T findUniqueByAttribute(Class<T> klass, String attribute, Serializable value) {
+	public T findUniqueByAttribute(String attribute, Serializable value) {
 		Map<String, Serializable> eqRestrictions = new HashMap<String, Serializable>();
 		eqRestrictions.put(attribute, value);
-		List<T> result = findByAttributes(klass, eqRestrictions);
+		List<T> result = findByAttributes(eqRestrictions);
 		if (result.size() == 1)
 			return result.get(0);
 
@@ -48,7 +50,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> findByAttributes(Class<T> klass, Map<String, Serializable> eqRestrictions) {
+	public List<T> findByAttributes(Map<String, Serializable> eqRestrictions) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(klass);
 		for (Map.Entry<String, Serializable> entry : eqRestrictions.entrySet())
 			c.add(Restrictions.eq(entry.getKey(), entry.getValue()));
@@ -57,7 +59,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findByOrAttributes(Class<T> klass, Map<String, Serializable> orRestrictions) {
+	public List<T> findByOrAttributes(Map<String, Serializable> orRestrictions) {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(klass);
 		Disjunction or = Restrictions.disjunction();
 		for (Map.Entry<String, Serializable> entry : orRestrictions.entrySet())

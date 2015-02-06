@@ -6,15 +6,15 @@ import java.util.Map;
 
 public interface GenericDao<T> {
 
-	public T findById(Class<T> klass, Serializable id);
+	public T findById(Serializable id);
 
-	public List<T> findAll(Class<T> klass);
+	public List<T> findAll();
 
-	public List<T> findByAttributes(Class<T> klass, Map<String, Serializable> eqRestrictions);
+	public List<T> findByAttributes(Map<String, Serializable> eqRestrictions);
 
-	public T findUniqueByAttribute(Class<T> klass, String attribute, Serializable value);
+	public T findUniqueByAttribute(String attribute, Serializable value);
 
-	public List<T> findByOrAttributes(Class<T> klass, Map<String, Serializable> orRestrictions);
+	public List<T> findByOrAttributes(Map<String, Serializable> orRestrictions);
 
 	public void save(Object object);
 
