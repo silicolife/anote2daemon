@@ -47,7 +47,7 @@ public class QueriesController {
 	 * 
 	 * @return
 	 */
-	@Secured("role_admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<Queries>>> getAllQueries() {
 		
@@ -75,7 +75,7 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("role_admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getAllPublications/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<Publications>>> getAllPublications(@PathVariable Long id) {
 	
@@ -89,7 +89,7 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@Secured("role_admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Queries query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
@@ -103,7 +103,7 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@Secured("role_admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/addPublicationsToQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@RequestParam Long id, @RequestBody List<Long> publicationsIds) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(id, publicationsIds));
@@ -116,7 +116,7 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("role_admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
@@ -129,7 +129,7 @@ public class QueriesController {
 	 * @param queryId
 	 * @return
 	 */
-	@Secured("role_admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<Long, RelevanceType>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
 		DaemonResponse<Map<Long, RelevanceType>> response = new DaemonResponse<Map<Long, RelevanceType>>(queriesService.getQueryPublicationsRelevance(queryId));

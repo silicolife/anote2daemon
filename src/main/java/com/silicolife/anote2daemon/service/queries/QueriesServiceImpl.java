@@ -24,6 +24,7 @@ import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
 import com.silicolife.anote2daemon.model.core.entities.UsersLog;
+import com.silicolife.anote2daemon.utils.ResourcesTypeUtils;
 
 /**
  * Service layer which implements all operations about Queries
@@ -40,8 +41,7 @@ public class QueriesServiceImpl implements QueriesService {
 	private UsersManagerDao usersManagerDao;
 	@Autowired
 	private UsersLogged userLogged;
-
-	private final static String queries = "queries";
+	private final static String queries = ResourcesTypeUtils.queries.toString();
 
 	@Autowired
 	public QueriesServiceImpl(QueriesManagerDao queriesManagerDao, UsersManagerDao usersManagerDao) {
@@ -57,7 +57,7 @@ public class QueriesServiceImpl implements QueriesService {
 		if (query == null)
 			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
 
-		Hibernate.initialize(query.getQueriesType());
+		//Hibernate.initialize(query.getQueriesType());
 		UsersHasDataObjectId idDataObject = new UsersHasDataObjectId(user.getId(), id, queries);
 		UsersHasDataObject dataObject = usersManagerDao.getUsersHasdataObjectDao().findById(idDataObject);
 		if (dataObject == null)
