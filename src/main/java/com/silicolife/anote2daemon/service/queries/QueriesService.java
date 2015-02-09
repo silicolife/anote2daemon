@@ -1,11 +1,11 @@
-package com.silicolife.anote2daemon.service.core;
+package com.silicolife.anote2daemon.service.queries;
 
 import java.util.List;
 import java.util.Map;
 
-import com.silicolife.anote2daemon.model.RelevanceType;
-import com.silicolife.anote2daemon.model.pojo.Publications;
-import com.silicolife.anote2daemon.model.pojo.Queries;
+import com.silicolife.anote2daemon.model.core.RelevanceType;
+import com.silicolife.anote2daemon.model.core.entities.Publications;
+import com.silicolife.anote2daemon.model.core.entities.Queries;
 
 /**
  * Interface to define all methods of Service Layer Queries
@@ -37,7 +37,7 @@ public interface QueriesService {
 	 * @param id
 	 * @return
 	 */
-	public List<Publications> getAllPublications(Long id);
+	public List<Publications> getQueryPublications(Long id);
 
 	/**
 	 * Create a query
@@ -73,7 +73,7 @@ public interface QueriesService {
 	 * @return
 	 */
 	public Boolean updateRelevance(Long queryId, Long publicationId, String relevance);
-	
+
 	/**
 	 * Get relevance from a publications from a query
 	 * 

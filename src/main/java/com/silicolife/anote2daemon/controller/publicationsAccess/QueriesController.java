@@ -1,6 +1,5 @@
 package com.silicolife.anote2daemon.controller.publicationsAccess;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.silicolife.anote2daemon.model.RelevanceType;
-import com.silicolife.anote2daemon.model.pojo.Publications;
-import com.silicolife.anote2daemon.model.pojo.Queries;
-import com.silicolife.anote2daemon.service.core.QueriesService;
-import com.silicolife.anote2daemon.webservice.DaemonRequest;
+import com.silicolife.anote2daemon.model.core.RelevanceType;
+import com.silicolife.anote2daemon.model.core.entities.Publications;
+import com.silicolife.anote2daemon.model.core.entities.Queries;
+import com.silicolife.anote2daemon.service.queries.QueriesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -42,15 +40,17 @@ public class QueriesController {
 	@Autowired
 	private QueriesService queriesService;
 
+
 	/**
 	 * Get All queries
 	 * 
 	 * 
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("role_admin")
 	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<Queries>>> getAllQueries() {
+		
 		DaemonResponse<List<Queries>> response = new DaemonResponse<List<Queries>>(queriesService.getAll());
 		return new ResponseEntity<DaemonResponse<List<Queries>>>(response, HttpStatus.OK);
 	}
@@ -61,9 +61,10 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getQueryById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Queries>> getQueryById(@PathVariable Long id) {
+	
 		DaemonResponse<Queries> response = new DaemonResponse<Queries>(queriesService.getById(id));
 		return new ResponseEntity<DaemonResponse<Queries>>(response, HttpStatus.OK);
 	}
@@ -74,10 +75,11 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("role_admin")
 	@RequestMapping(value = "/getAllPublications/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<Publications>>> getAllPublications(@PathVariable Long id) {
-		DaemonResponse<List<Publications>> response = new DaemonResponse<List<Publications>>(queriesService.getAllPublications(id));
+	
+		DaemonResponse<List<Publications>> response = new DaemonResponse<List<Publications>>(queriesService.getQueryPublications(id));
 		return new ResponseEntity<DaemonResponse<List<Publications>>>(response, HttpStatus.OK);
 	}
 
@@ -87,10 +89,9 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("role_admin")
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody DaemonRequest<Queries> request) {
-		Queries query = request.getContent();
+	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Queries query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -102,10 +103,9 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("role_admin")
 	@RequestMapping(value = "/addPublicationsToQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@RequestParam Long id, @RequestBody DaemonRequest<ArrayList<Long>> request) {
-		List<Long> publicationsIds = request.getContent();
+	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@RequestParam Long id, @RequestBody List<Long> publicationsIds) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(id, publicationsIds));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -116,7 +116,7 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("role_admin")
 	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
@@ -129,7 +129,7 @@ public class QueriesController {
 	 * @param queryId
 	 * @return
 	 */
-	@Secured("ROLE_EMPLOYEES")
+	@Secured("role_admin")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<Long, RelevanceType>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
 		DaemonResponse<Map<Long, RelevanceType>> response = new DaemonResponse<Map<Long, RelevanceType>>(queriesService.getQueryPublicationsRelevance(queryId));

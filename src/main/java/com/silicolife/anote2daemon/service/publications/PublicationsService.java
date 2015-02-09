@@ -1,9 +1,9 @@
-package com.silicolife.anote2daemon.service.core;
+package com.silicolife.anote2daemon.service.publications;
 
 import java.util.List;
 import java.util.Map;
 
-import com.silicolife.anote2daemon.model.pojo.Publications;
+import com.silicolife.anote2daemon.model.core.entities.Publications;
 
 /**
  * Interface to define all methods of Service Layer publications
@@ -15,7 +15,7 @@ import com.silicolife.anote2daemon.model.pojo.Publications;
 public interface PublicationsService {
 
 	/**
-	 * Get all fields publication by id
+	 * Get publication by id (without fulltext)
 	 * 
 	 * @param id
 	 * @return
@@ -23,20 +23,12 @@ public interface PublicationsService {
 	public Publications getById(Long id);
 
 	/**
-	 * Get publication only with few columns (without full text)
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public Publications getFewColumnsById(Long id);
-
-	/**
 	 * Create publication
 	 * 
 	 * @param publication
 	 * @return
 	 */
-	public Boolean create(Publications publication);
+	public Boolean create(List<Publications> publications);
 
 	/**
 	 * Update publication
@@ -45,13 +37,6 @@ public interface PublicationsService {
 	 * @return
 	 */
 	public Boolean update(Publications publication);
-
-	/**
-	 * Add list of publications to daemon
-	 * 
-	 * @param documents
-	 */
-	public Boolean addPublications(List<Publications> publications);
 
 	/**
 	 * Get all SourceId from a publications

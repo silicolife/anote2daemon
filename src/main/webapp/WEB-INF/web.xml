@@ -6,24 +6,22 @@
 
 	<display-name>anote2daemon</display-name>
 
-
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/application.xml</param-value>
-	</context-param>
+	
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
 
-
-	<!-- Spring security configuration -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:spring-security.xml
+		classpath:spring-database.xml
+		classpath:spring-dao.xml
+		classpath:spring-security.xml
 		</param-value>
 	</context-param>
+
 
 	<!-- Spring security filters -->
 	<filter>

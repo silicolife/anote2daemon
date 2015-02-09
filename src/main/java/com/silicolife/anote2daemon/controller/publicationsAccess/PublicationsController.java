@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.silicolife.anote2daemon.model.pojo.Publications;
-import com.silicolife.anote2daemon.service.core.PublicationsService;
-import com.silicolife.anote2daemon.webservice.DaemonRequest;
+import com.silicolife.anote2daemon.model.core.entities.Publications;
+import com.silicolife.anote2daemon.service.publications.PublicationsService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -61,9 +60,8 @@ public class PublicationsController {
 	 */
 	@Secured("ROLE_EMPLOYEES")
 	@RequestMapping(value = "/createMultiplePublications", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody DaemonRequest<List<Publications>> request) {
-		List<Publications> publications = request.getContent();
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.addPublications(publications));
+	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<Publications> publications) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publications));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
@@ -76,8 +74,7 @@ public class PublicationsController {
 	 */
 	@Secured("ROLE_EMPLOYEES")
 	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody DaemonRequest<Publications> request) {
-		Publications publication = request.getContent();
+	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody Publications publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

@@ -10,7 +10,8 @@
 		<config>src/main/resources/spring-security.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>src/main/webapp/WEB-INF/application.xml</config>
+		<config>src/main/resources/spring-dao.xml</config>
+		<config>src/main/resources/spring-database.xml</config>
 		<config>src/main/webapp/WEB-INF/dispatcher-servlet.xml</config>
 	</autoconfigs>
 	<configSets>

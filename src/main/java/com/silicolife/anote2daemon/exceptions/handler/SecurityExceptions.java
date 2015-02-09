@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
-import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
+import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
 
 /**
  * 

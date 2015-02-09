@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
-import com.silicolife.anote2daemon.exceptions.pojo.ExceptionInfo;
+import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
 
 /**
  * Generic class to handler with general exceptions generate by anote2daemon.
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(NullPointerException.class)
+	//@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<ExceptionInfo> handleException(NullPointerException e) {
 		String rootCause = null;
 		String message = e.getMessage();
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(Exception.class)
+	//@ExceptionHandler(Exception.class)
 	public ResponseEntity<ExceptionInfo> handleException(Exception e) {
 		String rootCause = null;
 		String message = e.getMessage();

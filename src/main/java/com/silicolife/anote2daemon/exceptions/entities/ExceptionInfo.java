@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.exceptions.pojo;
+package com.silicolife.anote2daemon.exceptions.entities;
 
 import java.io.Serializable;
 

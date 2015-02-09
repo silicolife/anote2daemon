@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import com.silicolife.anote2daemon.security.pojo.CustomSpringUser;
+import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -43,13 +43,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		/**
 		 * Create user salt to add security password
 		 */
-		Long userId = ((CustomSpringUser) user).getDaemonUser().getId();
+		Long userId = ((CustomSpringUser) user).getRepositoryUser().getId();
 		String strUserId = String.valueOf(userId);
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		encoder.setIterations(13);
 		String salt = encoder.encodePassword(strUserId, null);
 
-		
 		if (!passwordEncoder.isPasswordValid(user.getPassword(), password, salt)) {
 			throw new BadCredentialsException("Wrong credentials.");
 		}
