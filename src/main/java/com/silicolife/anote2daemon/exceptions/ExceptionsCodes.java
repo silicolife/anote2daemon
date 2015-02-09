@@ -21,6 +21,7 @@ public class ExceptionsCodes {
 	public static final String codeQueryAccessDenied = "queryDenied";
 	public static final String codeQueryPublication = "noAssociationQueryPub";
 	public static final String codePublicationSource = "noPublicationSource";
+	public static final String codeWrongCredentials = "wrongCredentials";
 
 	/**
 	 * Error Messages
@@ -32,5 +33,6 @@ public class ExceptionsCodes {
 	public static final String msgQueryAccessDenied = "Query Access denied";
 	public static final String msgQueryPublication = "Association query publication does not exist";
 	public static final String msgPublicationSource = "Publication source does not exist";
+	public static final String msgWrongCredentials = "The username or password are wrong. :D";
 
 }

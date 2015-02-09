@@ -13,18 +13,17 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 
+import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 
-@Component
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class RestAuthenticationProvider implements AuthenticationProvider {
 
 	private UserDetailsService userService;
 	private ShaPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public CustomAuthenticationProvider(UserDetailsService userService, ShaPasswordEncoder passwordEncoder) {
+	public RestAuthenticationProvider(UserDetailsService userService, ShaPasswordEncoder passwordEncoder) {
 		this.userService = userService;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -33,11 +32,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String password = (String) authentication.getCredentials();
-
 		UserDetails user = userService.loadUserByUsername(username);
 
 		if (user == null) {
-			throw new BadCredentialsException("Wrong credentials.");
+			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
 
 		/**
@@ -48,9 +46,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		encoder.setIterations(13);
 		String salt = encoder.encodePassword(strUserId, null);
-
 		if (!passwordEncoder.isPasswordValid(user.getPassword(), password, salt)) {
-			throw new BadCredentialsException("Wrong credentials.");
+			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
 
 		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
