@@ -17,18 +17,18 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsSource;
  */
 public class PublicationsSourceWrapper {
 
-	public static PublicationExternalSourceLinkImpl convertToAnoteStructure(PublicationsHasPublicationsSource daemonObject) {
-		Long sourceId = daemonObject.getId().getPublicationsSourceId();
-		String sourceInternalId = daemonObject.getId().getPublicationsSourceInternalId();
-		String sourceDesc = daemonObject.getPublicationsSource().getDescription();
-		PublicationExternalSourceLinkImpl pubExternal = new PublicationExternalSourceLinkImpl(sourceInternalId, sourceId, sourceDesc);
-		return pubExternal;
+	public static PublicationExternalSourceLinkImpl convertToAnoteStructure(PublicationsHasPublicationsSource pubHasPubSource) {
+		Long sourceId = pubHasPubSource.getId().getPublicationsSourceId();
+		String sourceInternalId = pubHasPubSource.getId().getPublicationsSourceInternalId();
+		String sourceDesc = pubHasPubSource.getPublicationsSource().getDescription();
+		PublicationExternalSourceLinkImpl pubExternal_ = new PublicationExternalSourceLinkImpl(sourceInternalId, sourceId, sourceDesc);
+		return pubExternal_;
 	}
 
-	public static PublicationsHasPublicationsSource convertToDaemonStructure(IPublicationExternalSourceLink anoteObject, Publications publication) {
-		Long sourceId = anoteObject.getSourceID();
-		String sourceInternalId = anoteObject.getSourceInternalID();
-		String sourceDesc = anoteObject.getSource();
+	public static PublicationsHasPublicationsSource convertToDaemonStructure(IPublicationExternalSourceLink pubExternal_, Publications publication) {
+		Long sourceId = pubExternal_.getSourceID();
+		String sourceInternalId = pubExternal_.getSourceInternalID();
+		String sourceDesc = pubExternal_.getSource();
 		PublicationsSource pubSource = new PublicationsSource(sourceId, sourceDesc);
 		PublicationsHasPublicationsSourceId id = new PublicationsHasPublicationsSourceId(sourceId, sourceInternalId);
 		PublicationsHasPublicationsSource pubHasPubSource = new PublicationsHasPublicationsSource(id, pubSource, publication);

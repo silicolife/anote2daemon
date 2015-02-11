@@ -17,16 +17,16 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsLabels;
  */
 public class PublicationsLabelsWrapper {
 
-	public static IPublicationLabel convertToAnoteStructure(PublicationsLabels parameter) {
-		Long labelId = parameter.getId();
-		String labelDesc = parameter.getDescription();
-		IPublicationLabel pubLabel = new PublicationLabelImpl(labelId, labelDesc);
-		return pubLabel;
+	public static IPublicationLabel convertToAnoteStructure(PublicationsLabels publicationsLabels) {
+		Long labelId = publicationsLabels.getId();
+		String labelDesc = publicationsLabels.getDescription();
+		IPublicationLabel publicationsLabels_ = new PublicationLabelImpl(labelId, labelDesc);
+		return publicationsLabels_;
 	}
 
-	public static PublicationsHasPublicationLabels convertToDaemonStructure(IPublicationLabel parameter, Publications publication) {
-		Long labelId = parameter.getID();
-		String labelDesc = parameter.getName();
+	public static PublicationsHasPublicationLabels convertToDaemonStructure(IPublicationLabel publicationsLabels_, Publications publication) {
+		Long labelId = publicationsLabels_.getID();
+		String labelDesc = publicationsLabels_.getName();
 		PublicationsLabels pubLabel = new PublicationsLabels(labelId, labelDesc);
 		PublicationsHasPublicationLabelsId id = new PublicationsHasPublicationLabelsId(labelId, publication.getId());
 		PublicationsHasPublicationLabels pubHasPubLabels = new PublicationsHasPublicationLabels(id, pubLabel, publication);

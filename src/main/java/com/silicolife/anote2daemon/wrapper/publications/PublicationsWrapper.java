@@ -25,60 +25,60 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicatio
  */
 public class PublicationsWrapper {
 
-	public static Publication convertToAnoteStructure(Publications daemonObject) {
+	public static Publication convertToAnoteStructure(Publications publications) {
 		/*
 		 * get publications parameters
 		 */
-		Long id = daemonObject.getId();
-		String title = daemonObject.getTitle();
-		String authors = daemonObject.getPubauthors();
-		String type = daemonObject.getCategory();
-		String yearDate = String.valueOf(daemonObject.getPubdate());
-		String fullDate = daemonObject.getFulldate();
-		String status = daemonObject.getPubstatus();
-		String journal = daemonObject.getJournal();
-		String volume = daemonObject.getVolume();
-		String issue = daemonObject.getIssue();
-		String pages = daemonObject.getPages();
-		String abstractSection = daemonObject.getAbstract_();
-		String externalLink = daemonObject.getExternalLinks();
-		Boolean freefulltextAvailable = daemonObject.getFreeFullText();
-		String notes = daemonObject.getNotes();
-		String relativePath = daemonObject.getRelativePath();
+		Long id = publications.getId();
+		String title = publications.getTitle();
+		String authors = publications.getPubauthors();
+		String type = publications.getCategory();
+		String yearDate = String.valueOf(publications.getPubdate());
+		String fullDate = publications.getFulldate();
+		String status = publications.getPubstatus();
+		String journal = publications.getJournal();
+		String volume = publications.getVolume();
+		String issue = publications.getIssue();
+		String pages = publications.getPages();
+		String abstractSection = publications.getAbstract_();
+		String externalLink = publications.getExternalLinks();
+		Boolean freefulltextAvailable = publications.getFreeFullText();
+		String notes = publications.getNotes();
+		String relativePath = publications.getRelativePath();
 		/*
 		 * wrapper publications has sources
 		 */
-		Set<PublicationsHasPublicationsSource> publicationsHasSources = daemonObject.getPublicationsHasPublicationsSources();
+		Set<PublicationsHasPublicationsSource> publicationsHasSources = publications.getPublicationsHasPublicationsSources();
 		List<IPublicationExternalSourceLink> externalIDsSource_ = null;
 		if (publicationsHasSources.size() > 0) {
 			externalIDsSource_ = new ArrayList<IPublicationExternalSourceLink>();
 			for (PublicationsHasPublicationsSource pubSource : publicationsHasSources) {
-				IPublicationExternalSourceLink pubExternalAnote = PublicationsSourceWrapper.convertToAnoteStructure(pubSource);
-				externalIDsSource_.add(pubExternalAnote);
+				IPublicationExternalSourceLink pubExternal_ = PublicationsSourceWrapper.convertToAnoteStructure(pubSource);
+				externalIDsSource_.add(pubExternal_);
 			}
 		}
 		/*
 		 * wrapper publications has fields
 		 */
-		Set<PublicationsFields> publicationsHasFields = daemonObject.getPublicationsFieldses();
+		Set<PublicationsFields> publicationsHasFields = publications.getPublicationsFieldses();
 		List<IPublicationField> fullTextfields_ = null;
 		if (publicationsHasFields.size() > 0) {
 			fullTextfields_ = new ArrayList<IPublicationField>();
 			for (PublicationsFields pubField : publicationsHasFields) {
-				IPublicationField pubFieldAnote = PublicationsFieldsWrapper.convertToAnoteStructure(pubField);
-				fullTextfields_.add(pubFieldAnote);
+				IPublicationField pubField_ = PublicationsFieldsWrapper.convertToAnoteStructure(pubField);
+				fullTextfields_.add(pubField_);
 			}
 		}
 		/*
 		 * wrapper publications has labels
 		 */
-		Set<PublicationsHasPublicationLabels> publicationsHasLabels = daemonObject.getPublicationsHasPublicationLabelses();
+		Set<PublicationsHasPublicationLabels> publicationsHasLabels = publications.getPublicationsHasPublicationLabelses();
 		List<IPublicationLabel> labels_ = null;
 		if (publicationsHasLabels.size() > 0) {
 			labels_ = new ArrayList<IPublicationLabel>();
 			for (PublicationsHasPublicationLabels pubLabel : publicationsHasLabels) {
-				IPublicationLabel pubLabelAnote = PublicationsLabelsWrapper.convertToAnoteStructure(pubLabel.getPublicationsLabels());
-				labels_.add(pubLabelAnote);
+				IPublicationLabel pubLabel_ = PublicationsLabelsWrapper.convertToAnoteStructure(pubLabel.getPublicationsLabels());
+				labels_.add(pubLabel_);
 			}
 		}
 		/*
@@ -90,26 +90,26 @@ public class PublicationsWrapper {
 		return publication;
 	}
 
-	public static Publications convertToDaemonStructure(IPublication anoteObject) {
+	public static Publications convertToDaemonStructure(IPublication publications_) {
 		/*
 		 * get publications parameters
 		 */
-		Long id = anoteObject.getID();
-		String title = anoteObject.getTitle();
-		String authors = anoteObject.getAuthors();
-		String type = anoteObject.getType();
-		String yearDate = anoteObject.getYearDate();
-		String fullDate = anoteObject.getFullDate();
-		String status = anoteObject.getStatus();
-		String journal = anoteObject.getJournal();
-		String volume = anoteObject.getVolume();
-		String issue = anoteObject.getIssue();
-		String pages = anoteObject.getPages();
-		String abstractSection = anoteObject.getAbstractSection();
-		String externalLink = anoteObject.getExternalLink();
-		Boolean freefulltextAvailable = anoteObject.getAvailableFreeFullTExt();
-		String notes = anoteObject.getNotes();
-		String relativePath = anoteObject.getRelativePath();
+		Long id = publications_.getID();
+		String title = publications_.getTitle();
+		String authors = publications_.getAuthors();
+		String type = publications_.getType();
+		String yearDate = publications_.getYearDate();
+		String fullDate = publications_.getFullDate();
+		String status = publications_.getStatus();
+		String journal = publications_.getJournal();
+		String volume = publications_.getVolume();
+		String issue = publications_.getIssue();
+		String pages = publications_.getPages();
+		String abstractSection = publications_.getAbstractSection();
+		String externalLink = publications_.getExternalLink();
+		Boolean freefulltextAvailable = publications_.getAvailableFreeFullTExt();
+		String notes = publications_.getNotes();
+		String relativePath = publications_.getRelativePath();
 
 		Publications publication = new Publications();
 		publication.setId(id);

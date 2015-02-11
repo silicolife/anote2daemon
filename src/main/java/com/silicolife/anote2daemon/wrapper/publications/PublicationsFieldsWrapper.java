@@ -16,18 +16,18 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsFieldsId;
  */
 public class PublicationsFieldsWrapper {
 
-	public static IPublicationField convertToAnoteStructure(PublicationsFields daemonObject) {
-		Long start = daemonObject.getFieldStart();
-		Long end = daemonObject.getFieldEnd();
-		String field = daemonObject.getId().getField();
-		IPublicationField publicationField = new PublicationFieldImpl(start, end, field);
-		return publicationField;
+	public static IPublicationField convertToAnoteStructure(PublicationsFields publicationsFields) {
+		Long start = publicationsFields.getFieldStart();
+		Long end = publicationsFields.getFieldEnd();
+		String field = publicationsFields.getId().getField();
+		IPublicationField publicationsFields_ = new PublicationFieldImpl(start, end, field);
+		return publicationsFields_;
 	}
 
-	public static PublicationsFields convertToDaemonStructure(IPublicationField anoteObject, Publications publication) {
-		Long start = anoteObject.getStart();
-		Long end = anoteObject.getEnd();
-		String name = anoteObject.getName();
+	public static PublicationsFields convertToDaemonStructure(IPublicationField publicationsFields_, Publications publication) {
+		Long start = publicationsFields_.getStart();
+		Long end = publicationsFields_.getEnd();
+		String name = publicationsFields_.getName();
 		PublicationsFieldsId id = new PublicationsFieldsId(name, publication.getId());
 		PublicationsFields publicationField = new PublicationsFields(id, publication, start, end);
 		return publicationField;
