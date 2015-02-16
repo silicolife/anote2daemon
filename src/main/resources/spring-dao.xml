@@ -49,6 +49,15 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	<beans:bean id="queriesTypeDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.QueriesType
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
 	<beans:bean id="queriesHasPublicationsDao"
 		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
@@ -85,7 +94,34 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	<beans:bean id="publicationsFieldsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsFields
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
+
+	<beans:bean id="publicationsHasPublicationLabelsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationLabels
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id="publicationsLabelsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsLabels
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
 
 	<!-- special operations DAO -->
@@ -108,6 +144,9 @@
 		<beans:constructor-arg ref="publicationsSourceDao" />
 		<beans:constructor-arg ref="publicationsHasPublicationsSourceDao" />
 		<beans:constructor-arg ref="publicationsDao" />
+		<beans:constructor-arg ref="publicationsFieldsDao" />
+		<beans:constructor-arg ref="publicationsLabelsDao" />
+		<beans:constructor-arg ref="publicationsHasPublicationLabelsDao" />
 		<beans:constructor-arg ref="publicationsAuxDao" />
 	</beans:bean>
 
@@ -116,12 +155,15 @@
 		<beans:constructor-arg ref="publicationsSourceDao" />
 		<beans:constructor-arg ref="publicationsHasPublicationsSourceDao" />
 		<beans:constructor-arg ref="publicationsDao" />
+		<beans:constructor-arg ref="publicationsFieldsDao" />
+		<beans:constructor-arg ref="publicationsLabelsDao" />
+		<beans:constructor-arg ref="publicationsHasPublicationLabelsDao" />
 		<beans:constructor-arg ref="publicationsAuxDao" />
 		<beans:constructor-arg ref="queriesDao" />
+		<beans:constructor-arg ref="queriesTypeDao" />
 		<beans:constructor-arg ref="queriesHasPublicationsDao" />
 		<beans:constructor-arg ref="queriesAuxDao" />
 	</beans:bean>
-
 
 	<beans:bean id="usersManagerDao"
 		class="com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao">
@@ -134,5 +176,6 @@
 	 <beans:bean id="userLogged"
 		class="com.silicolife.anote2daemon.model.core.dao.UsersLogged">
 	</beans:bean> 
+	
 	
 </beans:beans>

@@ -2,14 +2,17 @@ package com.silicolife.anote2daemon.service.queries;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.process.IR.IQuery;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
@@ -18,16 +21,21 @@ import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.QueriesManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.Publications;
+import com.silicolife.anote2daemon.model.core.entities.PublicationsQueryRelevance;
 import com.silicolife.anote2daemon.model.core.entities.Queries;
 import com.silicolife.anote2daemon.model.core.entities.QueriesHasPublications;
+import com.silicolife.anote2daemon.model.core.entities.QueriesHasPublicationsId;
+import com.silicolife.anote2daemon.model.core.entities.QueriesType;
 import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
 import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 import com.silicolife.anote2daemon.utils.ResourcesTypeUtils;
+import com.silicolife.anote2daemon.wrapper.publications.PublicationsWrapper;
+import com.silicolife.anote2daemon.wrapper.queries.QueriesWrapper;
 
 /**
- * Service layer which implements all operations about Queries
+ * Service layer which implement all operations about Queries
  * 
  * @author Joel Azevedo Costa
  * @year 2015
@@ -49,25 +57,24 @@ public class QueriesServiceImpl implements QueriesService {
 		this.usersManagerDao = usersManagerDao;
 	}
 
-	
 	@Override
-	public Queries getById(Long id) {
+	public IQuery getById(Long id) {
 		Users user = userLogged.getCurrentUserLogged();
 		Queries query = queriesManagerDao.getQueriesDao().findById(id);
-		if (query == null)
-			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
-
-		//Hibernate.initialize(query.getQueriesType());
 		UsersHasDataObjectId idDataObject = new UsersHasDataObjectId(user.getId(), id, queries);
 		UsersHasDataObject dataObject = usersManagerDao.getUsersHasdataObjectDao().findById(idDataObject);
 		if (dataObject == null)
 			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
-		return query;
+		if (query == null)
+			return null;
+
+		IQuery query_ = QueriesWrapper.convertToAnoteStructure(query);
+		return query_;
 	}
 
 	@Override
-	public List<Publications> getQueryPublications(Long id) {
+	public List<IPublication> getQueryPublications(Long id) {
 		Queries query = queriesManagerDao.getQueriesDao().findById(id);
 		if (query == null)
 			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
@@ -78,48 +85,58 @@ public class QueriesServiceImpl implements QueriesService {
 		if (dataObject == null)
 			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
-		// -- initialize lazy objects
-		Hibernate.initialize(query.getQueriesHasPublicationses());
-		Set<QueriesHasPublications> publicationsQueries = query.getQueriesHasPublicationses();
-		List<Publications> listPublications = new ArrayList<Publications>();
-		for (QueriesHasPublications publicationQuery : publicationsQueries) {
-			Publications publication = queriesManagerDao.getPublicationsAuxDao().findPublicationsById(publicationQuery.getId().getPublicationsId());
-			listPublications.add(publication);
+		List<Publications> listPublications = queriesManagerDao.getPublicationsAuxDao().findPublicationsByQueryId(id);
+		if (listPublications.size() == 0)
+			return null;
+
+		List<IPublication> listPublications_ = new ArrayList<IPublication>();
+		for (Publications publication : listPublications) {
+			IPublication publication_ = PublicationsWrapper.convertToAnoteStructure(publication);
+			listPublications_.add(publication_);
 		}
 
-		return listPublications;
+		return listPublications_;
 	}
 
 	@Override
-	public List<Queries> getAll() {
+	public List<IQuery> getAll() {
 
 		Users user = userLogged.getCurrentUserLogged();
 		/**
 		 * get all queries from a user
 		 */
-		List<Object[]> listObject = queriesManagerDao.getQueriesAuxDao().findQueriesByAttributes(user.getId(), queries);
-		if (listObject == null)
+		List<Queries> listQueries = queriesManagerDao.getQueriesAuxDao().findQueriesByAttributes(user.getId(), queries);
+		if (listQueries.size() == 0)
 			return null;
 
-		List<Queries> listQueries = new ArrayList<Queries>();
-		for (Object[] object : listObject) {
-			Queries query = (Queries) object[1];
-			listQueries.add(query);
+		List<IQuery> listQueries_ = new ArrayList<IQuery>();
+		for (Queries query : listQueries) {
+			IQuery query_ = QueriesWrapper.convertToAnoteStructure(query);
+			listQueries_.add(query_);
 		}
 
-		return listQueries;
+		return listQueries_;
 	}
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean create(Queries query) {
+	public Boolean create(IQuery query_) {
 
 		Users user = userLogged.getCurrentUserLogged();
+		Queries query = QueriesWrapper.convertToDaemonStructure(query_);
+		/*
+		 * save query type if not exist
+		 */
+		QueriesType queryType = query.getQueriesType();
+		QueriesType queryTypeDb = queriesManagerDao.getQueriesType().findById(queryType.getId());
+		if (queryTypeDb == null)
+			queriesManagerDao.getQueriesType().save(queryType);
+
 		queriesManagerDao.getQueriesDao().save(query);
+
 		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), query.getId(), queries);
 		UsersHasDataObject dataObjectUser = new UsersHasDataObject(dataObjectUserId, user, "owner");
 		usersManagerDao.getUsersHasdataObjectDao().save(dataObjectUser);
-
 		UsersLog log = new UsersLog(user, new Date(), "create", "queries/daemon_users_has_data_object", null, "create a new query");
 		usersManagerDao.getUsersLog().save(log);
 
@@ -128,32 +145,24 @@ public class QueriesServiceImpl implements QueriesService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean update(Queries query) {
-
+	public Boolean update(IQuery query_) {
+		Users user = userLogged.getCurrentUserLogged();
+		Queries query = QueriesWrapper.convertToDaemonStructure(query_);
+		Queries queryDb = queriesManagerDao.getQueriesDao().findById(query.getId());
+		if (queryDb == null)
+			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
 		/*
-		 * Queries queryObj = queriesDao.findById(QueriesDao.className,
-		 * query.getId()); if (queryObj == null) throw new
-		 * DaemonException(ExceptionsCodes.codeNoQuery,
-		 * ExceptionsCodes.msgNoQuery);
-		 * 
-		 * DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
-		 * DaemonTypeResources resource = getDaemonResourceType();
-		 * DaemonUsersHasDataObjectId dataObjectUsersId = new
-		 * DaemonUsersHasDataObjectId(user.getId(), query.getId(),
-		 * resource.getId()); DaemonUsersHasDataObject dataObjectUsers =
-		 * daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className,
-		 * dataObjectUsersId);
-		 * 
-		 * if (dataObjectUsers == null ||
-		 * dataObjectUsers.getAccesLevel().equals("read")) throw new
-		 * DaemonException(ExceptionsCodes.codeQueryAccessDenied,
-		 * ExceptionsCodes.msgQueryAccessDenied);
-		 * 
-		 * queriesDao.save(query);
-		 * 
-		 * DaemonLog log = new DaemonLog(user, new Date(), "update", "queries",
-		 * null, "update query"); daemonLogDao.save(log);
+		 * verify if has permissions
 		 */
+		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), query.getId(), queries);
+		UsersHasDataObject dataObjectUser = usersManagerDao.getUsersHasdataObjectDao().findById(dataObjectUserId);
+		if (dataObjectUser == null || dataObjectUser.getAccesLevel().equals("read"))
+			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
+
+		queriesManagerDao.getQueriesDao().update(query);
+
+		UsersLog log = new UsersLog(user, new Date(), "update", "queries", null, "update query");
+		usersManagerDao.getUsersLog().save(log);
 
 		return true;
 
@@ -163,28 +172,19 @@ public class QueriesServiceImpl implements QueriesService {
 	@Override
 	public boolean addPublicationsToQuery(Long id, List<Long> publicationsIds) {
 
-		/*
-		 * DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
-		 * 
-		 * Queries query = queriesDao.findById(QueriesDao.className, id); if
-		 * (query == null) throw new
-		 * DaemonException(ExceptionsCodes.codeNoQuery,
-		 * ExceptionsCodes.msgNoQuery);
-		 * 
-		 * for (Long publicationId : publicationsIds) { Publications publication
-		 * = publicationsDao.findFewColumnsById(publicationId); if (publication
-		 * == null) throw new DaemonException(ExceptionsCodes.codeNoPublication,
-		 * ExceptionsCodes.msgNoPublication);
-		 * 
-		 * QueriesHasPublicationsId queryHasPubId = new
-		 * QueriesHasPublicationsId(id, publicationId); QueriesHasPublications
-		 * queryHasPub = new QueriesHasPublications(queryHasPubId, query,
-		 * publication); queriesHasPublicationsDao.save(queryHasPub); }
-		 * 
-		 * DaemonLog log = new DaemonLog(user, new Date(), "create",
-		 * "queriesHasPublications", null, "associate publications to a query");
-		 * daemonLogDao.save(log);
-		 */
+		Users user = userLogged.getCurrentUserLogged();
+		Queries query = queriesManagerDao.getQueriesDao().findById(id);
+		if (query == null)
+			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
+
+		for (Long publicationId : publicationsIds) {
+			QueriesHasPublicationsId queryHasPubId = new QueriesHasPublicationsId(id, publicationId);
+			QueriesHasPublications queryHasPub = new QueriesHasPublications(queryHasPubId, null, null);
+			queriesManagerDao.getQueriesHasPublicationsDao().save(queryHasPub);
+		}
+
+		UsersLog log = new UsersLog(user, new Date(), "create", "queries_has_publications", null, "associate publications to a query");
+		usersManagerDao.getUsersLog().save(log);
 
 		return true;
 	}
@@ -192,44 +192,26 @@ public class QueriesServiceImpl implements QueriesService {
 	@Transactional(readOnly = false)
 	@Override
 	public Boolean updateRelevance(Long queryId, Long publicationId, String relevance) {
+
+		Users user = userLogged.getCurrentUserLogged();
+		QueriesHasPublicationsId queriesPubId = new QueriesHasPublicationsId(queryId, publicationId);
+		QueriesHasPublications queriesPub = queriesManagerDao.getQueriesHasPublicationsDao().findById(queriesPubId);
+		if (queriesPub == null)
+			throw new DaemonException(ExceptionsCodes.codeQueryPublication, ExceptionsCodes.msgQueryPublication);
+
+		queriesPub.setRelevance(relevance);
 		/*
-		 * Queries query = queriesDao.findById(QueriesDao.className, queryId);
-		 * if (query == null) throw new
-		 * DaemonException(ExceptionsCodes.codeNoQuery,
-		 * ExceptionsCodes.msgNoQuery);
-		 * 
-		 * Publications publication =
-		 * publicationsDao.findFewColumnsById(publicationId); if (publication ==
-		 * null) throw new DaemonException(ExceptionsCodes.codeNoPublication,
-		 * ExceptionsCodes.msgNoPublication);
-		 * 
-		 * DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
-		 * DaemonTypeResources resource = getDaemonResourceType();
-		 * DaemonUsersHasDataObjectId dataObjectUsersId = new
-		 * DaemonUsersHasDataObjectId(user.getId(), queryId, resource.getId());
-		 * DaemonUsersHasDataObject dataObjectUsers =
-		 * daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className,
-		 * dataObjectUsersId); if (dataObjectUsers == null ||
-		 * dataObjectUsers.getAccesLevel().equals("read")) throw new
-		 * DaemonException(ExceptionsCodes.codeQueryPublication,
-		 * ExceptionsCodes.msgQueryPublication);
-		 * 
-		 * QueriesHasPublicationsId queriesPubId = new
-		 * QueriesHasPublicationsId(queryId, publicationId);
-		 * QueriesHasPublications queriesPublications =
-		 * queriesHasPublicationsDao
-		 * .findById(QueriesHasPublicationsDao.className, queriesPubId); if
-		 * (queriesPublications == null) throw new
-		 * DaemonException(ExceptionsCodes.codeQueryAccessDenied,
-		 * ExceptionsCodes.msgQueryAccessDenied);
-		 * 
-		 * queriesPublications.setRelevanceEnum(relevance);
-		 * queriesHasPublicationsDao.update(queriesPublications);
-		 * 
-		 * DaemonLog log = new DaemonLog(user, new Date(), "update",
-		 * "queries_has_publications", null,
-		 * "update relevance from a publication"); daemonLogDao.save(log);
+		 * verify if has permissions
 		 */
+		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), queryId, queries);
+		UsersHasDataObject dataObjectUser = usersManagerDao.getUsersHasdataObjectDao().findById(dataObjectUserId);
+		if (dataObjectUser == null || dataObjectUser.getAccesLevel().equals("read"))
+			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
+
+		queriesManagerDao.getQueriesHasPublicationsDao().update(queriesPub);
+
+		UsersLog log = new UsersLog(user, new Date(), "update", "queries_has_publications", null, "update relevance");
+		usersManagerDao.getUsersLog().save(log);
 
 		return true;
 	}
@@ -237,31 +219,29 @@ public class QueriesServiceImpl implements QueriesService {
 	@Override
 	public Map<Long, RelevanceType> getQueryPublicationsRelevance(Long queryId) {
 
+		Queries query = queriesManagerDao.getQueriesDao().findById(queryId);
+		if (query == null)
+			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
+
+		Users user = userLogged.getCurrentUserLogged();
 		/*
-		 * Queries query = queriesDao.findById(QueriesDao.className, queryId);
-		 * if (query == null) throw new
-		 * DaemonException(ExceptionsCodes.codeNoQuery,
-		 * ExceptionsCodes.msgNoQuery);
-		 * 
-		 * DaemonUsers user = DaemonUserLoggedAuxiliar.getUserLogged();
-		 * DaemonTypeResources resource = getDaemonResourceType();
-		 * DaemonUsersHasDataObjectId dataObjectUsersId = new
-		 * DaemonUsersHasDataObjectId(user.getId(), queryId, resource.getId());
-		 * DaemonUsersHasDataObject dataObjectUsers =
-		 * daemonUsersHasDataObjectDao.findById(UsersHasDataObjectDao.className,
-		 * dataObjectUsersId); if (dataObjectUsers == null) throw new
-		 * DaemonException(ExceptionsCodes.codeQueryAccessDenied,
-		 * ExceptionsCodes.msgQueryAccessDenied);
-		 * 
-		 * List<Object[]> listPubRelevance =
-		 * queriesHasPublicationsDao.findPublicationsRelevanceFromQuery
-		 * (queryId); Map<Long, RelevanceType> map = null; if (listPubRelevance
-		 * != null) { map = new HashMap<Long, RelevanceType>(); for (Object[]
-		 * record : listPubRelevance) { Long pubId = (Long) record[0];
-		 * map.put(pubId, RelevanceType.convertString((String) record[1])); } }
+		 * verify if has permissions
 		 */
+		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), queryId, queries);
+		UsersHasDataObject dataObjectUser = usersManagerDao.getUsersHasdataObjectDao().findById(dataObjectUserId);
+		if (dataObjectUser == null)
+			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
-		return null;
+		Set<QueriesHasPublications> queriesHasPub = query.getQueriesHasPublicationses();
+		Map<Long, RelevanceType> map = new HashMap<Long, RelevanceType>();
+		for (QueriesHasPublications queryHasPub : queriesHasPub) {
+			Long pubId = queryHasPub.getId().getPublicationsId();
+			map.put(pubId, RelevanceType.convertString(queryHasPub.getRelevance()));
+		}
+
+		if (map.size() == 0)
+			return null;
+
+		return map;
 	}
-
 }

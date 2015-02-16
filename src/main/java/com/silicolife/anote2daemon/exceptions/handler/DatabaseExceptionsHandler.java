@@ -38,7 +38,7 @@ public class DatabaseExceptionsHandler {
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeConstraint, message, rootCause);
 		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.CONFLICT);
 	}
-
+	
 	/**
 	 * DataIntegration violation exceptions
 	 * 

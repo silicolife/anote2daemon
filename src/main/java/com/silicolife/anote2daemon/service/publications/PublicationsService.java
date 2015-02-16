@@ -3,7 +3,7 @@ package com.silicolife.anote2daemon.service.publications;
 import java.util.List;
 import java.util.Map;
 
-import com.silicolife.anote2daemon.model.core.entities.Publications;
+import pt.uminho.anote2.core.document.IPublication;
 
 /**
  * Interface to define all methods of Service Layer publications
@@ -20,7 +20,7 @@ public interface PublicationsService {
 	 * @param id
 	 * @return
 	 */
-	public Publications getById(Long id);
+	public IPublication getById(Long id);
 
 	/**
 	 * Create publication
@@ -28,7 +28,7 @@ public interface PublicationsService {
 	 * @param publication
 	 * @return
 	 */
-	public Boolean create(List<Publications> publications);
+	public Boolean create(List<IPublication> publications_);
 
 	/**
 	 * Update publication
@@ -36,7 +36,7 @@ public interface PublicationsService {
 	 * @param publication
 	 * @return
 	 */
-	public Boolean update(Publications publication);
+	public Boolean update(IPublication publication_);
 
 	/**
 	 * Get all SourceId from a publications

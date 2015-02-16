@@ -3,9 +3,10 @@ package com.silicolife.anote2daemon.service.queries;
 import java.util.List;
 import java.util.Map;
 
+import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.process.IR.IQuery;
+
 import com.silicolife.anote2daemon.model.core.RelevanceType;
-import com.silicolife.anote2daemon.model.core.entities.Publications;
-import com.silicolife.anote2daemon.model.core.entities.Queries;
 
 /**
  * Interface to define all methods of Service Layer Queries
@@ -22,14 +23,14 @@ public interface QueriesService {
 	 * @param id
 	 * @return
 	 */
-	public Queries getById(Long id);
+	public IQuery getById(Long id);
 
 	/**
 	 * Get all queries associated from a user
 	 * 
 	 * @return
 	 */
-	public List<Queries> getAll();
+	public List<IQuery> getAll();
 
 	/**
 	 * Get all publications from a query
@@ -37,7 +38,7 @@ public interface QueriesService {
 	 * @param id
 	 * @return
 	 */
-	public List<Publications> getQueryPublications(Long id);
+	public List<IPublication> getQueryPublications(Long id);
 
 	/**
 	 * Create a query
@@ -45,7 +46,7 @@ public interface QueriesService {
 	 * @param query
 	 * @return
 	 */
-	public Boolean create(Queries query);
+	public Boolean create(IQuery query);
 
 	/**
 	 * Update a Query
@@ -53,7 +54,7 @@ public interface QueriesService {
 	 * @param query
 	 * @return
 	 */
-	public Boolean update(Queries query);
+	public Boolean update(IQuery query);
 
 	/**
 	 * Associate publications to a query

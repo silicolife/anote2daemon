@@ -20,7 +20,7 @@
 						class="com.silicolife.anote2daemon.webservice.HibernateAwareObjectMapper" />
 				</beans:property>
 			</beans:bean>
-		</mvc:message-converters>
+		</mvc:message-converters> 
 	</mvc:annotation-driven>
 
 

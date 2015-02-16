@@ -4,6 +4,7 @@ package com.silicolife.anote2daemon.model.core.entities;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;

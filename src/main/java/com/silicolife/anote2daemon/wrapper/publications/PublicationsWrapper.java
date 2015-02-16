@@ -25,7 +25,7 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicatio
  */
 public class PublicationsWrapper {
 
-	public static Publication convertToAnoteStructure(Publications publications) {
+	public static IPublication convertToAnoteStructure(Publications publications) {
 		/*
 		 * get publications parameters
 		 */
@@ -33,7 +33,9 @@ public class PublicationsWrapper {
 		String title = publications.getTitle();
 		String authors = publications.getPubauthors();
 		String type = publications.getCategory();
-		String yearDate = String.valueOf(publications.getPubdate());
+		String yearDate = null;
+		if (publications.getPubdate() != null)
+			yearDate = String.valueOf(publications.getPubdate());
 		String fullDate = publications.getFulldate();
 		String status = publications.getPubstatus();
 		String journal = publications.getJournal();
@@ -42,7 +44,9 @@ public class PublicationsWrapper {
 		String pages = publications.getPages();
 		String abstractSection = publications.getAbstract_();
 		String externalLink = publications.getExternalLinks();
-		Boolean freefulltextAvailable = publications.getFreeFullText();
+		boolean freefulltextAvailable = false;
+		if(publications.getFreeFullText() != null)
+			freefulltextAvailable = publications.getFreeFullText();
 		String notes = publications.getNotes();
 		String relativePath = publications.getRelativePath();
 		/*
@@ -84,10 +88,10 @@ public class PublicationsWrapper {
 		/*
 		 * create publication
 		 */
-		Publication publication = new Publication(id, title, authors, type, yearDate, fullDate, status, journal, volume, issue, pages, abstractSection, externalLink,
+		IPublication publication_ = new Publication(id, title, authors, type, yearDate, fullDate, status, journal, volume, issue, pages, abstractSection, externalLink,
 				freefulltextAvailable, notes, relativePath, externalIDsSource_, fullTextfields_, labels_);
 
-		return publication;
+		return publication_;
 	}
 
 	public static Publications convertToDaemonStructure(IPublication publications_) {

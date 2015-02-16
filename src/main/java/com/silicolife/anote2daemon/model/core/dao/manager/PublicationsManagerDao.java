@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component;
 import com.silicolife.anote2daemon.model.core.dao.GenericDao;
 import com.silicolife.anote2daemon.model.core.dao.specialdao.PublicationsAuxDao;
 import com.silicolife.anote2daemon.model.core.entities.Publications;
+import com.silicolife.anote2daemon.model.core.entities.PublicationsFields;
+import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationLabels;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationsSource;
+import com.silicolife.anote2daemon.model.core.entities.PublicationsLabels;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsSource;
 
 @Component
@@ -15,15 +18,20 @@ public class PublicationsManagerDao {
 	private GenericDao<PublicationsSource> publicationsSourceDao;
 	private GenericDao<PublicationsHasPublicationsSource> publicationsHasPublicationsSourceDao;
 	private GenericDao<Publications> publicationsDao;
+	private GenericDao<PublicationsFields> publicationsFieldsDao;
+	private GenericDao<PublicationsLabels> publicationsLabelsDao;
+	private GenericDao<PublicationsHasPublicationLabels> publicationsHasPublicationLabelsDao;
 	private PublicationsAuxDao publicationsAuxDao;
 
 	@Autowired
 	public PublicationsManagerDao(GenericDao<PublicationsSource> publicationsSourceDao, GenericDao<PublicationsHasPublicationsSource> publicationsHasPublicationsSourceDao,
-			GenericDao<Publications> publicationsDao, PublicationsAuxDao publicationsAuxDao) {
+			GenericDao<Publications> publicationsDao, GenericDao<PublicationsFields> publicationsFieldsDao, GenericDao<PublicationsLabels> publicationsLabelsDao,
+			GenericDao<PublicationsHasPublicationLabels> publicationsHasPublicationLabelsDao, PublicationsAuxDao publicationsAuxDao) {
 		super();
 		this.publicationsSourceDao = publicationsSourceDao;
 		this.publicationsHasPublicationsSourceDao = publicationsHasPublicationsSourceDao;
 		this.publicationsDao = publicationsDao;
+		this.publicationsFieldsDao = publicationsFieldsDao;
 		this.publicationsAuxDao = publicationsAuxDao;
 	}
 
@@ -37,6 +45,18 @@ public class PublicationsManagerDao {
 
 	public GenericDao<Publications> getPublicationsDao() {
 		return publicationsDao;
+	}
+
+	public GenericDao<PublicationsFields> getPublicationsFieldsDao() {
+		return publicationsFieldsDao;
+	}
+
+	public GenericDao<PublicationsLabels> getPublicationsLabelsDao() {
+		return publicationsLabelsDao;
+	}
+
+	public GenericDao<PublicationsHasPublicationLabels> getPublicationsHasPublicationLabelsDao() {
+		return publicationsHasPublicationLabelsDao;
 	}
 
 	public PublicationsAuxDao getPublicationsAuxDao() {

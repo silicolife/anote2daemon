@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.process.IR.IQuery;
+
 import com.silicolife.anote2daemon.model.core.RelevanceType;
-import com.silicolife.anote2daemon.model.core.entities.Publications;
-import com.silicolife.anote2daemon.model.core.entities.Queries;
 import com.silicolife.anote2daemon.service.queries.QueriesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
@@ -49,10 +51,9 @@ public class QueriesController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<Queries>>> getAllQueries() {
-		
-		DaemonResponse<List<Queries>> response = new DaemonResponse<List<Queries>>(queriesService.getAll());
-		return new ResponseEntity<DaemonResponse<List<Queries>>>(response, HttpStatus.OK);
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueries() {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAll());
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 
 	/**
@@ -61,12 +62,12 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
+//	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', 'queryOwner')")
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getQueryById/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Queries>> getQueryById(@PathVariable Long id) {
-	
-		DaemonResponse<Queries> response = new DaemonResponse<Queries>(queriesService.getById(id));
-		return new ResponseEntity<DaemonResponse<Queries>>(response, HttpStatus.OK);
+	public ResponseEntity<DaemonResponse<IQuery>> getQueryById(@PathVariable Long id) {
+		DaemonResponse<IQuery> response = new DaemonResponse<IQuery>(queriesService.getById(id));
+		return new ResponseEntity<DaemonResponse<IQuery>>(response, HttpStatus.OK);
 	}
 
 	/**
@@ -77,10 +78,10 @@ public class QueriesController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/getAllPublications/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<Publications>>> getAllPublications(@PathVariable Long id) {
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long id) {
 	
-		DaemonResponse<List<Publications>> response = new DaemonResponse<List<Publications>>(queriesService.getQueryPublications(id));
-		return new ResponseEntity<DaemonResponse<List<Publications>>>(response, HttpStatus.OK);
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(id));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
 
 	/**
@@ -91,7 +92,7 @@ public class QueriesController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Queries query) {
+	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody IQuery query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

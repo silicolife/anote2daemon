@@ -1,18 +1,20 @@
 package com.silicolife.anote2daemon.wrapper.queries;
 
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import pt.uminho.anote2.core.document.relevance.RelevanceTypeEnum;
 import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.datastructures.documents.query.QueryOriginType;
 import pt.uminho.anote2.process.IR.IQuery;
 import pt.uminho.anote2.process.IR.IQueryOriginType;
 
+import com.silicolife.anote2daemon.model.core.entities.PublicationsQueryRelevance;
 import com.silicolife.anote2daemon.model.core.entities.Queries;
 import com.silicolife.anote2daemon.model.core.entities.QueriesProperties;
-import com.silicolife.anote2daemon.model.core.entities.QueriesPropertiesId;
 import com.silicolife.anote2daemon.model.core.entities.QueriesType;
 
 /**
@@ -27,62 +29,74 @@ import com.silicolife.anote2daemon.model.core.entities.QueriesType;
  */
 public class QueriesWrapper {
 
-	public IQuery convertToAnoteStructure(Queries daemonObject) {
+	public static IQuery convertToAnoteStructure(Queries queries) {
 		/*
 		 * create query type
 		 */
-		Long queryTypeId = daemonObject.getQueriesType().getId();
-		String queryTypeDesc = daemonObject.getQueriesType().getDescription();
+		Long queryTypeId = queries.getQueriesType().getId();
+		String queryTypeDesc = queries.getQueriesType().getDescription();
 		IQueryOriginType queryType_ = new QueryOriginType(queryTypeId, queryTypeDesc);
 		/**
 		 * create properties
 		 */
-		Properties properties = null;
-		Set<QueriesProperties> queryProperties = daemonObject.getQueriesPropertieses();
-		if (queryProperties.size() > 0) {
-			properties = new Properties();
-			for (QueriesProperties queryProperty : queryProperties) {
-				String key = queryProperty.getId().getPropKey();
-				String value = queryProperty.getPropValue();
-				properties.put(key, value);
+		Properties properties = QueriesPropertiesWrapper.convertToAnoteStructure(queries.getQueriesPropertieses());
+		/*
+		 * create publications query relevance
+		 */
+		Set<PublicationsQueryRelevance> pubQueriesRelevance = queries.getPublicationsQueryRelevances();
+		Map<Long, RelevanceTypeEnum> documentRelevance = null;
+		if (pubQueriesRelevance.size() > 0) {
+			documentRelevance = new HashMap<Long, RelevanceTypeEnum>();
+			for (PublicationsQueryRelevance pubRelevance : pubQueriesRelevance) {
+				Long pubId = pubRelevance.getId().getPublicationsId();
+				RelevanceTypeEnum relevance = RelevanceTypeEnum.convertString(pubRelevance.getRelevance());
+				documentRelevance.put(pubId, relevance);
 			}
 		}
 		/*
 		 * create query
 		 */
-		Long id = daemonObject.getId();
-		Date date = daemonObject.getQueryDate();
-		String keywords = daemonObject.getKeywords();
-		String organism = daemonObject.getOrganism();
-		String completeQuery = daemonObject.getCompleteQuery();
-		int publicationsSize = daemonObject.getMatchingPublications();
-		int availableAbstract = daemonObject.getAvailableAbstracts();
-		String name = daemonObject.getQueryName();
-		String notes = daemonObject.getNotes();
+		Long id = queries.getId();
+		Date date = queries.getQueryDate();
+		String keywords = queries.getKeywords();
+		String organism = queries.getOrganism();
+		String completeQuery = queries.getCompleteQuery();
+		int publicationsSize = 0;
+		if (queries.getMatchingPublications() != null)
+			publicationsSize = queries.getMatchingPublications();
+		int availableAbstract = 0;
+		if (queries.getAvailableAbstracts() != null)
+			availableAbstract = queries.getAvailableAbstracts();
+		String name = queries.getQueryName();
+		String notes = queries.getNotes();
 
-		Query query = new Query(id, queryType_, date, keywords, organism, completeQuery, publicationsSize, availableAbstract, name, notes, properties);
+		IQuery query_ = new Query(id, queryType_, date, keywords, organism, completeQuery, publicationsSize, availableAbstract, name, notes, documentRelevance, properties);
 
-		return query;
+		return query_;
 	}
 
-	public Queries convertToDaemonStructure(IQuery parameter) {
+	public static Queries convertToDaemonStructure(IQuery query_) {
 		/*
 		 * get parameters
 		 */
-		Long id = parameter.getID();
-		Date date = parameter.getDate();
-		String keywords = parameter.getKeyWords();
-		String organism = parameter.getOrganism();
-		String completeQuery = parameter.getCompleteQuery();
-		int publicationsSize = parameter.getPublicationsSize();
-		int availableAbstract = parameter.getAvailableAbstracts();
-		String queryName = parameter.getName();
-		String notes = parameter.getNotes();
+		Long id = query_.getID();
+		Date date = query_.getDate();
+		String keywords = query_.getKeyWords();
+		String organism = query_.getOrganism();
+		String completeQuery = query_.getCompleteQuery();
+		Integer publicationsSize = query_.getPublicationsSize();
+		if (publicationsSize == 0)
+			publicationsSize = null;
+		Integer availableAbstract = query_.getAvailableAbstracts();
+		if (availableAbstract == 0)
+			availableAbstract = null;
+		String queryName = query_.getName();
+		String notes = query_.getNotes();
 		Boolean active = true;
 		/*
 		 * create query type
 		 */
-		IQueryOriginType queryType = parameter.getQueryOriginType();
+		IQueryOriginType queryType = query_.getQueryOriginType();
 		Long queryTypeId = queryType.getID();
 		String querytypeDesc = queryType.getOrigin();
 		QueriesType queryTypeDaemon = new QueriesType(queryTypeId);
@@ -91,18 +105,10 @@ public class QueriesWrapper {
 		 * create query
 		 */
 		Queries query = new Queries(id, queryTypeDaemon, date, keywords, active);
-
 		/*
 		 * create query properties
 		 */
-		Properties properties = parameter.getProperties();
-		Set<QueriesProperties> queriesProperties = new HashSet<QueriesProperties>(0);
-		for (String key : properties.stringPropertyNames()) {
-			QueriesPropertiesId queriesPropertiesId = new QueriesPropertiesId(id, key);
-			String value = properties.getProperty(key);
-			QueriesProperties queriesPropertiesDaemon = new QueriesProperties(queriesPropertiesId, query, value);
-			queriesProperties.add(queriesPropertiesDaemon);
-		}
+		Set<QueriesProperties> queriesProperties = QueriesPropertiesWrapper.convertToDaemonStructure(query_.getProperties(), query);
 		/*
 		 * set query data
 		 */

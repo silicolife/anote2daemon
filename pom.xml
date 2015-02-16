@@ -20,10 +20,15 @@
 
 	<!-- project external dependencies -->
 	<dependencies>
+		<!-- <dependency> <groupId>com.silicolife.anote2</groupId> <artifactId>anote2-core-1.0</artifactId> 
+			<version>1.0</version> </dependency> <dependency> <groupId>com.silicolife.anote2</groupId> 
+			<artifactId>anote2-datastructures-1.0</artifactId> <version>1.0</version> 
+			</dependency> -->
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -37,6 +42,12 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.34</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>

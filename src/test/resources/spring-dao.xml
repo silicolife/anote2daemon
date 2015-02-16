@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- CREATE BEANS TO DAO -->
+
+	<beans:bean id="usersDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Users
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="usersLogDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.UsersLog
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="usersHasdataObjectDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="queriesDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Queries
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id="queriesTypeDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.QueriesType
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="queriesHasPublicationsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.QueriesHasPublications
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="publicationsSourceDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsSource
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="publicationsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Publications
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="publicationsHasPublicationsSourceDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationsSource
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id="publicationsFieldsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsFields
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+
+	<beans:bean id="publicationsHasPublicationLabelsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationLabels
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id="publicationsLabelsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsLabels
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+
+	<!-- special operations DAO -->
+
+	<beans:bean id="publicationsAuxDao"
+		class="com.silicolife.anote2daemon.model.core.dao.specialdao.PublicationsAuxDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="queriesAuxDao"
+		class="com.silicolife.anote2daemon.model.core.dao.specialdao.QueriesAuxDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+	</beans:bean>
+
+
+	<!-- DAO Manager -->
+
+	<beans:bean id="publicationsManagerDao"
+		class="com.silicolife.anote2daemon.model.core.dao.manager.PublicationsManagerDao">
+		<beans:constructor-arg ref="publicationsSourceDao" />
+		<beans:constructor-arg ref="publicationsHasPublicationsSourceDao" />
+		<beans:constructor-arg ref="publicationsDao" />
+		<beans:constructor-arg ref="publicationsFieldsDao" />
+		<beans:constructor-arg ref="publicationsLabelsDao" />
+		<beans:constructor-arg ref="publicationsHasPublicationLabelsDao" />
+		<beans:constructor-arg ref="publicationsAuxDao" />
+	</beans:bean>
+
+	<beans:bean id="queriesManagerDao"
+		class="com.silicolife.anote2daemon.model.core.dao.manager.QueriesManagerDao">
+		<beans:constructor-arg ref="publicationsSourceDao" />
+		<beans:constructor-arg ref="publicationsHasPublicationsSourceDao" />
+		<beans:constructor-arg ref="publicationsDao" />
+		<beans:constructor-arg ref="publicationsFieldsDao" />
+		<beans:constructor-arg ref="publicationsLabelsDao" />
+		<beans:constructor-arg ref="publicationsHasPublicationLabelsDao" />
+		<beans:constructor-arg ref="publicationsAuxDao" />
+		<beans:constructor-arg ref="queriesDao" />
+		<beans:constructor-arg ref="queriesTypeDao" />
+		<beans:constructor-arg ref="queriesHasPublicationsDao" />
+		<beans:constructor-arg ref="queriesAuxDao" />
+	</beans:bean>
+
+	<beans:bean id="usersManagerDao"
+		class="com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao">
+		<beans:constructor-arg ref="usersDao" />
+		<beans:constructor-arg ref="usersLogDao" />
+		<beans:constructor-arg ref="usersHasdataObjectDao" />
+	</beans:bean>
+	
+	
+	 <beans:bean id="userLogged"
+		class="com.silicolife.anote2daemon.model.core.dao.UsersLogged">
+	</beans:bean> 
+	
+</beans:beans>
