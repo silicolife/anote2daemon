@@ -6,9 +6,7 @@ import pt.uminho.anote2.core.cluster.IClusterProcess;
 
 /**
  * 
- * Interface to define all methods of Sevice layer from clustering
- * 
- * 
+ * Interface to define all methods of Service layer from clustering
  * 
  * @author Joel Azevedo Costa
  * @year 2015
@@ -21,7 +19,7 @@ public interface ClusteringService {
 	 * @param clustering
 	 * @return
 	 */
-	public Boolean createClustering(IClusterProcess clustering);
+	public Boolean createClustering(IClusterProcess clustering_);
 	/**
 	 * Associate cluster to query
 	 * 
@@ -29,7 +27,7 @@ public interface ClusteringService {
 	 * @param clustering
 	 * @return
 	 */
-	public Boolean clusterProcessQueryRegistry(Long queryId, IClusterProcess clustering);
+	public Boolean clusterProcessQueryRegistry(Long queryId, IClusterProcess clustering_);
 	/**
 	 * Get cluster from query
 	 * 
@@ -50,7 +48,7 @@ public interface ClusteringService {
 	 * @param clustering
 	 * @return
 	 */
-	public Boolean inactivateClustering(IClusterProcess clustering);
+	public Boolean inactivateClustering(IClusterProcess clustering_);
 	
 
 }

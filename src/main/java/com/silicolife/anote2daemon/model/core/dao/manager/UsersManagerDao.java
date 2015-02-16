@@ -1,14 +1,14 @@
 package com.silicolife.anote2daemon.model.core.dao.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.silicolife.anote2daemon.model.core.dao.GenericDao;
 import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
 import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 
-@Component
+@Repository
 public class UsersManagerDao {
 
 	private GenericDao<Users> usersDao;

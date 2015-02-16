@@ -40,11 +40,11 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>WEB-INF/dispatcher-servlet.xml</param-value>
+			<param-value>classpath:dispatcher-servlet.xml</param-value>
 		</init-param>
 		<init-param>
 			<param-name>log4jConfigLocation</param-name>
-			<param-value>WEB-INF/log4j.properties</param-value>
+			<param-value>classpath:log4j.properties</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

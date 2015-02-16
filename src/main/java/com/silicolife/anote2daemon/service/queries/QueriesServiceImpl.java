@@ -21,7 +21,6 @@ import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.QueriesManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.Publications;
-import com.silicolife.anote2daemon.model.core.entities.PublicationsQueryRelevance;
 import com.silicolife.anote2daemon.model.core.entities.Queries;
 import com.silicolife.anote2daemon.model.core.entities.QueriesHasPublications;
 import com.silicolife.anote2daemon.model.core.entities.QueriesHasPublicationsId;
