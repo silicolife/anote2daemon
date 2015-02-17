@@ -1,8 +1,15 @@
 package com.silicolife.anote2daemon.utils;
 
+/**
+ * Enum which save the resource type of anote2daemon
+ * 
+ * @author Joel Azevedo costa
+ * @year 2015
+ *
+ */
 public enum ResourcesTypeUtils {
 
-	queries("queries"),corpus("corpus");
+	queries("queries"), corpus("corpus");
 
 	private final String name;
 
@@ -17,5 +24,4 @@ public enum ResourcesTypeUtils {
 	public String toString() {
 		return name;
 	}
-
 }
