@@ -1,7 +1,7 @@
 package com.silicolife.anote2daemon.exceptions;
 
 /**
- * Class to represent the queries exceptions
+ * Class to represent the anote2dameon exceptions
  * 
  * 
  * 

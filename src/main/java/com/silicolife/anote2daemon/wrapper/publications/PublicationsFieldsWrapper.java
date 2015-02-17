@@ -8,7 +8,8 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsFields;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsFieldsId;
 
 /**
- * Wrapper to handler with transformations of publications fields structures 
+ * Class to transform anote2 Publications Fields structures to daemon
+ * Publications Fields structures and vice-verse
  * 
  * @author Joel Azevedo Costa
  * @year 2015

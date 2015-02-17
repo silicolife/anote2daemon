@@ -1,5 +1,13 @@
 package com.silicolife.anote2daemon.exceptions;
 
+/**
+ * Exceptions codes and messages used in anote2dameon exceptions.
+ * 
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 public class ExceptionsCodes {
 	public static final String generalDbCode = "generalDataBase";
 	public static final String generalCode = "general";
@@ -22,6 +30,9 @@ public class ExceptionsCodes {
 	public static final String codeQueryPublication = "noAssociationQueryPub";
 	public static final String codePublicationSource = "noPublicationSource";
 	public static final String codeWrongCredentials = "wrongCredentials";
+	public static final String codeResourceAccessDenied = "resourceDenied";
+	
+	
 
 	/**
 	 * Error Messages
@@ -34,5 +45,6 @@ public class ExceptionsCodes {
 	public static final String msgQueryPublication = "Association query publication does not exist";
 	public static final String msgPublicationSource = "Publication source does not exist";
 	public static final String msgWrongCredentials = "The username or password are wrong. :D";
+	public static final String msgResourceAccessDenied = "Puff... you does not access to that anote2daemon resource. :d";
 
 }

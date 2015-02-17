@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +16,33 @@ import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.model.core.entities.UsersGroupsHasUsersAccessLevels;
+import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
+import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
 
+/**
+ * 
+ * Service layer which implement all operations about user. This implementation
+ * has one spring method (loadUserByUsername) implementation to allow the login functionality.
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @Service
 @Transactional(readOnly = true)
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UsersServiceImpl implements UsersService {
 
 	private UsersManagerDao usersManagerDao;
 
 	@Autowired
-	public UserDetailsServiceImpl(UsersManagerDao usersManagerDao) {
+	public UsersServiceImpl(UsersManagerDao usersManagerDao) {
 		this.usersManagerDao = usersManagerDao;
+	}
+
+	@Override
+	public UsersHasDataObject getUsersHasDataObjectById(UsersHasDataObjectId id) {
+		UsersHasDataObject userDataobject = usersManagerDao.getUsersHasdataObjectDao().findById(id);
+		return userDataobject;
 	}
 
 	@Override
@@ -48,6 +64,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			authList.add(new SimpleGrantedAuthority(code));
 		}
 
-		return new CustomSpringUser(userDomain.getUsername(), userDomain.getUserPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList, userDomain);
+		return new CustomSpringUser(userDomain.getUsername(), userDomain.getUserPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authList,
+				userDomain);
 	}
 }

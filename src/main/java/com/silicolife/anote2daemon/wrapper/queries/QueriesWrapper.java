@@ -20,7 +20,7 @@ import com.silicolife.anote2daemon.model.core.entities.QueriesType;
 /**
  * 
  * Class to transform anote2 Query structures to daemon Query structures and
- * vice-versa
+ * vice-verse
  * 
  * 
  * @author Joel Azevedo Costa

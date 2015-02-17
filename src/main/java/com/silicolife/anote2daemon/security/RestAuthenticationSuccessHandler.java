@@ -21,14 +21,13 @@ import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.utils.ApplicationContextUtils;
 
 /**
- * Class called when the authentication is success
+ * This class is called when the authentication is success
  * 
  * 
  * @author Joel Azevedo Costa
  * @year 2015
  *
  */
-
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 	private RequestCache requestCache = new HttpSessionRequestCache();

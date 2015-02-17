@@ -11,8 +11,8 @@ import com.silicolife.anote2daemon.model.core.entities.ClustersLabels;
 import com.silicolife.anote2daemon.model.core.entities.ClustersLabelsPublications;
 
 /**
- * Wrapper to convert anote2 structures to daemon structures and vice verse
- * 
+ * Class to transform anote2 Cluster Labels structures to daemon
+ * Cluster Labels structures and vice-verse
  * 
  * @author Joel Azevedo Costa
  * @year 2015

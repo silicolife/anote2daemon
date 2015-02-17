@@ -3,7 +3,7 @@ package com.silicolife.anote2daemon.exceptions.entities;
 import java.io.Serializable;
 
 /**
- * Class to represent the exception. It is sent in JSON message
+ * Class to represent the exception. It is sent in JSON format
  * 
  * @author Joel Azevedo Costa
  * @year 2015

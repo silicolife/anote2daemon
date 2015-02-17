@@ -32,7 +32,7 @@
 
 	<!-- Create object user Spring -->
 	<beans:bean id="userDetailsService"
-		class="com.silicolife.anote2daemon.service.users.UserDetailsServiceImpl">
+		class="com.silicolife.anote2daemon.service.users.UsersServiceImpl">
 		<beans:constructor-arg ref="usersManagerDao" />
 	</beans:bean>
 
@@ -59,25 +59,25 @@
 
 
 	<!-- Enable the annotations for defining the secure role -->
-	 <global-method-security secured-annotations="enabled" />
+	<!-- <global-method-security secured-annotations="enabled" /> -->
 
 
 
-	<!--  <global-method-security pre-post-annotations="enabled">
+	<global-method-security pre-post-annotations="enabled" proxy-target-class="true">
 		<expression-handler ref="expressionHandler" />
 	</global-method-security>
-
 
 
 	<beans:bean id="expressionHandler"
 		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
 		<beans:property name="permissionEvaluator" ref="myPermissionEvaluator" />
 	</beans:bean>
-	
-	
+
+
 	<beans:bean id="myPermissionEvaluator"
 		class="com.silicolife.anote2daemon.security.RestPermissionsEvaluator">
-		<beans:constructor-arg ref="usersManagerDao" />
-	</beans:bean> -->
+	 	<beans:constructor-arg ref="userDetailsService" /> 
+	</beans:bean>
+
 
 </beans:beans>

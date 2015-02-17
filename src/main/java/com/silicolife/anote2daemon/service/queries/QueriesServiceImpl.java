@@ -58,16 +58,10 @@ public class QueriesServiceImpl implements QueriesService {
 
 	@Override
 	public IQuery getById(Long id) {
-		Users user = userLogged.getCurrentUserLogged();
 		Queries query = queriesManagerDao.getQueriesDao().findById(id);
-		UsersHasDataObjectId idDataObject = new UsersHasDataObjectId(user.getId(), id, queries);
-		UsersHasDataObject dataObject = usersManagerDao.getUsersHasdataObjectDao().findById(idDataObject);
-		if (dataObject == null)
-			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
-
 		if (query == null)
 			return null;
-
+		
 		IQuery query_ = QueriesWrapper.convertToAnoteStructure(query);
 		return query_;
 	}
@@ -77,12 +71,6 @@ public class QueriesServiceImpl implements QueriesService {
 		Queries query = queriesManagerDao.getQueriesDao().findById(id);
 		if (query == null)
 			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
-
-		Users user = userLogged.getCurrentUserLogged();
-		UsersHasDataObjectId idDataObject = new UsersHasDataObjectId(user.getId(), query.getId(), queries);
-		UsersHasDataObject dataObject = usersManagerDao.getUsersHasdataObjectDao().findById(idDataObject);
-		if (dataObject == null)
-			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
 		List<Publications> listPublications = queriesManagerDao.getPublicationsAuxDao().findPublicationsByQueryId(id);
 		if (listPublications.size() == 0)
@@ -150,13 +138,7 @@ public class QueriesServiceImpl implements QueriesService {
 		Queries queryDb = queriesManagerDao.getQueriesDao().findById(query.getId());
 		if (queryDb == null)
 			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
-		/*
-		 * verify if has permissions
-		 */
-		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), query.getId(), queries);
-		UsersHasDataObject dataObjectUser = usersManagerDao.getUsersHasdataObjectDao().findById(dataObjectUserId);
-		if (dataObjectUser == null || dataObjectUser.getAccesLevel().equals("read"))
-			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
+	
 
 		queriesManagerDao.getQueriesDao().update(query);
 
@@ -199,14 +181,8 @@ public class QueriesServiceImpl implements QueriesService {
 			throw new DaemonException(ExceptionsCodes.codeQueryPublication, ExceptionsCodes.msgQueryPublication);
 
 		queriesPub.setRelevance(relevance);
-		/*
-		 * verify if has permissions
-		 */
-		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), queryId, queries);
-		UsersHasDataObject dataObjectUser = usersManagerDao.getUsersHasdataObjectDao().findById(dataObjectUserId);
-		if (dataObjectUser == null || dataObjectUser.getAccesLevel().equals("read"))
-			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
-
+	
+		
 		queriesManagerDao.getQueriesHasPublicationsDao().update(queriesPub);
 
 		UsersLog log = new UsersLog(user, new Date(), "update", "queries_has_publications", null, "update relevance");
@@ -221,15 +197,6 @@ public class QueriesServiceImpl implements QueriesService {
 		Queries query = queriesManagerDao.getQueriesDao().findById(queryId);
 		if (query == null)
 			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
-
-		Users user = userLogged.getCurrentUserLogged();
-		/*
-		 * verify if has permissions
-		 */
-		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), queryId, queries);
-		UsersHasDataObject dataObjectUser = usersManagerDao.getUsersHasdataObjectDao().findById(dataObjectUserId);
-		if (dataObjectUser == null)
-			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
 
 		Set<QueriesHasPublications> queriesHasPub = query.getQueriesHasPublicationses();
 		Map<Long, RelevanceType> map = new HashMap<Long, RelevanceType>();

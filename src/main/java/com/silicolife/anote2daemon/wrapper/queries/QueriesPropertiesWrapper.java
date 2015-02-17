@@ -8,6 +8,14 @@ import com.silicolife.anote2daemon.model.core.entities.Queries;
 import com.silicolife.anote2daemon.model.core.entities.QueriesProperties;
 import com.silicolife.anote2daemon.model.core.entities.QueriesPropertiesId;
 
+/**
+ * Class to transform anote2 Query properties structures to daemon Query properties structures and
+ * vice-verse
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 public class QueriesPropertiesWrapper{
 
 	public static Properties convertToAnoteStructure(Set<QueriesProperties> queryProperties) {

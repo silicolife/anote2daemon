@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pt.uminho.anote2.core.cluster.IClusterLabel;
 import pt.uminho.anote2.core.cluster.IClusterProcess;
 
-import com.silicolife.anote2daemon.exceptions.DaemonException;
-import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.ClustersManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
@@ -22,17 +20,13 @@ import com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasCluster
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasClustersLabelsId;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcesses;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProperties;
-import com.silicolife.anote2daemon.model.core.entities.Users;
-import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
-import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
-import com.silicolife.anote2daemon.utils.ResourcesTypeUtils;
 import com.silicolife.anote2daemon.wrapper.clustering.ClustersLabelsWrapper;
 import com.silicolife.anote2daemon.wrapper.clustering.ClustersProcessWrapper;
 import com.silicolife.anote2daemon.wrapper.clustering.ClustersPropertiesWrapper;
 
 /**
  * 
- * Implementation of Service layer from clustering
+ * Service layer which implements all operations about clustering
  * 
  * @author Joel Azevedo Costa
  * @year 2015
@@ -46,14 +40,8 @@ public class ClusteringServiceImpl implements ClusteringService {
 	private UsersManagerDao usersManagerDao;
 	@Autowired
 	private UsersLogged userLogged;
-	private final static String queries = ResourcesTypeUtils.queries.toString();
 
-	/**
-	 * Constructor
-	 * 
-	 * @param clustersManagerDao
-	 * @param usersManagerDao
-	 */
+
 	@Autowired
 	public ClusteringServiceImpl(ClustersManagerDao clustersManagerDao, UsersManagerDao usersManagerDao) {
 		this.clustersManagerDao = clustersManagerDao;
@@ -98,12 +86,6 @@ public class ClusteringServiceImpl implements ClusteringService {
 
 	@Override
 	public List<IClusterProcess> getClustersFromQuery(Long queryId) {
-		Users user = userLogged.getCurrentUserLogged();
-		UsersHasDataObjectId idDataObject = new UsersHasDataObjectId(user.getId(), queryId, queries);
-		UsersHasDataObject dataObject = usersManagerDao.getUsersHasdataObjectDao().findById(idDataObject);
-		if (dataObject == null)
-			throw new DaemonException(ExceptionsCodes.codeQueryAccessDenied, ExceptionsCodes.msgQueryAccessDenied);
-
 		List<IClusterProcess> clustersProcess_ = new ArrayList<IClusterProcess>();
 		List<ClustersProcesses> clustersProcesses = clustersManagerDao.getClustersProcessAuxDao().findClustersByQueryId(queryId);
 		for (ClustersProcesses clusterProcess : clustersProcesses) {
@@ -138,7 +120,6 @@ public class ClusteringServiceImpl implements ClusteringService {
 	 */
 	private void createClustersPrperties(ClustersProperties properties) {
 		clustersManagerDao.getClustersPropertiesDao().save(properties);
-
 	}
 	
 	private void createClustersLabels(ClustersProcesses clusterProcess, ClustersLabels clusterLabel) {

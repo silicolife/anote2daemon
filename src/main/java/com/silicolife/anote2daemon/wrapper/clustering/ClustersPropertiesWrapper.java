@@ -8,6 +8,14 @@ import com.silicolife.anote2daemon.model.core.entities.ClustersProcesses;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProperties;
 import com.silicolife.anote2daemon.model.core.entities.ClustersPropertiesId;
 
+/**
+ * Class to transform anote2 Cluster Properties structures to daemon
+ * Cluster Properties structures and vice-verse
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 public class ClustersPropertiesWrapper {
 
 	public static Properties convertToAnoteStructure(Set<ClustersProperties> clusterProperties) {

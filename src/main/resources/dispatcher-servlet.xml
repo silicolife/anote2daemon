@@ -26,6 +26,7 @@
 
 	<beans:import resource="classpath:spring-database.xml" />
 	<beans:import resource="classpath:spring-dao.xml" />
+	<beans:import resource="classpath:spring-security.xml" />
 
 
 

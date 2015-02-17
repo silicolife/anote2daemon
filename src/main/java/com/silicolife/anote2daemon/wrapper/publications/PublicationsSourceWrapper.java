@@ -9,7 +9,8 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicatio
 import com.silicolife.anote2daemon.model.core.entities.PublicationsSource;
 
 /**
- * Wrapper to handler with transformations of publications source structures 
+ * Class to transform anote2 Publications Source structures to daemon
+ * Publications Source structures and vice-verse
  * 
  * @author Joel Azevedo Costa
  * @year 2015

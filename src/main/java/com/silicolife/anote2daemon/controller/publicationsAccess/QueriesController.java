@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +19,13 @@ import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.process.IR.IQuery;
 
 import com.silicolife.anote2daemon.model.core.RelevanceType;
+import com.silicolife.anote2daemon.security.PermissionObjects;
 import com.silicolife.anote2daemon.service.queries.QueriesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * API queries functionalities. All these methods are exposed to the web. It is
- * necessary a user logged to access these methods
- * 
+ * The goal of this class is to expose for the web all Queries functionalities
+ * of anote2daemon. It is necessary a user logged to access these methods
  * 
  * 
  * 
@@ -39,8 +39,10 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 public class QueriesController {
 
 	@Autowired
+	private PermissionObjects permissionObjects;
+	
+	@Autowired
 	private QueriesService queriesService;
-
 
 	/**
 	 * Get All queries
@@ -48,7 +50,7 @@ public class QueriesController {
 	 * 
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN'))")
 	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueries() {
 		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAll());
@@ -61,8 +63,7 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-//	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', 'queryOwner')")
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissionObjects.getFullgrant())")
 	@RequestMapping(value = "/getQueryById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IQuery>> getQueryById(@PathVariable Long id) {
 		DaemonResponse<IQuery> response = new DaemonResponse<IQuery>(queriesService.getById(id));
@@ -75,10 +76,10 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissionObjects.getFullgrant())")
 	@RequestMapping(value = "/getAllPublications/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long id) {
-	
+
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(id));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
@@ -89,7 +90,7 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody IQuery query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
@@ -103,7 +104,7 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissionObjects.getWritegrant())")
 	@RequestMapping(value = "/addPublicationsToQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@RequestParam Long id, @RequestBody List<Long> publicationsIds) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(id, publicationsIds));
@@ -116,7 +117,7 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId 'queries', @permissionObjects.getWritegrant())")
 	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
@@ -129,7 +130,7 @@ public class QueriesController {
 	 * @param queryId
 	 * @return
 	 */
-	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId, 'queries', @permissionObjects.getFullgrant())")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<Long, RelevanceType>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
 		DaemonResponse<Map<Long, RelevanceType>> response = new DaemonResponse<Map<Long, RelevanceType>>(queriesService.getQueryPublicationsRelevance(queryId));

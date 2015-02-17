@@ -9,11 +9,13 @@ com.silicolife.anote2daemon.model.core.dao.manager
 com.silicolife.anote2daemon.model.core.dao.specialdao
 com.silicolife.anote2daemon.model.core.entities
 com.silicolife.anote2daemon.security
+com.silicolife.anote2daemon.service.clustering
 com.silicolife.anote2daemon.service.publications
 com.silicolife.anote2daemon.service.queries
 com.silicolife.anote2daemon.service.users
 com.silicolife.anote2daemon.utils
 com.silicolife.anote2daemon.webservice
 com.silicolife.anote2daemon.wrapper
+com.silicolife.anote2daemon.wrapper.clustering
 com.silicolife.anote2daemon.wrapper.publications
 com.silicolife.anote2daemon.wrapper.queries
