@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Define all generic methos to access the data.
+ * 
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ * @param <T>
+ */
 public interface GenericDao<T> {
 
 	public T findById(Serializable id);

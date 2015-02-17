@@ -17,6 +17,13 @@ import com.silicolife.anote2daemon.model.core.entities.QueriesHasClustersProcess
 import com.silicolife.anote2daemon.model.core.entities.QueriesHasPublications;
 import com.silicolife.anote2daemon.model.core.entities.QueriesType;
 
+/**
+ * Class to handler with Queries object DAO
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @Repository
 public class QueriesManagerDao extends PublicationsManagerDao {
 

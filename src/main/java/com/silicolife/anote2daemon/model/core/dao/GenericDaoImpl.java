@@ -12,6 +12,15 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * This classes represents the implementation of generic methods to access the
+ * data
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ * @param <T>
+ */
 @Repository
 public class GenericDaoImpl<T> implements GenericDao<T> {
 

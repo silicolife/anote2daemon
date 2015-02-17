@@ -10,6 +10,13 @@ import com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasCluster
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcesses;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProperties;
 
+/**
+ * Class to handler with clusters object DAO
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @Repository
 public class ClustersManagerDao {
 

@@ -1,6 +1,11 @@
 package com.silicolife.anote2daemon.model.core;
 
-
+/**
+ * Enum which represents the relevance type
+ * 
+ * @author Hugo Costa
+ *
+ */
 public enum RelevanceType {
 	none, Irrelevant, Related, Relevant;
 	

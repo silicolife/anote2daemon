@@ -8,6 +8,13 @@ import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
 import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 
+/**
+ * Class to handler with Users object DAO
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @Repository
 public class UsersManagerDao {
 

@@ -12,6 +12,13 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicatio
 import com.silicolife.anote2daemon.model.core.entities.PublicationsLabels;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsSource;
 
+/**
+ * Class to handler with Publications object DAO
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @Repository
 public class PublicationsManagerDao {
 
