@@ -6,8 +6,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Identify the permissions of the anote2daemon
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @Component
-public class PermissionObjects {
+public class Permissions {
 
 	private static final List<String> fullGrant = new ArrayList<String>(Arrays.asList("owner", "read", "read_write"));
 	private static final List<String> writeGrant = new ArrayList<String>(Arrays.asList("owner", "read_write"));

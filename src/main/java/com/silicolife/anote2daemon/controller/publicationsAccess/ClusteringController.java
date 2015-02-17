@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.cluster.IClusterProcess;
 
-import com.silicolife.anote2daemon.security.PermissionObjects;
+import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.service.clustering.ClusteringService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
@@ -37,7 +37,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 public class ClusteringController {
 
 	@Autowired
-	private PermissionObjects permissionObjects;
+	private Permissions permissions;
 	@Autowired
 	private ClusteringService clusteringService;
 
@@ -47,7 +47,7 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissionObjects.getFullgrant())")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissions.getFullgrant())")
 	@RequestMapping(value = "/getClustersFromQuery/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IClusterProcess>>> getClustersFromQuery(@PathVariable Long queryId) {
 		DaemonResponse<List<IClusterProcess>> response = new DaemonResponse<List<IClusterProcess>>(clusteringService.getClustersFromQuery(queryId));
@@ -84,7 +84,7 @@ public class ClusteringController {
 	 * @param clusteringId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissionObjects.getWritegrant())")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissions.getWritegrant())")
 	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));

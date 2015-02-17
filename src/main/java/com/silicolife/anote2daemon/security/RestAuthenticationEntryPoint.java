@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
+/**
+ * Entry point in login system
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

@@ -17,8 +17,8 @@ import com.silicolife.anote2daemon.service.users.UsersService;
 
 /**
  * 
- * Class to manage the permission from an user to the anote2daemon resources
- * (query, corpus, processes, resources)
+ * Class to handler with the permissions from an user to the anote2daemon
+ * resources (query, corpus, processes, resources)
  * 
  * @author Joel Azevedo Costa
  * @year 2015

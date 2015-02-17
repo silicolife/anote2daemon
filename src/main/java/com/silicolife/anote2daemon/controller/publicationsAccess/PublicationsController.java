@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.document.IPublication;
 
-import com.silicolife.anote2daemon.security.PermissionObjects;
+import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.service.publications.PublicationsService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
@@ -35,7 +35,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 public class PublicationsController {
 
 	@Autowired
-	private PermissionObjects permissionObjects;
+	private Permissions permissions;
 	@Autowired
 	private PublicationsService publicationService;
 

@@ -17,6 +17,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 
+/**
+ * Custom provider to handler with login and password encryption
+ * 
+ * @author Joel Azevedo Costa
+ *
+ */
 public class RestAuthenticationProvider implements AuthenticationProvider {
 
 	private UserDetailsService userService;
@@ -33,11 +39,9 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 		String username = authentication.getName();
 		String password = (String) authentication.getCredentials();
 		UserDetails user = userService.loadUserByUsername(username);
-
 		if (user == null) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
-
 		/**
 		 * Create user salt to add security password
 		 */
@@ -46,12 +50,12 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		encoder.setIterations(13);
 		String salt = encoder.encodePassword(strUserId, null);
+		
 		if (!passwordEncoder.isPasswordValid(user.getPassword(), password, salt)) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
 
 		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-
 		return new UsernamePasswordAuthenticationToken(user, password, authorities);
 	}
 
