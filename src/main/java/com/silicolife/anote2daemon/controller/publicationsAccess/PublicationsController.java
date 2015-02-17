@@ -21,17 +21,14 @@ import com.silicolife.anote2daemon.service.publications.PublicationsService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * The goal of this class is to expose for the web all Publications functionalities of
- * anote2daemon.
- * It is necessary a user logged to access these methods
- * 
- * 
+ * The goal of this class is to expose for the web all Publications
+ * functionalities of anote2daemon. It is necessary a user logged to access
+ * these methods
  * 
  * @author Joel Azevedo Costa
  * @year 2015
  *
  */
-
 @RequestMapping(value = "/publications")
 @ResponseBody
 @Controller

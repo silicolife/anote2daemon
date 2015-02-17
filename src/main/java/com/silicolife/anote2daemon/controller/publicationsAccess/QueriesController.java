@@ -24,10 +24,9 @@ import com.silicolife.anote2daemon.service.queries.QueriesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * The goal of this class is to expose for the web all Queries functionalities
- * of anote2daemon. It is necessary a user logged to access these methods
- * 
- * 
+ * The goal of this class is to expose for the web all Clustering
+ * functionalities of anote2daemon. It is necessary a user logged to access
+ * these methods
  * 
  * @author Joel Azevedo Costa
  * @year 2015
@@ -40,13 +39,11 @@ public class QueriesController {
 
 	@Autowired
 	private PermissionObjects permissionObjects;
-	
 	@Autowired
 	private QueriesService queriesService;
 
 	/**
 	 * Get All queries
-	 * 
 	 * 
 	 * @return
 	 */
@@ -125,7 +122,7 @@ public class QueriesController {
 	}
 
 	/**
-	 * Get Publications from queries and relevance
+	 * Get Publication Id and relevance from a query
 	 * 
 	 * @param queryId
 	 * @return
