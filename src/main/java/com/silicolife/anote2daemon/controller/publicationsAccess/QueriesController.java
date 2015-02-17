@@ -50,7 +50,7 @@ public class QueriesController {
 	 * 
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN'))")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueries() {
 		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAll());
@@ -117,7 +117,7 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId 'queries', @permissionObjects.getWritegrant())")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId, 'queries', @permissionObjects.getWritegrant())")
 	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));

@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.cluster.IClusterProcess;
@@ -19,9 +21,9 @@ import com.silicolife.anote2daemon.service.clustering.ClusteringService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * The goal of this class is to expose for the web all Clustering functionalities of
- * anote2daemon.
- * It is necessary a user logged to access these methods
+ * The goal of this class is to expose for the web all Clustering
+ * functionalities of anote2daemon. It is necessary a user logged to access
+ * these methods
  * 
  * 
  * 
@@ -62,5 +64,42 @@ public class ClusteringController {
 	public ResponseEntity<DaemonResponse<IClusterProcess>> getClusteringById(@PathVariable Long id) {
 		DaemonResponse<IClusterProcess> response = new DaemonResponse<IClusterProcess>(clusteringService.getClusteringById(id));
 		return new ResponseEntity<DaemonResponse<IClusterProcess>>(response, HttpStatus.OK);
+	}
+	/**
+	 * create a cluster process
+	 * 
+	 * @param clustering
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/createClusterProcess", method = RequestMethod.PUT, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createClusterProcess(@RequestBody IClusterProcess clustering) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.createClustering(clustering));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	/**
+	 * Associate a Cluster process to a Query
+	 * 
+	 * @param queryId
+	 * @param clusteringId
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissionObjects.getWritegrant())")
+	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.PUT, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	/**
+	 * Inactive a Cluster Process
+	 * 
+	 * @param clusteringId
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> inactivateClustering(@RequestParam Long clusteringId) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.inactivateClustering(clusteringId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }

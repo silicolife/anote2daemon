@@ -40,7 +40,7 @@ public class RestPermissionsEvaluator implements PermissionEvaluator {
 	}
 
 	@Override
-	public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) throws DaemonException {
+	public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
 		@SuppressWarnings("unchecked")
 		List<String> permissionList = List.class.cast(permission);
 		Users user = userLogged.getCurrentUserLogged();

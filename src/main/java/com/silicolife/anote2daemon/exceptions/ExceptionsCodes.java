@@ -31,6 +31,7 @@ public class ExceptionsCodes {
 	public static final String codePublicationSource = "noPublicationSource";
 	public static final String codeWrongCredentials = "wrongCredentials";
 	public static final String codeResourceAccessDenied = "resourceDenied";
+	public static final String codeNoCluster = "noCluster";
 	
 	
 
@@ -45,6 +46,7 @@ public class ExceptionsCodes {
 	public static final String msgQueryPublication = "Association query publication does not exist";
 	public static final String msgPublicationSource = "Publication source does not exist";
 	public static final String msgWrongCredentials = "The username or password are wrong. :D";
-	public static final String msgResourceAccessDenied = "Puff... you does not access to that anote2daemon resource. :d";
+	public static final String msgResourceAccessDenied = "Puff... you do not access to that anote2daemon resource. :d";
+	public static final String msgNoCluster = "Cluster does not exist";
 
 }

@@ -1,6 +1,7 @@
 package com.silicolife.anote2daemon.service.clustering;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -12,21 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 import pt.uminho.anote2.core.cluster.IClusterLabel;
 import pt.uminho.anote2.core.cluster.IClusterProcess;
 
+import com.silicolife.anote2daemon.exceptions.DaemonException;
+import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.ClustersManagerDao;
+import com.silicolife.anote2daemon.model.core.dao.manager.QueriesManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.ClustersLabels;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasClustersLabels;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasClustersLabelsId;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcesses;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProperties;
+import com.silicolife.anote2daemon.model.core.entities.QueriesHasClustersProcess;
+import com.silicolife.anote2daemon.model.core.entities.QueriesHasClustersProcessId;
+import com.silicolife.anote2daemon.model.core.entities.Users;
+import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 import com.silicolife.anote2daemon.wrapper.clustering.ClustersLabelsWrapper;
 import com.silicolife.anote2daemon.wrapper.clustering.ClustersProcessWrapper;
 import com.silicolife.anote2daemon.wrapper.clustering.ClustersPropertiesWrapper;
 
 /**
- * 
- * Service layer which implements all operations about clustering
+ * Service layer which implements all operations about clustering.
  * 
  * @author Joel Azevedo Costa
  * @year 2015
@@ -38,14 +45,16 @@ public class ClusteringServiceImpl implements ClusteringService {
 
 	private ClustersManagerDao clustersManagerDao;
 	private UsersManagerDao usersManagerDao;
+	private QueriesManagerDao queriesManagerDao;
 	@Autowired
 	private UsersLogged userLogged;
-
+	
 
 	@Autowired
-	public ClusteringServiceImpl(ClustersManagerDao clustersManagerDao, UsersManagerDao usersManagerDao) {
+	public ClusteringServiceImpl(ClustersManagerDao clustersManagerDao, UsersManagerDao usersManagerDao, QueriesManagerDao queriesManagerDao) {
 		this.clustersManagerDao = clustersManagerDao;
 		this.usersManagerDao = usersManagerDao;
+		this.queriesManagerDao = queriesManagerDao;
 	}
 
 	@Transactional(readOnly = false)
@@ -61,9 +70,9 @@ public class ClusteringServiceImpl implements ClusteringService {
 		 */
 		List<IClusterLabel> clustersLabels_ = clustering_.getLabels();
 		if (clustersLabels_ != null) {
-			for(IClusterLabel clusterLabel_ : clustersLabels_){
+			for (IClusterLabel clusterLabel_ : clustersLabels_) {
 				ClustersLabels clusterLabel = ClustersLabelsWrapper.convertToDaemonStructure(clusterLabel_);
-				createClustersLabels(clusterProcess,clusterLabel);
+				createClustersLabels(clusterProcess, clusterLabel);
 			}
 		}
 		Properties properties = clustering_.getPropeties();
@@ -79,9 +88,17 @@ public class ClusteringServiceImpl implements ClusteringService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean clusterProcessQueryRegistry(Long queryId, IClusterProcess clustering_) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean clusterProcessQueryRegistry(Long queryId, Long clusteringId) {
+		
+		QueriesHasClustersProcessId id = new QueriesHasClustersProcessId(queryId, clusteringId);
+		QueriesHasClustersProcess queriesHasClusters = new QueriesHasClustersProcess(id, null, null);
+		queriesManagerDao.getQueriesHasClustersProcessDao().save(queriesHasClusters);
+		
+		Users user = userLogged.getCurrentUserLogged();
+		UsersLog log = new UsersLog(user, new Date(), "create", "queries_has_clusters_processes", null, "Association between queries and clusters processes");
+		usersManagerDao.getUsersLog().save(log);
+		
+		return true;
 	}
 
 	@Override
@@ -110,9 +127,16 @@ public class ClusteringServiceImpl implements ClusteringService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean inactivateClustering(IClusterProcess clustering_) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean inactivateClustering(Long clusteringId) {
+		
+		ClustersProcesses clustersProcess = clustersManagerDao.getClustersProcessDao().findById(clusteringId);
+		if(clustersProcess == null)
+			throw new DaemonException(ExceptionsCodes.codeNoCluster, ExceptionsCodes.msgNoCluster);
+		clustersProcess.setActive(false);
+		
+		clustersManagerDao.getClustersProcessDao().update(clustersProcess);
+
+		return true;
 	}
 
 	/*
@@ -121,7 +145,7 @@ public class ClusteringServiceImpl implements ClusteringService {
 	private void createClustersPrperties(ClustersProperties properties) {
 		clustersManagerDao.getClustersPropertiesDao().save(properties);
 	}
-	
+
 	private void createClustersLabels(ClustersProcesses clusterProcess, ClustersLabels clusterLabel) {
 		String name = clusterLabel.getClusterLabelName();
 		ClustersLabels clusterLabelObj = clustersManagerDao.getClustersLabelsDao().findUniqueByAttribute("clusterLabelName", name);
@@ -129,7 +153,7 @@ public class ClusteringServiceImpl implements ClusteringService {
 			clustersManagerDao.getClustersLabelsDao().save(clusterLabel);
 			clusterLabelObj = clusterLabel;
 		}
-		
+
 		ClustersProcessHasClustersLabelsId id = new ClustersProcessHasClustersLabelsId(clusterProcess.getId(), clusterLabelObj.getClustersLabelId());
 		ClustersProcessHasClustersLabels clusterProcessHasLabel = clustersManagerDao.getClustersProcessHasClustersLabelsDao().findById(id);
 		if (clusterProcessHasLabel == null) {

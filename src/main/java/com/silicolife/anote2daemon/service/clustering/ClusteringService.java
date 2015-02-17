@@ -24,10 +24,10 @@ public interface ClusteringService {
 	 * Associate cluster to query
 	 * 
 	 * @param queryId
-	 * @param clustering
+	 * @param clusteringId
 	 * @return
 	 */
-	public Boolean clusterProcessQueryRegistry(Long queryId, IClusterProcess clustering_);
+	public Boolean clusterProcessQueryRegistry(Long queryId, Long clusteringId);
 	/**
 	 * Get cluster from query
 	 * 
@@ -45,10 +45,10 @@ public interface ClusteringService {
 	/**
 	 * Inactive a cluster
 	 * 
-	 * @param clustering
+	 * @param clusteringId
 	 * @return
 	 */
-	public Boolean inactivateClustering(IClusterProcess clustering_);
+	public Boolean inactivateClustering(Long clusteringId);
 	
 
 }

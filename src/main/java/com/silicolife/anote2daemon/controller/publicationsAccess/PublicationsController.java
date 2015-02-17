@@ -49,7 +49,7 @@ public class PublicationsController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN'))")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/getPublicationById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IPublication>> getPublicationById(@PathVariable Long id) {
 		DaemonResponse<IPublication> response = new DaemonResponse<IPublication>(publicationService.getById(id));
@@ -63,7 +63,7 @@ public class PublicationsController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN'))")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/createMultiplePublications", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<IPublication> publications) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publications));
@@ -77,7 +77,7 @@ public class PublicationsController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN'))")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody IPublication publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
@@ -91,7 +91,7 @@ public class PublicationsController {
 	 * @param source
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN'))")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/getAllPublicationsFromSource/{source}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@PathVariable String source) {
 		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsFromSource(source));
