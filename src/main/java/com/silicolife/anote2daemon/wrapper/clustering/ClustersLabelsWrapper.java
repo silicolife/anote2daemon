@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import pt.uminho.anote2.carrot.linkage.datastructures.ClusterLabel;
 import pt.uminho.anote2.core.cluster.IClusterLabel;
+import pt.uminho.anote2.datastructures.clustering.ClusterLabel;
 
 import com.silicolife.anote2daemon.model.core.entities.ClustersLabels;
 import com.silicolife.anote2daemon.model.core.entities.ClustersLabelsPublications;

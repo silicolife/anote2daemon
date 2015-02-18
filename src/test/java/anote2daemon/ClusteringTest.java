@@ -15,10 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import pt.uminho.anote2.carrot.linkage.datastructures.ClusterLabel;
-import pt.uminho.anote2.carrot.linkage.datastructures.ClusterProcess;
 import pt.uminho.anote2.core.cluster.IClusterLabel;
 import pt.uminho.anote2.core.cluster.IClusterProcess;
+import pt.uminho.anote2.datastructures.clustering.ClusterLabel;
+import pt.uminho.anote2.datastructures.clustering.ClusterProcess;
 
 import com.silicolife.anote2daemon.service.clustering.ClusteringService;
 

@@ -34,7 +34,6 @@ public class PublicationsManagerDao {
 	public PublicationsManagerDao(GenericDao<PublicationsSource> publicationsSourceDao, GenericDao<PublicationsHasPublicationsSource> publicationsHasPublicationsSourceDao,
 			GenericDao<Publications> publicationsDao, GenericDao<PublicationsFields> publicationsFieldsDao, GenericDao<PublicationsLabels> publicationsLabelsDao,
 			GenericDao<PublicationsHasPublicationLabels> publicationsHasPublicationLabelsDao, PublicationsAuxDao publicationsAuxDao) {
-		super();
 		this.publicationsSourceDao = publicationsSourceDao;
 		this.publicationsHasPublicationsSourceDao = publicationsHasPublicationsSourceDao;
 		this.publicationsDao = publicationsDao;

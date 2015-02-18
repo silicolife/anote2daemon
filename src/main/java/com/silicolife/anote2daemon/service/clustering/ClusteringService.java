@@ -6,7 +6,7 @@ import pt.uminho.anote2.core.cluster.IClusterProcess;
 
 /**
  * 
- * Interface to define all methods of Service layer of clustering
+ * Interface to define all methods of Service layer about clustering
  * 
  * @author Joel Azevedo Costa
  * @year 2015

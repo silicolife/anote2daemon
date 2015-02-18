@@ -31,10 +31,7 @@
 
 
 	<!-- Create object user Spring -->
-	<beans:bean id="userDetailsService"
-		class="com.silicolife.anote2daemon.service.users.UsersServiceImpl">
-		<beans:constructor-arg ref="usersManagerDao" />
-	</beans:bean>
+	<beans:bean id="userDetailsService" class="com.silicolife.anote2daemon.service.users.UsersServiceImpl" autowire="constructor" />
 
 	<!-- Custom authentication provider -->
 	<beans:bean id="customAuthenticationProvider"
@@ -62,8 +59,7 @@
 	<!-- <global-method-security secured-annotations="enabled" /> -->
 
 
-
-	<global-method-security pre-post-annotations="enabled" proxy-target-class="true">
+	<global-method-security pre-post-annotations="enabled">
 		<expression-handler ref="expressionHandler" />
 	</global-method-security>
 

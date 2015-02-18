@@ -24,7 +24,6 @@ public class UsersManagerDao {
 
 	@Autowired
 	public UsersManagerDao(GenericDao<Users> usersDao, GenericDao<UsersLog> usersLogDao, GenericDao<UsersHasDataObject> usersHasdataObjectDao) {
-		super();
 		this.usersDao = usersDao;
 		this.usersLogDao = usersLogDao;
 		this.usersHasdataObjectDao = usersHasdataObjectDao;

@@ -169,76 +169,51 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
-
-
-	<!-- special operations DAO -->
-
-	<beans:bean id="publicationsAuxDao"
-		class="com.silicolife.anote2daemon.model.core.dao.specialdao.PublicationsAuxDaoImpl">
+	
+	
+	<!--  Corpus  -->
+	<beans:bean id="corpusDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Corpus
+			</beans:value>
+		</beans:constructor-arg>
 	</beans:bean>
-
-	<beans:bean id="queriesAuxDao"
-		class="com.silicolife.anote2daemon.model.core.dao.specialdao.QueriesAuxDaoImpl">
+	
+	
+	<beans:bean id="corpusPropertiesDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.CorpusProperties
+			</beans:value>
+		</beans:constructor-arg>
 	</beans:bean>
 	
-	<beans:bean id="clustersProcessAuxDao"
-		class="com.silicolife.anote2daemon.model.core.dao.specialdao.ClustersProcessAuxDaoImpl">
+	
+	<beans:bean id="corpusHasProcessesDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
-	</beans:bean>
-
-
-	<!-- DAO Manager -->
-
-	<beans:bean id="publicationsManagerDao"
-		class="com.silicolife.anote2daemon.model.core.dao.manager.PublicationsManagerDao">
-		<beans:constructor-arg ref="publicationsSourceDao" />
-		<beans:constructor-arg ref="publicationsHasPublicationsSourceDao" />
-		<beans:constructor-arg ref="publicationsDao" />
-		<beans:constructor-arg ref="publicationsFieldsDao" />
-		<beans:constructor-arg ref="publicationsLabelsDao" />
-		<beans:constructor-arg ref="publicationsHasPublicationLabelsDao" />
-		<beans:constructor-arg ref="publicationsAuxDao" />
-	</beans:bean>
-
-	<beans:bean id="queriesManagerDao"
-		class="com.silicolife.anote2daemon.model.core.dao.manager.QueriesManagerDao">
-		<beans:constructor-arg ref="publicationsSourceDao" />
-		<beans:constructor-arg ref="publicationsHasPublicationsSourceDao" />
-		<beans:constructor-arg ref="publicationsDao" />
-		<beans:constructor-arg ref="publicationsFieldsDao" />
-		<beans:constructor-arg ref="publicationsLabelsDao" />
-		<beans:constructor-arg ref="publicationsHasPublicationLabelsDao" />
-		<beans:constructor-arg ref="publicationsAuxDao" />
-		<beans:constructor-arg ref="queriesDao" />
-		<beans:constructor-arg ref="queriesTypeDao" />
-		<beans:constructor-arg ref="queriesHasPublicationsDao" />
-		<beans:constructor-arg ref="queriesHasClustersProcessDao" />
-		<beans:constructor-arg ref="queriesAuxDao" />
-	</beans:bean>
-
-	<beans:bean id="usersManagerDao"
-		class="com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao">
-		<beans:constructor-arg ref="usersDao" />
-		<beans:constructor-arg ref="usersLogDao" />
-		<beans:constructor-arg ref="usersHasdataObjectDao" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.CorpusHasProcesses
+			</beans:value>
+		</beans:constructor-arg>
 	</beans:bean>
 	
-	<beans:bean id="clustersManagerDao"
-		class="com.silicolife.anote2daemon.model.core.dao.manager.ClustersManagerDao">
-		<beans:constructor-arg ref="clustersProcessDao" />
-		<beans:constructor-arg ref="clustersLabelsDao" />
-		<beans:constructor-arg ref="clustersPropertiesDao" />
-		<beans:constructor-arg ref="clustersProcessHasClustersLabelsDao" />
-		<beans:constructor-arg ref="clustersProcessAuxDao" />
+	
+	<beans:bean id="corpusHasPublicationsDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.CorpusHasPublications
+			</beans:value>
+		</beans:constructor-arg>
 	</beans:bean>
 	
 	
 
-	<beans:bean id="userLogged"
-		class="com.silicolife.anote2daemon.model.core.dao.UsersLogged">
-	</beans:bean>
+
 
 
 </beans:beans>

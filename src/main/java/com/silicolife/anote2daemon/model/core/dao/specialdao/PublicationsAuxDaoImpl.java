@@ -28,9 +28,23 @@ public class PublicationsAuxDaoImpl implements PublicationsAuxDao {
 
 		Session session = sessionFactory.getCurrentSession();
 		Criteria c = session.createCriteria(Publications.class, "pub");
-		c.setFetchMode("pubHasPub.publications", FetchMode.JOIN);
+		c.setFetchMode("queriesHasPub.publications", FetchMode.JOIN);
 		c.createAlias("pub.queriesHasPublicationses", "queriesHasPub");
 		c.add(Restrictions.eq("queriesHasPub.id.queriesId", queryId));
+
+		List<Publications> publications = c.list();
+
+		return publications;
+	}
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Publications> findPublicationsByCorpusId(Long corpusId) {
+
+		Session session = sessionFactory.getCurrentSession();
+		Criteria c = session.createCriteria(Publications.class, "pub");
+		c.createAlias("pub.corpusHasPublicationses", "corpusHasPub");
+		c.setFetchMode("corpusHasPub.publications", FetchMode.JOIN);
+		c.add(Restrictions.eq("corpusHasPub.id.corpusId", corpusId));
 
 		List<Publications> publications = c.list();
 

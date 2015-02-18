@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import pt.uminho.anote2.carrot.linkage.datastructures.ClusterProcess;
 import pt.uminho.anote2.core.cluster.IClusterLabel;
 import pt.uminho.anote2.core.cluster.IClusterProcess;
+import pt.uminho.anote2.datastructures.clustering.ClusterProcess;
 
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasClustersLabels;
 import com.silicolife.anote2daemon.model.core.entities.ClustersProcesses;
@@ -23,12 +23,6 @@ import com.silicolife.anote2daemon.model.core.entities.ClustersProperties;
  */
 public class ClustersProcessWrapper {
 
-	/**
-	 * Convert anote2 structure
-	 * 
-	 * @param clusterProcesses
-	 * @return
-	 */
 	public static IClusterProcess convertToAnoteStructure(ClustersProcesses clusterProcesses) {
 
 		Long id = clusterProcesses.getId();
@@ -64,12 +58,7 @@ public class ClustersProcessWrapper {
 		return clusterProcess_;
 	}
 
-	/**
-	 * Convert to daemon structure
-	 * 
-	 * @param clusterProcess_
-	 * @return
-	 */
+
 	public static ClustersProcesses convertToDaemonStructure(IClusterProcess clusterProcess_) {
 		
 		Long id = clusterProcess_.getID();

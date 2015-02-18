@@ -30,19 +30,21 @@ public class QueriesManagerDao extends PublicationsManagerDao {
 	private GenericDao<Queries> queriesDao;
 	private GenericDao<QueriesType> queriesTypeDao;
 	private GenericDao<QueriesHasPublications> queriesHasPublicationsDao;
-	private GenericDao<QueriesHasClustersProcess> queriesHasClustersProcess;
+	private GenericDao<QueriesHasClustersProcess> queriesHasClustersProcessDao;
 	private QueriesAuxDao queriesAuxDao;
 
 	@Autowired
 	public QueriesManagerDao(GenericDao<PublicationsSource> publicationsSourceDao, GenericDao<PublicationsHasPublicationsSource> publicationsHasPublicationsSourceDao,
 			GenericDao<Publications> publicationsDao, GenericDao<PublicationsFields> publicationsFieldsDao, GenericDao<PublicationsLabels> publicationsLabelsDao,
 			GenericDao<PublicationsHasPublicationLabels> publicationsHasPublicationLabelsDao, PublicationsAuxDao publicationsAuxDao, GenericDao<Queries> queriesDao,
-			GenericDao<QueriesType> queriesTypeDao, GenericDao<QueriesHasPublications> queriesHasPublicationsDao, GenericDao<QueriesHasClustersProcess> queriesHasClustersProcess, QueriesAuxDao queriesAuxDao) {
+			GenericDao<QueriesType> queriesTypeDao, GenericDao<QueriesHasPublications> queriesHasPublicationsDao,
+			GenericDao<QueriesHasClustersProcess> queriesHasClustersProcessDao, QueriesAuxDao queriesAuxDao) {
 		super(publicationsSourceDao, publicationsHasPublicationsSourceDao, publicationsDao, publicationsFieldsDao, publicationsLabelsDao, publicationsHasPublicationLabelsDao,
 				publicationsAuxDao);
 		this.queriesDao = queriesDao;
 		this.queriesTypeDao = queriesTypeDao;
 		this.queriesHasPublicationsDao = queriesHasPublicationsDao;
+		this.queriesHasClustersProcessDao = queriesHasClustersProcessDao;
 		this.queriesAuxDao = queriesAuxDao;
 	}
 
@@ -53,13 +55,13 @@ public class QueriesManagerDao extends PublicationsManagerDao {
 	public GenericDao<QueriesType> getQueriesType() {
 		return queriesTypeDao;
 	}
-	
+
 	public GenericDao<QueriesHasPublications> getQueriesHasPublicationsDao() {
 		return queriesHasPublicationsDao;
 	}
-	
+
 	public GenericDao<QueriesHasClustersProcess> getQueriesHasClustersProcessDao() {
-		return queriesHasClustersProcess;
+		return queriesHasClustersProcessDao;
 	}
 
 	public QueriesAuxDao getQueriesAuxDao() {

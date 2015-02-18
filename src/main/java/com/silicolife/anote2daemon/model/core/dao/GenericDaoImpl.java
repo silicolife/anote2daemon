@@ -9,8 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 /**
  * This classes represents the implementation of generic methods to access the
@@ -21,13 +19,12 @@ import org.springframework.stereotype.Repository;
  *
  * @param <T>
  */
-@Repository
+
 public class GenericDaoImpl<T> implements GenericDao<T> {
 
 	private SessionFactory sessionFactory;
 	private Class<T> klass;
 
-	@Autowired
 	public GenericDaoImpl(SessionFactory sessionFactory, Class<T> klass) {
 		this.sessionFactory = sessionFactory;
 		this.klass = klass;
