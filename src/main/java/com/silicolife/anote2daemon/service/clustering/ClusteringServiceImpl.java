@@ -81,7 +81,13 @@ public class ClusteringServiceImpl implements ClusteringService {
 			for (ClustersProperties clusterProperty : clustersProperties) {
 				createClustersPrperties(clusterProperty);
 			}
-		}
+		}	
+		/*
+		 * Log
+		 */
+		Users user = userLogged.getCurrentUserLogged();
+		UsersLog log = new UsersLog(user, new Date(), "create", "clusters_processes/cluster_label/cluster_properties", null, "create cluster processes");
+		usersManagerDao.getUsersLog().save(log);
 
 		return true;
 	}
@@ -93,7 +99,9 @@ public class ClusteringServiceImpl implements ClusteringService {
 		QueriesHasClustersProcessId id = new QueriesHasClustersProcessId(queryId, clusteringId);
 		QueriesHasClustersProcess queriesHasClusters = new QueriesHasClustersProcess(id, null, null);
 		queriesManagerDao.getQueriesHasClustersProcessDao().save(queriesHasClusters);
-		
+		/*
+		 * Log
+		 */
 		Users user = userLogged.getCurrentUserLogged();
 		UsersLog log = new UsersLog(user, new Date(), "create", "queries_has_clusters_processes", null, "Association between queries and clusters processes");
 		usersManagerDao.getUsersLog().save(log);
