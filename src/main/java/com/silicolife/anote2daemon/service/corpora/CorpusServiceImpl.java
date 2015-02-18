@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.corpus.ICorpus;
 
+import com.silicolife.anote2daemon.exceptions.DaemonException;
+import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.CorpusManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.PublicationsManagerDao;
@@ -56,7 +58,6 @@ public class CorpusServiceImpl implements CorpusService {
 
 	@Override
 	public List<ICorpus> getAllCorpus() {
-
 		List<Corpus> corpus = corpusManagerDao.getCorpusDao().findAll();
 		List<ICorpus> corpus_ = new ArrayList<ICorpus>();
 		for (Corpus corpusObj : corpus) {
@@ -67,7 +68,6 @@ public class CorpusServiceImpl implements CorpusService {
 			return null;
 
 		return corpus_;
-
 	}
 
 	@Override
@@ -104,7 +104,10 @@ public class CorpusServiceImpl implements CorpusService {
 		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), corpus.getId(), corpusStr);
 		UsersHasDataObject dataObjectUser = new UsersHasDataObject(dataObjectUserId, user, "owner");
 		usersManagerDao.getUsersHasdataObjectDao().save(dataObjectUser);
-		UsersLog log = new UsersLog(user, new Date(), "create", "corpus/daemon_users_has_data_object", null, "create a new corpus");
+		/*
+		 * log
+		 */
+		UsersLog log = new UsersLog(user, new Date(), "create", "corpus/corpus_properties/daemon_users_has_data_object", null, "create corpus");
 		usersManagerDao.getUsersLog().save(log);
 
 		return true;
@@ -115,15 +118,14 @@ public class CorpusServiceImpl implements CorpusService {
 	@Override
 	public boolean updateCorpus(ICorpus corpus_) {
 		/*
-		 * save corpus
+		 * update corpus
 		 */
 		Users user = userLogged.getCurrentUserLogged();
 		Corpus corpus = CorpusWrapper.convertToDaemonStructure(corpus_);
 		corpusManagerDao.getCorpusDao().update(corpus);
-
-		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), corpus.getId(), corpusStr);
-		UsersHasDataObject dataObjectUser = new UsersHasDataObject(dataObjectUserId, user, "owner");
-		usersManagerDao.getUsersHasdataObjectDao().save(dataObjectUser);
+		/*
+		 * log
+		 */
 		UsersLog log = new UsersLog(user, new Date(), "update", "corpus", null, "update corpus");
 		usersManagerDao.getUsersLog().save(log);
 
@@ -134,10 +136,9 @@ public class CorpusServiceImpl implements CorpusService {
 	public List<IPublication> getCorpusPublications(Long corpusId) {
 		Corpus corpus = corpusManagerDao.getCorpusDao().findById(corpusId);
 		if (corpus == null)
-			return null;
+			throw new DaemonException(ExceptionsCodes.codeNoCorpus, ExceptionsCodes.msgNoCorpus);
 
 		List<IPublication> publications_ = new ArrayList<IPublication>();
-
 		List<Publications> publications = publicationsManagerDao.getPublicationsAuxDao().findPublicationsByCorpusId(corpusId);
 		for (Publications publication : publications) {
 			IPublication publication_ = PublicationsWrapper.convertToAnoteStructure(publication);
@@ -146,8 +147,8 @@ public class CorpusServiceImpl implements CorpusService {
 
 		if (publications_.size() == 0)
 			return null;
-		return publications_;
 
+		return publications_;
 	}
 
 	/*
