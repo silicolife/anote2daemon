@@ -124,7 +124,10 @@ public class QueriesServiceImpl implements QueriesService {
 		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), query.getId(), queries);
 		UsersHasDataObject dataObjectUser = new UsersHasDataObject(dataObjectUserId, user, "owner");
 		usersManagerDao.getUsersHasdataObjectDao().save(dataObjectUser);
-		UsersLog log = new UsersLog(user, new Date(), "create", "queries/daemon_users_has_data_object", null, "create a new query");
+		/*
+		 * log
+		 */
+		UsersLog log = new UsersLog(user, new Date(), "create", "queries/queries_type/daemon_users_has_data_object", null, "create query");
 		usersManagerDao.getUsersLog().save(log);
 
 		return true;
@@ -135,18 +138,14 @@ public class QueriesServiceImpl implements QueriesService {
 	public Boolean update(IQuery query_) {
 		Users user = userLogged.getCurrentUserLogged();
 		Queries query = QueriesWrapper.convertToDaemonStructure(query_);
-		Queries queryDb = queriesManagerDao.getQueriesDao().findById(query.getId());
-		if (queryDb == null)
-			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
-	
-
 		queriesManagerDao.getQueriesDao().update(query);
-
+		/*
+		 * log
+		 */
 		UsersLog log = new UsersLog(user, new Date(), "update", "queries", null, "update query");
 		usersManagerDao.getUsersLog().save(log);
 
 		return true;
-
 	}
 
 	@Transactional(readOnly = false)
@@ -163,7 +162,9 @@ public class QueriesServiceImpl implements QueriesService {
 			QueriesHasPublications queryHasPub = new QueriesHasPublications(queryHasPubId, null, null);
 			queriesManagerDao.getQueriesHasPublicationsDao().save(queryHasPub);
 		}
-
+		/*
+		 * log
+		 */
 		UsersLog log = new UsersLog(user, new Date(), "create", "queries_has_publications", null, "associate publications to a query");
 		usersManagerDao.getUsersLog().save(log);
 
@@ -176,15 +177,18 @@ public class QueriesServiceImpl implements QueriesService {
 
 		Users user = userLogged.getCurrentUserLogged();
 		QueriesHasPublicationsId queriesPubId = new QueriesHasPublicationsId(queryId, publicationId);
-		QueriesHasPublications queriesPub = queriesManagerDao.getQueriesHasPublicationsDao().findById(queriesPubId);
-		if (queriesPub == null)
-			throw new DaemonException(ExceptionsCodes.codeQueryPublication, ExceptionsCodes.msgQueryPublication);
-
-		queriesPub.setRelevance(relevance);
-	
+		QueriesHasPublications queriesPub = new QueriesHasPublications(queriesPubId, null,null);
 		
-		queriesManagerDao.getQueriesHasPublicationsDao().update(queriesPub);
+		//queriesManagerDao.getQueriesHasPublicationsDao().findById(queriesPubId);
+		//if (queriesPub == null)
+		//	throw new DaemonException(ExceptionsCodes.codeQueryPublication, ExceptionsCodes.msgQueryPublication);
 
+	
+		queriesPub.setRelevance(relevance);
+		queriesManagerDao.getQueriesHasPublicationsDao().update(queriesPub);
+		/*
+		 * log
+		 */
 		UsersLog log = new UsersLog(user, new Date(), "update", "queries_has_publications", null, "update relevance");
 		usersManagerDao.getUsersLog().save(log);
 
@@ -193,7 +197,6 @@ public class QueriesServiceImpl implements QueriesService {
 
 	@Override
 	public Map<Long, RelevanceType> getQueryPublicationsRelevance(Long queryId) {
-
 		Queries query = queriesManagerDao.getQueriesDao().findById(queryId);
 		if (query == null)
 			throw new DaemonException(ExceptionsCodes.codeNoQuery, ExceptionsCodes.msgNoQuery);
