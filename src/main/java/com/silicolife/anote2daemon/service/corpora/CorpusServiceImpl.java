@@ -17,7 +17,6 @@ import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.CorpusManagerDao;
-import com.silicolife.anote2daemon.model.core.dao.manager.PublicationsManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.Corpus;
 import com.silicolife.anote2daemon.model.core.entities.CorpusProperties;
@@ -42,18 +41,15 @@ import com.silicolife.anote2daemon.wrapper.publications.PublicationsWrapper;
 public class CorpusServiceImpl implements CorpusService {
 
 	private CorpusManagerDao corpusManagerDao;
-	private PublicationsManagerDao publicationsManagerDao;
 	private UsersManagerDao usersManagerDao;
-
 	@Autowired
 	private UsersLogged userLogged;
 	private final static String corpusStr = ResourcesTypeUtils.corpus.toString();
 
 	@Autowired
-	public CorpusServiceImpl(CorpusManagerDao corpusManagerDao, UsersManagerDao usersManagerDao, PublicationsManagerDao publicationsManagerDao) {
+	public CorpusServiceImpl(CorpusManagerDao corpusManagerDao, UsersManagerDao usersManagerDao) {
 		this.corpusManagerDao = corpusManagerDao;
 		this.usersManagerDao = usersManagerDao;
-		this.publicationsManagerDao = publicationsManagerDao;
 	}
 
 	@Override
@@ -139,7 +135,7 @@ public class CorpusServiceImpl implements CorpusService {
 			throw new DaemonException(ExceptionsCodes.codeNoCorpus, ExceptionsCodes.msgNoCorpus);
 
 		List<IPublication> publications_ = new ArrayList<IPublication>();
-		List<Publications> publications = publicationsManagerDao.getPublicationsAuxDao().findPublicationsByCorpusId(corpusId);
+		List<Publications> publications = corpusManagerDao.getPublicationsAuxDao().findPublicationsByCorpusId(corpusId);
 		for (Publications publication : publications) {
 			IPublication publication_ = PublicationsWrapper.convertToAnoteStructure(publication);
 			publications_.add(publication_);
@@ -152,7 +148,7 @@ public class CorpusServiceImpl implements CorpusService {
 	}
 
 	/*
-	 * private auxiliar methods to save corpus properties
+	 * private auxiliary methods to save corpus properties
 	 */
 	private void createCorpusProperties(CorpusProperties properties) {
 		corpusManagerDao.getCorpusPropertiesDao().save(properties);

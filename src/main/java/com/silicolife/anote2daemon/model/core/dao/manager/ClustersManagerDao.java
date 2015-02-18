@@ -18,7 +18,7 @@ import com.silicolife.anote2daemon.model.core.entities.ClustersProperties;
  *
  */
 @Repository
-public class ClustersManagerDao {
+public class ClustersManagerDao{
 
 	private GenericDao<ClustersProcesses> clustersProcessDao;
 	private GenericDao<ClustersLabels> clustersLabelsDao;
