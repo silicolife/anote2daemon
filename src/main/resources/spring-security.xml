@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-
 	<!-- Http entry point to login -->
 	<http use-expressions="true" entry-point-ref="restAuthenticationEntryPoint"
 		authentication-manager-ref="authenticationManager">
@@ -13,7 +12,6 @@
 			authentication-failure-handler-ref="restAuthenticationFailureHandler" />
 		<logout />
 	</http>
-
 
 	<!-- Entry point for REST service. -->
 	<beans:bean id="restAuthenticationEntryPoint"
@@ -24,11 +22,9 @@
 		class="com.silicolife.anote2daemon.security.RestAuthenticationSuccessHandler">
 	</beans:bean>
 
-
 	<!-- Using default failure handler -->
 	<beans:bean id="restAuthenticationFailureHandler"
 		class="com.silicolife.anote2daemon.security.RestAuthenticationFailureHandler" />
-
 
 	<!-- Create object user Spring -->
 	<beans:bean id="userDetailsService" class="com.silicolife.anote2daemon.service.users.UsersServiceImpl" autowire="constructor" />
@@ -48,32 +44,26 @@
 		</beans:property>
 	</beans:bean>
 
-
 	<!-- Authentication Manager -->
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="customAuthenticationProvider" />
 	</authentication-manager>
 
-
 	<!-- Enable the annotations for defining the secure role -->
 	<!-- <global-method-security secured-annotations="enabled" /> -->
-
 
 	<global-method-security pre-post-annotations="enabled">
 		<expression-handler ref="expressionHandler" />
 	</global-method-security>
-
 
 	<beans:bean id="expressionHandler"
 		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
 		<beans:property name="permissionEvaluator" ref="myPermissionEvaluator" />
 	</beans:bean>
 
-
 	<beans:bean id="myPermissionEvaluator"
 		class="com.silicolife.anote2daemon.security.RestPermissionsEvaluator">
 	 	<beans:constructor-arg ref="userDetailsService" /> 
 	</beans:bean>
-
 
 </beans:beans>

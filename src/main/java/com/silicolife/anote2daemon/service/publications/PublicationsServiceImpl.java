@@ -1,11 +1,11 @@
 package com.silicolife.anote2daemon.service.publications;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +17,17 @@ import pt.uminho.anote2.core.document.structure.IPublicationField;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
+import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.PublicationsManagerDao;
+import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.Publications;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsFields;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationLabels;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationsSource;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsLabels;
 import com.silicolife.anote2daemon.model.core.entities.PublicationsSource;
+import com.silicolife.anote2daemon.model.core.entities.Users;
+import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 import com.silicolife.anote2daemon.wrapper.publications.PublicationsFieldsWrapper;
 import com.silicolife.anote2daemon.wrapper.publications.PublicationsLabelsWrapper;
 import com.silicolife.anote2daemon.wrapper.publications.PublicationsSourceWrapper;
@@ -32,42 +36,45 @@ import com.silicolife.anote2daemon.wrapper.publications.PublicationsWrapper;
 /**
  * Service layer which implements all operations about publications
  * 
- * 
  * @author Joel Azevedo Costa
  * @year 2015
- *
+ * 
  */
 @Service
 @Transactional(readOnly = true)
 public class PublicationsServiceImpl implements PublicationsService {
 
 	private PublicationsManagerDao publicationsManagerDao;
+	private UsersManagerDao usersManagerDao;
+	@Autowired
+	private UsersLogged userLogged;
 
 	@Autowired
 	public PublicationsServiceImpl(PublicationsManagerDao publicationsManagerDao) {
-		super();
 		this.publicationsManagerDao = publicationsManagerDao;
 	}
 
 	@Override
 	public IPublication getById(Long id) {
 		Publications publication = publicationsManagerDao.getPublicationsDao().findById(id);
-		IPublication publication_ = null;
-		if (publication != null) {
-			publication_ = PublicationsWrapper.convertToAnoteStructure(publication);
-		}
+		if (publication == null)
+			return null;
+
+		IPublication publication_ = PublicationsWrapper.convertToAnoteStructure(publication);
 		return publication_;
 	}
 
 	@Transactional(readOnly = false)
 	@Override
 	public Boolean update(IPublication publication_) {
-		Publications pub = publicationsManagerDao.getPublicationsDao().findById(publication_.getID());
-		if (pub == null)
-			throw new DaemonException(ExceptionsCodes.codeNoPublication, ExceptionsCodes.msgNoPublication);
-
 		Publications publications = PublicationsWrapper.convertToDaemonStructure(publication_);
 		publicationsManagerDao.getPublicationsDao().update(publications);
+		/*
+		 * Log
+		 */
+		Users user = userLogged.getCurrentUserLogged();
+		UsersLog log = new UsersLog(user, new Date(), "update", "publications", null, "update publication");
+		usersManagerDao.getUsersLog().save(log);
 		return true;
 	}
 
@@ -106,6 +113,15 @@ public class PublicationsServiceImpl implements PublicationsService {
 				}
 			}
 		}
+
+		if (publications_.size() > 0) {
+			/*
+			 * Log
+			 */
+			Users user = userLogged.getCurrentUserLogged();
+			UsersLog log = new UsersLog(user, new Date(), "create", "publications/publications_labels/publication_source/publications_fields", null, "create publication");
+			usersManagerDao.getUsersLog().save(log);
+		}
 		return true;
 	}
 
@@ -116,7 +132,6 @@ public class PublicationsServiceImpl implements PublicationsService {
 			throw new DaemonException(ExceptionsCodes.codePublicationSource, ExceptionsCodes.msgPublicationSource);
 
 		Map<String, Long> response = new HashMap<String, Long>();
-		Hibernate.initialize(publicationSource.getPublicationsHasPublicationsSources());
 		Set<PublicationsHasPublicationsSource> pubsSources = publicationSource.getPublicationsHasPublicationsSources();
 		for (PublicationsHasPublicationsSource pubSource : pubsSources) {
 			String pubSourceId = pubSource.getId().getPublicationsSourceInternalId();
