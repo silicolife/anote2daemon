@@ -4,6 +4,7 @@ import java.util.List;
 
 import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.corpus.ICorpus;
+import pt.uminho.anote2.process.IE.IIEProcess;
 
 /**
  * 
@@ -51,6 +52,14 @@ public interface CorpusService {
 	 * @return
 	 */
 	public List<IPublication> getCorpusPublications(Long corpusId);
+	
+	/**
+	 * Get processes from a corpus
+	 * 
+	 * @param corpusId
+	 * @return
+	 */
+	public List<IIEProcess> getCorpusProcesses(Long corpusId);
 	
 	
 }

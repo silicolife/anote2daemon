@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.corpus.ICorpus;
+import pt.uminho.anote2.process.IE.IIEProcess;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
@@ -20,6 +21,7 @@ import com.silicolife.anote2daemon.model.core.dao.manager.CorpusManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.Corpus;
 import com.silicolife.anote2daemon.model.core.entities.CorpusProperties;
+import com.silicolife.anote2daemon.model.core.entities.Processes;
 import com.silicolife.anote2daemon.model.core.entities.Publications;
 import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
@@ -28,6 +30,7 @@ import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 import com.silicolife.anote2daemon.utils.ResourcesTypeUtils;
 import com.silicolife.anote2daemon.wrapper.corpora.CorpusPropertiesWrapper;
 import com.silicolife.anote2daemon.wrapper.corpora.CorpusWrapper;
+import com.silicolife.anote2daemon.wrapper.process.ProcessWrapper;
 import com.silicolife.anote2daemon.wrapper.publications.PublicationsWrapper;
 
 /**
@@ -145,6 +148,21 @@ public class CorpusServiceImpl implements CorpusService {
 			return null;
 
 		return publications_;
+	}
+
+	@Override
+	public List<IIEProcess> getCorpusProcesses(Long corpusId) {
+
+		List<IIEProcess> processes_ = new ArrayList<IIEProcess>();
+		List<Processes> processes = corpusManagerDao.getCorpusAuxDao().findProcessesByCorpusId(corpusId);
+		for (Processes process : processes) {
+			IIEProcess process_ = ProcessWrapper.convertToAnoteStructure(process);
+			processes_.add(process_);
+		}
+		if (processes_.size() == 0)
+			return null;
+
+		return processes_;
 	}
 
 	/*

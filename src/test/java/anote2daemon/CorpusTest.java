@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.core.document.corpus.ICorpus;
+import pt.uminho.anote2.datastructures.corpora.Corpus;
+import pt.uminho.anote2.process.IE.IIEProcess;
 
 import com.silicolife.anote2daemon.service.corpora.CorpusService;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,7 +49,8 @@ public class CorpusTest {
 
 	@Test
 	public void test() {
-		getAllPublications(1L);
+		//getAllPublications(1L);
+		getCorpusProcesses(1L);
 	}
 	
 	
@@ -63,5 +67,19 @@ public class CorpusTest {
 		Date end = new Date();
 		
 		System.out.println(end.getTime() - begin.getTime());
+	}
+	
+	private void getCorpusProcesses(Long queryId){
+		Date begin = new Date();
+
+		List<IIEProcess> processes = corpusService.getCorpusProcesses(queryId);
+		for(IIEProcess ddd : processes){
+			System.out.println(ddd.getName());
+		}
+		
+		Date end = new Date();
+		
+		System.out.println(end.getTime() - begin.getTime());
+		
 	}
 }

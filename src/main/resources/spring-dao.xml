@@ -169,9 +169,9 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
-	
-	
-	<!--  Corpus  -->
+
+
+	<!-- Corpus -->
 	<beans:bean id="corpusDao"
 		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
@@ -180,8 +180,8 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
-	
-	
+
+
 	<beans:bean id="corpusPropertiesDao"
 		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
@@ -190,8 +190,8 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
-	
-	
+
+
 	<beans:bean id="corpusHasProcessesDao"
 		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
@@ -200,8 +200,8 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
-	
-	
+
+
 	<beans:bean id="corpusHasPublicationsDao"
 		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
@@ -210,10 +210,9 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
+
+
+
 	
-	
-
-
-
 
 </beans:beans>
