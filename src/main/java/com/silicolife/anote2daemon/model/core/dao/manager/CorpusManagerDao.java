@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.silicolife.anote2daemon.model.core.dao.GenericDao;
+import com.silicolife.anote2daemon.model.core.dao.specialdao.CorpusAuxDao;
 import com.silicolife.anote2daemon.model.core.dao.specialdao.PublicationsAuxDao;
 import com.silicolife.anote2daemon.model.core.entities.Corpus;
 import com.silicolife.anote2daemon.model.core.entities.CorpusHasProcesses;
@@ -23,18 +24,21 @@ public class CorpusManagerDao extends PublicationsManagerDao {
 	private GenericDao<CorpusProperties> corpusPropertiesDao;
 	private GenericDao<CorpusHasProcesses> corpusHasProcessesDao;
 	private GenericDao<CorpusHasPublications> corpusHasPublicationsDao;
+	private CorpusAuxDao corpusAuxDao;
 
 	@Autowired
 	public CorpusManagerDao(GenericDao<PublicationsSource> publicationsSourceDao, GenericDao<PublicationsHasPublicationsSource> publicationsHasPublicationsSourceDao,
 			GenericDao<Publications> publicationsDao, GenericDao<PublicationsFields> publicationsFieldsDao, GenericDao<PublicationsLabels> publicationsLabelsDao,
 			GenericDao<PublicationsHasPublicationLabels> publicationsHasPublicationLabelsDao, PublicationsAuxDao publicationsAuxDao, GenericDao<Corpus> corpusDao,
-			GenericDao<CorpusProperties> corpusPropertiesDao, GenericDao<CorpusHasProcesses> corpusHasProcessesDao, GenericDao<CorpusHasPublications> corpusHasPublicationsDao) {
+			GenericDao<CorpusProperties> corpusPropertiesDao, GenericDao<CorpusHasProcesses> corpusHasProcessesDao, GenericDao<CorpusHasPublications> corpusHasPublicationsDao,
+			CorpusAuxDao corpusAuxDao) {
 		super(publicationsSourceDao, publicationsHasPublicationsSourceDao, publicationsDao, publicationsFieldsDao, publicationsLabelsDao, publicationsHasPublicationLabelsDao,
 				publicationsAuxDao);
 		this.corpusDao = corpusDao;
 		this.corpusPropertiesDao = corpusPropertiesDao;
 		this.corpusHasProcessesDao = corpusHasProcessesDao;
 		this.corpusHasPublicationsDao = corpusHasPublicationsDao;
+		this.corpusAuxDao = corpusAuxDao;
 	}
 
 	public GenericDao<Corpus> getCorpusDao() {
@@ -51,5 +55,9 @@ public class CorpusManagerDao extends PublicationsManagerDao {
 
 	public GenericDao<CorpusHasPublications> getCorpusHasPublicationsDao() {
 		return corpusHasPublicationsDao;
+	}
+
+	public CorpusAuxDao getCorpusAuxDao() {
+		return corpusAuxDao;
 	}
 }
