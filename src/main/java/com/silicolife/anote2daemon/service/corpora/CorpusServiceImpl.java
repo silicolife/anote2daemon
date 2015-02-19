@@ -20,6 +20,8 @@ import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
 import com.silicolife.anote2daemon.model.core.dao.manager.CorpusManagerDao;
 import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
 import com.silicolife.anote2daemon.model.core.entities.Corpus;
+import com.silicolife.anote2daemon.model.core.entities.CorpusHasProcesses;
+import com.silicolife.anote2daemon.model.core.entities.CorpusHasProcessesId;
 import com.silicolife.anote2daemon.model.core.entities.CorpusProperties;
 import com.silicolife.anote2daemon.model.core.entities.Processes;
 import com.silicolife.anote2daemon.model.core.entities.Publications;
@@ -170,5 +172,23 @@ public class CorpusServiceImpl implements CorpusService {
 	 */
 	private void createCorpusProperties(CorpusProperties properties) {
 		corpusManagerDao.getCorpusPropertiesDao().save(properties);
+	}
+
+	@Override
+	public Boolean registerCoprusProcess(Long corpusId, Long processId) {
+		/*
+		 * save processes
+		 */
+		Users user = userLogged.getCurrentUserLogged();
+		CorpusHasProcessesId id = new CorpusHasProcessesId(corpusId, processId);
+		CorpusHasProcesses processes = new CorpusHasProcesses(id, null, null);
+		corpusManagerDao.getCorpusDao().save(processes);
+		/*
+		 * log
+		 */
+		UsersLog log = new UsersLog(user, new Date(), "create", "corpus_has_processes", null, "Association between corpus and process");
+		usersManagerDao.getUsersLog().save(log);
+
+		return true;
 	}
 }

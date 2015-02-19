@@ -61,5 +61,14 @@ public interface CorpusService {
 	 */
 	public List<IIEProcess> getCorpusProcesses(Long corpusId);
 	
+	/**
+	 * Register a corpus to a process
+	 * 
+	 * @param corpusId
+	 * @param processId
+	 * @return
+	 */
+	public Boolean registerCoprusProcess(Long corpusId, Long processId);
+	
 	
 }
