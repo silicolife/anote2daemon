@@ -67,9 +67,9 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 		if (auth.isAuthenticated()) {
 			CustomSpringUser customUser = (CustomSpringUser) auth.getPrincipal();
 			Users user = customUser.getRepositoryUser();
-			((UsersLogged) v.getBean("userLogged")).setCurrentUserLogged(user);
+			((UsersLogged) v.getBean("usersLogged")).setCurrentUserLogged(user);
 		} else {
-			((UsersLogged) v.getBean("userLogged")).setCurrentUserLogged(null);
+			((UsersLogged) v.getBean("usersLogged")).setCurrentUserLogged(null);
 		}
 	}
 
