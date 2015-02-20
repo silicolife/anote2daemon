@@ -167,15 +167,8 @@ public class CorpusServiceImpl implements CorpusService {
 		return processes_;
 	}
 
-	/*
-	 * private auxiliary methods to save corpus properties
-	 */
-	private void createCorpusProperties(CorpusProperties properties) {
-		corpusManagerDao.getCorpusPropertiesDao().save(properties);
-	}
-
 	@Override
-	public Boolean registerCoprusProcess(Long corpusId, Long processId) {
+	public Boolean registerCorpusProcess(Long corpusId, Long processId) {
 		/*
 		 * save processes
 		 */
@@ -190,5 +183,12 @@ public class CorpusServiceImpl implements CorpusService {
 		usersManagerDao.getUsersLog().save(log);
 
 		return true;
+	}
+
+	/*
+	 * private auxiliary methods to save corpus properties
+	 */
+	private void createCorpusProperties(CorpusProperties properties) {
+		corpusManagerDao.getCorpusPropertiesDao().save(properties);
 	}
 }

@@ -68,7 +68,7 @@ public interface CorpusService {
 	 * @param processId
 	 * @return
 	 */
-	public Boolean registerCoprusProcess(Long corpusId, Long processId);
+	public Boolean registerCorpusProcess(Long corpusId, Long processId);
 	
 	
 }

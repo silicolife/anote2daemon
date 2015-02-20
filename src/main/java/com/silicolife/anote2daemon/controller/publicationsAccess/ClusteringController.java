@@ -47,12 +47,13 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissions.getFullgrant())")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getClustersFromQuery/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IClusterProcess>>> getClustersFromQuery(@PathVariable Long queryId) {
 		DaemonResponse<List<IClusterProcess>> response = new DaemonResponse<List<IClusterProcess>>(clusteringService.getClustersFromQuery(queryId));
 		return new ResponseEntity<DaemonResponse<List<IClusterProcess>>>(response, HttpStatus.OK);
 	}
+
 	/**
 	 * Get cluster by id
 	 * 
@@ -65,6 +66,7 @@ public class ClusteringController {
 		DaemonResponse<IClusterProcess> response = new DaemonResponse<IClusterProcess>(clusteringService.getClusteringById(id));
 		return new ResponseEntity<DaemonResponse<IClusterProcess>>(response, HttpStatus.OK);
 	}
+
 	/**
 	 * create a cluster process
 	 * 
@@ -77,6 +79,7 @@ public class ClusteringController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.createClustering(clustering));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+
 	/**
 	 * Associate a Cluster process to a Query
 	 * 
@@ -84,12 +87,13 @@ public class ClusteringController {
 	 * @param clusteringId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, 'queries', @permissions.getWritegrant())")
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+
 	/**
 	 * Inactive a Cluster Process
 	 * 
