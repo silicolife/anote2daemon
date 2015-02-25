@@ -211,8 +211,46 @@
 		</beans:constructor-arg>
 	</beans:bean>
 
+	<!-- Processes -->
+
+	<beans:bean id="processesDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Processes
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="processesTypeDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ProcessesType
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+	<beans:bean id="processesOriginDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ProcessesOrigin
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
 
-	
+	<beans:bean id="processesPropertiesDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ProcessesProperties
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+
+
+
 
 </beans:beans>

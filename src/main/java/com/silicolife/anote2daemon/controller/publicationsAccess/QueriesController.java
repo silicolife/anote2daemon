@@ -32,7 +32,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * @year 2015
  *
  */
-@RequestMapping(value = "/queries")
+@RequestMapping(value = "/queries", produces = { "application/json" })
 @ResponseBody
 @Controller
 public class QueriesController {

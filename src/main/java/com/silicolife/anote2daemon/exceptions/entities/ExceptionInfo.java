@@ -20,6 +20,10 @@ public class ExceptionInfo implements Serializable {
 	private String rootCause;
 	private String otherInfo;
 
+	public ExceptionInfo() {
+
+	}
+
 	public ExceptionInfo(String code, String message, String rootCause) {
 		this.code = code;
 		this.message = message;

@@ -3,7 +3,6 @@ package com.silicolife.anote2daemon.service.corpora;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
 import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
 import com.silicolife.anote2daemon.model.core.entities.UsersLog;
 import com.silicolife.anote2daemon.utils.ResourcesTypeUtils;
-import com.silicolife.anote2daemon.wrapper.corpora.CorpusPropertiesWrapper;
 import com.silicolife.anote2daemon.wrapper.corpora.CorpusWrapper;
 import com.silicolife.anote2daemon.wrapper.process.ProcessWrapper;
 import com.silicolife.anote2daemon.wrapper.publications.PublicationsWrapper;
@@ -85,23 +83,22 @@ public class CorpusServiceImpl implements CorpusService {
 	@Transactional(readOnly = false)
 	@Override
 	public Boolean createCorpus(ICorpus corpus_) {
-		/*
-		 * save corpus
-		 */
-		Users user = userLogged.getCurrentUserLogged();
+
 		Corpus corpus = CorpusWrapper.convertToDaemonStructure(corpus_);
-		corpusManagerDao.getCorpusDao().save(corpus);
 		/*
 		 * save corpus associations
 		 */
-		Properties properties = corpus_.getProperties();
-		if (properties != null) {
-			Set<CorpusProperties> corpusProperties = CorpusPropertiesWrapper.convertToDaemonStructure(properties, corpus);
-			for (CorpusProperties corpusProperty : corpusProperties) {
-				createCorpusProperties(corpusProperty);
-			}
+		Set<CorpusProperties> corpusProperties = corpus.getCorpusPropertieses();
+		for (CorpusProperties corpusProperty : corpusProperties) {
+			createCorpusProperties(corpusProperty);
 		}
 
+		/*
+		 * save corpus
+		 */
+		corpusManagerDao.getCorpusDao().save(corpus);
+
+		Users user = userLogged.getCurrentUserLogged();
 		UsersHasDataObjectId dataObjectUserId = new UsersHasDataObjectId(user.getId(), corpus.getId(), corpusStr);
 		UsersHasDataObject dataObjectUser = new UsersHasDataObject(dataObjectUserId, user, "owner");
 		usersManagerDao.getUsersHasdataObjectDao().save(dataObjectUser);

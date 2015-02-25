@@ -1,6 +1,8 @@
 package com.silicolife.anote2daemon.exceptions.handler;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
  * 
@@ -30,7 +33,11 @@ public class SecurityExceptions {
 	 * @return
 	 */
 	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<ExceptionInfo> handleException(AccessDeniedException e) {
+	public ResponseEntity<DaemonResponse<?>> handleException(AccessDeniedException e) {
+
+		 HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+
 		String rootCause = null;
 		String message = e.getMessage();
 		Throwable cause = e.getCause();
@@ -38,6 +45,8 @@ public class SecurityExceptions {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.accessDeniedCode, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.UNAUTHORIZED);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, headers,HttpStatus.UNAUTHORIZED);
 	}
 }

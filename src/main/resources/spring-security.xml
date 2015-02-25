@@ -12,7 +12,7 @@
 		<intercept-url pattern="/**" />
 		<form-login authentication-success-handler-ref="restAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="restAuthenticationFailureHandler" />
-		<logout />
+		<http-basic />
 	</http>
 
 	<!-- Entry point for REST service. -->

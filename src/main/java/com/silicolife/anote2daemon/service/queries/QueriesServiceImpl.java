@@ -88,11 +88,11 @@ public class QueriesServiceImpl implements QueriesService {
 	@Override
 	public List<IQuery> getAll() {
 
-		Users user = userLogged.getCurrentUserLogged();
+	//	Users user = userLogged.getCurrentUserLogged();
 		/**
 		 * get all queries from a user
 		 */
-		List<Queries> listQueries = queriesManagerDao.getQueriesAuxDao().findQueriesByAttributes(user.getId(), queries);
+		List<Queries> listQueries = queriesManagerDao.getQueriesAuxDao().findQueriesByAttributes(1L, queries);
 		if (listQueries.size() == 0)
 			return null;
 
