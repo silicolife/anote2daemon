@@ -6,12 +6,14 @@
 
 	<display-name>anote2daemon</display-name>
 
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
 	
-
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -21,7 +23,6 @@
 		classpath:spring-security.xml
 		</param-value>
 	</context-param>
-
 
 	<!-- Spring security filters -->
 	<filter>

@@ -7,13 +7,16 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- Http entry point to login -->
-	<http use-expressions="true" entry-point-ref="restAuthenticationEntryPoint"
+	<http entry-point-ref="restAuthenticationEntryPoint"
 		authentication-manager-ref="authenticationManager">
 		<intercept-url pattern="/**" />
 		<form-login authentication-success-handler-ref="restAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="restAuthenticationFailureHandler" />
-		<http-basic />
+		<logout logout-url="/j_spring_security_logout"
+			invalidate-session="true" delete-cookies="JSESSIONID"
+			success-handler-ref="logoutSuccessHandler" />
 	</http>
+
 
 	<!-- Entry point for REST service. -->
 	<beans:bean id="restAuthenticationEntryPoint"
@@ -28,8 +31,15 @@
 	<beans:bean id="restAuthenticationFailureHandler"
 		class="com.silicolife.anote2daemon.security.RestAuthenticationFailureHandler" />
 
+	<!-- Logout success -->
+	<beans:bean id="logoutSuccessHandler"
+		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler" />
+
+
 	<!-- Create object user Spring -->
-	<beans:bean id="userDetailsService" class="com.silicolife.anote2daemon.service.users.UsersServiceImpl" autowire="constructor" />
+	<beans:bean id="userDetailsService"
+		class="com.silicolife.anote2daemon.service.users.UsersServiceImpl"
+		autowire="constructor" />
 
 	<!-- Custom authentication provider -->
 	<beans:bean id="customAuthenticationProvider"
@@ -65,10 +75,8 @@
 
 	<beans:bean id="myPermissionEvaluator"
 		class="com.silicolife.anote2daemon.security.RestPermissionsEvaluator">
-	 	<beans:constructor-arg ref="userDetailsService" /> 
+		<beans:constructor-arg ref="userDetailsService" />
 	</beans:bean>
-	
-	
-	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
 
+	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
 </beans:beans>

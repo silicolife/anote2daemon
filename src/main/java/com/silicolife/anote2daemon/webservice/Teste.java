@@ -1,16 +1,35 @@
 package com.silicolife.anote2daemon.webservice;
 
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+
+import pt.uminho.anote2.datastructures.documents.query.Query;
+
+import com.silicolife.anote2daemon.webservice.client.RestClient;
 
 public class Teste {
 
 	public static void main(String[] args) {
 
-	//	RestClient client = RestClient.getInstance();
-		//ResponseEntity<DaemonResponse> a = client.login("admin", "admin");
+		RestClient client = RestClient.getInstance();
+		client.login("admin", "admin");
+		HttpHeaders sessinCookie = client.getHeaderAfterLoginSuccesuful();
+		HttpEntity<?> requestEntity = new HttpEntity<Object>(sessinCookie);
+		ResponseEntity<DaemonResponse<List<Query>>> a = client.getTemplate().exchange("http://localhost:8080/anote2daemon/queries/getAllQueries", HttpMethod.GET, requestEntity,
+				new ParameterizedTypeReference<DaemonResponse<List<Query>>>() {
+				});
 
-	//	ResponseEntity<List<Query>> response = (ResponseEntity<List<Query>>) client.executeGet("queries/getAllQueries");
+		// ResponseEntity<DaemonResponse> a = client.login("admin", "admin");
 
-//		List<Query> ad = (List)response.getBody();
+		// ResponseEntity<List<Query>> response = (ResponseEntity<List<Query>>)
+		// client.executeGet("queries/getAllQueries");
+
+		// List<Query> ad = (List)response.getBody();
 		/*
 		 * ObjectMapper mapper = new ObjectMapper();
 		 * mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);

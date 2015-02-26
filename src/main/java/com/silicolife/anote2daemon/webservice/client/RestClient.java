@@ -19,8 +19,10 @@ public class RestClient {
 	private final HttpHost targetHost = new HttpHost("localhost", 8080, "http");
 	private final String targetRelativePath = "anote2daemon";
 	private final String login = targetHost.toURI() + "/" + targetRelativePath + "/j_spring_security_check";
-	private final String logout = targetHost.toURI() + "/" + targetRelativePath + "/logout";
+	private final String logout = targetHost.toURI() + "/" + targetRelativePath + "/j_spring_security_logout";
 	private final RestAccessTemplate template;
+	private final ParameterizedTypeReference<DaemonResponse<Object>> classReturned = new ParameterizedTypeReference<DaemonResponse<Object>>() {
+	};
 	private static RestClient instance = null;
 
 	private RestClient() {
@@ -40,8 +42,6 @@ public class RestClient {
 	}
 
 	public ResponseEntity<DaemonResponse<Object>> login(String username, String password) {
-		ParameterizedTypeReference<DaemonResponse<Object>> classReturned = new ParameterizedTypeReference<DaemonResponse<Object>>() {
-		};
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
 		headers.add("Content-Type", "application/x-www-form-urlencoded");
 		MultiValueMap<String, String> loginMap = new LinkedMultiValueMap<String, String>();
@@ -53,14 +53,11 @@ public class RestClient {
 	}
 
 	public ResponseEntity<DaemonResponse<Object>> logout() {
-		ParameterizedTypeReference<DaemonResponse<Object>> classReturned = new ParameterizedTypeReference<DaemonResponse<Object>>() {
-		};
 		ResponseEntity<DaemonResponse<Object>> response = template.exchange(logout, HttpMethod.POST, null, classReturned);
 		return response;
 	}
 
 	public HttpHeaders getHeaderAfterLoginSuccesuful() {
-
 		HttpHeaders requestHeaders = null;
 		List<Cookie> cookies = template.getCookieStore().getCookies();
 		if (cookies != null) {
