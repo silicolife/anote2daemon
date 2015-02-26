@@ -23,6 +23,8 @@ public class Teste {
 		ResponseEntity<DaemonResponse<List<Query>>> a = client.getTemplate().exchange("http://localhost:8080/anote2daemon/queries/getAllQueries", HttpMethod.GET, requestEntity,
 				new ParameterizedTypeReference<DaemonResponse<List<Query>>>() {
 				});
+		
+		ResponseEntity<DaemonResponse<Object>> log = client.logout();
 
 		// ResponseEntity<DaemonResponse> a = client.login("admin", "admin");
 

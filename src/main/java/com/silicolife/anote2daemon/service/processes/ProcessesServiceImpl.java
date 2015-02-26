@@ -80,8 +80,9 @@ public class ProcessesServiceImpl implements ProcessesService {
 
 	@Override
 	public IIEProcess getProcessByID(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Processes processes = processesManagerDao.getProcessesDao().findById(id);
+		IIEProcess processes_ = ProcessWrapper.convertToAnoteStructure(processes);
+		return processes_;
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
  * 
@@ -28,7 +29,7 @@ public class DaemonDataException {
 	 * @return
 	 */
 	@ExceptionHandler(DaemonException.class)
-	public ResponseEntity<ExceptionInfo> handleException(DaemonException e) {
+	public ResponseEntity<DaemonResponse<?>> handleException(DaemonException e) {
 
 		String code = e.getCode();
 		String rootCause = null;
@@ -38,6 +39,8 @@ public class DaemonDataException {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.FORBIDDEN);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.FORBIDDEN);
 	}
 }

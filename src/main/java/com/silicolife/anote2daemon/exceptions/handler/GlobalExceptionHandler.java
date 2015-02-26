@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
  * Generic class to handler with general exceptions generate by anote2daemon.
@@ -26,7 +27,7 @@ public class GlobalExceptionHandler {
 	 * @return
 	 */
 	//@ExceptionHandler(NullPointerException.class)
-	public ResponseEntity<ExceptionInfo> handleException(NullPointerException e) {
+	public ResponseEntity<DaemonResponse<?>> handleException(NullPointerException e) {
 		String rootCause = null;
 		String message = e.getMessage();
 		Throwable cause = e.getCause();
@@ -34,7 +35,9 @@ public class GlobalExceptionHandler {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.nullPointerCode, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.NOT_IMPLEMENTED);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	/**
@@ -44,7 +47,7 @@ public class GlobalExceptionHandler {
 	 * @return
 	 */
 	@ExceptionHandler(InvalidFormatException.class)
-	public ResponseEntity<ExceptionInfo> handleException(InvalidFormatException e) {
+	public ResponseEntity<DaemonResponse<?>> handleException(InvalidFormatException e) {
 		String rootCause = null;
 		String message = e.getMessage();
 		Throwable cause = e.getCause();
@@ -52,7 +55,9 @@ public class GlobalExceptionHandler {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.parseJsonCode, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.BAD_REQUEST);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.BAD_REQUEST);
 	}
 
 	/**
@@ -62,7 +67,7 @@ public class GlobalExceptionHandler {
 	 * @return
 	 */
 	//@ExceptionHandler(Exception.class)
-	public ResponseEntity<ExceptionInfo> handleException(Exception e) {
+	public ResponseEntity<DaemonResponse<?>> handleException(Exception e) {
 		String rootCause = null;
 		String message = e.getMessage();
 		Throwable cause = e.getCause();
@@ -70,6 +75,8 @@ public class GlobalExceptionHandler {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.generalCode, message, rootCause);
-		return new ResponseEntity<ExceptionInfo>(exception, HttpStatus.BAD_REQUEST);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.BAD_REQUEST);
 	}
 }
