@@ -41,6 +41,20 @@ public class PublicationsController {
 
 	/**
 	 * 
+	 * Get fulltext from publication
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/getFullText/{id}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<String>> getFullText(@PathVariable Long id) {
+		DaemonResponse<String> response = new DaemonResponse<String>(publicationService.getFullText(id));
+		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
 	 * Get Publication by id (without fulltext)
 	 * 
 	 * @param id

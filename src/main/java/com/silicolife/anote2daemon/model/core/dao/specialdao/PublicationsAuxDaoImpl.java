@@ -1,9 +1,12 @@
 package com.silicolife.anote2daemon.model.core.dao.specialdao;
 
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -36,6 +39,7 @@ public class PublicationsAuxDaoImpl implements PublicationsAuxDao {
 
 		return publications;
 	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Publications> findPublicationsByCorpusId(Long corpusId) {
@@ -49,5 +53,26 @@ public class PublicationsAuxDaoImpl implements PublicationsAuxDao {
 		List<Publications> publications = c.list();
 
 		return publications;
+	}
+
+	@Override
+	public Publications getPublicationFullText(Long publicationId) {
+
+		Session session = sessionFactory.getCurrentSession();
+		String sqlString = "SELECT id, fullcontent FROM publications WHERE id = ?";
+		SQLQuery qry = session.createSQLQuery(sqlString);
+		qry.setParameter(0, publicationId);
+		qry.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+		@SuppressWarnings("rawtypes")
+		Map data = (Map) qry.uniqueResult();
+		Publications publication = null;
+		if (data != null) {
+			Long id = ((BigInteger) data.get("id")).longValue();
+			String content = (String) data.get("fullcontent");
+			publication = new Publications(id);
+			publication.setFullcontent(content);
+		}
+
+		return publication;
 	}
 }

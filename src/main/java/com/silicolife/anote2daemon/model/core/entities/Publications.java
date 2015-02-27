@@ -33,8 +33,8 @@ public class Publications implements java.io.Serializable {
 	private String pages;
 	private String abstract_;
 	private String externalLinks;
-	@Transient
 	private Boolean freeFullText;
+	@Transient
 	private String fullcontent;
 	private String notes;
 	private String relativePath;

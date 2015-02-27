@@ -46,4 +46,12 @@ public interface PublicationsService {
 	 * @return
 	 */
 	public Map<String, Long> getAllPublicationsFromSource(String source);
+
+	/**
+	 * Get full text from a publication
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public String getFullText(Long id);
 }

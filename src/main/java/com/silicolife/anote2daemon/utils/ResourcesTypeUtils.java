@@ -9,7 +9,7 @@ package com.silicolife.anote2daemon.utils;
  */
 public enum ResourcesTypeUtils {
 
-	queries("queries"), corpus("corpus");
+	queries("queries"), corpus("corpus"), processes("processes");
 
 	private final String name;
 

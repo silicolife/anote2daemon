@@ -144,6 +144,17 @@ public class PublicationsServiceImpl implements PublicationsService {
 		return response;
 	}
 
+	@Override
+	public String getFullText(Long id) {
+		Publications publications = publicationsManagerDao.getPublicationsAuxDao().getPublicationFullText(id);
+		if (publications == null)
+			throw new DaemonException(ExceptionsCodes.codeNoPublication, ExceptionsCodes.msgNoPublication);
+
+		String content = publications.getFullcontent();
+
+		return content;
+	}
+
 	/*
 	 * private methods
 	 */
