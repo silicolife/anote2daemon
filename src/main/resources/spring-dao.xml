@@ -250,7 +250,15 @@
 		</beans:constructor-arg>
 	</beans:bean>
 
+	<!-- Classes -->
 
-
+	<beans:bean id="classesDao"
+		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Classes
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
 </beans:beans>
