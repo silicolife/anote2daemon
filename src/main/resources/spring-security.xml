@@ -9,7 +9,7 @@
 	<!-- Http entry point to login -->
 	<http entry-point-ref="restAuthenticationEntryPoint"
 		authentication-manager-ref="authenticationManager">
-		<intercept-url pattern="/**" />
+		<intercept-url pattern="/**"  />
 		<form-login authentication-success-handler-ref="restAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="restAuthenticationFailureHandler" />
 		<logout logout-url="/j_spring_security_logout"

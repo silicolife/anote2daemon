@@ -1,5 +1,8 @@
 package com.silicolife.anote2daemon.webservice.client;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.apache.http.HttpHost;
@@ -16,7 +19,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 public class RestClient {
 
-	private final HttpHost targetHost = new HttpHost("localhost", 8080, "http");
+	private final HttpHost targetHost = new HttpHost("127.0.0.1", 8443, "https");
 	private final String targetRelativePath = "anote2daemon";
 	private final String login = targetHost.toURI() + "/" + targetRelativePath + "/j_spring_security_check";
 	private final String logout = targetHost.toURI() + "/" + targetRelativePath + "/j_spring_security_logout";
@@ -25,11 +28,11 @@ public class RestClient {
 	};
 	private static RestClient instance = null;
 
-	private RestClient() {
+	private RestClient() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException{
 		template = new RestAccessTemplate();
 	}
 
-	public static RestClient getInstance() {
+	public static RestClient getInstance() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
 		if (instance == null) {
 			instance = new RestClient();
 

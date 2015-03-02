@@ -1,5 +1,8 @@
 package com.silicolife.anote2daemon.webservice;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,7 +17,7 @@ import com.silicolife.anote2daemon.webservice.client.RestClient;
 
 public class Teste {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
 
 		RestClient client = RestClient.getInstance();
 		client.login("admin", "admin");
