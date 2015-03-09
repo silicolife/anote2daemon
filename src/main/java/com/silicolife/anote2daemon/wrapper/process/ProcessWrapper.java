@@ -1,7 +1,5 @@
 package com.silicolife.anote2daemon.wrapper.process;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -42,16 +40,13 @@ public class ProcessWrapper {
 		IProcessOrigin processOrigin_ = ProcessOriginWrapper.convertToAnoteStructure(processOrigin);
 		IProcessType processType_ = ProcessTypeWrapper.convertToAnoteStructure(processType);
 		Properties properties = ProcessPropertiesWrapper.convertToAnoteStructure(processProperties);
-		List<ICorpus> corpusList_ = new ArrayList<ICorpus>();
-		for (CorpusHasProcesses corpusRecord : corpusHasProcesses) {
-			ICorpus corpus_ = CorpusWrapper.convertToAnoteStructure(corpusRecord.getCorpus());
-			corpusList_.add(corpus_);
+		ICorpus corpus_ = null;
+		if(corpusHasProcesses.size() > 0){
+			CorpusHasProcesses corpusRecord = corpusHasProcesses.iterator().next();
+			corpus_ = CorpusWrapper.convertToAnoteStructure(corpusRecord.getCorpus());
 		}
 
-		if (corpusList_.size() == 0)
-			corpusList_ = null;
-
-		IIEProcess process_ = new IEProcess(id, corpusList_, description, notes, processType_, processOrigin_, properties);
+		IIEProcess process_ = new IEProcess(id, corpus_, description, notes, processType_, processOrigin_, properties);
 
 		return process_;
 	}
@@ -59,7 +54,7 @@ public class ProcessWrapper {
 	public static Processes convertToDaemonStructure(IIEProcess processes_) {
 		Long id = processes_.getID();
 		String name = processes_.getName();
-		String notes = processes_.getNotes();
+		String notes = "";//processes_.getNotes();
 		IProcessOrigin processOrigin_ = processes_.getProcessOrigin();
 		IProcessType processType_ = processes_.getType();
 		Properties properties = processes_.getProperties();

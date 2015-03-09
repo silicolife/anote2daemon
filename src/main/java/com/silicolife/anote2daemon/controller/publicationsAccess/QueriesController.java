@@ -87,10 +87,11 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')") //pt.uminho.anote2.datastructures.documents.query.
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody IQuery query) {
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
+	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody pt.uminho.anote2.datastructures.documents.query.Query query) {
+		IQuery iquery = IQuery.class.cast(query);
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(iquery));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 

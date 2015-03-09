@@ -79,9 +79,9 @@ public class QueriesWrapper {
 		/*
 		 * get parameters
 		 */
-		Long id = query_.getID();
+		Long id = query_.getId();
 		Date date = query_.getDate();
-		String keywords = query_.getKeyWords();
+		String keywords = query_.getKeywords();
 		String organism = query_.getOrganism();
 		String completeQuery = query_.getCompleteQuery();
 		Integer publicationsSize = query_.getPublicationsSize();
@@ -97,7 +97,7 @@ public class QueriesWrapper {
 		 * create query type
 		 */
 		IQueryOriginType queryType = query_.getQueryOriginType();
-		Long queryTypeId = queryType.getID();
+		Long queryTypeId = queryType.getId();
 		String querytypeDesc = queryType.getOrigin();
 		QueriesType queryTypeDaemon = new QueriesType(queryTypeId);
 		queryTypeDaemon.setDescription(querytypeDesc);

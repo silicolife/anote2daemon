@@ -7,24 +7,19 @@ package com.silicolife.anote2daemon.model.core;
  *
  */
 public enum RelevanceType {
-	none, Irrelevant, Related, Relevant;
-	
+	none, irrelevant, related, relevant;
+
 	public static RelevanceType convertString(String string) {
-		if(string== null)
-		{
+		if (string == null) {
 			return RelevanceType.none;
 		}
-		if(string.equals("Irrelevant"))
-		{
-			return RelevanceType.Irrelevant;
-		}
-		else if(string.equals("Related"))
-		{
-			return RelevanceType.Related;
-		}
-		else if(string.equals("Relevant"))
-		{
-			return RelevanceType.Relevant;
+		string = string.toLowerCase();
+		if (string.equals("irrelevant")) {
+			return RelevanceType.irrelevant;
+		} else if (string.equals("related")) {
+			return RelevanceType.related;
+		} else if (string.equals("relevant")) {
+			return RelevanceType.relevant;
 		}
 		return RelevanceType.none;
 	}

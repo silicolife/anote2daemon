@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.wrapper.publications;
 
+
 import pt.uminho.anote2.core.document.structure.IPublicationField;
 import pt.uminho.anote2.datastructures.documents.structure.PublicationFieldImpl;
 

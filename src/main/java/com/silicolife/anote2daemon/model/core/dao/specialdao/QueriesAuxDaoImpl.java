@@ -28,7 +28,6 @@ public class QueriesAuxDaoImpl implements QueriesAuxDao{
 		SQLQuery qry = session.createSQLQuery(sqlString);
 		qry.setParameter(0, id);
 		qry.setParameter(1, resourceType);
-		//qry.addEntity("users_has_data_object", UsersHasDataObject.class);
 	    qry.addEntity("queries", Queries.class);
 	    @SuppressWarnings("unchecked")
 		List<Queries>  result = qry.list();

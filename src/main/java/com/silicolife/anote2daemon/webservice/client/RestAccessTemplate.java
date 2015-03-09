@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.webservice.client;
 
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -22,13 +23,13 @@ import org.springframework.web.client.RestTemplate;
 
 public class RestAccessTemplate extends RestTemplate {
 
-	private final CloseableHttpClient httpClient;
-	private final CookieStore cookieStore;
-	private final HttpClientContext httpContext;
-	private final RestHttpComponentsClientHttpRequestFactory statefullHttpComponentsClientHttpRequestFactory;
-	private final List<HttpMessageConverter<?>> messageConverters;
-	private final SSLContextBuilder builder;
-	private final SSLConnectionSocketFactory sslsf;
+	private CloseableHttpClient httpClient;
+	private CookieStore cookieStore;
+	private HttpClientContext httpContext;
+	private RestHttpComponentsClientHttpRequestFactory statefullHttpComponentsClientHttpRequestFactory;
+	private List<HttpMessageConverter<?>> messageConverters;
+	private SSLContextBuilder builder;
+	private SSLConnectionSocketFactory sslsf;
 
 	public RestAccessTemplate() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
 		messageConverters = new ArrayList<HttpMessageConverter<?>>();
@@ -62,5 +63,19 @@ public class RestAccessTemplate extends RestTemplate {
 
 	public RestHttpComponentsClientHttpRequestFactory getStatefulHttpClientRequestFactory() {
 		return statefullHttpComponentsClientHttpRequestFactory;
+	}
+
+	public void clear() throws IOException {
+	
+		cookieStore = null;
+		sslsf = null;
+		messageConverters = null;
+		httpContext = null;
+		statefullHttpComponentsClientHttpRequestFactory = null;
+		
+		if (httpClient != null) {
+			httpClient.close();
+			httpClient = null;
+		}
 	}
 }
