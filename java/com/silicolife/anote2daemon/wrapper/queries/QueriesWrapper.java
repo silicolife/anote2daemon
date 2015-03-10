@@ -97,10 +97,14 @@ public class QueriesWrapper {
 		 * create query type
 		 */
 		IQueryOriginType queryType = query_.getQueryOriginType();
-		Long queryTypeId = queryType.getId();
-		String querytypeDesc = queryType.getOrigin();
-		QueriesType queryTypeDaemon = new QueriesType(queryTypeId);
-		queryTypeDaemon.setDescription(querytypeDesc);
+		QueriesType queryTypeDaemon = null;
+		if (queryType != null) {
+			Long queryTypeId = queryType.getId();
+			String querytypeDesc = queryType.getOrigin();
+			queryTypeDaemon = new QueriesType(queryTypeId);
+			queryTypeDaemon.setDescription(querytypeDesc);
+		}
+
 		/*
 		 * create query
 		 */

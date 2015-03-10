@@ -9,14 +9,14 @@ import com.silicolife.anote2daemon.model.core.entities.QueriesProperties;
 import com.silicolife.anote2daemon.model.core.entities.QueriesPropertiesId;
 
 /**
- * Class to transform anote2 Query properties structures to daemon Query properties structures and
- * vice-verse
+ * Class to transform anote2 Query properties structures to daemon Query
+ * properties structures and vice-verse
  * 
  * @author Joel Azevedo Costa
  * @year 2015
  *
  */
-public class QueriesPropertiesWrapper{
+public class QueriesPropertiesWrapper {
 
 	public static Properties convertToAnoteStructure(Set<QueriesProperties> queryProperties) {
 		Properties properties = null;
@@ -32,13 +32,15 @@ public class QueriesPropertiesWrapper{
 	}
 
 	public static Set<QueriesProperties> convertToDaemonStructure(Properties properties, Queries query) {
-		
+
 		Set<QueriesProperties> queriesProperties = new HashSet<QueriesProperties>(0);
-		for (String key : properties.stringPropertyNames()) {
-			QueriesPropertiesId queriesPropertiesId = new QueriesPropertiesId(query.getId(), key);
-			String value = properties.getProperty(key);
-			QueriesProperties queriesPropertiesDaemon = new QueriesProperties(queriesPropertiesId, query, value);
-			queriesProperties.add(queriesPropertiesDaemon);
+		if (properties != null) {
+			for (String key : properties.stringPropertyNames()) {
+				QueriesPropertiesId queriesPropertiesId = new QueriesPropertiesId(query.getId(), key);
+				String value = properties.getProperty(key);
+				QueriesProperties queriesPropertiesDaemon = new QueriesProperties(queriesPropertiesId, query, value);
+				queriesProperties.add(queriesPropertiesDaemon);
+			}
 		}
 
 		return queriesProperties;
