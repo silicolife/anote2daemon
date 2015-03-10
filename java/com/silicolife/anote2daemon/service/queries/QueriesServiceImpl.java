@@ -61,7 +61,7 @@ public class QueriesServiceImpl implements QueriesService {
 		Queries query = queriesManagerDao.getQueriesDao().findById(id);
 		if (query == null)
 			return null;
-		
+
 		IQuery query_ = QueriesWrapper.convertToAnoteStructure(query);
 		return query_;
 	}
@@ -88,11 +88,11 @@ public class QueriesServiceImpl implements QueriesService {
 	@Override
 	public List<IQuery> getAll() {
 
-	//	Users user = userLogged.getCurrentUserLogged();
+		 Users user = userLogged.getCurrentUserLogged();
 		/**
 		 * get all queries from a user
 		 */
-		List<Queries> listQueries = queriesManagerDao.getQueriesAuxDao().findQueriesByAttributes(1L, queries);
+		List<Queries> listQueries = queriesManagerDao.getQueriesAuxDao().findQueriesByAttributes(user.getId(), queries);
 		if (listQueries.size() == 0)
 			return null;
 
@@ -115,9 +115,11 @@ public class QueriesServiceImpl implements QueriesService {
 		 * save query type if not exist
 		 */
 		QueriesType queryType = query.getQueriesType();
-		QueriesType queryTypeDb = queriesManagerDao.getQueriesType().findById(queryType.getId());
-		if (queryTypeDb == null)
-			queriesManagerDao.getQueriesType().save(queryType);
+		if (queryType != null) {
+			QueriesType queryTypeDb = queriesManagerDao.getQueriesType().findById(queryType.getId());
+			if (queryTypeDb == null)
+				queriesManagerDao.getQueriesType().save(queryType);
+		}
 
 		queriesManagerDao.getQueriesDao().save(query);
 
@@ -177,13 +179,13 @@ public class QueriesServiceImpl implements QueriesService {
 
 		Users user = userLogged.getCurrentUserLogged();
 		QueriesHasPublicationsId queriesPubId = new QueriesHasPublicationsId(queryId, publicationId);
-		QueriesHasPublications queriesPub = new QueriesHasPublications(queriesPubId, null,null);
-		
-		//queriesManagerDao.getQueriesHasPublicationsDao().findById(queriesPubId);
-		//if (queriesPub == null)
-		//	throw new DaemonException(ExceptionsCodes.codeQueryPublication, ExceptionsCodes.msgQueryPublication);
+		QueriesHasPublications queriesPub = new QueriesHasPublications(queriesPubId, null, null);
 
-	
+		// queriesManagerDao.getQueriesHasPublicationsDao().findById(queriesPubId);
+		// if (queriesPub == null)
+		// throw new DaemonException(ExceptionsCodes.codeQueryPublication,
+		// ExceptionsCodes.msgQueryPublication);
+
 		queriesPub.setRelevance(relevance);
 		queriesManagerDao.getQueriesHasPublicationsDao().update(queriesPub);
 		/*
