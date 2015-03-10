@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.process.IR.IQuery;
 
 import com.silicolife.anote2daemon.model.core.RelevanceType;
@@ -87,11 +88,12 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')") //pt.uminho.anote2.datastructures.documents.query.
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	// pt.uminho.anote2.datastructures.documents.query.
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody pt.uminho.anote2.datastructures.documents.query.Query query) {
+	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Query query) {
 		IQuery iquery = IQuery.class.cast(query);
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(iquery));
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
