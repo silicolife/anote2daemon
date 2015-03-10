@@ -27,8 +27,8 @@ public class PublicationsSourceWrapper {
 	}
 
 	public static PublicationsHasPublicationsSource convertToDaemonStructure(IPublicationExternalSourceLink pubExternal_, Publications publication) {
-		Long sourceId = pubExternal_.getSourceID();
-		String sourceInternalId = pubExternal_.getSourceInternalID();
+		Long sourceId = pubExternal_.getSourceId();
+		String sourceInternalId = pubExternal_.getSourceInternalId();
 		String sourceDesc = pubExternal_.getSource();
 		PublicationsSource pubSource = new PublicationsSource(sourceId, sourceDesc);
 		PublicationsHasPublicationsSourceId id = new PublicationsHasPublicationsSourceId(sourceId, sourceInternalId);

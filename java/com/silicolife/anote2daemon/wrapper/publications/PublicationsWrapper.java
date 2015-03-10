@@ -16,8 +16,8 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicatio
 import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationsSource;
 
 /**
- * Class to transform anote2 Publications structures to daemon
- * Publications structures and vice-verse
+ * Class to transform anote2 Publications structures to daemon Publications
+ * structures and vice-verse
  * 
  * 
  * @author Joel Azevedo Costa
@@ -46,7 +46,7 @@ public class PublicationsWrapper {
 		String abstractSection = publications.getAbstract_();
 		String externalLink = publications.getExternalLinks();
 		boolean freefulltextAvailable = false;
-		if(publications.getFreeFullText() != null)
+		if (publications.getFreeFullText() != null)
 			freefulltextAvailable = publications.getFreeFullText();
 		String notes = publications.getNotes();
 		String relativePath = publications.getRelativePath();
@@ -99,12 +99,12 @@ public class PublicationsWrapper {
 		/*
 		 * get publications parameters
 		 */
-		Long id = publications_.getID();
+		Long id = publications_.getId();
 		String title = publications_.getTitle();
 		String authors = publications_.getAuthors();
 		String type = publications_.getType();
-		String yearDate = publications_.getYearDate();
-		String fullDate = publications_.getFullDate();
+		String yearDate = publications_.getYeardate();
+		String fullDate = publications_.getFulldate();
 		String status = publications_.getStatus();
 		String journal = publications_.getJournal();
 		String volume = publications_.getVolume();
@@ -112,7 +112,7 @@ public class PublicationsWrapper {
 		String pages = publications_.getPages();
 		String abstractSection = publications_.getAbstractSection();
 		String externalLink = publications_.getExternalLink();
-		Boolean freefulltextAvailable = publications_.getAvailableFreeFullTExt();
+		Boolean freefulltextAvailable = publications_.getAvailableFreeFullText();
 		String notes = publications_.getNotes();
 		String relativePath = publications_.getRelativePath();
 
@@ -121,7 +121,9 @@ public class PublicationsWrapper {
 		publication.setTitle(title);
 		publication.setPubauthors(authors);
 		publication.setCategory(type);
-		publication.setPubdate(Integer.parseInt(yearDate));
+		if(yearDate != null){
+			publication.setPubdate(Integer.parseInt(yearDate));	
+		}
 		publication.setFulldate(fullDate);
 		publication.setPubstatus(status);
 		publication.setJournal(journal);

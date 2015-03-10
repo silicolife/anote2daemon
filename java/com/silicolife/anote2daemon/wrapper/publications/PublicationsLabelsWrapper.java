@@ -26,8 +26,8 @@ public class PublicationsLabelsWrapper {
 	}
 
 	public static PublicationsHasPublicationLabels convertToDaemonStructure(IPublicationLabel publicationsLabels_, Publications publication) {
-		Long labelId = publicationsLabels_.getID();
-		String labelDesc = publicationsLabels_.getName();
+		Long labelId = publicationsLabels_.getId();
+		String labelDesc = publicationsLabels_.getLabel();
 		PublicationsLabels pubLabel = new PublicationsLabels(labelId, labelDesc);
 		PublicationsHasPublicationLabelsId id = new PublicationsHasPublicationLabelsId(labelId, publication.getId());
 		PublicationsHasPublicationLabels pubHasPubLabels = new PublicationsHasPublicationLabels(id, pubLabel, publication);
