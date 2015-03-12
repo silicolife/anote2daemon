@@ -1,6 +1,5 @@
 package com.silicolife.anote2daemon.wrapper.publications;
 
-import pt.uminho.anote2.core.document.IPublicationExternalSourceLink;
 import pt.uminho.anote2.datastructures.documents.PublicationExternalSourceLinkImpl;
 
 import com.silicolife.anote2daemon.model.core.entities.Publications;
@@ -26,7 +25,7 @@ public class PublicationsSourceWrapper {
 		return pubExternal_;
 	}
 
-	public static PublicationsHasPublicationsSource convertToDaemonStructure(IPublicationExternalSourceLink pubExternal_, Publications publication) {
+	public static PublicationsHasPublicationsSource convertToDaemonStructure(PublicationExternalSourceLinkImpl pubExternal_, Publications publication) {
 		Long sourceId = pubExternal_.getSourceId();
 		String sourceInternalId = pubExternal_.getSourceInternalId();
 		String sourceDesc = pubExternal_.getSource();

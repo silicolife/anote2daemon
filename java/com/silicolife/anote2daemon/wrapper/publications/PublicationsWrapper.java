@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.IPublicationExternalSourceLink;
 import pt.uminho.anote2.core.document.labels.IPublicationLabel;
 import pt.uminho.anote2.core.document.structure.IPublicationField;
@@ -26,7 +25,7 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicatio
  */
 public class PublicationsWrapper {
 
-	public static IPublication convertToAnoteStructure(Publications publications) {
+	public static Publication convertToAnoteStructure(Publications publications) {
 		/*
 		 * get publications parameters
 		 */
@@ -89,13 +88,13 @@ public class PublicationsWrapper {
 		/*
 		 * create publication
 		 */
-		IPublication publication_ = new Publication(id, title, authors, type, yearDate, fullDate, status, journal, volume, issue, pages, abstractSection, externalLink,
+		Publication publication_ = new Publication(id, title, authors, type, yearDate, fullDate, status, journal, volume, issue, pages, abstractSection, externalLink,
 				freefulltextAvailable, notes, relativePath, externalIDsSource_, fullTextfields_, labels_);
 
 		return publication_;
 	}
 
-	public static Publications convertToDaemonStructure(IPublication publications_) {
+	public static Publications convertToDaemonStructure(Publication publications_) {
 		/*
 		 * get publications parameters
 		 */

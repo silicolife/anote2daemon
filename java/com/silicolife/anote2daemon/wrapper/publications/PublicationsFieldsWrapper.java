@@ -1,7 +1,6 @@
 package com.silicolife.anote2daemon.wrapper.publications;
 
 
-import pt.uminho.anote2.core.document.structure.IPublicationField;
 import pt.uminho.anote2.datastructures.documents.structure.PublicationFieldImpl;
 
 import com.silicolife.anote2daemon.model.core.entities.Publications;
@@ -18,15 +17,15 @@ import com.silicolife.anote2daemon.model.core.entities.PublicationsFieldsId;
  */
 public class PublicationsFieldsWrapper {
 
-	public static IPublicationField convertToAnoteStructure(PublicationsFields publicationsFields) {
+	public static PublicationFieldImpl convertToAnoteStructure(PublicationsFields publicationsFields) {
 		Long start = publicationsFields.getFieldStart();
 		Long end = publicationsFields.getFieldEnd();
 		String field = publicationsFields.getId().getField();
-		IPublicationField publicationsFields_ = new PublicationFieldImpl(start, end, field);
+		PublicationFieldImpl publicationsFields_ = new PublicationFieldImpl(start, end, field);
 		return publicationsFields_;
 	}
 
-	public static PublicationsFields convertToDaemonStructure(IPublicationField publicationsFields_, Publications publication) {
+	public static PublicationsFields convertToDaemonStructure(PublicationFieldImpl publicationsFields_, Publications publication) {
 		Long start = publicationsFields_.getStart();
 		Long end = publicationsFields_.getEnd();
 		String name = publicationsFields_.getName();
