@@ -37,7 +37,7 @@ public interface PublicationsService {
 	 * @param publication
 	 * @return
 	 */
-	public Boolean update(IPublication publication_);
+	public Boolean update(Publication publication_);
 
 	/**
 	 * Get all SourceId from a publications

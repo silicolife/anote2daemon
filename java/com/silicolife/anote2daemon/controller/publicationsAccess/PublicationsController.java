@@ -91,7 +91,7 @@ public class PublicationsController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody IPublication publication) {
+	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody Publication publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

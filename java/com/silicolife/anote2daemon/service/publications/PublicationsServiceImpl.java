@@ -68,7 +68,7 @@ public class PublicationsServiceImpl implements PublicationsService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean update(IPublication publication_) {
+	public Boolean update(Publication publication_) {
 		Publications publications = PublicationsWrapper.convertToDaemonStructure(publication_);
 		publicationsManagerDao.getPublicationsDao().update(publications);
 		/*
@@ -83,7 +83,7 @@ public class PublicationsServiceImpl implements PublicationsService {
 	@Transactional(readOnly = false)
 	@Override
 	public Boolean create(List<Publication> publications_) {
-		for (IPublication publication_ : publications_) {
+		for (Publication publication_ : publications_) {
 			/*
 			 * save publication
 			 */
