@@ -94,7 +94,6 @@ public class QueriesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-	
 
 	/**
 	 * Update a query
@@ -106,7 +105,7 @@ public class QueriesController {
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody Query query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
-		return new ResponseEntity<DaemonResponse<Boolean>> (response, HttpStatus.OK);
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
 	/**
@@ -116,10 +115,10 @@ public class QueriesController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/addPublicationsToQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@RequestParam Long id, @RequestBody List<Long> publicationsIds) {
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(id, publicationsIds));
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
+	@RequestMapping(value = "/addPublicationsToQuery/{queryId}", method = RequestMethod.PUT, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@PathVariable Long queryId, @RequestBody List<Long> publicationsIds) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(queryId, publicationsIds));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 

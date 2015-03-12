@@ -154,7 +154,7 @@ public class QueriesServiceImpl implements QueriesService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public boolean addPublicationsToQuery(Long id, List<Long> publicationsIds) {
+	public Boolean addPublicationsToQuery(Long id, List<Long> publicationsIds) {
 
 		Users user = userLogged.getCurrentUserLogged();
 		Queries query = queriesManagerDao.getQueriesDao().findById(id);

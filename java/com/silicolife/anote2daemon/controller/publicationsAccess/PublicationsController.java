@@ -41,7 +41,6 @@ public class PublicationsController {
 	private PublicationsService publicationService;
 
 	/**
-	 * 
 	 * Get fulltext from publication
 	 * 
 	 * @param id
@@ -76,7 +75,7 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/createMultiplePublications", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/create", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<Publication> publications) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publications));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -104,9 +103,9 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/getAllPublicationsFromSource/{source}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllPublicationsIdFromSource/{source}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@PathVariable String source) {
-		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsFromSource(source));
+		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsIdFromSource(source));
 		return new ResponseEntity<DaemonResponse<Map<String, Long>>>(response, HttpStatus.OK);
 	}
 }

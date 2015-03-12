@@ -64,7 +64,7 @@ public interface QueriesService {
 	 * @param publicationsIds
 	 * @return
 	 */
-	public boolean addPublicationsToQuery(Long id, List<Long> publicationsIds);
+	public Boolean addPublicationsToQuery(Long id, List<Long> publicationsIds);
 
 	/**
 	 * Update the relevance from a publication in a query

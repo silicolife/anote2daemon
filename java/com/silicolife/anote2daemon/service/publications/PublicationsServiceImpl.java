@@ -127,7 +127,7 @@ public class PublicationsServiceImpl implements PublicationsService {
 	}
 
 	@Override
-	public Map<String, Long> getAllPublicationsFromSource(String source) {
+	public Map<String, Long> getAllPublicationsIdFromSource(String source) {
 		PublicationsSource publicationSource = publicationsManagerDao.getPublicationsSourceDao().findUniqueByAttribute("description", source);
 		if (publicationSource == null)
 			throw new DaemonException(ExceptionsCodes.codePublicationSource, ExceptionsCodes.msgPublicationSource);
