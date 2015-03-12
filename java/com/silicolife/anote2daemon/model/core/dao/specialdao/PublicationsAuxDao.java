@@ -11,4 +11,6 @@ public interface PublicationsAuxDao {
 	public List<Publications> findPublicationsByCorpusId(Long corpusId);
 
 	public Publications getPublicationFullText(Long publicationId);
+	
+	public List<Object[]> getPublicationBySource(Long sourceId);
 }

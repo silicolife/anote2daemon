@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -134,12 +133,14 @@ public class PublicationsServiceImpl implements PublicationsService {
 			throw new DaemonException(ExceptionsCodes.codePublicationSource, ExceptionsCodes.msgPublicationSource);
 
 		Map<String, Long> response = new HashMap<String, Long>();
-		Set<PublicationsHasPublicationsSource> pubsSources = publicationSource.getPublicationsHasPublicationsSources();
-		for (PublicationsHasPublicationsSource pubSource : pubsSources) {
-			String pubSourceId = pubSource.getId().getPublicationsSourceInternalId();
-			Long pubId = pubSource.getPublications().getId();
+		
+		List<Object[]> objects = publicationsManagerDao.getPublicationsAuxDao().getPublicationBySource(publicationSource.getId());
+		for (Object[] object : objects) {
+			String pubSourceId = (String) object[1];
+			Long pubId = (Long) object[0];
 			response.put(pubSourceId, pubId);
 		}
+		
 		if (response.size() == 0)
 			return null;
 

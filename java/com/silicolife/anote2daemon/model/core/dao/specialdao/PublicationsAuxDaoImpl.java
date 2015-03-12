@@ -9,11 +9,13 @@ import org.hibernate.FetchMode;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.silicolife.anote2daemon.model.core.entities.Publications;
+import com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationsSource;
 
 @Repository
 public class PublicationsAuxDaoImpl implements PublicationsAuxDao {
@@ -74,5 +76,21 @@ public class PublicationsAuxDaoImpl implements PublicationsAuxDao {
 		}
 
 		return publication;
+	}
+	@Override
+	public List<Object[]> getPublicationBySource(Long sourceId) {
+
+		Session session = sessionFactory.getCurrentSession();
+		Criteria c = session.createCriteria(PublicationsHasPublicationsSource.class, "pubHasSource");
+		c.createAlias("pubHasSource.publications", "publications");
+		c.setFetchMode("pubHasSource.publications", FetchMode.JOIN);
+		c.add(Restrictions.eq("pubHasSource.id.publicationsSourceId", sourceId));
+		c.setProjection(Projections.projectionList().add(Projections.property("publications.id"), "pubId")
+				.add(Projections.property("pubHasSource.id.publicationsSourceInternalId"), "internalId"));
+
+		@SuppressWarnings("unchecked")
+		List<Object[]> response = c.list();
+
+		return response;
 	}
 }

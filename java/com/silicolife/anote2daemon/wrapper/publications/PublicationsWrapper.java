@@ -112,7 +112,7 @@ public class PublicationsWrapper {
 		String pages = publications_.getPages();
 		String abstractSection = publications_.getAbstractSection();
 		String externalLink = publications_.getExternalLink();
-		Boolean freefulltextAvailable = publications_.getAvailableFreeFullText();
+		Boolean freefulltextAvailable = publications_.isAvailableFreeFullText();
 		String notes = publications_.getNotes();
 		String relativePath = publications_.getRelativePath();
 
