@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.process.IR.IQuery;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
@@ -48,6 +49,7 @@ public class QueriesServiceImpl implements QueriesService {
 	private UsersManagerDao usersManagerDao;
 	@Autowired
 	private UsersLogged userLogged;
+	
 	private final static String queries = ResourcesTypeUtils.queries.toString();
 
 	@Autowired
@@ -107,7 +109,7 @@ public class QueriesServiceImpl implements QueriesService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean create(IQuery query_) {
+	public Boolean create(Query query_) {
 
 		Users user = userLogged.getCurrentUserLogged();
 		Queries query = QueriesWrapper.convertToDaemonStructure(query_);
@@ -137,7 +139,7 @@ public class QueriesServiceImpl implements QueriesService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean update(IQuery query_) {
+	public Boolean update(Query query_) {
 		Users user = userLogged.getCurrentUserLogged();
 		Queries query = QueriesWrapper.convertToDaemonStructure(query_);
 		queriesManagerDao.getQueriesDao().update(query);

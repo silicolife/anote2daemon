@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.process.IR.IQuery;
 
 import com.silicolife.anote2daemon.model.core.RelevanceType;
@@ -46,7 +47,7 @@ public interface QueriesService {
 	 * @param query
 	 * @return
 	 */
-	public Boolean create(IQuery query);
+	public Boolean create(Query query);
 
 	/**
 	 * Update a Query
@@ -54,7 +55,7 @@ public interface QueriesService {
 	 * @param query
 	 * @return
 	 */
-	public Boolean update(IQuery query);
+	public Boolean update(Query query);
 
 	/**
 	 * Associate publications to a query

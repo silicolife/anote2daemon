@@ -9,7 +9,6 @@ import java.util.Set;
 import pt.uminho.anote2.core.document.relevance.RelevanceTypeEnum;
 import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.datastructures.documents.query.QueryOriginType;
-import pt.uminho.anote2.process.IR.IQuery;
 import pt.uminho.anote2.process.IR.IQueryOriginType;
 
 import com.silicolife.anote2daemon.model.core.entities.PublicationsQueryRelevance;
@@ -29,7 +28,7 @@ import com.silicolife.anote2daemon.model.core.entities.QueriesType;
  */
 public class QueriesWrapper {
 
-	public static IQuery convertToAnoteStructure(Queries queries) {
+	public static Query convertToAnoteStructure(Queries queries) {
 		/*
 		 * create query type
 		 */
@@ -70,12 +69,12 @@ public class QueriesWrapper {
 		String name = queries.getQueryName();
 		String notes = queries.getNotes();
 
-		IQuery query_ = new Query(id, queryType_, date, keywords, organism, completeQuery, publicationsSize, availableAbstract, name, notes, documentRelevance, properties);
+		Query query_ = new Query(id, queryType_, date, keywords, organism, completeQuery, publicationsSize, availableAbstract, name, notes, documentRelevance, properties);
 
 		return query_;
 	}
 
-	public static Queries convertToDaemonStructure(IQuery query_) {
+	public static Queries convertToDaemonStructure(Query query_) {
 		/*
 		 * get parameters
 		 */
