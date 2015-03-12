@@ -19,8 +19,13 @@
 						class="com.silicolife.anote2daemon.webservice.HibernateAwareObjectMapper" />
 				</beans:property>
 			</beans:bean>
-		</mvc:message-converters> 
+
+			<beans:bean id="xmlRequestConverter"
+				class="org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter">
+			</beans:bean>
+		</mvc:message-converters>
 	</mvc:annotation-driven>
+
 
 	<mvc:resources location="classpath:/META-INF/web-resources/"
 		mapping="/resources/**/*" />
@@ -28,12 +33,13 @@
 	<beans:import resource="classpath:spring-database.xml" />
 	<beans:import resource="classpath:spring-dao.xml" />
 	<beans:import resource="classpath:spring-security.xml" />
-	
-	
+
+
 	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.controller" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.exceptions" />
-	<context:component-scan base-package="com.silicolife.anote2daemon.exceptions.handler" />
+	<context:component-scan
+		base-package="com.silicolife.anote2daemon.exceptions.handler" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.service" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.utils" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.security" />

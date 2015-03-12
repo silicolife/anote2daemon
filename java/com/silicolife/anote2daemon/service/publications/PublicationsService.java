@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.datastructures.documents.Publication;
 
 /**
  * Interface to define all methods of Service Layer publications
@@ -28,7 +29,7 @@ public interface PublicationsService {
 	 * @param publication
 	 * @return
 	 */
-	public Boolean create(List<IPublication> publications_);
+	public Boolean create(List<Publication> publications_);
 
 	/**
 	 * Update publication

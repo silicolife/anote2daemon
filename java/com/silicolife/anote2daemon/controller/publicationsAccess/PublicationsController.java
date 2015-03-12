@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.datastructures.documents.Publication;
 
 import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.service.publications.PublicationsService;
@@ -76,7 +77,7 @@ public class PublicationsController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/createMultiplePublications", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<IPublication> publications) {
+	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<Publication> publications) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publications));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

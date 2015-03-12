@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(NullPointerException.class)
+	//@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<DaemonResponse<?>> handleException(NullPointerException e) {
 		String rootCause = null;
 		String message = e.getMessage();
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(Exception.class)
+	//@ExceptionHandler(Exception.class)
 	public ResponseEntity<DaemonResponse<?>> handleException(Exception e) {
 		String rootCause = null;
 		String message = e.getMessage();

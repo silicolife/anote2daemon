@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
 import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
  * 
@@ -34,7 +36,7 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 		/*
 		 * send authentication fail in JSON format
 		 */
-		response.addHeader("Content-type", "application/json");
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.addDateHeader("Date", new Date().getTime());
 		response.setCharacterEncoding("UTF-8");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -44,10 +46,11 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 		if (cause != null)
 			rootCause = cause.getMessage();
 		String code = ExceptionsCodes.codeWrongCredentials;
-		ExceptionInfo exceptionObj = new ExceptionInfo(code, message, rootCause);
+		DaemonResponse<?> responseObj = new DaemonResponse<>();
+		responseObj.setException(new ExceptionInfo(code, message, rootCause));
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
-		String json = writer.writeValueAsString(exceptionObj);
+		String json = writer.writeValueAsString(responseObj);
 
 		ServletOutputStream output = response.getOutputStream();
 		output.print(json);

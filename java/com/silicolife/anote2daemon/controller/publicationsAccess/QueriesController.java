@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * @year 2015
  *
  */
-@RequestMapping(value = "/queries", produces = { "application/json" })
+@RequestMapping(value = "/queries", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class QueriesController {
@@ -77,7 +78,6 @@ public class QueriesController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getAllPublications/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long id) {
-
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(id));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
@@ -89,12 +89,24 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	// pt.uminho.anote2.datastructures.documents.query.
 	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Query query) {
-		IQuery iquery = IQuery.class.cast(query);
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+
+	/**
+	 * Update a query
+	 * 
+	 * @param query
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
+	@RequestMapping(value = "/updateQuery", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody Query query) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
+		return new ResponseEntity<DaemonResponse<Boolean>> (response, HttpStatus.OK);
 	}
 
 	/**

@@ -14,6 +14,7 @@ import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.IPublicationExternalSourceLink;
 import pt.uminho.anote2.core.document.labels.IPublicationLabel;
 import pt.uminho.anote2.core.document.structure.IPublicationField;
+import pt.uminho.anote2.datastructures.documents.Publication;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
@@ -50,8 +51,9 @@ public class PublicationsServiceImpl implements PublicationsService {
 	private UsersLogged userLogged;
 
 	@Autowired
-	public PublicationsServiceImpl(PublicationsManagerDao publicationsManagerDao) {
+	public PublicationsServiceImpl(PublicationsManagerDao publicationsManagerDao, UsersManagerDao usersManagerDao) {
 		this.publicationsManagerDao = publicationsManagerDao;
+		this.usersManagerDao = usersManagerDao;
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class PublicationsServiceImpl implements PublicationsService {
 
 	@Transactional(readOnly = false)
 	@Override
-	public Boolean create(List<IPublication> publications_) {
+	public Boolean create(List<Publication> publications_) {
 		for (IPublication publication_ : publications_) {
 			/*
 			 * save publication
