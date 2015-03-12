@@ -9,6 +9,7 @@ import java.util.Set;
 import pt.uminho.anote2.core.document.relevance.RelevanceTypeEnum;
 import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.datastructures.documents.query.QueryOriginType;
+import pt.uminho.anote2.process.IR.IQuery;
 import pt.uminho.anote2.process.IR.IQueryOriginType;
 
 import com.silicolife.anote2daemon.model.core.entities.PublicationsQueryRelevance;
@@ -74,7 +75,7 @@ public class QueriesWrapper {
 		return query_;
 	}
 
-	public static Queries convertToDaemonStructure(Query query_) {
+	public static Queries convertToDaemonStructure(IQuery query_) {
 		/*
 		 * get parameters
 		 */

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.IPublicationExternalSourceLink;
 import pt.uminho.anote2.core.document.labels.IPublicationLabel;
 import pt.uminho.anote2.core.document.structure.IPublicationField;
@@ -94,7 +95,7 @@ public class PublicationsWrapper {
 		return publication_;
 	}
 
-	public static Publications convertToDaemonStructure(Publication publications_) {
+	public static Publications convertToDaemonStructure(IPublication publications_) {
 		/*
 		 * get publications parameters
 		 */
