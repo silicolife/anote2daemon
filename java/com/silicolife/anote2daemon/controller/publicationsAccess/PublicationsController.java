@@ -76,7 +76,7 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/create", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<Publication> publications) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publications));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);

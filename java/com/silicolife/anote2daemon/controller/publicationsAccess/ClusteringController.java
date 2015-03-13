@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.carrot.linkage.datastructures.ClusterProcess;
 import pt.uminho.anote2.core.cluster.IClusterProcess;
 
 import com.silicolife.anote2daemon.security.Permissions;
@@ -75,8 +76,8 @@ public class ClusteringController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/createClusterProcess", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createClusterProcess(@RequestBody IClusterProcess clustering) {
+	@RequestMapping(value = "/createClusterProcess", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createClusterProcess(@RequestBody ClusterProcess clustering) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.createClustering(clustering));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -89,7 +90,7 @@ public class ClusteringController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -102,7 +103,7 @@ public class ClusteringController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> inactivateClustering(@RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.inactivateClustering(clusteringId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);

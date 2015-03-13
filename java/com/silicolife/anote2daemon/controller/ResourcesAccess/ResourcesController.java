@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,16 +20,15 @@ import com.silicolife.anote2daemon.service.resources.ClassesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * The goal of this class is to expose for the web all Resources
- * functionalities of anote2daemon. It is necessary a user logged to access
- * these methods
+ * The goal of this class is to expose for the web all Resources functionalities
+ * of anote2daemon. It is necessary a user logged to access these methods
  * 
  * 
  * @author Joel Azevedo Costa
  * @year 2015
  *
  */
-@RequestMapping(value = "/resources")
+@RequestMapping(value = "/resources", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class ResourcesController {

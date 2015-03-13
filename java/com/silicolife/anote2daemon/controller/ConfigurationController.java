@@ -20,7 +20,6 @@ public class ConfigurationController {
 	@RequestMapping(value = "/getVersion", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<String>> getVersion() {
 		String version = "Version: Development";
-
 		DaemonResponse<String> response = new DaemonResponse<String>(version);
 		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
 	}
@@ -28,25 +27,18 @@ public class ConfigurationController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file) {
 
-		
-		
 		return "OK";
-		
-	/*	String name = "ddd";
-		if (!file.isEmpty()) {
-			try {
-				File ff = new File("C:\\apache-tomcat-8.0.14\\temp\\ddd.txt");
-				byte[] bytes = file.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(ff));
-				stream.write(bytes);
-				stream.close();
-				return "You successfully uploaded " + name + "!";
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
-		} else {
-			return "You failed to upload " + name + " because the file was empty.";
-		}*/
+
+		/*
+		 * String name = "ddd"; if (!file.isEmpty()) { try { File ff = new
+		 * File("C:\\apache-tomcat-8.0.14\\temp\\ddd.txt"); byte[] bytes =
+		 * file.getBytes(); BufferedOutputStream stream = new
+		 * BufferedOutputStream(new FileOutputStream(ff)); stream.write(bytes);
+		 * stream.close(); return "You successfully uploaded " + name + "!"; }
+		 * catch (Exception e) { return "You failed to upload " + name + " => "
+		 * + e.getMessage(); } } else { return "You failed to upload " + name +
+		 * " because the file was empty."; }
+		 */
 	}
 
 }

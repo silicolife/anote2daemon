@@ -89,7 +89,7 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/createQuery", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/createQuery", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Query query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -102,7 +102,7 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/updateQuery", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody Query query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -116,7 +116,7 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/addPublicationsToQuery/{queryId}", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/addPublicationsToQuery/{queryId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@PathVariable Long queryId, @RequestBody List<Long> publicationsIds) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(queryId, publicationsIds));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -129,7 +129,7 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateRelevance", method = RequestMethod.PUT)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);

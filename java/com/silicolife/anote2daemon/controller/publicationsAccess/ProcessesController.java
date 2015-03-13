@@ -2,6 +2,7 @@ package com.silicolife.anote2daemon.controller.publicationsAccess;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.service.processes.ProcessesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
-@RequestMapping(value = "/processes")
+@RequestMapping(value = "/processes", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class ProcessesController {
@@ -33,7 +34,7 @@ public class ProcessesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/createIEProcess", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/createIEProcess", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createIEProcess(@RequestBody IIEProcess processes_) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(processesService.createIEProcess(processes_));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -46,7 +47,7 @@ public class ProcessesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#processes_.getID(), T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).processes.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/updateIEProcess", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/updateIEProcess", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateIEProcess(@RequestBody IIEProcess processes_) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(processesService.updateIEProcess(processes_));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
