@@ -61,7 +61,7 @@ public class ClustersProcessWrapper {
 
 	public static ClustersProcesses convertToDaemonStructure(IClusterProcess clusterProcess_) {
 		
-		Long id = clusterProcess_.getID();
+		Long id = clusterProcess_.getId();
 		String description = clusterProcess_.getDescription();
 		ClustersProcesses clusterProcesses = new ClustersProcesses(id,true);
 		clusterProcesses.setDescription(description);
