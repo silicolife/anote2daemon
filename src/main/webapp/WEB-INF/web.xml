@@ -9,8 +9,8 @@
 	<session-config>
 		<session-timeout>1</session-timeout>
 	</session-config>
-	
-	
+
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -48,7 +48,17 @@
 			<param-value>classpath:log4j.properties</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+
+		<multipart-config>
+			<location>C:\apache-tomcat-8.0.14\temp</location>
+			<max-file-size>52428800</max-file-size>
+			<max-request-size>52428800</max-request-size>
+			<file-size-threshold>0</file-size-threshold>
+		</multipart-config>
 	</servlet>
+
+
+
 
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>

@@ -26,6 +26,18 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
+<beans:bean id="multipartResolver"
+        class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+</beans:bean>
+
+
+	<!-- <beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		<beans:property name="maxUploadSize" value="100000" />
+
+	</beans:bean> -->
+
 
 	<mvc:resources location="classpath:/META-INF/web-resources/"
 		mapping="/resources/**/*" />

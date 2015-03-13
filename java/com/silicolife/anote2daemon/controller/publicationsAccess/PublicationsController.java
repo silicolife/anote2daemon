@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * @year 2015
  *
  */
-@RequestMapping(value = "/publications")
+@RequestMapping(value = "/publications", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class PublicationsController {
@@ -103,7 +104,7 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/getAllPublicationsIdFromSource/{source}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllPublicationsExternalIdFromSource/{source}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@PathVariable String source) {
 		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsIdFromSource(source));
 		return new ResponseEntity<DaemonResponse<Map<String, Long>>>(response, HttpStatus.OK);
