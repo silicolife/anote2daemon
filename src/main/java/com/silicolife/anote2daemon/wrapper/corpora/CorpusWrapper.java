@@ -34,7 +34,7 @@ public class CorpusWrapper {
 	}
 
 	public static Corpus convertToDaemonStructure(ICorpus corpus_) {
-		Long id = corpus_.getID();
+		Long id = corpus_.getId();
 		String name = corpus_.getDescription();
 		String notes = corpus_.getNotes();
 		Set<CorpusProperties> corpusProperties = new HashSet<CorpusProperties>(0);
