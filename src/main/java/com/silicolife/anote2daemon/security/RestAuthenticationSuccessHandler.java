@@ -15,9 +15,10 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
 
-import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users;
+
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
-import com.silicolife.anote2daemon.model.core.entities.Users;
 import com.silicolife.anote2daemon.utils.ApplicationContextUtils;
 
 /**

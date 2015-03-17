@@ -15,119 +15,119 @@
 	<!-- CREATE BEANS TO DAO -->
 
 	<beans:bean id="usersDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Users
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="usersLogDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.UsersLog
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersLog
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="usersHasdataObjectDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObject
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="queriesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Queries
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Queries
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="queriesTypeDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.QueriesType
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueriesType
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="queriesHasPublicationsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.QueriesHasPublications
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueriesHasPublications
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="queriesHasClustersProcessDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.QueriesHasClustersProcess
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueriesHasClustersProcess
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="publicationsSourceDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsSource
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsSource
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="publicationsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Publications
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Publications
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="publicationsHasPublicationsSourceDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationsSource
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsHasPublicationsSource
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="publicationsFieldsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsFields
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsFields
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 
 	<beans:bean id="publicationsHasPublicationLabelsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsHasPublicationLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsHasPublicationLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="publicationsLabelsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.PublicationsLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -135,37 +135,37 @@
 	<!-- clustering -->
 
 	<beans:bean id="clustersProcessDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ClustersProcesses
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersProcesses
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="clustersLabelsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ClustersLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="clustersPropertiesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ClustersProperties
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersProperties
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="clustersProcessHasClustersLabelsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ClustersProcessHasClustersLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersProcessHasClustersLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -173,40 +173,40 @@
 
 	<!-- Corpus -->
 	<beans:bean id="corpusDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Corpus
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Corpus
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 
 	<beans:bean id="corpusPropertiesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.CorpusProperties
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusProperties
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 
 	<beans:bean id="corpusHasProcessesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.CorpusHasProcesses
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusHasProcesses
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 
 	<beans:bean id="corpusHasPublicationsDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.CorpusHasPublications
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusHasPublications
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -214,38 +214,38 @@
 	<!-- Processes -->
 
 	<beans:bean id="processesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Processes
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Processes
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="processesTypeDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ProcessesType
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessesType
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="processesOriginDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ProcessesOrigin
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessesOrigin
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 
 	<beans:bean id="processesPropertiesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.ProcessesProperties
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessesProperties
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -253,10 +253,10 @@
 	<!-- Classes -->
 
 	<beans:bean id="classesDao"
-		class="com.silicolife.anote2daemon.model.core.dao.GenericDaoImpl">
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">com.silicolife.anote2daemon.model.core.entities.Classes
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Classes
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>

@@ -26,9 +26,9 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-<beans:bean id="multipartResolver"
-        class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
-</beans:bean>
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	</beans:bean>
 
 
 	<mvc:resources location="classpath:/META-INF/web-resources/"

@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.controller.publicationsAccess;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
 import pt.uminho.anote2.datastructures.documents.Publication;
 
 import com.silicolife.anote2daemon.security.Permissions;
-import com.silicolife.anote2daemon.service.publications.PublicationsService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -78,7 +79,11 @@ public class PublicationsController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<Publication> publications) {
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publications));
+		List<IPublication> publicationsList = new ArrayList<IPublication>();
+		for (Publication pub : publications)
+			publicationsList.add(pub);
+
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publicationsList));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 

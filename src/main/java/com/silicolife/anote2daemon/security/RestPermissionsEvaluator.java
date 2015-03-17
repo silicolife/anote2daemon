@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ExceptionsCodes;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObject;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObjectId;
+
 import com.silicolife.anote2daemon.exceptions.DaemonException;
-import com.silicolife.anote2daemon.exceptions.ExceptionsCodes;
-import com.silicolife.anote2daemon.model.core.dao.UsersLogged;
-import com.silicolife.anote2daemon.model.core.entities.Users;
-import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
-import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
 import com.silicolife.anote2daemon.service.users.UsersService;
 
 /**

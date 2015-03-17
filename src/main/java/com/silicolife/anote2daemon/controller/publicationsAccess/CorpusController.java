@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pt.uminho.anote2.core.document.IPublication;
 import pt.uminho.anote2.core.document.corpus.ICorpus;
 import pt.uminho.anote2.datastructures.corpora.Corpus;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.CorpusService;
 
 import com.silicolife.anote2daemon.security.Permissions;
-import com.silicolife.anote2daemon.service.corpora.CorpusService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**

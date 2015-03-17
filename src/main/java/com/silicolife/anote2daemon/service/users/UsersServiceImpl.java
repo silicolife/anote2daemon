@@ -12,12 +12,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.silicolife.anote2daemon.model.core.dao.manager.UsersManagerDao;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.manager.UsersManagerDao;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersGroupsHasUsersAccessLevels;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObject;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObjectId;
+
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
-import com.silicolife.anote2daemon.model.core.entities.Users;
-import com.silicolife.anote2daemon.model.core.entities.UsersGroupsHasUsersAccessLevels;
-import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObject;
-import com.silicolife.anote2daemon.model.core.entities.UsersHasDataObjectId;
 
 /**
  * 

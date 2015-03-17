@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.core.document.IPublication;
+import pt.uminho.anote2.core.document.relevance.RelevanceTypeEnum;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
 import pt.uminho.anote2.datastructures.documents.query.Query;
 import pt.uminho.anote2.process.IR.IQuery;
 
-import com.silicolife.anote2daemon.model.core.RelevanceType;
 import com.silicolife.anote2daemon.security.Permissions;
-import com.silicolife.anote2daemon.service.queries.QueriesService;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -143,8 +143,8 @@ public class QueriesController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Map<Long, RelevanceType>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
-		DaemonResponse<Map<Long, RelevanceType>> response = new DaemonResponse<Map<Long, RelevanceType>>(queriesService.getQueryPublicationsRelevance(queryId));
-		return new ResponseEntity<DaemonResponse<Map<Long, RelevanceType>>>(response, HttpStatus.OK);
+	public ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
+		DaemonResponse<Map<Long, RelevanceTypeEnum>> response = new DaemonResponse<Map<Long, RelevanceTypeEnum>>(queriesService.getQueryPublicationsRelevance(queryId));
+		return new ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>>(response, HttpStatus.OK);
 	}
 }
