@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.core.document.IPublication;
-import pt.uminho.anote2.core.document.corpus.ICorpus;
 import pt.uminho.anote2.datastructures.corpora.Corpus;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.CorpusService;
+import pt.uminho.anote2.interfaces.core.document.IPublication;
+import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
 
 import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;

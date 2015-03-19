@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.processes.ProcessesService;
-import pt.uminho.anote2.process.IE.IIEProcess;
+import pt.uminho.anote2.interfaces.process.IE.IIEProcess;
 
 import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users;
 
+
 @Entity
 public class CustomSpringUser extends User {
 
