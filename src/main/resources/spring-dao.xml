@@ -18,7 +18,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -27,7 +27,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersLog
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserLogs
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -36,7 +36,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObject
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -54,7 +54,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueriesType
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryTypes
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -63,7 +63,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueriesHasPublications
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryHasPublications
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -72,7 +72,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueriesHasClustersProcess
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryHasClusterProcesses
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -81,7 +81,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsSource
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationSources
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -99,7 +99,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsHasPublicationsSource
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationHasSources
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -108,7 +108,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsFields
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationFields
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -118,7 +118,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsHasPublicationLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationHasLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -127,7 +127,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationsLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -138,7 +138,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersProcesses
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProcesses
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -147,7 +147,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -156,7 +156,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersProperties
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProperties
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -165,7 +165,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClustersProcessHasClustersLabels
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProcessHasLabels
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -226,7 +226,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessesType
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessTypes
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -235,7 +235,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessesOrigin
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessOrigins
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
@@ -245,7 +245,7 @@
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessesProperties
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessProperties
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>

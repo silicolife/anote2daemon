@@ -56,8 +56,8 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 		ServletOutputStream output = response.getOutputStream();
 		output.print(json);
 		output.flush();
-		output.close();
-
+		output.close(); 
+		
 	}
 
 }

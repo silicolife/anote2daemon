@@ -2,8 +2,8 @@ package com.silicolife.anote2daemon.service.users;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObject;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObjectId;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjectsId;
 
 /**
  * Service layer which implements all operations about users. This interface
@@ -23,5 +23,5 @@ public interface UsersService extends UserDetailsService {
 	 * @param id
 	 * @return
 	 */
-	public UsersHasDataObject getUsersHasDataObjectById(UsersHasDataObjectId id);
+	public AuthUserDataObjects getUsersHasDataObjectById(AuthUserDataObjectsId id);
 }

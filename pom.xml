@@ -21,9 +21,13 @@
 	<!-- project external dependencies -->
 	<dependencies>
 		<!-- <dependency> <groupId>com.silicolife.anote2</groupId> <artifactId>anote2-core-1.0</artifactId> 
-			<version>1.0</version> </dependency> <dependency> <groupId>com.silicolife.anote2</groupId> 
-			<artifactId>anote2-datastructures-1.0</artifactId> <version>1.0</version> 
-			</dependency> -->
+			<version>1.0</version> </dependency> -->
+
+		<dependency>
+			<groupId>com.silicolife.anote2</groupId>
+			<artifactId>anote2-datastructures-1.0</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 
 		<dependency>

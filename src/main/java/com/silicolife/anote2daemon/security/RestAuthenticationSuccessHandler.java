@@ -16,7 +16,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 import com.silicolife.anote2daemon.utils.ApplicationContextUtils;
@@ -67,7 +67,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 		ApplicationContext v = ApplicationContextUtils.getApplicationContext();
 		if (auth.isAuthenticated()) {
 			CustomSpringUser customUser = (CustomSpringUser) auth.getPrincipal();
-			Users user = customUser.getRepositoryUser();
+			AuthUsers user = customUser.getRepositoryUser();
 			((UsersLogged) v.getBean("usersLogged")).setCurrentUserLogged(user);
 		} else {
 			((UsersLogged) v.getBean("usersLogged")).setCurrentUserLogged(null);

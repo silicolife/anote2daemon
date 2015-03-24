@@ -83,6 +83,19 @@ public class QueriesController {
 	}
 
 	/**
+	 * Inactive / remove a query
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
+	@RequestMapping(value = "/inactiveQuery/{id}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Boolean>> inactiveQuery(@PathVariable Long id) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.inactiveQuery(id));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
 	 * Create query
 	 * 
 	 * @param request

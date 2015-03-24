@@ -46,12 +46,12 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 		/**
 		 * Create user salt to add security password
 		 */
-		Long userId = ((CustomSpringUser) user).getRepositoryUser().getId();
+		Long userId = ((CustomSpringUser) user).getRepositoryUser().getAuId();
 		String strUserId = String.valueOf(userId);
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		encoder.setIterations(13);
 		String salt = encoder.encodePassword(strUserId, null);
-		
+
 		if (!passwordEncoder.isPasswordValid(user.getPassword(), password, salt)) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}

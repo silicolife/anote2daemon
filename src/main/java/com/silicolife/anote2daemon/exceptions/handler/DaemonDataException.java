@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.DataException;
+
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
@@ -42,5 +44,27 @@ public class DaemonDataException {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.FORBIDDEN);
+	}
+
+	/**
+	 * Handler with data exception
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(DataException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(DataException e) {
+
+		String code = e.getCode();
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NO_CONTENT);
 	}
 }

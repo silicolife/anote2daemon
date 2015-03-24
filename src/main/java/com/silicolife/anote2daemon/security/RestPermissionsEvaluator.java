@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ExceptionsCodes;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Users;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObject;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.UsersHasDataObjectId;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjectsId;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 
 import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.service.users.UsersService;
@@ -44,10 +44,10 @@ public class RestPermissionsEvaluator implements PermissionEvaluator {
 	public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
 		@SuppressWarnings("unchecked")
 		List<String> permissionList = List.class.cast(permission);
-		Users user = userLogged.getCurrentUserLogged();
-		UsersHasDataObjectId idDataObject = new UsersHasDataObjectId(user.getId(), (Long) targetId, targetType);
-		UsersHasDataObject dataObject = usersService.getUsersHasDataObjectById(idDataObject);
-		if (dataObject == null || !permissionList.contains(dataObject.getAccesLevel()))
+		AuthUsers user = userLogged.getCurrentUserLogged();
+		AuthUserDataObjectsId idDataObject = new AuthUserDataObjectsId(user.getAuId(), (Long) targetId, targetType);
+		AuthUserDataObjects dataObject = usersService.getUsersHasDataObjectById(idDataObject);
+		if (dataObject == null || !permissionList.contains(dataObject.getAudoPermission()))
 			throw new DaemonException(ExceptionsCodes.codeResourceAccessDenied, ExceptionsCodes.msgResourceAccessDenied);
 
 		return true;
