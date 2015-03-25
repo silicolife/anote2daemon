@@ -10,7 +10,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
-
+/**
+ * Generic class to handler with server codes exceptions, like 404
+ * 
+ * @author Joel Azevedo Costa
+ * @year 2015
+ *
+ */
 @ControllerAdvice
 public class ServerCodesExceptions extends ResponseEntityExceptionHandler {
 
@@ -19,8 +25,7 @@ public class ServerCodesExceptions extends ResponseEntityExceptionHandler {
 		String statusCode = status.name();
 		String reason = status.getReasonPhrase();
 		String message = ex.getMessage();
-		ExceptionInfo exception = new ExceptionInfo(statusCode, reason, message
-				);
+		ExceptionInfo exception = new ExceptionInfo(statusCode, reason, message);
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, status);

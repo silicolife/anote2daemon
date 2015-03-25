@@ -1,0 +1,74 @@
+package com.silicolife.anote2daemon.controller.userprivileges;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.users.UserService;
+
+import com.silicolife.anote2daemon.webservice.DaemonResponse;
+
+/**
+ * 
+ * 
+ * @author Utilizador
+ *
+ */
+
+@RequestMapping(value = "/users", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+@ResponseBody
+@Controller
+public class UsersController {
+
+	@Autowired
+	private UserService userService;
+
+	/**
+	 * 
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createUser(@RequestBody AuthUsers user) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.createUser(user));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> updateUser(@RequestBody AuthUsers user) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.updateUser(user));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/removeUser/{userId}", method = RequestMethod.DELETE)
+	public ResponseEntity<DaemonResponse<Boolean>> removeUser(@PathVariable Long userId) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.removeUser(userId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+
+}
