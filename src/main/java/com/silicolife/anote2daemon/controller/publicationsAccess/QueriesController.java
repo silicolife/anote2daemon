@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
-import pt.uminho.anote2.datastructures.documents.query.Query;
+import pt.uminho.anote2.datastructures.documents.query.QueryImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.relevance.RelevanceTypeEnum;
 import pt.uminho.anote2.interfaces.process.IR.IQuery;
@@ -103,7 +103,7 @@ public class QueriesController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/createQuery", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody Query query) {
+	public ResponseEntity<DaemonResponse<Boolean>> createQuery(@RequestBody QueryImpl query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.create(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -116,7 +116,7 @@ public class QueriesController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody Query query) {
+	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

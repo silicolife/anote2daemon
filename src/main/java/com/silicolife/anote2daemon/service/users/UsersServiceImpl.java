@@ -50,7 +50,7 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		AuthUsers userDomain = usersManagerDao.getAuthUsersDao().findUniqueByAttribute("username", username);
+		AuthUsers userDomain = usersManagerDao.getAuthUsersDao().findUniqueByAttribute("auUsername", username);
 		if (userDomain == null)
 			return null;
 

@@ -18,7 +18,7 @@ public class GeneratePassword {
 		encoder.setIterations(13);
 		String salt = encoder.encodePassword("1", null);
 		
-		System.out.print(GeneratePassword.generate("teste", salt));
+		System.out.print(GeneratePassword.generate("admin", salt));
 
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.corpora.Corpus;
+import pt.uminho.anote2.datastructures.corpora.CorpusImpl;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.CorpusService;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
@@ -74,7 +74,7 @@ public class CorpusController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/createCorpus", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createCorpus(@RequestBody Corpus corpus) {
+	public ResponseEntity<DaemonResponse<Boolean>> createCorpus(@RequestBody CorpusImpl corpus) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.createCorpus(corpus));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -87,7 +87,7 @@ public class CorpusController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).corpus.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateCorpus", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateCorpus(@RequestBody Corpus corpus) {
+	public ResponseEntity<DaemonResponse<Boolean>> updateCorpus(@RequestBody CorpusImpl corpus) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.updateCorpus(corpus));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

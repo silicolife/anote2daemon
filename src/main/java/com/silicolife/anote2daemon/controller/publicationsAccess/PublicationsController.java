@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
-import pt.uminho.anote2.datastructures.documents.Publication;
+import pt.uminho.anote2.datastructures.documents.PublicationImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 
 import com.silicolife.anote2daemon.security.Permissions;
@@ -78,9 +78,9 @@ public class PublicationsController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<Publication> publications) {
+	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<PublicationImpl> publications) {
 		List<IPublication> publicationsList = new ArrayList<IPublication>();
-		for (Publication pub : publications)
+		for (PublicationImpl pub : publications)
 			publicationsList.add(pub);
 
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publicationsList));
@@ -96,7 +96,7 @@ public class PublicationsController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody Publication publication) {
+	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody PublicationImpl publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

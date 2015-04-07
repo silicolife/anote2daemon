@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.clustering.ClusterProcess;
+import pt.uminho.anote2.datastructures.clustering.ClusterProcessImpl;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.ClusteringService;
 import pt.uminho.anote2.interfaces.core.cluster.IClusterProcess;
 
@@ -77,7 +77,7 @@ public class ClusteringController {
 	 */
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/createClusterProcess", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createClusterProcess(@RequestBody ClusterProcess clustering) {
+	public ResponseEntity<DaemonResponse<Boolean>> createClusterProcess(@RequestBody ClusterProcessImpl clustering) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.createClustering(clustering));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
