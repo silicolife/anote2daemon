@@ -25,7 +25,7 @@
 
 		<dependency>
 			<groupId>com.silicolife.anote2</groupId>
-			<artifactId>anote2-datastructures-1.0</artifactId>
+			<artifactId>anotelib</artifactId>
 			<version>1.0</version>
 		</dependency>
 
