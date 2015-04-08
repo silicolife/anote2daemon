@@ -48,7 +48,7 @@ public class PublicationsController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/getFullText/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<String>> getFullText(@PathVariable Long id) {
 		DaemonResponse<String> response = new DaemonResponse<String>(publicationService.getFullText(id));
@@ -62,7 +62,7 @@ public class PublicationsController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/getPublicationById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IPublication>> getPublicationById(@PathVariable Long id) {
 		DaemonResponse<IPublication> response = new DaemonResponse<IPublication>(publicationService.getById(id));
@@ -76,7 +76,7 @@ public class PublicationsController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<PublicationImpl> publications) {
 		List<IPublication> publicationsList = new ArrayList<IPublication>();
@@ -94,7 +94,7 @@ public class PublicationsController {
 	 * @param request
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody PublicationImpl publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
@@ -108,7 +108,7 @@ public class PublicationsController {
 	 * @param source
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/getAllPublicationsExternalIdFromSource/{source}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@PathVariable String source) {
 		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsIdFromSource(source));
