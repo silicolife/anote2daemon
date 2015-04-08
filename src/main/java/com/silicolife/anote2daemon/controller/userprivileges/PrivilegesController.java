@@ -9,14 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.system.PrivilegesService;
+import pt.uminho.anote2.interfaces.core.user.IUserDataObject;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * 
  * 
  * 
  * @author Utilizador
@@ -31,6 +32,7 @@ public class PrivilegesController {
 	private PrivilegesService privilegesService;
 
 	/**
+	 * add privilege
 	 * 
 	 * @param userId
 	 * @param resourceId
@@ -38,15 +40,16 @@ public class PrivilegesController {
 	 * @param privilege
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/addPrivileges", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Boolean>> addPrivileges(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource,
-			@PathVariable String privilege) {
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/addPrivileges", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> addPrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
+			@RequestParam String privilege) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.addPrivilege(userId, resourceId, resource, privilege));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
 	/**
+	 * update privilege
 	 * 
 	 * @param userId
 	 * @param resourceId
@@ -54,25 +57,41 @@ public class PrivilegesController {
 	 * @param privilege
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/updatePrivileges", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Boolean>> updatePrivileges(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource,
-			@PathVariable String privilege) {
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/updatePrivileges", method = RequestMethod.PUT)
+	public ResponseEntity<DaemonResponse<Boolean>> updatePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
+			@RequestParam String privilege) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.updatePrivilege(userId, resourceId, resource, privilege));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
 	/**
+	 * delete privilege
 	 * 
 	 * @param userId
 	 * @param resourceId
 	 * @param resource
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/removePrivileges", method = RequestMethod.DELETE)
-	public ResponseEntity<DaemonResponse<Boolean>> removePrivileges(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource) {
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/deletePrivileges", method = RequestMethod.DELETE)
+	public ResponseEntity<DaemonResponse<Boolean>> deletePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Get privilege from an user to resource
+	 * 
+	 * @param userId
+	 * @param resourceId
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/getUserDataObjectPrivilege/{userId}/{resourceId}/{resource}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IUserDataObject>> getUserDataObjectPrivilege(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource) {
+		DaemonResponse<IUserDataObject> response = new DaemonResponse<IUserDataObject>(privilegesService.getPrivilege(userId, resourceId, resource));
+		return new ResponseEntity<DaemonResponse<IUserDataObject>>(response, HttpStatus.OK);
 	}
 }

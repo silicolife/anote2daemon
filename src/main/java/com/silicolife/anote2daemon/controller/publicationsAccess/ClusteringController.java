@@ -49,7 +49,7 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getClustersFromQuery/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IClusterProcess>>> getClustersFromQuery(@PathVariable Long queryId) {
 		DaemonResponse<List<IClusterProcess>> response = new DaemonResponse<List<IClusterProcess>>(clusteringService.getClustersFromQuery(queryId));
@@ -62,7 +62,7 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getClusteringById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IClusterProcess>> getClusteringById(@PathVariable Long id) {
 		DaemonResponse<IClusterProcess> response = new DaemonResponse<IClusterProcess>(clusteringService.getClusteringById(id));
@@ -75,7 +75,7 @@ public class ClusteringController {
 	 * @param clustering
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/createClusterProcess", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createClusterProcess(@RequestBody ClusterProcessImpl clustering) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.createClustering(clustering));
@@ -89,7 +89,7 @@ public class ClusteringController {
 	 * @param clusteringId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin') and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));
@@ -102,7 +102,7 @@ public class ClusteringController {
 	 * @param clusteringId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> inactivateClustering(@RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.inactivateClustering(clusteringId));
