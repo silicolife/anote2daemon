@@ -40,6 +40,15 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	<beans:bean id="authGroup"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroups
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
 	<beans:bean id="queriesDao"
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
