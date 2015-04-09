@@ -2,6 +2,7 @@ package com.silicolife.anote2daemon.controller.publicationsAccess;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -159,5 +160,19 @@ public class QueriesController {
 	public ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
 		DaemonResponse<Map<Long, RelevanceTypeEnum>> response = new DaemonResponse<Map<Long, RelevanceTypeEnum>>(queriesService.getQueryPublicationsRelevance(queryId));
 		return new ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * Connect to daemon and get publication full text
+	 * 
+	 * @param queryId
+	 * @param source
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllQueryPublicationsExternalIdFromSource/{queryId}/{source}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Set<String>>> getQueryPublicationsRelevance(@PathVariable Long queryId,@PathVariable String source) {
+		DaemonResponse<Set<String>> response = new DaemonResponse<Set<String>>(queriesService.getQueryPublicationsExternalIDFromSource(queryId, source));
+		return new ResponseEntity<DaemonResponse<Set<String>>>(response, HttpStatus.OK);
 	}
 }
