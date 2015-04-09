@@ -1,5 +1,7 @@
 package com.silicolife.anote2daemon.controller.userprivileges;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.system.PrivilegesService;
+import pt.uminho.anote2.interfaces.core.user.IUser;
 import pt.uminho.anote2.interfaces.core.user.IUserDataObject;
+import pt.uminho.anote2.interfaces.core.utils.IGenericPair;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
@@ -79,7 +83,7 @@ public class PrivilegesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Get privilege from an user to resource
 	 * 
@@ -93,5 +97,20 @@ public class PrivilegesController {
 	public ResponseEntity<DaemonResponse<IUserDataObject>> getUserDataObjectPrivilege(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource) {
 		DaemonResponse<IUserDataObject> response = new DaemonResponse<IUserDataObject>(privilegesService.getPrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<IUserDataObject>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * Get all users and permission that user to a resource
+	 * 
+	 * @param resourceId
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/getUsersAndPrivilegers/{resourceId}/{resource}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>> getUsersAndPrivilegers(@PathVariable Long resourceId, @PathVariable String resource) {
+		DaemonResponse<List<IGenericPair<IUser, String>>> response = new DaemonResponse<List<IGenericPair<IUser, String>>>(privilegesService.getUsersAndPermissions(resourceId,
+				resource));
+		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
 	}
 }
