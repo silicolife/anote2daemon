@@ -74,7 +74,7 @@ public class PrivilegesController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('role_admin')")
-	@RequestMapping(value = "/deletePrivileges", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deletePrivileges", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> deletePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
