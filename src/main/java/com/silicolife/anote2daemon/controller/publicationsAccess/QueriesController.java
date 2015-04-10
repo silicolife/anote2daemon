@@ -115,7 +115,7 @@ public class QueriesController {
 	 * @param query
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#query.getId(), T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
