@@ -83,6 +83,20 @@ public class PrivilegesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param resourceId
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/deletePrivilegesLoggedUser", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> deletePrivilegesLoggedUser(@RequestParam Long resourceId, @RequestParam String resource) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilegeLoggedUser(resourceId, resource));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Get privilege from an user to resource
