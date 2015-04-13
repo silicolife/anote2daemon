@@ -53,7 +53,7 @@ public class QueriesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueries() {
-		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAll());
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromUserLogged());
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 
