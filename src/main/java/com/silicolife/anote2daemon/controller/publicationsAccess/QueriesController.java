@@ -51,9 +51,34 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueries() {
+	@RequestMapping(value = "/getAllQueriesFromUserLogged", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesFromUserLogged() {
 		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromUserLogged());
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * get all queries from user logged with specific permission
+	 * 
+	 * @param permission
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllQueriesFromUserLogged/{permission}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesFromUserLogged(@PathVariable String permission) {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromUserLogged(permission));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * get All queries from system
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/getAllQueriesFromSystem", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesFromSystem() {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromSystem());
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 
@@ -95,7 +120,7 @@ public class QueriesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.inactiveQuery(id));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Create query
 	 * 
@@ -171,7 +196,7 @@ public class QueriesController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getAllQueryPublicationsExternalIdFromSource/{queryId}/{source}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Set<String>>> getQueryPublicationsRelevance(@PathVariable Long queryId,@PathVariable String source) {
+	public ResponseEntity<DaemonResponse<Set<String>>> getQueryPublicationsRelevance(@PathVariable Long queryId, @PathVariable String source) {
 		DaemonResponse<Set<String>> response = new DaemonResponse<Set<String>>(queriesService.getQueryPublicationsExternalIDFromSource(queryId, source));
 		return new ResponseEntity<DaemonResponse<Set<String>>>(response, HttpStatus.OK);
 	}
