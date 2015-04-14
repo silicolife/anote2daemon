@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +45,7 @@ public class PrivilegesController {
 	 * @param privilege
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/addPrivileges", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> addPrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
 			@RequestParam String privilege) {
@@ -61,7 +62,7 @@ public class PrivilegesController {
 	 * @param privilege
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/updatePrivileges", method = RequestMethod.PUT)
 	public ResponseEntity<DaemonResponse<Boolean>> updatePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
 			@RequestParam String privilege) {
@@ -77,7 +78,7 @@ public class PrivilegesController {
 	 * @param resource
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/deletePrivileges", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> deletePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
@@ -120,11 +121,26 @@ public class PrivilegesController {
 	 * @param resource
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getUsersAndPrivilegers/{resourceId}/{resource}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>> getUsersAndPrivilegers(@PathVariable Long resourceId, @PathVariable String resource) {
 		DaemonResponse<List<IGenericPair<IUser, String>>> response = new DaemonResponse<List<IGenericPair<IUser, String>>>(privilegesService.getUsersAndPermissions(resourceId,
 				resource));
 		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Check if user has permission to that resource
+	 * 
+	 * @param resourceId
+	 * @param resource
+	 * @param permissions
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/hasPermission", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> hasPermission(@RequestParam Long resourceId, @RequestParam String resource, @RequestBody List<String> permissions) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.hasPermission(resourceId, resource, permissions));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }

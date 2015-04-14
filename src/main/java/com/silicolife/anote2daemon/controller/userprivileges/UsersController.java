@@ -87,7 +87,7 @@ public class UsersController {
 		DaemonResponse<List<IGroup>> response = new DaemonResponse<List<IGroup>>(userService.getAllGroups());
 		return new ResponseEntity<DaemonResponse<List<IGroup>>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Get all Users
 	 * 
@@ -98,5 +98,17 @@ public class UsersController {
 	public ResponseEntity<DaemonResponse<List<IUser>>> getAllUsers() {
 		DaemonResponse<List<IUser>> response = new DaemonResponse<List<IUser>>(userService.getAllUsers());
 		return new ResponseEntity<DaemonResponse<List<IUser>>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * Verify if user has some roles
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/hasPermissionRole", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> hasPermissionRole(@RequestBody List<String> rolesCodes) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.hasPermissionRole(rolesCodes));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }
