@@ -138,8 +138,8 @@ public class PrivilegesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/hasPermission", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> hasPermission(@RequestParam Long resourceId, @RequestParam String resource, @RequestBody List<String> permissions) {
+	@RequestMapping(value = "/hasPermission/{resourceId}/{resource}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> hasPermission(@PathVariable Long resourceId, @PathVariable String resource, @RequestBody List<String> permissions) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.hasPermission(resourceId, resource, permissions));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
