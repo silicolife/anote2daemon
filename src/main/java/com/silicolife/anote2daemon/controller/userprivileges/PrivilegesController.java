@@ -79,8 +79,8 @@ public class PrivilegesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/deletePrivileges", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> deletePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
+	@RequestMapping(value = "/deletePrivilegesForUser", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> deletePrivilegesForUser(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -93,8 +93,8 @@ public class PrivilegesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/deletePrivilegesLoggedUser", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> deletePrivilegesLoggedUser(@RequestParam Long resourceId, @RequestParam String resource) {
+	@RequestMapping(value = "/deletePrivileges", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> deletePrivileges(@RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilegeLoggedUser(resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -107,7 +107,7 @@ public class PrivilegesController {
 	 * @param resource
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getUserDataObjectPrivilege/{userId}/{resourceId}/{resource}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IUserDataObject>> getUserDataObjectPrivilege(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource) {
 		DaemonResponse<IUserDataObject> response = new DaemonResponse<IUserDataObject>(privilegesService.getPrivilege(userId, resourceId, resource));

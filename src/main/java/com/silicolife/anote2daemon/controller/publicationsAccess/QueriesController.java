@@ -46,39 +46,28 @@ public class QueriesController {
 	private QueriesService queriesService;
 
 	/**
-	 * Get All queries
+	 * Get All queries from a user
 	 * 
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getAllQueriesFromUserLogged", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesFromUserLogged() {
-		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromUserLogged());
+	@RequestMapping(value = "/getAllQueries", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueries() {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueries());
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * get all queries from user logged with specific permission
+	 * get all queries from user logged. if the user has "role_admin" all queries
+	 * are returned. If has another role only the "owner" queries are returned
 	 * 
 	 * @param permission
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getAllQueriesFromUserLogged/{permission}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesFromUserLogged(@PathVariable String permission) {
-		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromUserLogged(permission));
-		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
-	}
-
-	/**
-	 * get All queries from system
-	 * 
-	 * @return
-	 */
-	@PreAuthorize("hasRole('role_admin')")
-	@RequestMapping(value = "/getAllQueriesFromSystem", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesFromSystem() {
-		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesFromSystem());
+	@RequestMapping(value = "/getAllPrivilegesQueriesAccessAdmin", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllPrivilegesQueriesAccessAdmin() {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllPrivilegesQueriesAdminAccess());
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 
