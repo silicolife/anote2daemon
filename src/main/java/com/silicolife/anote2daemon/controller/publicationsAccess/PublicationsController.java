@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
@@ -78,7 +77,7 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/create", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/createPublications", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<PublicationImpl> publications) {
 		List<IPublication> publicationsList = new ArrayList<IPublication>();
 		for (PublicationImpl pub : publications)
@@ -124,8 +123,8 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/updatePublicationAvailableFreeFullText", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> updatePublicationAvailableFreeFullText(@RequestParam Long publicationId, @RequestParam Boolean isAvailable) {
+	@RequestMapping(value = "/updatePublicationAvailableFreeFullText/{publicationId}/{isAvailable}", method = RequestMethod.PUT)
+	public ResponseEntity<DaemonResponse<Boolean>> updatePublicationAvailableFreeFullText(@PathVariable Long publicationId, @PathVariable Boolean isAvailable) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.updatePublicationAvailableFreeFullText(publicationId, isAvailable));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

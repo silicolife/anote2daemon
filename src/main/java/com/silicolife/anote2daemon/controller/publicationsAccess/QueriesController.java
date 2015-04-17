@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
@@ -58,8 +57,9 @@ public class QueriesController {
 	}
 
 	/**
-	 * get all queries from user logged. if the user has "role_admin" all queries
-	 * are returned. If has another role only the "owner" queries are returned
+	 * get all queries from user logged. if the user has "role_admin" all
+	 * queries are returned. If has another role only the "owner" queries are
+	 * returned
 	 * 
 	 * @param permission
 	 * @return
@@ -157,8 +157,10 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/updateRelevance", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
+	@RequestMapping(value = "/updateRelevance/{queryId}/{publicationId}/{relevance}", method = RequestMethod.PUT)
+	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@PathVariable Long queryId, @PathVariable Long publicationId, @PathVariable String relevance) {
+		if (relevance.equals(RelevanceTypeEnum.none.toString()))
+			relevance = null;
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

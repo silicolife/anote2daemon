@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
+import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
+
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**

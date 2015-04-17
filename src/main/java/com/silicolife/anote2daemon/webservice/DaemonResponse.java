@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.webservice;
 
-import com.silicolife.anote2daemon.exceptions.entities.ExceptionInfo;
+import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
 
 public class DaemonResponse<T> {
 
