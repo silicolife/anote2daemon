@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.UserExceptions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.users.UserService;
 import pt.uminho.anote2.interfaces.core.user.IGroup;
@@ -67,10 +68,11 @@ public class UsersController {
 	 * 
 	 * @param userId
 	 * @return
+	 * @throws UserExceptions
 	 */
 	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId) {
+	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId){
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.removeUser(userId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -86,6 +88,32 @@ public class UsersController {
 	public ResponseEntity<DaemonResponse<List<IGroup>>> getAllGroups() {
 		DaemonResponse<List<IGroup>> response = new DaemonResponse<List<IGroup>>(userService.getAllGroups());
 		return new ResponseEntity<DaemonResponse<List<IGroup>>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * Get user by email
+	 * 
+	 * @param email
+	 * @return
+	 */
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/getUserByEmail", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<IUser>> getUserByEmail(@RequestParam String email) {
+		DaemonResponse<IUser> response = new DaemonResponse<IUser>(userService.getByEmail(email));
+		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Get user by username
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@PreAuthorize("hasRole('role_admin')")
+	@RequestMapping(value = "/getUserByUsername", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<IUser>> getUserByUsername(@RequestParam String username) {
+		DaemonResponse<IUser> response = new DaemonResponse<IUser>(userService.getByUsername(username));
+		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}
 
 	/**

@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ExceptionsCodes;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
@@ -43,6 +44,28 @@ public class SecurityExceptions {
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.accessDeniedCode, message, rootCause);
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
-		return new ResponseEntity<DaemonResponse<?>>(response,HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.UNAUTHORIZED);
+	}
+	
+	/**
+	 * Handler with privileges exception
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(PrivilegesException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(PrivilegesException e) {
+
+		String code = e.getCode();
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.UNAUTHORIZED);
 	}
 }

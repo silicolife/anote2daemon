@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.system.PrivilegesService;
 import pt.uminho.anote2.interfaces.core.user.IUser;
 import pt.uminho.anote2.interfaces.core.user.IUserDataObject;
@@ -44,6 +45,7 @@ public class PrivilegesController {
 	 * @param resource
 	 * @param privilege
 	 * @return
+	 * @throws PrivilegesException
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/addPrivileges", method = RequestMethod.POST)
@@ -61,9 +63,10 @@ public class PrivilegesController {
 	 * @param resource
 	 * @param privilege
 	 * @return
+	 * @throws PrivilegesException
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/updatePrivileges", method = RequestMethod.PUT)
+	@RequestMapping(value = "/updatePrivileges", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updatePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
 			@RequestParam String privilege) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.updatePrivilege(userId, resourceId, resource, privilege));
@@ -77,6 +80,7 @@ public class PrivilegesController {
 	 * @param resourceId
 	 * @param resource
 	 * @return
+	 * @throws PrivilegesException
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/deletePrivilegesForUser", method = RequestMethod.POST)
@@ -84,7 +88,7 @@ public class PrivilegesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 
 	 * @param userId
@@ -128,7 +132,7 @@ public class PrivilegesController {
 				resource));
 		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Check if user has permission to that resource
 	 * 

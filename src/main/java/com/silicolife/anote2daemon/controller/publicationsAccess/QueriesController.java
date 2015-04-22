@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
 import pt.uminho.anote2.datastructures.documents.query.QueryImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
@@ -77,10 +79,10 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
-	@RequestMapping(value = "/getQueryById/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<IQuery>> getQueryById(@PathVariable Long id) {
-		DaemonResponse<IQuery> response = new DaemonResponse<IQuery>(queriesService.getById(id));
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
+	@RequestMapping(value = "/getQueryById/{queryId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IQuery>> getQueryById(@PathVariable Long queryId) {
+		DaemonResponse<IQuery> response = new DaemonResponse<IQuery>(queriesService.getById(queryId));
 		return new ResponseEntity<DaemonResponse<IQuery>>(response, HttpStatus.OK);
 	}
 
@@ -89,11 +91,12 @@ public class QueriesController {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws PublicationManagerException
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
-	@RequestMapping(value = "/getAllPublications/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long id) {
-		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(id));
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
+	@RequestMapping(value = "/getAllPublications/{queryId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long queryId) {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(queryId));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
 
@@ -104,9 +107,9 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
-	@RequestMapping(value = "/inactiveQuery/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Boolean>> inactiveQuery(@PathVariable Long id) {
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.inactiveQuery(id));
+	@RequestMapping(value = "/inactiveQuery", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> inactiveQuery(@RequestParam Long queryId) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.inactiveQuery(queryId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
@@ -128,10 +131,11 @@ public class QueriesController {
 	 * 
 	 * @param query
 	 * @return
+	 * @throws PublicationManagerException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#query.getId(), T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) {
+	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -142,6 +146,7 @@ public class QueriesController {
 	 * @param id
 	 * @param request
 	 * @return
+	 * @throws PublicationManagerException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/addPublicationsToQuery/{queryId}", method = RequestMethod.POST, consumes = { "application/json" })
@@ -157,8 +162,8 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
-	@RequestMapping(value = "/updateRelevance/{queryId}/{publicationId}/{relevance}", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@PathVariable Long queryId, @PathVariable Long publicationId, @PathVariable String relevance) {
+	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		if (relevance.equals(RelevanceTypeEnum.none.toString()))
 			relevance = null;
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
@@ -170,6 +175,7 @@ public class QueriesController {
 	 * 
 	 * @param queryId
 	 * @return
+	 * @throws PublicationManagerException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)

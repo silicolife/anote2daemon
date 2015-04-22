@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.corpora.CorpusImpl;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.CorpusService;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
@@ -97,6 +98,7 @@ public class CorpusController {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws CorpusException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).corpus.toString(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getCorpusPublications/{id}", method = RequestMethod.GET)

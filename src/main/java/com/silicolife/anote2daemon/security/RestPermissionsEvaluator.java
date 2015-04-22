@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ExceptionsCodes;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjectsId;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 
-import com.silicolife.anote2daemon.exceptions.DaemonException;
 import com.silicolife.anote2daemon.service.users.UsersService;
 
 /**
@@ -48,7 +48,7 @@ public class RestPermissionsEvaluator implements PermissionEvaluator {
 		AuthUserDataObjectsId idDataObject = new AuthUserDataObjectsId(user.getAuId(), (Long) targetId, targetType);
 		AuthUserDataObjects dataObject = usersService.getUsersHasDataObjectById(idDataObject);
 		if (dataObject == null || !permissionList.contains(dataObject.getAudoPermission()))
-			throw new DaemonException(ExceptionsCodes.codeResourceAccessDenied, ExceptionsCodes.msgResourceAccessDenied);
+			throw new PrivilegesException(ExceptionsCodes.codeResourceAccessDenied, ExceptionsCodes.msgResourceAccessDenied);
 
 		return true;
 	}

@@ -13,7 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ExceptionsCodes;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
