@@ -28,7 +28,6 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * these methods
  * 
  * 
- * 
  * @author Joel Azevedo Costa
  * @year 2015
  *
@@ -49,7 +48,7 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getClustersFromQuery/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IClusterProcess>>> getClustersFromQuery(@PathVariable Long queryId) {
 		DaemonResponse<List<IClusterProcess>> response = new DaemonResponse<List<IClusterProcess>>(clusteringService.getClustersFromQuery(queryId));
@@ -89,7 +88,7 @@ public class ClusteringController {
 	 * @param clusteringId
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).queries.toString(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));

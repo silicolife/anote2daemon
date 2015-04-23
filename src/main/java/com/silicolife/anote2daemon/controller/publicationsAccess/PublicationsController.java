@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
 import pt.uminho.anote2.datastructures.documents.PublicationImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
@@ -49,7 +48,6 @@ public class PublicationsController {
 	 * 
 	 * @param id
 	 * @return
-	 * @throws PublicationManagerException
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getFullText/{id}", method = RequestMethod.GET)
@@ -124,7 +122,6 @@ public class PublicationsController {
 	 * @param pubId
 	 * @param isAvailable
 	 * @return
-	 * @throws PublicationManagerException
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/updatePublicationAvailableFreeFullText", method = RequestMethod.PUT)

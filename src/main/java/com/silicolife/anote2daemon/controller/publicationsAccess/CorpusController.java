@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.corpora.CorpusImpl;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.CorpusService;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
@@ -60,7 +59,7 @@ public class CorpusController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).corpus.toString(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getCorpusById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<ICorpus>> getCorpusById(@PathVariable Long id) {
 		DaemonResponse<ICorpus> response = new DaemonResponse<ICorpus>(corpusService.getCorpusByID(id));
@@ -86,7 +85,7 @@ public class CorpusController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).corpus.toString(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateCorpus", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateCorpus(@RequestBody CorpusImpl corpus) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.updateCorpus(corpus));
@@ -98,9 +97,8 @@ public class CorpusController {
 	 * 
 	 * @param id
 	 * @return
-	 * @throws CorpusException
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).corpus.toString(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getCorpusPublications/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IPublication>>> getCorpusPublications(@PathVariable Long id) {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(corpusService.getCorpusPublications(id));
@@ -114,7 +112,7 @@ public class CorpusController {
 	 * @param processId
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(com.silicolife.anote2daemon.utils.ResourcesTypeUtils).corpus.toString(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/registerCorpusProcess", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> registerCorpusProcess(@RequestParam Long corpusId, @RequestParam Long processId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.registerCorpusProcess(corpusId, processId));
