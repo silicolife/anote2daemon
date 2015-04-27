@@ -1,8 +1,9 @@
 package com.silicolife.anote2daemon.exceptions.handler;
 
+import org.hibernate.HibernateException;
+import org.hibernate.JDBCException;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.GenericJDBCException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +25,18 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 @ControllerAdvice
 public class DatabaseExceptionsHandler {
 
-	@ExceptionHandler(GenericJDBCException.class)
-	public ResponseEntity<DaemonResponse<?>> handleException(GenericJDBCException e) {
+	@ExceptionHandler(JDBCException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(JDBCException e) {
 		String rootCause = null;
 		String message = e.getMessage();
 		Throwable cause = e.getCause();
 		if (cause != null)
 			rootCause = cause.getMessage();
 
-		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeConstraint, message, rootCause);
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeHibernateAccess, message, rootCause);
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
-		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.CONFLICT);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
 	}
 
 	/**
@@ -96,5 +97,26 @@ public class DatabaseExceptionsHandler {
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.CONFLICT);
+	}
+	
+	
+	/**
+	 * Hibernate general exception
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(HibernateException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(HibernateException e) {
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeHibernateGeneral, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
 	}
 }

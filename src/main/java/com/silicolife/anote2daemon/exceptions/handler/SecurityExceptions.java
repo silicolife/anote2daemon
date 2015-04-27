@@ -3,6 +3,7 @@ package com.silicolife.anote2daemon.exceptions.handler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -46,9 +47,30 @@ public class SecurityExceptions {
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	/**
-	 * Handler with privileges exception
+	 * Wrong authentication
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(AuthenticationException e) {
+
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeWrongCredentials, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.UNAUTHORIZED);
+	}
+
+	/**
+	 * Handler with privileges exception (hasPermission method)
 	 * 
 	 * @param e
 	 * @return

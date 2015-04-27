@@ -10,10 +10,31 @@
 		<session-timeout>20</session-timeout>
 	</session-config>
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+     <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
+    </listener>
 
+    <filter>
+        <filter-name>requestContextFilter</filter-name>
+        <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>requestContextFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+     
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -22,6 +43,8 @@
 		classpath:spring-security.xml
 		</param-value>
 	</context-param>
+
+
 
 	<!-- Spring security filters -->
 	<filter>
@@ -83,4 +106,6 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	
 </web-app>

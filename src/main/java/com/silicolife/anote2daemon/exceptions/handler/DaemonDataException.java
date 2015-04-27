@@ -25,7 +25,7 @@ public class DaemonDataException {
 
 	/**
 	 * 
-	 * DaemonQueries Exceptions
+	 * Daemon Exceptions
 	 * 
 	 * @param e
 	 * @return
@@ -43,7 +43,7 @@ public class DaemonDataException {
 		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
-		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
 	}
 
 	/**
@@ -65,6 +65,6 @@ public class DaemonDataException {
 		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
-		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
 	}
 }
