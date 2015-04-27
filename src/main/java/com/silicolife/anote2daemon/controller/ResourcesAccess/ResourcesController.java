@@ -45,7 +45,7 @@ public class ResourcesController {
 	 * @param classes
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/insertNewClass", method = RequestMethod.PUT)
 	public ResponseEntity<DaemonResponse<Boolean>> insertNewClass(@RequestBody Classes classes) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(classesService.insertNewClass(classes));
@@ -57,7 +57,7 @@ public class ResourcesController {
 	 * 
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getClasses/}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<Long, String>>> getClasses() {
 		DaemonResponse<Map<Long, String>> response = new DaemonResponse<Map<Long, String>>(classesService.getClasses());
@@ -70,7 +70,7 @@ public class ResourcesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getClassById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Classes>> getClassById(@PathVariable Long id) {
 		DaemonResponse<Classes> response = new DaemonResponse<Classes>(classesService.getClassById(id));

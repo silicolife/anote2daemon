@@ -34,7 +34,7 @@ public class ProcessesController {
 	 * @param processes_
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/createIEProcess", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createIEProcess(@RequestBody IIEProcess processes_) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(processesService.createIEProcess(processes_));
@@ -47,7 +47,7 @@ public class ProcessesController {
 	 * @param processes_
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#processes_.getID(), T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#processes_.getID(), T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateIEProcess", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateIEProcess(@RequestBody IIEProcess processes_) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(processesService.updateIEProcess(processes_));
@@ -60,7 +60,7 @@ public class ProcessesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("hasRole('ROLE_ADMIN') and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getProcessByID", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IIEProcess>> getProcessByID(@PathVariable Long id) {
 		DaemonResponse<IIEProcess> response = new DaemonResponse<IIEProcess>(processesService.getProcessByID(id));
