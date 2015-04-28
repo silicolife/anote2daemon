@@ -12,11 +12,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
+import com.silicolife.anote2daemon.service.users.UsersService;
 
 /**
  * Custom provider to handler with login and password encryption
@@ -26,11 +26,11 @@ import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
  */
 public class RestAuthenticationProvider implements AuthenticationProvider {
 
-	private UserDetailsService userService;
+	private UsersService userService;
 	private ShaPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public RestAuthenticationProvider(UserDetailsService userService, ShaPasswordEncoder passwordEncoder) {
+	public RestAuthenticationProvider(UsersService userService, ShaPasswordEncoder passwordEncoder) {
 		this.userService = userService;
 		this.passwordEncoder = passwordEncoder;
 	}

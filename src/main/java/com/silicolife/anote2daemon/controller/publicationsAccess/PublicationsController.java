@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
 import pt.uminho.anote2.datastructures.documents.PublicationImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
+import pt.uminho.anote2.interfaces.core.document.labels.IPublicationLabel;
 
 import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
@@ -42,6 +43,18 @@ public class PublicationsController {
 	private Permissions permissions;
 	@Autowired
 	private PublicationsService publicationService;
+
+	/**
+	 * Get all Publication labels from system
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllPublicationsLabels", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IPublicationLabel>>> getAllPublicationsLabels() {
+		DaemonResponse<List<IPublicationLabel>> response = new DaemonResponse<List<IPublicationLabel>>(publicationService.getAllPublicationLabels());
+		return new ResponseEntity<DaemonResponse<List<IPublicationLabel>>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Get fulltext from publication

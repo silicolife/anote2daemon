@@ -1,12 +1,13 @@
 package com.silicolife.anote2daemon.exceptions.handler;
 
 import org.hibernate.HibernateException;
-import org.hibernate.JDBCException;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -25,8 +26,8 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 @ControllerAdvice
 public class DatabaseExceptionsHandler {
 
-	@ExceptionHandler(JDBCException.class)
-	public ResponseEntity<DaemonResponse<?>> handleException(JDBCException e) {
+	@ExceptionHandler(GenericJDBCException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(GenericJDBCException e) {
 		String rootCause = null;
 		String message = e.getMessage();
 		Throwable cause = e.getCause();
@@ -38,6 +39,22 @@ public class DatabaseExceptionsHandler {
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
 	}
+	
+	
+	@ExceptionHandler(CannotCreateTransactionException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(CannotCreateTransactionException e) {
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeHibernateAccess, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
+	}
+
 
 	/**
 	 * Constraint violation exceptions

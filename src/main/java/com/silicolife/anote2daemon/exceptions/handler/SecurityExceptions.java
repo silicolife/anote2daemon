@@ -70,7 +70,7 @@ public class SecurityExceptions {
 	}
 
 	/**
-	 * Handler with privileges exception (hasPermission method)
+	 * Handler with privileges from RestPermissionsEvaluator (hasPermission method)
 	 * 
 	 * @param e
 	 * @return
