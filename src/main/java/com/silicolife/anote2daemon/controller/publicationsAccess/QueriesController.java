@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
 import pt.uminho.anote2.datastructures.documents.query.QueryImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
@@ -133,7 +132,7 @@ public class QueriesController {
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#query.getId(), T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) throws PublicationManagerException {
+	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query)  {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
