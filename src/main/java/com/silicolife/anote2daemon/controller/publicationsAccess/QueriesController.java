@@ -35,7 +35,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * @year 2015
  *
  */
-@RequestMapping(value = "/queries", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+@RequestMapping(value = "/queries", produces = { "application/json;charset=UTF-8", MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class QueriesController {

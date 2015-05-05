@@ -1,10 +1,10 @@
 package com.silicolife.anote2daemon.security;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,11 +53,11 @@ public class RestAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 		ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
 		String json = writer.writeValueAsString(responseObj);
 
-		ServletOutputStream output = response.getOutputStream();
+		PrintWriter output = response.getWriter();
 		output.print(json);
 		output.flush();
-		output.close(); 
-		
+		output.close();
+
 	}
 
 }
