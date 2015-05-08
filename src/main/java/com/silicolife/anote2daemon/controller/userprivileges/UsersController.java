@@ -38,6 +38,19 @@ public class UsersController {
 	private UserService userService;
 
 	/**
+	 * Check if login exist
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/checkLogin", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> checkLogin(@RequestParam String username, @RequestParam String password) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.checkLogin(username, password));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+
+	/**
 	 * Create a new user
 	 * 
 	 * @param user
@@ -72,7 +85,7 @@ public class UsersController {
 	 */
 	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId){
+	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.removeUser(userId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -102,7 +115,7 @@ public class UsersController {
 		DaemonResponse<IUser> response = new DaemonResponse<IUser>(userService.getByEmail(email));
 		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Get user by username
 	 * 
