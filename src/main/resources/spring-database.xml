@@ -25,6 +25,6 @@
 		<beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
 
-	<tx:annotation-driven />
+	<tx:annotation-driven order="100" transaction-manager="transactionManager" />
 
 </beans:beans>

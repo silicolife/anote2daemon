@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.controller.userprivileges;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,9 @@ public class UsersController {
 	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/getUserByEmail", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IUser>> getUserByEmail(@RequestParam String email) {
-		DaemonResponse<IUser> response = new DaemonResponse<IUser>(userService.getByEmail(email));
+		IUser user = userService.getByEmail(email);
+		user.setAuPassword(null);
+		DaemonResponse<IUser> response = new DaemonResponse<IUser>(user);
 		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}
 
@@ -125,7 +128,9 @@ public class UsersController {
 	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/getUserByUsername", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IUser>> getUserByUsername(@RequestParam String username) {
-		DaemonResponse<IUser> response = new DaemonResponse<IUser>(userService.getByUsername(username));
+		IUser user = userService.getByUsername(username);
+		user.setAuPassword(null);
+		DaemonResponse<IUser> response = new DaemonResponse<IUser>(user);
 		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}
 
@@ -137,7 +142,13 @@ public class UsersController {
 	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IUser>>> getAllUsers() {
-		DaemonResponse<List<IUser>> response = new DaemonResponse<List<IUser>>(userService.getAllUsers());
+		List<AuthUsers> authUsers = userService.getAllUsers();
+		List<IUser> users = new ArrayList<IUser>();
+		for(AuthUsers user :authUsers){
+			user.setAuPassword(null);
+			users.add(user);
+		}
+		DaemonResponse<List<IUser>> response = new DaemonResponse<List<IUser>>(users);
 		return new ResponseEntity<DaemonResponse<List<IUser>>>(response, HttpStatus.OK);
 	}
 
