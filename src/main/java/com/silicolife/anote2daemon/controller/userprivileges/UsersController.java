@@ -114,7 +114,8 @@ public class UsersController {
 	@RequestMapping(value = "/getUserByEmail", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IUser>> getUserByEmail(@RequestParam String email) {
 		IUser user = userService.getByEmail(email);
-		user.setAuPassword(null);
+		if(user != null)
+			user.setAuPassword(null);
 		DaemonResponse<IUser> response = new DaemonResponse<IUser>(user);
 		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}
@@ -129,7 +130,8 @@ public class UsersController {
 	@RequestMapping(value = "/getUserByUsername", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IUser>> getUserByUsername(@RequestParam String username) {
 		IUser user = userService.getByUsername(username);
-		user.setAuPassword(null);
+		if(user != null)
+			user.setAuPassword(null);
 		DaemonResponse<IUser> response = new DaemonResponse<IUser>(user);
 		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}

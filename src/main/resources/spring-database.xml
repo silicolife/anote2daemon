@@ -2,7 +2,7 @@
 <beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
     http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -11,9 +11,12 @@
     http://www.springframework.org/schema/tx 
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/util 
-    http://www.springframework.org/schema/util/spring-util.xsd">
+    http://www.springframework.org/schema/util/spring-util.xsd
+     http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-<context:component-scan base-package="com.silicolife.anote2daemon.exceptions.handler" />
+	<context:component-scan
+		base-package="com.silicolife.anote2daemon.exceptions.handler" />
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<beans:property name="configLocation" value="classpath:hibernate.cfg.xml" />
@@ -25,6 +28,10 @@
 		<beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
 
-	<tx:annotation-driven order="100" transaction-manager="transactionManager" />
+
+	<tx:annotation-driven />
+
+
+
 
 </beans:beans>

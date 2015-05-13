@@ -24,4 +24,5 @@ public interface UsersService extends UserDetailsService {
 	 * @return
 	 */
 	public AuthUserDataObjects getUsersHasDataObjectById(AuthUserDataObjectsId id);
+
 }
