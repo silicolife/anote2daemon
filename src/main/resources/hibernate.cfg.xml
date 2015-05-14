@@ -10,9 +10,9 @@
 		<property name="hibernate.c3p0.min_size">1</property>
 		<property name="hibernate.c3p0.timeout">300</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.password">eat24</property>
-		<property name="hibernate.connection.url">jdbc:mysql://192.168.1.200/anote2_daemon_syngenta_v2</property>
-		<property name="hibernate.connection.username">eat24</property>
+		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote2_daemon_syngenta_v2</property>
+		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.default_catalog">anote2_daemon_syngenta_v2</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
