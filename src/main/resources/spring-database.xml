@@ -15,8 +15,10 @@
      http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<context:component-scan
-		base-package="com.silicolife.anote2daemon.exceptions.handler" />
+	<!-- <context:component-scan
+		base-package="com.silicolife.anote2daemon.exceptions.handler" /> -->
+		
+		
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<beans:property name="configLocation" value="classpath:hibernate.cfg.xml" />
@@ -30,8 +32,5 @@
 
 
 	<tx:annotation-driven />
-
-
-
 
 </beans:beans>

@@ -67,6 +67,15 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	<beans:bean id="queryPropertiesDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryProperties
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
 
 	<beans:bean id="queryHasPublicationsDao"
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
@@ -259,7 +268,7 @@
 		</beans:constructor-arg>
 	</beans:bean>
 
-	<!-- Classes -->
+	<!-- Classes and Resources -->
 
 	<beans:bean id="classesDao"
 		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
@@ -269,5 +278,89 @@
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	
+	<!-- Resources -->
+	
+	
+	
+	<beans:bean id="resourceTypeDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceTypes
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<beans:bean id="resourceDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Resources
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<beans:bean id="resourcesElememtsDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElements
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<beans:bean id="resourcesElememtsSynonymsDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Synonyms
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<beans:bean id="resourcesElememtsRelationsDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementRelations
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<beans:bean id="resourcesElememtsRelationTypeDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementRelationTypes
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<beans:bean id="resourcesElememtsExtenalIDsDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementExtenalIds
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<beans:bean id="resourcesElememtsSourcesDao"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Sources
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
 
 </beans:beans>

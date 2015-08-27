@@ -19,14 +19,10 @@
 
 
 	<!-- Http entry point to login -->
-	<http entry-point-ref="restAuthenticationEntryPoint"
-		authentication-manager-ref="authenticationManager">
+	<http entry-point-ref="restAuthenticationEntryPoint" authentication-manager-ref="authenticationManager">
 		<intercept-url pattern="/**" />
-		<form-login authentication-success-handler-ref="restAuthenticationSuccessHandler"
-			authentication-failure-handler-ref="restAuthenticationFailureHandler" />
-		<logout logout-url="/j_spring_security_logout"
-			invalidate-session="true" delete-cookies="JSESSIONID"
-			success-handler-ref="logoutSuccessHandler" />
+		<form-login authentication-success-handler-ref="restAuthenticationSuccessHandler" authentication-failure-handler-ref="restAuthenticationFailureHandler" />
+		<logout logout-url="/j_spring_security_logout" invalidate-session="true" delete-cookies="JSESSIONID" success-handler-ref="logoutSuccessHandler" />
 	</http>
 
 
@@ -90,8 +86,8 @@
 		<beans:constructor-arg ref="userDetailsService" />
 	</beans:bean>
 
-	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
+<!-- <context:component-scan base-package="com.silicolife.anote2daemon.model" />
 	<context:component-scan
-		base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model" />
+		base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model" /> -->
 
 </beans:beans>

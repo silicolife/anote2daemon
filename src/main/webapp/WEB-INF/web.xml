@@ -38,7 +38,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-		classpath:dispatcher-servlet.xml
+		classpath:application-context.xml
 		</param-value>
 	</context-param>
 	
