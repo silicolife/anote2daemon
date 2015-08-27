@@ -86,7 +86,7 @@ public class UsersController {
 	 */
 	@PreAuthorize("hasRole('role_admin')")
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId) {
+	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId) throws UserExceptions {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.removeUser(userId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

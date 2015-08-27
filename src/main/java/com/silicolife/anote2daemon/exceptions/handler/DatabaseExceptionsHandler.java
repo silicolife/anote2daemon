@@ -6,6 +6,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -101,6 +102,27 @@ public class DatabaseExceptionsHandler {
 			rootCause = cause.getMessage();
 
 		ExceptionInfo exception = new ExceptionInfo(ExceptionsCodes.codeHibernateGeneral, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	/**
+	 * Transaction creation Exception
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(CannotCreateTransactionException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(CannotCreateTransactionException e) {
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new
+				ExceptionInfo(ExceptionsCodes.codeHibernateGeneral, message, rootCause);
 		DaemonResponse<?> response = new DaemonResponse<>();
 		response.setException(exception);
 		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.NOT_ACCEPTABLE);

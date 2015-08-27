@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.corpora.CorpusImpl;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.CorpusService;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
@@ -97,10 +98,11 @@ public class CorpusController {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws CorpusException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getCorpusPublications/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IPublication>>> getCorpusPublications(@PathVariable Long id) {
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getCorpusPublications(@PathVariable Long id) throws CorpusException {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(corpusService.getCorpusPublications(id));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}

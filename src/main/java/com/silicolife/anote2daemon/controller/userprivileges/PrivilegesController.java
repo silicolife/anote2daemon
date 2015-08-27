@@ -50,7 +50,7 @@ public class PrivilegesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/addPrivileges", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> addPrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
-			@RequestParam String privilege) {
+			@RequestParam String privilege) throws PrivilegesException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.addPrivilege(userId, resourceId, resource, privilege));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -68,7 +68,7 @@ public class PrivilegesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/updatePrivileges", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updatePrivileges(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource,
-			@RequestParam String privilege) {
+			@RequestParam String privilege) throws PrivilegesException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.updatePrivilege(userId, resourceId, resource, privilege));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -84,7 +84,7 @@ public class PrivilegesController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/deletePrivilegesForUser", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> deletePrivilegesForUser(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
+	public ResponseEntity<DaemonResponse<Boolean>> deletePrivilegesForUser(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) throws PrivilegesException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.removePrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

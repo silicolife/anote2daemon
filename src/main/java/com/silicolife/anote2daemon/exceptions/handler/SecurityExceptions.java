@@ -11,6 +11,7 @@ import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.Except
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 
+import com.silicolife.anote2daemon.exceptions.PrivilegesDaemonException;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -70,13 +71,35 @@ public class SecurityExceptions {
 	}
 
 	/**
-	 * Handler with privileges from RestPermissionsEvaluator (hasPermission method)
+	 * Handler with privileges (Permission denied)
 	 * 
 	 * @param e
 	 * @return
 	 */
 	@ExceptionHandler(PrivilegesException.class)
 	public ResponseEntity<DaemonResponse<?>> handleException(PrivilegesException e) {
+
+		String code = e.getCode();
+		String rootCause = null;
+		String message = e.getMessage();
+		Throwable cause = e.getCause();
+		if (cause != null)
+			rootCause = cause.getMessage();
+
+		ExceptionInfo exception = new ExceptionInfo(code, message, rootCause);
+		DaemonResponse<?> response = new DaemonResponse<>();
+		response.setException(exception);
+		return new ResponseEntity<DaemonResponse<?>>(response, HttpStatus.UNAUTHORIZED);
+	}
+	
+	/**
+	 * Handler with privileges from RestPermissionsEvaluator (hasPermission method)
+	 * 
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(PrivilegesDaemonException.class)
+	public ResponseEntity<DaemonResponse<?>> handleException(PrivilegesDaemonException e) {
 
 		String code = e.getCode();
 		String rootCause = null;

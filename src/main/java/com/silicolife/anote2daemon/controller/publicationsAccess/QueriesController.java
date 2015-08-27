@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
 import pt.uminho.anote2.datastructures.documents.query.QueryImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
@@ -35,7 +36,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * @year 2015
  *
  */
-@RequestMapping(value = "/queries", produces = { "application/json;charset=UTF-8", MediaType.APPLICATION_XML_VALUE })
+@RequestMapping(value = "/queries", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class QueriesController {
@@ -90,10 +91,11 @@ public class QueriesController {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws PublicationManagerException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getAllPublications/{queryId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long queryId) {
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long queryId) throws PublicationManagerException {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(queryId));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
@@ -129,10 +131,11 @@ public class QueriesController {
 	 * 
 	 * @param query
 	 * @return
+	 * @throws PublicationManagerException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#query.getId(), T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query)  {
+	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -143,10 +146,11 @@ public class QueriesController {
 	 * @param id
 	 * @param request
 	 * @return
+	 * @throws PublicationManagerException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
 	@RequestMapping(value = "/addPublicationsToQuery/{queryId}", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@PathVariable Long queryId, @RequestBody Set<Long> publicationsIds) {
+	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@PathVariable Long queryId, @RequestBody Set<Long> publicationsIds) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(queryId, publicationsIds));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -171,10 +175,11 @@ public class QueriesController {
 	 * 
 	 * @param queryId
 	 * @return
+	 * @throws PublicationManagerException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>> getQueryPublicationsRelevance(@PathVariable Long queryId) {
+	public ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>> getQueryPublicationsRelevance(@PathVariable Long queryId) throws PublicationManagerException {
 		DaemonResponse<Map<Long, RelevanceTypeEnum>> response = new DaemonResponse<Map<Long, RelevanceTypeEnum>>(queriesService.getQueryPublicationsRelevance(queryId));
 		return new ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>>(response, HttpStatus.OK);
 	}

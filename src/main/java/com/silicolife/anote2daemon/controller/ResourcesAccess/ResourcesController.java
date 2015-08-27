@@ -60,7 +60,7 @@ public class ResourcesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getClasses/}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<Long, String>>> getClasses() {
-		DaemonResponse<Map<Long, String>> response = new DaemonResponse<Map<Long, String>>(classesService.getClasses());
+		DaemonResponse<Map<Long, String>> response = null;//new DaemonResponse<Map<Long, String>>(classesService.getClasses());
 		return new ResponseEntity<DaemonResponse<Map<Long, String>>>(response, HttpStatus.OK);
 	}
 

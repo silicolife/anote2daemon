@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
 import pt.uminho.anote2.datastructures.documents.PublicationImpl;
+import pt.uminho.anote2.interfaces.core.dataaccess.exception.ANoteException;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.labels.IPublicationLabel;
 
@@ -61,10 +63,11 @@ public class PublicationsController {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws ANoteException 
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getFullText/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<String>> getFullText(@PathVariable Long id) {
+	public ResponseEntity<DaemonResponse<String>> getFullText(@PathVariable Long id) throws ANoteException {
 		DaemonResponse<String> response = new DaemonResponse<String>(publicationService.getFullText(id));
 		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
 	}
@@ -97,7 +100,9 @@ public class PublicationsController {
 		for (PublicationImpl pub : publications)
 			publicationsList.add(pub);
 
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.create(publicationsList));
+		Boolean a = publicationService.create(publicationsList);
+		
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(a);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
@@ -135,10 +140,11 @@ public class PublicationsController {
 	 * @param pubId
 	 * @param isAvailable
 	 * @return
+	 * @throws PublicationManagerException 
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/updatePublicationAvailableFreeFullText", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> updatePublicationAvailableFreeFullText(@RequestParam Long publicationId, @RequestParam Boolean isAvailable) {
+	public ResponseEntity<DaemonResponse<Boolean>> updatePublicationAvailableFreeFullText(@RequestParam Long publicationId, @RequestParam Boolean isAvailable) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.updatePublicationAvailableFreeFullText(publicationId, isAvailable));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
