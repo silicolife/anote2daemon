@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.controller.ResourcesAccess;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Classes;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesService;
+import pt.uminho.anote2.datastructures.resources.ResourceImpl;
+import pt.uminho.anote2.interfaces.resource.IResource;
+import pt.uminho.anote2.interfaces.resource.IResourceElement;
 
 import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
- * The goal of this class is to expose for the web all Resources functionalities
+ * The goal of this class is to expose for the web all resources functionalities
  * of anote2daemon. It is necessary a user logged to access these methods
  * 
  * 
@@ -37,44 +40,74 @@ public class ResourcesController {
 	@Autowired
 	private Permissions permissions;
 	@Autowired
-	private ClassesService classesService;
+	private ResourcesService resourcesService;
 
 	/**
-	 * create new class
 	 * 
-	 * @param classes
+	 * 
+	 * @param resource
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/insertNewClass", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> insertNewClass(@RequestBody Classes classes) {
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(classesService.insertNewClass(classes));
+	@RequestMapping(value = "/createResource", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createResource(@RequestBody ResourceImpl resource) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.create(resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * get classes
 	 * 
+	 * 
+	 * @param type
 	 * @return
+	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getClasses/}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Map<Long, String>>> getClasses() {
-		DaemonResponse<Map<Long, String>> response = null;//new DaemonResponse<Map<Long, String>>(classesService.getClasses());
-		return new ResponseEntity<DaemonResponse<Map<Long, String>>>(response, HttpStatus.OK);
+	@RequestMapping(value = "/getResourcesByType/{type}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getResourcesByType(@PathVariable String type) throws ResourcesExceptions {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getResourcesByType(type));
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * get Classes by id
 	 * 
-	 * @param id
+	 * 
+	 * @param resourceId
 	 * @return
 	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), @permissions.getFullgrant())")
+	@RequestMapping(value = "/getResourceById/{resourceId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IResource<IResourceElement>>> getQueryById(@PathVariable Long resourceId) {
+		DaemonResponse<IResource<IResourceElement>> response = new DaemonResponse<IResource<IResourceElement>>(resourcesService.getResourcesById(resourceId));
+		return new ResponseEntity<DaemonResponse<IResource<IResourceElement>>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param resource
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#resource.getID(), T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), @permissions.getWritegrant())")
+	@RequestMapping(value = "/updateResource", method = RequestMethod.PUT, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody ResourceImpl resource) throws ResourcesExceptions {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.update(resource));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * 
+	 * 
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getClassById/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Classes>> getClassById(@PathVariable Long id) {
-		DaemonResponse<Classes> response = new DaemonResponse<Classes>(classesService.getClassById(id));
-		return new ResponseEntity<DaemonResponse<Classes>>(response, HttpStatus.OK);
+	@RequestMapping(value = "/getAllPrivilegesResourcesAdminAccess", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getAllPrivilegesResourcesAdminAccess() throws ResourcesExceptions {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getAllPrivilegesResourcesAdminAccess());
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
 
 }

@@ -5,10 +5,10 @@
 <hibernate-configuration>
 	<session-factory>
 	
-	    <property name="hibernate.connection.password">root</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote2_test_3</property>
-		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.default_catalog">anote2_test_3</property>
+	    <property name="hibernate.connection.password">@NoteDaemon@2015!User</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote2daemon_silico_pilot_v1</property>
+		<property name="hibernate.connection.username">anotedaemon</property>
+		<property name="hibernate.default_catalog">anote2daemon_silico_pilot_v1</property>
 		
 		<property name="hibernate.c3p0.idle_test_period">10</property>
 		<property name="hibernate.c3p0.acquireRetryAttempts">1</property>
