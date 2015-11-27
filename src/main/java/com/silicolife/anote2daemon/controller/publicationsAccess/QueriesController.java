@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
 import pt.uminho.anote2.datastructures.documents.query.QueryImpl;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.relevance.RelevanceTypeEnum;
 import pt.uminho.anote2.interfaces.process.IR.IQuery;
 
-import com.silicolife.anote2daemon.security.Permissions;
+import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
+import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -44,7 +46,10 @@ public class QueriesController {
 	@Autowired
 	private Permissions permissions;
 	@Autowired
+	private GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericPairSpringSpel;
+	@Autowired
 	private QueriesService queriesService;
+	
 
 	/**
 	 * Get All queries from a user
@@ -79,7 +84,9 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getQueryById/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IQuery>> getQueryById(@PathVariable Long queryId) {
 		DaemonResponse<IQuery> response = new DaemonResponse<IQuery>(queriesService.getById(queryId));
@@ -93,7 +100,9 @@ public class QueriesController {
 	 * @return
 	 * @throws PublicationManagerException 
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId,"
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getAllPublications/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long queryId) throws PublicationManagerException {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(queryId));
@@ -106,7 +115,9 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/inactiveQuery", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> inactiveQuery(@RequestParam Long queryId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.inactiveQuery(queryId));
@@ -133,7 +144,9 @@ public class QueriesController {
 	 * @return
 	 * @throws PublicationManagerException 
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#query.getId(), T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#query.getId(),"
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateQuery", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody QueryImpl query) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.update(query));
@@ -148,7 +161,9 @@ public class QueriesController {
 	 * @return
 	 * @throws PublicationManagerException 
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addPublicationsToQuery/{queryId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> addPublicationsToQuery(@PathVariable Long queryId, @RequestBody Set<Long> publicationsIds) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.addPublicationsToQuery(queryId, publicationsIds));
@@ -161,7 +176,9 @@ public class QueriesController {
 	 * @param id
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
 		if (relevance.equals(RelevanceTypeEnum.none.toString()))
@@ -177,7 +194,9 @@ public class QueriesController {
 	 * @return
 	 * @throws PublicationManagerException 
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getQueryPublicationsRelevance/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<Long, RelevanceTypeEnum>>> getQueryPublicationsRelevance(@PathVariable Long queryId) throws PublicationManagerException {
 		DaemonResponse<Map<Long, RelevanceTypeEnum>> response = new DaemonResponse<Map<Long, RelevanceTypeEnum>>(queriesService.getQueryPublicationsRelevance(queryId));

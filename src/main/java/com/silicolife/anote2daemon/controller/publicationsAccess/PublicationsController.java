@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
 import pt.uminho.anote2.datastructures.documents.PublicationImpl;
 import pt.uminho.anote2.interfaces.core.dataaccess.exception.ANoteException;
 import pt.uminho.anote2.interfaces.core.document.IPublication;
 import pt.uminho.anote2.interfaces.core.document.labels.IPublicationLabel;
 
-import com.silicolife.anote2daemon.security.Permissions;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**

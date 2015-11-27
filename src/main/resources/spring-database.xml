@@ -12,11 +12,11 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/util 
     http://www.springframework.org/schema/util/spring-util.xsd
-     http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop.xsd">
+    http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<!-- <context:component-scan
-		base-package="com.silicolife.anote2daemon.exceptions.handler" /> -->
+	 <context:component-scan
+		base-package="com.silicolife.anote2daemon.exceptions.handler" /> 
 		
 		
 	<beans:bean id="sessionFactory"
@@ -29,7 +29,6 @@
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="sessionFactory" />
 	</beans:bean>
-
 
 	<tx:annotation-driven />
 

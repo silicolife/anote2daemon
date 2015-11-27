@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.clustering.ClusterProcessImpl;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.ClusteringService;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.IClusteringService;
 import pt.uminho.anote2.interfaces.core.cluster.IClusterProcess;
 
-import com.silicolife.anote2daemon.security.Permissions;
+import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
+import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
 /**
@@ -40,7 +42,9 @@ public class ClusteringController {
 	@Autowired
 	private Permissions permissions;
 	@Autowired
-	private ClusteringService clusteringService;
+	private GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericPairSpringSpel;
+	@Autowired
+	private IClusteringService clusteringService;
 
 	/**
 	 * Get all clusters from a query
@@ -48,7 +52,9 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getFullgrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getClustersFromQuery/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IClusterProcess>>> getClustersFromQuery(@PathVariable Long queryId) {
 		DaemonResponse<List<IClusterProcess>> response = new DaemonResponse<List<IClusterProcess>>(clusteringService.getClustersFromQuery(queryId));
@@ -88,7 +94,9 @@ public class ClusteringController {
 	 * @param clusteringId
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(), @permissions.getWritegrant())")
+	@PreAuthorize("isAuthenticated() and hasPermission(#id,"
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));

@@ -4,10 +4,10 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
                         http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop.xsd">
+						http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
 
@@ -48,6 +48,10 @@
 	<beans:bean id="userDetailsService"
 		class="com.silicolife.anote2daemon.service.users.UsersServiceImpl"
 		autowire="constructor" />
+		
+	<beans:bean id="resourcesElementService"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesElementServiceImpl"
+		autowire="constructor" />
 
 	<!-- Custom authentication provider -->
 	<beans:bean id="customAuthenticationProvider"
@@ -69,8 +73,6 @@
 		<authentication-provider ref="customAuthenticationProvider" />
 	</authentication-manager>
 
-	<!-- Enable the annotations for defining the secure role -->
-	<!-- <global-method-security secured-annotations="enabled" /> -->
 
 	<global-method-security pre-post-annotations="enabled">
 		<expression-handler ref="expressionHandler" />
@@ -84,10 +86,12 @@
 	<beans:bean id="myPermissionEvaluator"
 		class="com.silicolife.anote2daemon.security.RestPermissionsEvaluator">
 		<beans:constructor-arg ref="userDetailsService" />
+		<beans:constructor-arg ref="resourcesElementService" />
 	</beans:bean>
 
-<!-- <context:component-scan base-package="com.silicolife.anote2daemon.model" />
+<!--  	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
 	<context:component-scan
 		base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model" /> -->
+
 
 </beans:beans>

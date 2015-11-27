@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjectsId;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import pt.uminho.anote2.interfaces.resource.IResource;
+import pt.uminho.anote2.interfaces.resource.IResourceElement;
 
 import com.silicolife.anote2daemon.exceptions.PrivilegesDaemonException;
 import com.silicolife.anote2daemon.service.users.UsersService;
+import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 
 /**
  * 
@@ -30,9 +35,12 @@ public class RestPermissionsEvaluator implements PermissionEvaluator {
 	@Autowired
 	private UsersLogged userLogged;
 	private UsersService usersService;
+	private IResourcesElementService resourcesElementService;
 
-	public RestPermissionsEvaluator(UsersService usersService) {
+	@Autowired
+	public RestPermissionsEvaluator(UsersService usersService, IResourcesElementService resourcesElementService) {
 		this.usersService = usersService;
+		this.resourcesElementService = resourcesElementService;
 	}
 
 	@Override
@@ -43,9 +51,28 @@ public class RestPermissionsEvaluator implements PermissionEvaluator {
 	@Override
 	public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
 		@SuppressWarnings("unchecked")
-		List<String> permissionList = List.class.cast(permission);
+		GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericInformation = GenericPairSpringSpel.class.cast(permission);
+		RestPermissionsEvaluatorEnum eval = genericInformation.getX();
+		List<String> permissionList = genericInformation.getY();
 		AuthUsers user = userLogged.getCurrentUserLogged();
-		AuthUserDataObjectsId idDataObject = new AuthUserDataObjectsId(user.getAuId(), (Long) targetId, targetType);
+		Long id = null;
+		
+		switch(eval){
+		case resourceByResourceElement:
+			try {
+				IResource<IResourceElement> obj = resourcesElementService.getResourceFromResourceElement((Long) targetId);
+				id = obj.getID();
+			} catch (ResourcesExceptions e) {
+				throw new PrivilegesDaemonException(ExceptionsCodes.codeResourceAccessDenied, ExceptionsCodes.msgResourceAccessDenied);
+			}
+		case default_:
+		default:
+			id = (Long) targetId;
+			break;
+		}
+		
+		
+		AuthUserDataObjectsId idDataObject = new AuthUserDataObjectsId(user.getAuId(), id, targetType);
 		AuthUserDataObjects dataObject = usersService.getUsersHasDataObjectById(idDataObject);
 		if (dataObject == null || !permissionList.contains(dataObject.getAudoPermission()))
 			throw new PrivilegesDaemonException(ExceptionsCodes.codeResourceAccessDenied, ExceptionsCodes.msgResourceAccessDenied);

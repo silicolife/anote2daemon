@@ -23,11 +23,11 @@
 		<!-- <dependency> <groupId>com.silicolife.anote2</groupId> <artifactId>anote2-core-1.0</artifactId> 
 			<version>1.0</version> </dependency> -->
 
-		<dependency>
+ 	<dependency> 
 			<groupId>com.silicolife.anote2</groupId>
 			<artifactId>anotelib</artifactId>
 			<version>1.0</version>
-		</dependency>
+		</dependency> 
 
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
