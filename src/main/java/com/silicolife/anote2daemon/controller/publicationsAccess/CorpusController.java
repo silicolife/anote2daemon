@@ -22,6 +22,7 @@ import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementa
 import pt.uminho.anote2.interfaces.core.document.IDocumentSet;
 import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
 import pt.uminho.anote2.interfaces.core.document.corpus.ICorpusStatistics;
+import pt.uminho.anote2.interfaces.process.IE.IIEProcess;
 
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
@@ -118,6 +119,18 @@ public class CorpusController {
 		DaemonResponse<IDocumentSet> response = new DaemonResponse<IDocumentSet>(corpusService.getCorpusPublications(id));
 		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
 	}
+	
+	
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusProcesses/{corpusId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getCorpusProcesses(@PathVariable Long corpusId) throws CorpusException{
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(corpusService.getCorpusProcesses(corpusId));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
+	
+	
 
 	/**
 	 * Register corpus to a process
@@ -163,7 +176,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
-	@RequestMapping(value = "/getCorpusStatistics", method = RequestMethod.GET)
+	@RequestMapping(value = "/getCorpusStatistics/{corpusId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<ICorpusStatistics>> getCorpusStatistics(@PathVariable Long corpusId) throws CorpusException{
 		DaemonResponse<ICorpusStatistics> response = new DaemonResponse<ICorpusStatistics>(corpusService.getCorpusStatistics(corpusId));
 		return new ResponseEntity<DaemonResponse<ICorpusStatistics>>(response, HttpStatus.OK);
@@ -193,8 +206,8 @@ public class CorpusController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getAllPrivilegesQueriesAdminAccess", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<ICorpus>>>  getAllPrivilegesQueriesAdminAccess(){
+	@RequestMapping(value = "/getAllPrivilegesCorpusAdminAccess", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<ICorpus>>>  getAllPrivilegesCorpusAdminAccess(){
 		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusService.getAllPrivilegesCorpusAdminAccess());
 		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
 	}
