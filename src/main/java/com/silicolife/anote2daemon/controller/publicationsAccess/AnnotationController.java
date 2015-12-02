@@ -1,6 +1,5 @@
 package com.silicolife.anote2daemon.controller.publicationsAccess;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -14,13 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.annotation.AnnotationImpl;
-import pt.uminho.anote2.datastructures.annotation.log.AnnotationLogImpl;
-import pt.uminho.anote2.datastructures.annotation.ner.EntityAnnotationImpl;
-import pt.uminho.anote2.datastructures.annotation.re.EventAnnotationImpl;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.AnnotationException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
@@ -68,13 +62,13 @@ public class AnnotationController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
-	@RequestMapping(value = "/addCorpusProcessDocumentEntityAnootations", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEntityAnootations(@RequestParam Long corpusId, @RequestParam Long processId, @RequestParam Long documentID, @RequestBody List<EntityAnnotationImpl> entityAnnotations) throws AnnotationException{
-		List<IEntityAnnotation> entityAnnotationList  = new ArrayList<IEntityAnnotation>();
-		for (EntityAnnotationImpl entity : entityAnnotations) {
-			entityAnnotationList.add(entity);
-		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addCorpusProcessDocumentEntityAnootations(corpusId, processId, documentID, entityAnnotationList));
+	@RequestMapping(value = "/addCorpusProcessDocumentEntityAnootations/{corpusId}/{processId}/{documentId}", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEntityAnootations(@PathVariable Long corpusId, @PathVariable Long processId, @PathVariable Long documentId, @RequestBody List<IEntityAnnotation> entityAnnotations) throws AnnotationException{
+//		List<IEntityAnnotation> entityAnnotationList  = new ArrayList<IEntityAnnotation>();
+//		for (EntityAnnotationImpl entity : entityAnnotations) {
+//			entityAnnotationList.add(entity);
+//		}
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addCorpusProcessDocumentEntityAnootations(corpusId, processId, documentId, entityAnnotations));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
@@ -124,7 +118,7 @@ public class AnnotationController {
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDocumentLogs/{processId}/{publicationId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<SortedSet<IAnnotationLog>>> getProcessDocumentLogs(Long processId, Long publicationId) throws AnnotationException{
+	public ResponseEntity<DaemonResponse<SortedSet<IAnnotationLog>>> getProcessDocumentLogs(@PathVariable Long processId, @PathVariable Long publicationId) throws AnnotationException{
 		DaemonResponse<SortedSet<IAnnotationLog>> response = new DaemonResponse<SortedSet<IAnnotationLog>>(annotationService.getProcessDocumentLogs(processId, publicationId));
 		return new ResponseEntity<DaemonResponse<SortedSet<IAnnotationLog>>>(response, HttpStatus.OK);
 	}
@@ -142,13 +136,13 @@ public class AnnotationController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
-	@RequestMapping(value = "/getProcessDocumentLogs/{processId}/{publicationId}", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEventsAnootations(@RequestParam Long corpusId,  @RequestParam Long processId, @RequestParam Long documentID, @RequestBody List<EventAnnotationImpl> events) throws AnnotationException{
-		List<IEventAnnotation> eventAnnotationList  = new ArrayList<IEventAnnotation>();
-		for (EventAnnotationImpl entity : events) {
-			eventAnnotationList.add(entity);
-		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addCorpusProcessDocumentEventsAnootations(corpusId, processId, documentID, eventAnnotationList));
+	@RequestMapping(value = "/addCorpusProcessDocumentEventsAnootations/{corpusId}/{processId}/{documentId}", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEventsAnootations(@PathVariable Long corpusId,  @PathVariable Long processId, @PathVariable Long documentID, @RequestBody List<IEventAnnotation> events) throws AnnotationException{
+//		List<IEventAnnotation> eventAnnotationList  = new ArrayList<IEventAnnotation>();
+//		for (EventAnnotationImpl entity : events) {
+//			eventAnnotationList.add(entity);
+//		}
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addCorpusProcessDocumentEventsAnootations(corpusId, processId, documentID, events));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
@@ -212,12 +206,12 @@ public class AnnotationController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/addAnnotationLogs", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> addAnnotationLogs(@RequestBody List<AnnotationLogImpl> annotationLogs) throws AnnotationException{
-		List<IAnnotationLog> logAnnotationList  = new ArrayList<IAnnotationLog>();
-		for (AnnotationLogImpl entity : annotationLogs) {
-			logAnnotationList.add(entity);
-		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addAnnotationLogs(logAnnotationList));
+	public ResponseEntity<DaemonResponse<Boolean>> addAnnotationLogs(@RequestBody List<IAnnotationLog> annotationLogs) throws AnnotationException{
+//		List<IAnnotationLog> logAnnotationList  = new ArrayList<IAnnotationLog>();
+//		for (AnnotationLogImpl entity : annotationLogs) {
+//			logAnnotationList.add(entity);
+//		}
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addAnnotationLogs(annotationLogs));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
@@ -231,12 +225,12 @@ public class AnnotationController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/inactiveAnnotations", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> inactiveAnnotations(@RequestBody List<AnnotationImpl> annotation) throws AnnotationException{
-		List<IAnnotation> annotationList  = new ArrayList<IAnnotation>();
-		for (AnnotationImpl annot : annotation) {
-			annotationList.add(annot);
-		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.inactiveAnnotations(annotationList));
+	public ResponseEntity<DaemonResponse<Boolean>> inactiveAnnotations(@RequestBody List<IAnnotation> annotation) throws AnnotationException{
+//		List<IAnnotation> annotationList  = new ArrayList<IAnnotation>();
+//		for (AnnotationImpl annot : annotation) {
+//			annotationList.add(annot);
+//		}
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.inactiveAnnotations(annotation));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
@@ -249,12 +243,12 @@ public class AnnotationController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/updateEntityAnnotations", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> updateEntityAnnotations(@RequestBody List<EntityAnnotationImpl> entityAnnotations) throws AnnotationException{
-		List<IEntityAnnotation> entityAnnotationList  = new ArrayList<IEntityAnnotation>();
-		for (EntityAnnotationImpl entity : entityAnnotations) {
-			entityAnnotationList.add(entity);
-		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.updateEntityAnnotations(entityAnnotationList));
+	public ResponseEntity<DaemonResponse<Boolean>> updateEntityAnnotations(@RequestBody List<IEntityAnnotation> IEntityAnnotation) throws AnnotationException{
+//		List<IEntityAnnotation> entityAnnotationList  = new ArrayList<IEntityAnnotation>();
+//		for (EntityAnnotationImpl entity : entityAnnotations) {
+//			entityAnnotationList.add(entity);
+//		}
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.updateEntityAnnotations(IEntityAnnotation));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }
