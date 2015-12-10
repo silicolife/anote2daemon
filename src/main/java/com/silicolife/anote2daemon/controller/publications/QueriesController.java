@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller.publicationsAccess;
+package com.silicolife.anote2daemon.controller.publications;
 
 import java.util.List;
 import java.util.Map;

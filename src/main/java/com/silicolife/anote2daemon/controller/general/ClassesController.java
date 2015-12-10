@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller.ResourcesAccess;
+package com.silicolife.anote2daemon.controller.general;
 
 import java.util.Set;
 
@@ -49,19 +49,33 @@ public class ClassesController {
 	 * @throws ClassException 
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/insertNewClass", method = RequestMethod.PUT)
+	@RequestMapping(value = "/insertNewClass", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> insertNewClass(@RequestBody AnoteClass classes) throws ClassException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(classesService.addClass(classes));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
 	/**
+	 * Update class
+	 * 
+	 * @param classes
+	 * @return
+	 * @throws ClassException
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/updateClass", method = RequestMethod.PUT)
+	public ResponseEntity<DaemonResponse<Boolean>> updateClass(@RequestBody AnoteClass classes) throws ClassException {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(classesService.updateClass(classes));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
 	 * get classes
 	 * 
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getClasses/}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getClasses", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Set<IAnoteClass>>> getClasses() {
 		DaemonResponse<Set<IAnoteClass>> response = new DaemonResponse<Set<IAnoteClass>>(classesService.getClasses());
 		return new ResponseEntity<DaemonResponse<Set<IAnoteClass>>>(response, HttpStatus.OK);
@@ -70,13 +84,13 @@ public class ClassesController {
 	/**
 	 * get Classes by id
 	 * 
-	 * @param id
+	 * @param classId
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getClassById/{id}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<IAnoteClass>> getClassById(@PathVariable Long id) {
-		DaemonResponse<IAnoteClass> response = new DaemonResponse<IAnoteClass>(classesService.getClassById(id));
+	@RequestMapping(value = "/getClassById/{classId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IAnoteClass>> getClassById(@PathVariable Long classId) {
+		DaemonResponse<IAnoteClass> response = new DaemonResponse<IAnoteClass>(classesService.getClassById(classId));
 		return new ResponseEntity<DaemonResponse<IAnoteClass>>(response, HttpStatus.OK);
 	}
 

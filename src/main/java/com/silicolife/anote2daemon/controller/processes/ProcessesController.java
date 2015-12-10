@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller.ResourcesAccess;
+package com.silicolife.anote2daemon.controller.processes;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ProcessException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
+import pt.uminho.anote2.datastructures.process.IEProcessImpl;
 import pt.uminho.anote2.interfaces.process.IE.IIEProcess;
 import pt.uminho.anote2.interfaces.process.IE.IIEProcessStatistics;
 
@@ -44,7 +45,7 @@ public class ProcessesController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/createIEProcess", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createIEProcess(@RequestBody IIEProcess processes_) {
+	public ResponseEntity<DaemonResponse<Boolean>> createIEProcess(@RequestBody IEProcessImpl processes_) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(processesService.createIEProcess(processes_));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -60,7 +61,7 @@ public class ProcessesController {
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateIEProcess", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateIEProcess(@RequestBody IIEProcess processes_) throws ProcessException {
+	public ResponseEntity<DaemonResponse<Boolean>> updateIEProcess(@RequestBody IEProcessImpl processes_) throws ProcessException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(processesService.updateIEProcess(processes_));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

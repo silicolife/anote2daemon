@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller.ResourcesAccess;
+package com.silicolife.anote2daemon.controller.resources;
 
 import java.util.List;
 
@@ -69,6 +69,7 @@ public class ResourcesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getResourcesByType/{type}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getResourcesByType(@PathVariable String type) throws ResourcesExceptions {
+		System.out.println(type);
 		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getResourcesByType(type));
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
@@ -83,7 +84,7 @@ public class ResourcesController {
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceById/{resourceId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<IResource<IResourceElement>>> getQueryById(@PathVariable Long resourceId) {
+	public ResponseEntity<DaemonResponse<IResource<IResourceElement>>> getResourceById(@PathVariable Long resourceId) {
 		DaemonResponse<IResource<IResourceElement>> response = new DaemonResponse<IResource<IResourceElement>>(resourcesService.getResourcesById(resourceId));
 		return new ResponseEntity<DaemonResponse<IResource<IResourceElement>>>(response, HttpStatus.OK);
 	}
@@ -99,13 +100,12 @@ public class ResourcesController {
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateResource", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateQuery(@RequestBody ResourceImpl resource) throws ResourcesExceptions {
+	public ResponseEntity<DaemonResponse<Boolean>> updateResource(@RequestBody ResourceImpl resource) throws ResourcesExceptions {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.update(resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
 	/**
-	 * 
 	 * 
 	 * 
 	 * @return
@@ -117,5 +117,4 @@ public class ResourcesController {
 		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getAllPrivilegesResourcesAdminAccess());
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
-
 }

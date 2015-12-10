@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller.ResourcesAccess;
+package com.silicolife.anote2daemon.controller.resources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
@@ -126,7 +127,7 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
-	@RequestMapping(value = "/addResourceElement/{resourceId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/getResourceContent/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceContent>> getResourceContent(@PathVariable Long resourceId) throws ResourcesExceptions {
 		DaemonResponse<IResourceContent> response = new DaemonResponse<IResourceContent>(resourcesElementService.getResourceContent(resourceId));
 		return new ResponseEntity<DaemonResponse<IResourceContent>>(response, HttpStatus.OK);
@@ -297,8 +298,8 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
-	@RequestMapping(value = "/inactivateResourceElement/{resourceElmentId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Boolean>> inactivateResourceElement(@PathVariable Long resourceElmentId) throws ResourcesExceptions {
+	@RequestMapping(value = "/inactivateResourceElement", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> inactivateResourceElement(@RequestParam Long resourceElmentId) throws ResourcesExceptions {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.inactivateResourceElement(resourceElmentId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -317,8 +318,8 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getWritegrant()))")
-	@RequestMapping(value = "/updateResourceElementSynonym/{resourceId}/{resourceElmentId}/{oldSynonym}/{newSynonym}", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceManagerReport>>  updateResourceElementSynonym(@PathVariable Long resourceId, @PathVariable Long resourceElmentId, @PathVariable String oldSynonym, @PathVariable String newSynonym) throws ResourcesExceptions{
+	@RequestMapping(value = "/updateResourceElementSynonym", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<IResourceManagerReport>>  updateResourceElementSynonym(@RequestParam Long resourceId, @RequestParam Long resourceElmentId, @RequestParam String oldSynonym, @RequestParam String newSynonym) throws ResourcesExceptions{
 		DaemonResponse<IResourceManagerReport> response = new DaemonResponse<IResourceManagerReport>(resourcesElementService.updateResourceElementSynonym(resourceId, resourceElmentId, oldSynonym, newSynonym));
 		return new ResponseEntity<DaemonResponse<IResourceManagerReport>>(response, HttpStatus.OK);	
 	}
@@ -334,8 +335,8 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
-	@RequestMapping(value = "/removeResourceElementSynonym/{resourceElmentId}/{synonym}", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementSynonym(@PathVariable Long resourceElmentId, @PathVariable String synonym) throws ResourcesExceptions{
+	@RequestMapping(value = "/removeResourceElementSynonym", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementSynonym(@RequestParam Long resourceElmentId, @RequestParam String synonym) throws ResourcesExceptions{
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.removeResourceElementSynonym(resourceElmentId, synonym));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);	
 	}
@@ -352,7 +353,7 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
-	@RequestMapping(value = "/removeResourceElementExternalId/{resourceElmentId}/{synonym}", method = RequestMethod.POST)
+	@RequestMapping(value = "/removeResourceElementExternalId/{resourceElmentId}", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementExternalID(@PathVariable Long resourceElmentId, @RequestBody ExternalIDImpl extID) throws ResourcesExceptions{
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.removeResourceElementExternalID(resourceElmentId, extID));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);	
@@ -365,7 +366,9 @@ public class ResourceElementsController {
 	 * @return
 	 * @throws ResourcesExceptions
 	 */
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()and hasPermission(#resourceElmentId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceMaxPriorety/{resourceElmentId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Integer>> getResourceMaxPriorety(@PathVariable Long resourceElmentId)throws ResourcesExceptions{	
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementService.getResourceMaxPriorety(resourceElmentId));
@@ -383,8 +386,8 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/addResourceElementsRelation/{resourceElmentIda}/{resourceElmentIdb}/{relationType}", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> addResourceElementsRelation(@PathVariable Long resourceElmentIda, @PathVariable Long resourceElmentIdb, @PathVariable String relationType) throws ResourcesExceptions{
+	@RequestMapping(value = "/addResourceElementsRelation", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> addResourceElementsRelation(@RequestParam Long resourceElmentIda, @RequestParam Long resourceElmentIdb, @RequestParam String relationType) throws ResourcesExceptions{
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.addResourceElementsRelation(resourceElmentIda, resourceElmentIdb, relationType));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);	
 	}
@@ -396,7 +399,9 @@ public class ResourceElementsController {
 	 * @return
 	 * @throws ResourcesExceptions
 	 */
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElementsRelations/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IResourceElementsRelation>>> getResourceElementsRelations(@PathVariable Long resourceId) throws ResourcesExceptions{
 		DaemonResponse<List<IResourceElementsRelation>> response = new DaemonResponse<List<IResourceElementsRelation>>(resourcesElementService.getResourceElementsRelations(resourceId));
@@ -411,7 +416,9 @@ public class ResourceElementsController {
 	 * @return
 	 * @throws ResourcesExceptions
 	 */
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElementId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceFromResourceElement/{resourceElementId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResource<IResourceElement>>> getResourceFromResourceElement(@PathVariable Long resourceElementId) throws ResourcesExceptions{
 		DaemonResponse<IResource<IResourceElement>> response = new DaemonResponse<IResource<IResourceElement>>(resourcesElementService.getResourceFromResourceElement(resourceElementId));
@@ -425,7 +432,9 @@ public class ResourceElementsController {
 	 * @return
 	 * @throws ResourcesExceptions
 	 */
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElementId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElemenById/{resourceElementId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElement>> getResourceElemenByID(@PathVariable Long resourceElementId) throws ResourcesExceptions{
 		DaemonResponse<IResourceElement> response = new DaemonResponse<IResourceElement>(resourcesElementService.getResourceElemenByID(resourceElementId));
@@ -442,10 +451,45 @@ public class ResourceElementsController {
 	 * @return
 	 * @throws ResourcesExceptions
 	 */
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElementsByName/{resourceElementId}/{name}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByName(@PathVariable Long resourceId, @PathVariable String name) throws ResourcesExceptions{
 		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementService.getResourceElementsByName(resourceId, name));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
+	}
+	
+	
+	/**
+	 * remove all external ids from a resource
+	 * 
+	 * @param resourceElmentId
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
+	@RequestMapping(value = "/removeResourceElementAllExternalID", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementAllExternalID(@RequestParam Long resourceElmentId) throws ResourcesExceptions{
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.removeResourceElementAllExternalID(resourceElmentId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);	
+	}
+
+	/**
+	 * Remove a synonym
+	 * 
+	 * @param resourceElmentId
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
+			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
+	@RequestMapping(value = "/removeResourceElementSynonyms", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementSynonyms(@RequestParam Long resourceElmentId) throws ResourcesExceptions{
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.removeResourceElementSynonyms(resourceElmentId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);	
 	}
 }

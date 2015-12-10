@@ -1,4 +1,4 @@
-package com.silicolife.anote2daemon.controller.publicationsAccess;
+package com.silicolife.anote2daemon.controller.clustering;
 
 import java.util.List;
 
