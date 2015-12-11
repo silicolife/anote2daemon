@@ -12,12 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesService;
 import pt.uminho.anote2.datastructures.resources.ResourceImpl;
+import pt.uminho.anote2.datastructures.resources.dictionary.DictionaryImpl;
+import pt.uminho.anote2.datastructures.resources.lexiacalwords.LexicalWordsImpl;
+import pt.uminho.anote2.datastructures.resources.lookuptable.LookupTableImpl;
+import pt.uminho.anote2.datastructures.resources.ontology.OntologyImpl;
+import pt.uminho.anote2.datastructures.resources.rule.RuleSetImpl;
 import pt.uminho.anote2.interfaces.resource.IResource;
 import pt.uminho.anote2.interfaces.resource.IResourceElement;
 
@@ -31,7 +37,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
  * 
  * 
  * @author Joel Azevedo Costa
- * @year 2015
+ * @version 1.0
  *
  */
 @RequestMapping(value = "/resources", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
@@ -47,14 +53,66 @@ public class ResourcesController {
 	private ResourcesService resourcesService;
 
 	/**
-	 * 
+	 * Create a dictionary resource
 	 * 
 	 * @param resource
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/createResource", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createResource(@RequestBody ResourceImpl resource) {
+	@RequestMapping(value = "/createResourceDictionary", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createResourceDictionary(@RequestBody DictionaryImpl resource) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.create(resource));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Create a lookup table resource
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/createResourceLookupTable", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createResourceLookupTable(@RequestBody LookupTableImpl resource) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.create(resource));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Create rule set resource
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/createResourceRuleSet", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createResourceRuleSet(@RequestBody RuleSetImpl resource) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.create(resource));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Create an ontology resource
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/createResourceOntology", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createResourceOntology(@RequestBody OntologyImpl resource) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.create(resource));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Create a lexical words resource
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/createResourceLexicalWords", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createResourceLexicalWords(@RequestBody LexicalWordsImpl resource) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesService.create(resource));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
@@ -67,9 +125,8 @@ public class ResourcesController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourcesByType/{type}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getResourcesByType(@PathVariable String type) throws ResourcesExceptions {
-		System.out.println(type);
+	@RequestMapping(value = "/getResourcesByType", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getResourcesByType(@RequestParam String type) throws ResourcesExceptions {
 		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getResourcesByType(type));
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}

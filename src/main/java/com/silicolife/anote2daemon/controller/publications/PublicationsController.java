@@ -128,8 +128,8 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getAllPublicationsExternalIdFromSource/{source}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@PathVariable String source) {
+	@RequestMapping(value = "/getAllPublicationsExternalIdFromSource", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<String, Long>>> getAllPublicationsFromSource(@RequestParam String source) {
 		DaemonResponse<Map<String, Long>> response = new DaemonResponse<Map<String, Long>>(publicationService.getAllPublicationsIdFromSource(source));
 		return new ResponseEntity<DaemonResponse<Map<String, Long>>>(response, HttpStatus.OK);
 	}

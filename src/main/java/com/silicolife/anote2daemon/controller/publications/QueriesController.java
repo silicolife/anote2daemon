@@ -211,8 +211,8 @@ public class QueriesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getAllQueryPublicationsExternalIdFromSource/{queryId}/{source}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<Set<String>>> getQueryPublicationsRelevance(@PathVariable Long queryId, @PathVariable String source) {
+	@RequestMapping(value = "/getAllQueryPublicationsExternalIdFromSource", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Set<String>>> getQueryPublicationsRelevance(@RequestParam Long queryId, @RequestParam String source) {
 		DaemonResponse<Set<String>> response = new DaemonResponse<Set<String>>(queriesService.getQueryPublicationsExternalIDFromSource(queryId, source));
 		return new ResponseEntity<DaemonResponse<Set<String>>>(response, HttpStatus.OK);
 	}

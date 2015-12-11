@@ -61,10 +61,11 @@ public class RestPermissionsEvaluator implements PermissionEvaluator {
 		case resourceByResourceElement:
 			try {
 				IResource<IResourceElement> obj = resourcesElementService.getResourceFromResourceElement((Long) targetId);
-				id = obj.getID();
+				id = obj.getId();
 			} catch (ResourcesExceptions e) {
 				throw new PrivilegesDaemonException(ExceptionsCodes.codeResourceAccessDenied, ExceptionsCodes.msgResourceAccessDenied);
 			}
+			break;
 		case default_:
 		default:
 			id = (Long) targetId;

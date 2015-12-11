@@ -112,8 +112,8 @@ public class PrivilegesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getUserDataObjectPrivilege/{userId}/{resourceId}/{resource}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<IUserDataObject>> getUserDataObjectPrivilege(@PathVariable Long userId, @PathVariable Long resourceId, @PathVariable String resource) {
+	@RequestMapping(value = "/getUserDataObjectPrivilege", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IUserDataObject>> getUserDataObjectPrivilege(@RequestParam Long userId, @RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<IUserDataObject> response = new DaemonResponse<IUserDataObject>(privilegesService.getPrivilege(userId, resourceId, resource));
 		return new ResponseEntity<DaemonResponse<IUserDataObject>>(response, HttpStatus.OK);
 	}
@@ -126,8 +126,8 @@ public class PrivilegesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getUsersAndPrivilegers/{resourceId}/{resource}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>> getUsersAndPrivilegers(@PathVariable Long resourceId, @PathVariable String resource) {
+	@RequestMapping(value = "/getUsersAndPrivilegers", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>> getUsersAndPrivilegers(@RequestParam Long resourceId, @RequestParam String resource) {
 		DaemonResponse<List<IGenericPair<IUser, String>>> response = new DaemonResponse<List<IGenericPair<IUser, String>>>(privilegesService.getUsersAndPermissions(resourceId,
 				resource));
 		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);

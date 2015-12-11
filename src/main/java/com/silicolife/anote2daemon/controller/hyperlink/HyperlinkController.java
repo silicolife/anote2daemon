@@ -101,7 +101,7 @@ public class HyperlinkController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getHyperLinkMenuItemsForSource/{sourceId}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IHyperLinkMenuItem>>> getHyperLinkMenuItemsForSource(@PathVariable long sourceId) throws HyperLinkMenuException {
+	public ResponseEntity<DaemonResponse<List<IHyperLinkMenuItem>>> getHyperLinkMenuItemsForSource(@PathVariable Long sourceId) throws HyperLinkMenuException {
 		DaemonResponse<List<IHyperLinkMenuItem>> response = new DaemonResponse<List<IHyperLinkMenuItem>>(hyperlinkService.getHyperLinkMenuItemsForSource(sourceId));
 		return new ResponseEntity<DaemonResponse<List<IHyperLinkMenuItem>>>(response, HttpStatus.OK);
 	}
