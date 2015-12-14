@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.annotation.AnnotationImpl;
 import pt.uminho.anote2.datastructures.annotation.log.AnnotationLogImpl;
 import pt.uminho.anote2.datastructures.annotation.ner.EntityAnnotationImpl;
 import pt.uminho.anote2.datastructures.annotation.re.EventAnnotationImpl;
@@ -231,12 +230,8 @@ public class AnnotationController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/inactiveAnnotations", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> inactiveAnnotations(@RequestBody List<AnnotationImpl> annotation) throws AnnotationException{
-		List<IAnnotation> annotationList  = new ArrayList<IAnnotation>();
-		for (AnnotationImpl annot : annotation) {
-			annotationList.add(annot);
-		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.inactiveAnnotations(annotationList));
+	public ResponseEntity<DaemonResponse<Boolean>> inactiveAnnotations(@RequestBody List<Long> annotation) throws AnnotationException{
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.inactiveAnnotations(annotation));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	

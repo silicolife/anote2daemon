@@ -12,11 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 
-@RequestMapping(value = "/configuration", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+@RequestMapping(value = "/", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 @ResponseBody
 @Controller
 public class ConfigurationController {
 
+	private final String title = "@note daemon - The best Text Mining Tool :d";
+	
 	@RequestMapping(value = "/getVersion", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<String>> getVersion() {
 		String version = "Version: Development";
@@ -40,5 +42,20 @@ public class ConfigurationController {
 		 * " because the file was empty."; }
 		 */
 	}
-
+	
+	
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<String> getFirstPage() {
+		
+		String output ="<!DOCTYPE html>"
+				+ "<html>"
+				+ "<head>"
+				+ "<meta charset=\"UTF-8\">"
+				+ "<title>" + title + "</title>"
+				+ "</head><body>"
+				+ "<hr/>" + title + "<hr/>"
+				+ "</body></html>";
+		
+		return new ResponseEntity<String>(output, HttpStatus.OK);
+	}
 }
