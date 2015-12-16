@@ -22,10 +22,10 @@ import pt.uminho.anote2.datastructures.annotation.re.EventAnnotationImpl;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.AnnotationException;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
-import pt.uminho.anote2.interfaces.core.annotation.IAnnotation;
 import pt.uminho.anote2.interfaces.core.annotation.IAnnotationLog;
 import pt.uminho.anote2.interfaces.core.annotation.IEntityAnnotation;
 import pt.uminho.anote2.interfaces.core.annotation.IEventAnnotation;
+import pt.uminho.anote2.interfaces.core.annotation.IManualCurationAnnotations;
 import pt.uminho.anote2.interfaces.core.document.IAnnotatedDocumentStatistics;
 
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
@@ -142,12 +142,12 @@ public class AnnotationController {
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addCorpusProcessDocumentEventsAnootations/{corpusId}/{processId}/{documentId}", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEventsAnootations(@PathVariable Long corpusId,  @PathVariable Long processId, @PathVariable Long documentID, @RequestBody List<EventAnnotationImpl> events) throws AnnotationException{
+	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEventsAnootations(@PathVariable Long corpusId,  @PathVariable Long processId, @PathVariable Long documentId, @RequestBody List<EventAnnotationImpl> events) throws AnnotationException{
 		List<IEventAnnotation> eventAnnotationList  = new ArrayList<IEventAnnotation>();
 		for (EventAnnotationImpl entity : events) {
 			eventAnnotationList.add(entity);
 		}
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addCorpusProcessDocumentEventsAnootations(corpusId, processId, documentID, eventAnnotationList));
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.addCorpusProcessDocumentEventsAnootations(corpusId, processId, documentId, eventAnnotationList));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
@@ -197,9 +197,9 @@ public class AnnotationController {
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDocumentAnnotationsAssociatedToLogs/{processId}", method = RequestMethod.GET)
-	public  ResponseEntity<DaemonResponse<List<IAnnotation>>> getProcessDocumentAnnotationsAssociatedToLogs(@PathVariable Long processId) throws AnnotationException{
-		DaemonResponse<List<IAnnotation>> response = new DaemonResponse<List<IAnnotation>>(annotationService.getProcessDocumentAnnotationsAssociatedToLogs(processId));
-		return new ResponseEntity<DaemonResponse<List<IAnnotation>>>(response, HttpStatus.OK);
+	public  ResponseEntity<DaemonResponse<IManualCurationAnnotations>> getProcessDocumentAnnotationsAssociatedToLogs(@PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<IManualCurationAnnotations> response = new DaemonResponse<IManualCurationAnnotations>(annotationService.getProcessDocumentAnnotationsAssociatedToLogs(processId));
+		return new ResponseEntity<DaemonResponse<IManualCurationAnnotations>>(response, HttpStatus.OK);
 	}
 	
 	/**

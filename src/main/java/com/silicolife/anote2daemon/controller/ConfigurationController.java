@@ -17,7 +17,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 @Controller
 public class ConfigurationController {
 
-	private final String title = "@note daemon - The best Text Mining Tool :d";
+	private final String title = "@note2daemon - The best Text Mining Tool :d";
 	
 	@RequestMapping(value = "/getVersion", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<String>> getVersion() {
@@ -28,7 +28,6 @@ public class ConfigurationController {
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file) {
-
 		return "OK";
 
 		/*
