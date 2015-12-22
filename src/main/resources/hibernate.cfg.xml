@@ -5,10 +5,10 @@
 <hibernate-configuration>
 	<session-factory>
 	
-	    <property name="hibernate.connection.password">admin</property>
-		<property name="hibernate.connection.url">jdbc:mysql://192.168.1.2/newanote_copora_v2</property>
-		<property name="hibernate.connection.username">jcosta</property>
-		<property name="hibernate.default_catalog">newanote_copora_v2</property>
+	    <property name="hibernate.connection.password">eat24</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote2_daemon_syngenta_v3</property>
+		<property name="hibernate.connection.username">eat24</property>
+		<property name="hibernate.default_catalog">anote2_daemon_syngenta_v3</property>
 		
 		<property name="hibernate.c3p0.idle_test_period">10</property>
 		<property name="hibernate.c3p0.acquireRetryAttempts">1</property>

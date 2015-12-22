@@ -143,9 +143,24 @@ public class PublicationsController {
 	 * @throws PublicationManagerException 
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/updatePublicationAvailableFreeFullText", method = RequestMethod.PUT)
+	@RequestMapping(value = "/updatePublicationAvailableFreeFullText", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updatePublicationAvailableFreeFullText(@RequestParam Long publicationId, @RequestParam Boolean isAvailable) throws PublicationManagerException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.updatePublicationAvailableFreeFullText(publicationId, isAvailable));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Update publication full text content
+	 * 
+	 * @param publicationId
+	 * @param fullText
+	 * @return
+	 * @throws PublicationManagerException
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/updatePublicationFullTextContent", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> updatePublicationFullTextContent(@RequestParam Long publicationId, @RequestParam String fullText) throws PublicationManagerException {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.updatePublicationAFullTextContent(publicationId, fullText));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }

@@ -153,7 +153,7 @@ public class ResourcesController {
 	 * @return
 	 * @throws ResourcesExceptions
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#resource.getID(), "
+	@PreAuthorize("isAuthenticated() and hasPermission(#resource.getId(), "
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateResource", method = RequestMethod.PUT, consumes = { "application/json" })
