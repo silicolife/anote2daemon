@@ -1,7 +1,9 @@
 package com.silicolife.anote2daemon.controller.userprivileges;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.UserExceptions;
 import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.users.UserService;
+import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.users.IUserService;
 import pt.uminho.anote2.interfaces.core.user.IGroup;
 import pt.uminho.anote2.interfaces.core.user.IUser;
 
@@ -36,7 +38,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 public class UsersController {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	/**
 	 * Check if login exist
@@ -163,6 +165,32 @@ public class UsersController {
 	@RequestMapping(value = "/hasPermissionRole", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> hasPermissionRole(@RequestBody List<String> rolesCodes) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.hasPermissionRole(rolesCodes));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param propertiesIdentifiers
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/loadProperties", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Properties>> loadProperties(@RequestBody HashSet<String> propertiesIdentifiers) {
+		DaemonResponse<Properties> response = new DaemonResponse<Properties>(userService.loadProperties(propertiesIdentifiers));
+		return new ResponseEntity<DaemonResponse<Properties>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param properties
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/saveProperties", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> loadProperties(@RequestBody Properties properties) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.saveProperties(properties));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }

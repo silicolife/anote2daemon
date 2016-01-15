@@ -50,5 +50,14 @@
 		</beans:constructor-arg>
 	</beans:bean>
 	
+	<beans:bean id="authSettings"
+		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		<beans:constructor-arg ref="sessionFactory" />
+		<beans:constructor-arg>
+			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserSettings
+			</beans:value>
+		</beans:constructor-arg>
+	</beans:bean>
+	
 
 </beans:beans>
