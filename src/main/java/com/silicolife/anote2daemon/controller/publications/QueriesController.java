@@ -17,17 +17,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
-import pt.uminho.anote2.datastructures.documents.query.QueryImpl;
-import pt.uminho.anote2.interfaces.core.document.IPublication;
-import pt.uminho.anote2.interfaces.core.document.relevance.RelevanceTypeEnum;
-import pt.uminho.anote2.interfaces.process.IR.IQuery;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
+import com.silicolife.textmining.core.datastructures.documents.query.QueryImpl;
+import com.silicolife.textmining.core.interfaces.core.document.IPublication;
+import com.silicolife.textmining.core.interfaces.core.document.relevance.RelevanceTypeEnum;
+import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
 
 /**
  * The goal of this class is to expose for the web all Clustering

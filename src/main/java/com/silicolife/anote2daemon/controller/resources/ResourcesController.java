@@ -15,21 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesService;
-import pt.uminho.anote2.datastructures.resources.ResourceImpl;
-import pt.uminho.anote2.datastructures.resources.dictionary.DictionaryImpl;
-import pt.uminho.anote2.datastructures.resources.lexiacalwords.LexicalWordsImpl;
-import pt.uminho.anote2.datastructures.resources.lookuptable.LookupTableImpl;
-import pt.uminho.anote2.datastructures.resources.ontology.OntologyImpl;
-import pt.uminho.anote2.datastructures.resources.rule.RuleSetImpl;
-import pt.uminho.anote2.interfaces.resource.IResource;
-import pt.uminho.anote2.interfaces.resource.IResourceElement;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesService;
+import com.silicolife.textmining.core.datastructures.resources.ResourceImpl;
+import com.silicolife.textmining.core.datastructures.resources.dictionary.loaders.DictionaryImpl;
+import com.silicolife.textmining.core.datastructures.resources.lexiacalwords.LexicalWordsImpl;
+import com.silicolife.textmining.core.datastructures.resources.lookuptable.LookupTableImpl;
+import com.silicolife.textmining.core.datastructures.resources.ontology.OntologyImpl;
+import com.silicolife.textmining.core.datastructures.resources.rule.RuleSetImpl;
+import com.silicolife.textmining.core.interfaces.resource.IResource;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 
 /**
  * The goal of this class is to expose for the web all resources functionalities

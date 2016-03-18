@@ -18,13 +18,12 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
-
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 import com.silicolife.anote2daemon.utils.ApplicationContextUtils;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.anote2daemon.webservice.HibernateAwareObjectMapper;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 
 /**
  * This class is called when the authentication is success

@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ProcessException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
-import pt.uminho.anote2.datastructures.process.IEProcessImpl;
-import pt.uminho.anote2.interfaces.process.IE.IIEProcess;
-import pt.uminho.anote2.interfaces.process.IE.IIEProcessStatistics;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ProcessException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
+import com.silicolife.textmining.core.datastructures.process.IEProcessImpl;
+import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
+import com.silicolife.textmining.core.interfaces.process.IE.IIEProcessStatistics;
 
 
 @RequestMapping(value = "/processes", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })

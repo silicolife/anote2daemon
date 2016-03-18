@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ClassException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
-import pt.uminho.anote2.datastructures.general.AnoteClass;
-import pt.uminho.anote2.interfaces.core.general.classe.IAnoteClass;
-
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ClassException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import com.silicolife.textmining.core.datastructures.general.AnoteClass;
+import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 
 /**
  * The goal of this class is to expose for the web all classe functionalities

@@ -12,7 +12,7 @@
 
 
 	<beans:bean id="usersLogged"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLoggedImpl"
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLoggedImpl"
 		scope="session">
 		<aop:scoped-proxy proxy-target-class="false" />
 	</beans:bean>
@@ -50,7 +50,7 @@
 		autowire="constructor" />
 		
 	<beans:bean id="resourcesElementService"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesElementServiceImpl"
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesElementServiceImpl"
 		autowire="constructor" />
 
 	<!-- Custom authentication provider -->
@@ -91,7 +91,7 @@
 
 <!--  	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
 	<context:component-scan
-		base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model" /> -->
+		base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model" /> -->
 
 
 </beans:beans>

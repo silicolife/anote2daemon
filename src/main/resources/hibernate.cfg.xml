@@ -6,9 +6,9 @@
 	<session-factory>
 	
 	    <property name="hibernate.connection.password">eat24</property>
-		<property name="hibernate.connection.url">jdbc:mysql://192.168.1.200/anote2_daemon_syngenta_v3</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote_demo_aebrasileira</property>
 		<property name="hibernate.connection.username">eat24</property>
-		<property name="hibernate.default_catalog">anote2_daemon_syngenta_v3</property>
+		<property name="hibernate.default_catalog">anote_demo_aebrasileira</property>
 		
 		<property name="hibernate.c3p0.idle_test_period">10</property>
 		<property name="hibernate.c3p0.acquireRetryAttempts">1</property>
@@ -23,121 +23,122 @@
 		<property name="hibernate.connection.useUnicode">true</property>
 		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.search.autoregister_listeners">false</property>
-	<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.use_sql_comments">true</property>
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterLabels" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterLabels" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserLogs" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserLogs" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Sources" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Sources" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserSettings" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserSettings" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessTypes" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessTypes" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.HyperLinkMenuSourceAssociation" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.HyperLinkMenuSourceAssociation" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Classes" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Classes" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthRoles" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthRoles" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterLabelPublications" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterLabelPublications" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessGeneralResumeStats" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessGeneralResumeStats" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesClassSynonymsCount" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesClassSynonymsCount" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementRelations" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementRelations" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Synonyms" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Synonyms" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Queries" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Queries" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesClassStats" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesClassStats" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusHasProcesses" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusHasProcesses" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationSides" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationSides" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Publications" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Publications" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessProperties" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessProperties" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceTypes" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceTypes" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClassHierarchies" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClassHierarchies" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Corpus" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Corpus" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationLabels" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationLabels" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationLogs" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationLogs" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessEntitiesClassStats" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessEntitiesClassStats" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationHasSources" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationHasSources" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Resources" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Resources" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusProperties" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusProperties" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Annotations" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Annotations" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroupHasRoles" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroupHasRoles" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroups" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroups" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesTotalElementsSynonyms" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesTotalElementsSynonyms" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProperties" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProperties" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.HyperLinkSubmenus" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.HyperLinkSubmenus" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Processes" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Processes" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationFields" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationFields" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationHasLabels" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationHasLabels" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessEntitiesStats" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessEntitiesStats" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessOrigins" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessOrigins" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementRelationTypes" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementRelationTypes" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Versions" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Versions" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProcesses" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProcesses" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.HyperLinkMenus" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.HyperLinkMenus" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesTotalElements" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourcesTotalElements" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationSources" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.PublicationSources" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusHasPublications" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.CorpusHasPublications" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryHasClusterProcesses" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryHasClusterProcesses" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryTypes" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryTypes" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElements" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElements" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessCluesStats" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ProcessCluesStats" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementExtenalIds" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ResourceElementExtenalIds" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryProperties" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryProperties" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProcessHasLabels" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.ClusterProcessHasLabels" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationProperties" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationProperties" />
 		<mapping
-			class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryHasPublications" />
+			class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.QueryHasPublications" />
+	
 	</session-factory>
 </hibernate-configuration>

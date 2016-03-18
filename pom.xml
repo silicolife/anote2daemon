@@ -4,7 +4,7 @@
 	<groupId>com.silicolife</groupId>
 	<artifactId>anote2daemon</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>anote2daemon</name>
 	<url>http://maven.apache.org</url>
 
@@ -22,12 +22,11 @@
 	<dependencies>
 		<!-- <dependency> <groupId>com.silicolife.anote2</groupId> <artifactId>anote2-core-1.0</artifactId> 
 			<version>1.0</version> </dependency> -->
-
- 	<dependency> 
-			<groupId>com.silicolife.anote2</groupId>
-			<artifactId>anotelib</artifactId>
-			<version>1.0</version>
-		</dependency> 
+		<dependency>
+			<groupId>com.silicolife.textmining</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
@@ -67,13 +66,14 @@
 			<scope>test</scope>
 		</dependency>
 
-
-
+	
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.34</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
+	
+
 
 		<dependency>
 			<groupId>org.springframework</groupId>

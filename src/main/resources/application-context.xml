@@ -15,11 +15,11 @@
 	<beans:import resource="classpath:spring-security.xml" />
 
 
-	<context:component-scan base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security" />
+	<context:component-scan base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
-	<context:component-scan base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model" />
+	<context:component-scan base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.service" />
-	<context:component-scan base-package="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service" />
+	<context:component-scan base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.utils" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.security" />
 

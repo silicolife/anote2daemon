@@ -13,10 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
-
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 import com.silicolife.anote2daemon.service.users.UsersService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 
 /**
  * Custom provider to handler with login and password encryption

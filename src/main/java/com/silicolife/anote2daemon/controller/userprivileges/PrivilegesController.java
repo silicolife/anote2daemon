@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.system.PrivilegesService;
-import pt.uminho.anote2.interfaces.core.user.IUser;
-import pt.uminho.anote2.interfaces.core.user.IUserDataObject;
-import pt.uminho.anote2.interfaces.core.utils.IGenericPair;
-
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.system.PrivilegesService;
+import com.silicolife.textmining.core.interfaces.core.user.IUser;
+import com.silicolife.textmining.core.interfaces.core.user.IUserDataObject;
+import com.silicolife.textmining.core.interfaces.core.utils.IGenericPair;
 
 /**
  * 

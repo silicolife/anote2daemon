@@ -14,17 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.HyperLinkMenuException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.hyperlink.IHyperLinkService;
-import pt.uminho.anote2.datastructures.hyperlink.HyperLinkMenuItemImpl;
-import pt.uminho.anote2.interfaces.core.dataaccess.exception.ANoteException;
-import pt.uminho.anote2.interfaces.core.general.source.ISource;
-import pt.uminho.anote2.interfaces.core.hyperlink.IHyperLinkMenuItem;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.HyperLinkMenuException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.hyperlink.IHyperLinkService;
+import com.silicolife.textmining.core.datastructures.hyperlink.HyperLinkMenuItemImpl;
+import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
+import com.silicolife.textmining.core.interfaces.core.general.source.ISource;
+import com.silicolife.textmining.core.interfaces.core.hyperlink.IHyperLinkMenuItem;
 
 /**
  * The goal of this class is to expose for the web all Hyperlink functionalities of

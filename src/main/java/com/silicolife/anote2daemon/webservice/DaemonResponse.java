@@ -1,6 +1,6 @@
 package com.silicolife.anote2daemon.webservice;
 
-import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
+import com.silicolife.textmining.core.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
 
 public class DaemonResponse<T> {
 

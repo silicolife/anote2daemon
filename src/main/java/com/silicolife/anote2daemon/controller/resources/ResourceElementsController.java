@@ -17,23 +17,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
-import pt.uminho.anote2.datastructures.general.ExternalIDImpl;
-import pt.uminho.anote2.datastructures.resources.ResourceElementImpl;
-import pt.uminho.anote2.interfaces.core.dataaccess.layer.resources.IResourceManagerReport;
-import pt.uminho.anote2.interfaces.core.general.IExternalID;
-import pt.uminho.anote2.interfaces.core.general.classe.IAnoteClass;
-import pt.uminho.anote2.interfaces.resource.IResource;
-import pt.uminho.anote2.interfaces.resource.IResourceElement;
-import pt.uminho.anote2.interfaces.resource.IResourceElementSet;
-import pt.uminho.anote2.interfaces.resource.content.IResourceContent;
-import pt.uminho.anote2.interfaces.resource.ontologies.IResourceElementsRelation;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.general.ExternalIDImpl;
+import com.silicolife.textmining.core.datastructures.resources.ResourceElementImpl;
+import com.silicolife.textmining.core.interfaces.core.dataaccess.layer.resources.IResourceManagerReport;
+import com.silicolife.textmining.core.interfaces.core.general.IExternalID;
+import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
+import com.silicolife.textmining.core.interfaces.resource.IResource;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElementSet;
+import com.silicolife.textmining.core.interfaces.resource.content.IResourceContent;
+import com.silicolife.textmining.core.interfaces.resource.ontologies.IResourceElementsRelation;
 
 /**
  * The goal of this class is to expose for the web all resources elements

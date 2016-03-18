@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
-
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
 
 /**
  * Generic class to handler with server codes exceptions, like 404, 400, ...

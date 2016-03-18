@@ -15,18 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.corpora.CorpusImpl;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
-import pt.uminho.anote2.interfaces.core.document.IDocumentSet;
-import pt.uminho.anote2.interfaces.core.document.corpus.ICorpus;
-import pt.uminho.anote2.interfaces.core.document.corpus.ICorpusStatistics;
-import pt.uminho.anote2.interfaces.process.IE.IIEProcess;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.corpora.CorpusImpl;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
+import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
+import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
+import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpusStatistics;
+import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
 
 /**
  * The goal of this class is to expose for the web all Corpus functionalities of

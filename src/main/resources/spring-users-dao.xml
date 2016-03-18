@@ -15,46 +15,46 @@
 	<!-- CREATE BEANS TO DAO -->
 
 	<beans:bean id="authUsersDao"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="authUserLogsDao"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserLogs
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserLogs
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 	<beans:bean id="authUserDataObjects"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserDataObjects
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 	
 	<beans:bean id="authGroup"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroups
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthGroups
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 	
 	<beans:bean id="authSettings"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserSettings
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUserSettings
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>

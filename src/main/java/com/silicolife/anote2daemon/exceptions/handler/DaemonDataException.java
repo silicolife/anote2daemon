@@ -5,11 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import pt.uminho.anote2.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.DataException;
-import pt.uminho.anote2.interfaces.core.dataaccess.exception.DaemonException;
-
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.DataException;
+import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.DaemonException;
 
 /**
  * 

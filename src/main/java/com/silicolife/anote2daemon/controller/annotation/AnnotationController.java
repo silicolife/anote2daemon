@@ -16,21 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.annotation.log.AnnotationLogImpl;
-import pt.uminho.anote2.datastructures.annotation.ner.EntityAnnotationImpl;
-import pt.uminho.anote2.datastructures.annotation.re.EventAnnotationImpl;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.exceptions.AnnotationException;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
-import pt.uminho.anote2.interfaces.core.annotation.IAnnotationLog;
-import pt.uminho.anote2.interfaces.core.annotation.IEntityAnnotation;
-import pt.uminho.anote2.interfaces.core.annotation.IEventAnnotation;
-import pt.uminho.anote2.interfaces.core.annotation.IManualCurationAnnotations;
-import pt.uminho.anote2.interfaces.core.document.IAnnotatedDocumentStatistics;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.annotation.log.AnnotationLogImpl;
+import com.silicolife.textmining.core.datastructures.annotation.ner.EntityAnnotationImpl;
+import com.silicolife.textmining.core.datastructures.annotation.re.EventAnnotationImpl;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.AnnotationException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
+import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotationLog;
+import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
+import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
+import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
+import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
 
 /**
  * The goal of this class is to expose for the web all annotation functionalities of

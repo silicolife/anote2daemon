@@ -13,40 +13,40 @@
 
 
 	<beans:bean id="annotationsDao"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Annotations
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.Annotations
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 	
 	
 	<beans:bean id="annotationPropertiesDao"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationProperties
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationProperties
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 
 
 	<beans:bean id="annotationSidesDao"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationSides
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationSides
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>
 	
 	
 	<beans:bean id="annotationLogsDao"
-		class="pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.GenericDaoImpl">
 		<beans:constructor-arg ref="sessionFactory" />
 		<beans:constructor-arg>
-			<beans:value type="java.lang.Class">pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationLogs
+			<beans:value type="java.lang.Class">com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AnnotationLogs
 			</beans:value>
 		</beans:constructor-arg>
 	</beans:bean>

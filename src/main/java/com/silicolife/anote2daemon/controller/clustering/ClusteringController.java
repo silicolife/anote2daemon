@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.controller.clustering;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pt.uminho.anote2.datastructures.clustering.ClusterProcessImpl;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.IClusteringService;
-import pt.uminho.anote2.interfaces.core.cluster.IClusterProcess;
-
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.clustering.ClusterLabelImpl;
+import com.silicolife.textmining.core.datastructures.clustering.ClusterProcessImpl;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ClusteringException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.IClusteringService;
+import com.silicolife.textmining.core.interfaces.core.cluster.IClusterLabel;
+import com.silicolife.textmining.core.interfaces.core.cluster.IClusterProcess;
 
 /**
  * The goal of this class is to expose for the web all Clustering
@@ -93,13 +96,14 @@ public class ClusteringController {
 	 * @param queryId
 	 * @param clusteringId
 	 * @return
+	 * @throws ClusteringException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#id,"
 			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) {
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.clusterProcessQueryRegistry(queryId, clusteringId));
+	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) throws ClusteringException {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.registerQueryClustering(queryId, clusteringId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 
@@ -108,11 +112,45 @@ public class ClusteringController {
 	 * 
 	 * @param clusteringId
 	 * @return
+	 * @throws ClusteringException 
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.PUT, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> inactivateClustering(@RequestParam Long clusteringId) {
+	public ResponseEntity<DaemonResponse<Boolean>> inactivateClustering(@RequestParam Long clusteringId) throws ClusteringException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.inactivateClustering(clusteringId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param clusteringId
+	 * @param clusterLabels
+	 * @return
+	 * @throws ClusteringException
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/addClusteringLabels/{clusteringId}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> addClusteringLabels(@PathVariable Long clusteringId, @RequestBody ArrayList<ClusterLabelImpl> clusterLabels) throws ClusteringException {
+		List<IClusterLabel> labelsCluster = new ArrayList<IClusterLabel>();
+		for (ClusterLabelImpl label : clusterLabels)
+			labelsCluster.add(label);
+
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.addClusteringLabels(clusteringId, labelsCluster));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param clusterProcess
+	 * @return
+	 * @throws ClusteringException
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/updateQueryClusteringProcess", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> updateQueryClusteringProcess(@RequestBody ClusterProcessImpl clusterProcess) throws ClusteringException {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.updateQueryClusteringProcess(clusterProcess));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 }
