@@ -63,7 +63,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addCorpusProcessDocumentEntityAnootations/{corpusId}/{processId}/{documentId}", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEntityAnootations(@PathVariable Long corpusId, @PathVariable Long processId, 
@@ -85,7 +85,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDocumentStatistics/{publicationId}/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IAnnotatedDocumentStatistics>> getProcessDocumentStatistics(@PathVariable Long publicationId, @PathVariable Long processId) throws AnnotationException{	
@@ -102,7 +102,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDoumentAnnotationEntities/{publicationId}/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IEntityAnnotation>>> getProcessDoumentAnnotationEntities(@PathVariable Long publicationId, @PathVariable Long processId) throws AnnotationException{
@@ -119,7 +119,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDocumentLogs/{processId}/{publicationId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<SortedSet<IAnnotationLog>>> getProcessDocumentLogs(@PathVariable Long processId, @PathVariable Long publicationId) throws AnnotationException{
@@ -138,7 +138,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addCorpusProcessDocumentEventsAnootations/{corpusId}/{processId}/{documentId}", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> addCorpusProcessDocumentEventsAnootations(@PathVariable Long corpusId,  @PathVariable Long processId, @PathVariable Long documentId, @RequestBody List<EventAnnotationImpl> events) throws AnnotationException{
@@ -159,7 +159,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessLogs/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<SortedSet<IAnnotationLog>>> getProcessLogs(@PathVariable Long processId) throws AnnotationException{
@@ -177,7 +177,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDoumentAnnotationEvents/{processId}/{publicationId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IEventAnnotation>>> getProcessDoumentAnnotationEvents(@PathVariable Long processId, @PathVariable Long publicationId) throws AnnotationException{
@@ -193,7 +193,7 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessDocumentAnnotationsAssociatedToLogs/{processId}", method = RequestMethod.GET)
 	public  ResponseEntity<DaemonResponse<IManualCurationAnnotations>> getProcessDocumentAnnotationsAssociatedToLogs(@PathVariable Long processId) throws AnnotationException{

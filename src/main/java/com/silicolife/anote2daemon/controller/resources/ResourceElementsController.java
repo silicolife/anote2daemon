@@ -66,7 +66,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addResourceElements/{resourceId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElements(@PathVariable Long resourceId, @RequestBody List<ResourceElementImpl> elem)
@@ -87,7 +87,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElements/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElements(@PathVariable Long resourceId) throws ResourcesExceptions {
@@ -105,7 +105,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElementsByClass", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByClass(@RequestParam Long resourceId, @RequestParam String termClass)
@@ -124,7 +124,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceContent/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceContent>> getResourceContent(@PathVariable Long resourceId) throws ResourcesExceptions {
@@ -141,7 +141,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceClassContent/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Set<IAnoteClass>>> getResourceClassContent(@PathVariable Long resourceId) throws ResourcesExceptions {
@@ -174,7 +174,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addResourceElementsWithoutValidation/{resourceId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElementsWithoutValidation(@PathVariable Long resourceId, @RequestBody List<ResourceElementImpl> element)
@@ -199,7 +199,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/checkResourceElementExistsInResource", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> checkResourceElementExistsInResource(@RequestParam long resourceId, @RequestParam String term) throws ResourcesExceptions {
@@ -217,7 +217,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/removeResourceClass/{resourceId}/{classId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceClass(@PathVariable Long resourceId, @PathVariable Long classId) throws ResourcesExceptions {
@@ -236,7 +236,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addResourceElementSynonyms/{resourceId}/{resourceElmentId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElementSynonyms(@PathVariable Long resourceId, @PathVariable Long resourceElmentId,
@@ -257,7 +257,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addResourceElementExternalIDs/{resourceId}/{resourceElmentId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElementExternalIDs(@PathVariable Long resourceId, @PathVariable Long resourceElmentId,
@@ -280,7 +280,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#elem.getId(), "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateResourceElement", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> updateResourceElement(@RequestBody ResourceElementImpl elem) throws ResourcesExceptions {
@@ -295,7 +295,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/inactivateResourceElement", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> inactivateResourceElement(@RequestParam Long resourceElmentId) throws ResourcesExceptions {
@@ -315,7 +315,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateResourceElementSynonym", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>>  updateResourceElementSynonym(@RequestParam Long resourceId, @RequestParam Long resourceElmentId, @RequestParam String oldSynonym, @RequestParam String newSynonym) throws ResourcesExceptions{
@@ -332,7 +332,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/removeResourceElementSynonym", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementSynonym(@RequestParam Long resourceElmentId, @RequestParam String synonym) throws ResourcesExceptions{
@@ -350,7 +350,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/removeResourceElementExternalId/{resourceElmentId}", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementExternalID(@PathVariable Long resourceElmentId, @RequestBody ExternalIDImpl extID) throws ResourcesExceptions{
@@ -366,7 +366,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated()and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceMaxPriorety/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Integer>> getResourceMaxPriorety(@PathVariable Long resourceId)throws ResourcesExceptions{	
@@ -399,7 +399,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElementsRelations/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IResourceElementsRelation>>> getResourceElementsRelations(@PathVariable Long resourceId) throws ResourcesExceptions{
@@ -416,7 +416,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElementId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceFromResourceElement/{resourceElementId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResource<IResourceElement>>> getResourceFromResourceElement(@PathVariable Long resourceElementId) throws ResourcesExceptions{
@@ -432,7 +432,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElementId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElemenById/{resourceElementId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElement>> getResourceElemenByID(@PathVariable Long resourceElementId) throws ResourcesExceptions{
@@ -451,7 +451,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_, @permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceElementsByName", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByName(@RequestParam Long resourceId, @RequestParam String name) throws ResourcesExceptions{
@@ -468,7 +468,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/removeResourceElementAllExternalID", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementAllExternalID(@RequestParam Long resourceElmentId) throws ResourcesExceptions{
@@ -484,7 +484,7 @@ public class ResourceElementsController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceElmentId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(), "
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).resourceByResourceElement, @permissions.getWritegrant()))")
 	@RequestMapping(value = "/removeResourceElementSynonyms", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceElementSynonyms(@RequestParam Long resourceElmentId) throws ResourcesExceptions{

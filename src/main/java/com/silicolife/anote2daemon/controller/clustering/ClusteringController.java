@@ -55,8 +55,8 @@ public class ClusteringController {
 	 * @param queryId
 	 * @return
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getClustersFromQuery/{queryId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IClusterProcess>>> getClustersFromQuery(@PathVariable Long queryId) {
@@ -98,10 +98,10 @@ public class ClusteringController {
 	 * @return
 	 * @throws ClusteringException 
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#id,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
-	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/clusterProcessQueryRegistry", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> clusterProcessQueryRegistry(@RequestParam Long queryId, @RequestParam Long clusteringId) throws ClusteringException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.registerQueryClustering(queryId, clusteringId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
@@ -115,7 +115,7 @@ public class ClusteringController {
 	 * @throws ClusteringException 
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.PUT, consumes = { "application/json" })
+	@RequestMapping(value = "/inactivateClustering", method = RequestMethod.PUT)
 	public ResponseEntity<DaemonResponse<Boolean>> inactivateClustering(@RequestParam Long clusteringId) throws ClusteringException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(clusteringService.inactivateClustering(clusteringId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);

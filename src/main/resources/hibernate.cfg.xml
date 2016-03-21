@@ -5,9 +5,9 @@
 <hibernate-configuration>
 	<session-factory>
 	
-	    <property name="hibernate.connection.password">eat24</property>
+	    <property name="hibernate.connection.password">admin</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost/anote_demo_aebrasileira</property>
-		<property name="hibernate.connection.username">eat24</property>
+		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.default_catalog">anote_demo_aebrasileira</property>
 		
 		<property name="hibernate.c3p0.idle_test_period">10</property>

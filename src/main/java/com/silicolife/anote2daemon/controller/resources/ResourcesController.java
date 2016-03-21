@@ -137,7 +137,7 @@ public class ResourcesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getResourceById/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResource<IResourceElement>>> getResourceById(@PathVariable Long resourceId) {
@@ -153,7 +153,7 @@ public class ResourcesController {
 	 * @throws ResourcesExceptions
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#resource.getId(), "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateResource", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateResource(@RequestBody ResourceImpl resource) throws ResourcesExceptions {

@@ -57,7 +57,7 @@ public class ProcessesController {
 	 * @throws ProcessException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processes_.getID(), "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateIEProcess", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateIEProcess(@RequestBody IEProcessImpl processes_) throws ProcessException {
@@ -73,7 +73,7 @@ public class ProcessesController {
 	 * @throws ProcessException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessByID/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IIEProcess>> getProcessByID(@PathVariable Long processId) throws ProcessException {
@@ -91,7 +91,7 @@ public class ProcessesController {
 	 * @throws ProcessException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getProcessStatistics/{processId}", method = RequestMethod.GET)
 	public  ResponseEntity<DaemonResponse<IIEProcessStatistics>>  getProcessStatistics(@PathVariable Long processId) throws ProcessException{

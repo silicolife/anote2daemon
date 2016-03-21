@@ -66,7 +66,7 @@ public class CorpusController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#id, "
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getCorpusById/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<ICorpus>> getCorpusById(@PathVariable Long id) {
@@ -95,7 +95,7 @@ public class CorpusController {
 	 * @throws CorpusException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpus.getId(),"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateCorpus", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateCorpus(@RequestBody CorpusImpl corpus) throws CorpusException {
@@ -111,7 +111,7 @@ public class CorpusController {
 	 * @throws CorpusException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#id,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getCorpusPublications/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IDocumentSet>> getCorpusPublications(@PathVariable Long id) throws CorpusException {
@@ -121,7 +121,7 @@ public class CorpusController {
 	
 	
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getCorpusProcesses/{corpusId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getCorpusProcesses(@PathVariable Long corpusId) throws CorpusException{
@@ -140,7 +140,7 @@ public class CorpusController {
 	 * @throws CorpusException 
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/registerCorpusProcess", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> registerCorpusProcess(@RequestParam Long corpusId, @RequestParam Long processId) throws CorpusException {
@@ -156,7 +156,7 @@ public class CorpusController {
 	 * @throws CorpusException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/addCorpusPublication", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> addCorpusPublication(@RequestParam Long corpusId, @RequestParam Long publicationId) throws CorpusException {
@@ -173,7 +173,7 @@ public class CorpusController {
 	 * @throws CorpusException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
 	@RequestMapping(value = "/getCorpusStatistics/{corpusId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<ICorpusStatistics>> getCorpusStatistics(@PathVariable Long corpusId) throws CorpusException{
@@ -190,7 +190,7 @@ public class CorpusController {
 	 * @throws CorpusException
 	 */
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
-			+ "T(pt.uminho.anote2.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/inativateCorpus", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> inativateCorpus(@RequestParam Long corpusId) throws CorpusException{
