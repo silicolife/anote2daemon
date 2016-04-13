@@ -22,6 +22,7 @@
         </listener-class>
     </listener>
 
+
     <filter>
         <filter-name>requestContextFilter</filter-name>
         <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
@@ -60,7 +61,15 @@
 	    <url-pattern>/*</url-pattern>  
 	</filter-mapping> 
 
-
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<!-- Spring security filters -->
 	<filter>
@@ -72,9 +81,6 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-
-
 
 	<!-- Dispatcher -->
 	<servlet>
@@ -100,5 +106,6 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
 	
 </web-app>

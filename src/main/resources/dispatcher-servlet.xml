@@ -11,6 +11,9 @@
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	
+	<mvc:cors>
+	<mvc:mapping path="/**" />
+</mvc:cors>
 	
 	<mvc:annotation-driven>
 		<mvc:message-converters>
