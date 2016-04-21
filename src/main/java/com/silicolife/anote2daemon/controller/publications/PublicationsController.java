@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.documents.PublicationImpl;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
@@ -43,7 +43,7 @@ public class PublicationsController {
 	@Autowired
 	private Permissions permissions;
 	@Autowired
-	private PublicationsService publicationService;
+	private IPublicationsService publicationService;
 
 	/**
 	 * Get all Publication labels from system

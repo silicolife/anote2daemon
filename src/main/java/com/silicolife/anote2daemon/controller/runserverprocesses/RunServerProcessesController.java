@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerRunExtention;
 import com.silicolife.anote2daemon.processes.ir.PubMedSearchServerRunExtension;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
@@ -48,7 +51,10 @@ public class RunServerProcessesController {
 	private QueriesService queriesService;
 	
 	@Autowired
-	private PublicationsService publicationsService;
+	private IPublicationsService publicationsService;
+	
+	@Autowired
+	private ICorpusService corpusService;
 
 
 	/**
@@ -67,6 +73,10 @@ public class RunServerProcessesController {
 				case IRPubmedSearchConfigurationImpl.pubmedsearchUID :
 					IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
 					new PubMedSearchServerRunExtension(queriesService,publicationsService).search(searchConfiguration);
+					break;
+				case CorpusCreateConfigurationImpl.configurationUID :
+					CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
+					new CorpusCreationServerRunExtention(corpusService, publicationsService).createCorpus(corpuscreationConfiguration);
 					break;
 				default :
 					break;
