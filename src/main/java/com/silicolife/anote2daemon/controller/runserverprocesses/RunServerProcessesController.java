@@ -33,6 +33,7 @@ import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidC
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.process.IR.exception.InternetConnectionProblemException;
+import com.silicolife.textmining.ie.re.relation.configuration.RERelationConfigurationImpl;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
 
@@ -96,6 +97,9 @@ public class RunServerProcessesController {
 					linaneusConfiguration.setCorpus(corpusServer);
 					new LinnaeusTaggerServerRunExtention(processService,annotationService).executeCorpusNER(linaneusConfiguration);
 					break;
+				case RERelationConfigurationImpl.reRelationUID :
+					RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
+					
 				default :
 					break;
 			}
