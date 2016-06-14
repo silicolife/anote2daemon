@@ -6,7 +6,6 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
-import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
 
 public class CorpusServerImpl extends CorpusImpl {
 	
@@ -17,11 +16,11 @@ public class CorpusServerImpl extends CorpusImpl {
 		this.corpusService=corpusService;
 	}
 	
-	@JsonIgnore
-	@Override
-	public void registerProcess(IIEProcess ieProcess) throws ANoteException {
-		corpusService.registerCorpusProcess(getId(), ieProcess.getID());
-	}
+//	@JsonIgnore
+//	@Override
+//	public void registerProcess(IIEProcess ieProcess) throws ANoteException {
+//		corpusService.registerCorpusProcess(getId(), ieProcess.getID());
+//	}
 
 	@JsonIgnore
 	@Override
