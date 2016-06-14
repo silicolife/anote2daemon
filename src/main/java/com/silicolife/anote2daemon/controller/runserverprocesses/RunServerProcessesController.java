@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerRunExtention;
+import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerExecutor;
 import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
 import com.silicolife.anote2daemon.processes.ir.PubMedSearchServerRunExtension;
 import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
@@ -88,14 +88,14 @@ public class RunServerProcessesController {
 					break;
 				case CorpusCreateConfigurationImpl.configurationUID :
 					CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
-					new CorpusCreationServerRunExtention(corpusService, publicationsService).createCorpus(corpuscreationConfiguration);
+					new CorpusCreationServerExecutor(corpusService, publicationsService).executeCorpusCreation(corpuscreationConfiguration);
 					break;
 				case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
 					NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
 					ICorpus corpus = linaneusConfiguration.getCorpus();
 					ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
 					linaneusConfiguration.setCorpus(corpusServer);
-					new LinnaeusTaggerServerRunExtention(processService,annotationService).executeCorpusNER(linaneusConfiguration);
+					new LinnaeusTaggerServerRunExtention(corpusService, processService, annotationService).executeCorpusNER(linaneusConfiguration);
 					break;
 				case RERelationConfigurationImpl.reRelationUID :
 					RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
