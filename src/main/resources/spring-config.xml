@@ -1,0 +1,18 @@
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<beans:bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<beans:property name="corePoolSize"><beans:value>5</beans:value></beans:property>
+		<beans:property name="maxPoolSize"><beans:value>10</beans:value></beans:property>
+		<beans:property name="WaitForTasksToCompleteOnShutdown"><beans:value>true</beans:value></beans:property>
+	</beans:bean>
+
+</beans:beans>
