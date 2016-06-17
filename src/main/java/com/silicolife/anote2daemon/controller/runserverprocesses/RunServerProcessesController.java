@@ -3,6 +3,7 @@ package com.silicolife.anote2daemon.controller.runserverprocesses;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerExecutor
 import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
 import com.silicolife.anote2daemon.processes.ir.PubMedSearchServerRunExtension;
 import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
+import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
@@ -29,6 +31,8 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
@@ -56,18 +60,27 @@ public class RunServerProcessesController {
 
 	@Autowired
 	private QueriesService queriesService;
-	
+
 	@Autowired
 	private IPublicationsService publicationsService;
-	
+
 	@Autowired
 	private ICorpusService corpusService;
 
 	@Autowired
 	private IProcessesService processService;
-	
+
 	@Autowired
 	private IAnnotationService annotationService;
+
+	@Autowired
+	private IResourcesElementService resourcesElementService;
+
+	@Autowired
+	private ClassesService classesService;
+
+	@Autowired 
+	private TaskExecutor taskExecutor;
 
 	/**
 	 * 
@@ -82,26 +95,20 @@ public class RunServerProcessesController {
 		ObjectMapper bla = new ObjectMapper();
 		try {
 			switch (parameters[0]) {
-				case IRPubmedSearchConfigurationImpl.pubmedsearchUID :
-					IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
-					new PubMedSearchServerRunExtension(queriesService,publicationsService).search(searchConfiguration);
-					break;
-				case CorpusCreateConfigurationImpl.configurationUID :
-					CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
-					new CorpusCreationServerExecutor(corpusService, publicationsService).executeCorpusCreation(corpuscreationConfiguration);
-					break;
-				case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
-					NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
-					ICorpus corpus = linaneusConfiguration.getCorpus();
-					ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
-					linaneusConfiguration.setCorpus(corpusServer);
-					new LinnaeusTaggerServerRunExtention(corpusService, processService, annotationService).executeCorpusNER(linaneusConfiguration);
-					break;
-				case RERelationConfigurationImpl.reRelationUID :
-					RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
-					
-				default :
-					break;
+			case IRPubmedSearchConfigurationImpl.pubmedsearchUID :
+				executeBackgroundThreadForPubMedSearch(parameters, bla);
+				break;
+			case CorpusCreateConfigurationImpl.configurationUID :
+				executeBackgroundThreadForCorpusCreation(parameters, bla);
+				break;
+			case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
+				executeBackgroundThreadForLinneausTagger(parameters, bla);
+				break;
+			case RERelationConfigurationImpl.reRelationUID :
+				RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
+
+			default :
+				break;
 			}
 		} catch (JsonParseException e) {
 			throw new RunServerProcessesException(e);
@@ -109,14 +116,61 @@ public class RunServerProcessesController {
 			throw new RunServerProcessesException(e);
 		} catch (IOException e) {
 			throw new RunServerProcessesException(e);
-		} catch (ANoteException e) {
-			throw new RunServerProcessesException(e);
-		} catch (InternetConnectionProblemException e) {
-			throw new RunServerProcessesException(e);
-		} catch (InvalidConfigurationException e) {
-			throw new RunServerProcessesException(e);
 		}
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+
+	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
+		final PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
+		taskExecutor.execute(new SpringRunnable(){
+
+			@Override
+			protected void onRun() {
+				try {
+					pubmedSearch.search(searchConfiguration);
+				} catch (ANoteException | InternetConnectionProblemException | InvalidConfigurationException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void executeBackgroundThreadForCorpusCreation(String[] parameters, ObjectMapper bla)
+			throws IOException, JsonParseException, JsonMappingException {
+		final CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
+		final CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
+		taskExecutor.execute(new SpringRunnable() {
+
+			@Override
+			protected void onRun() {
+				try {
+					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
+				} catch (ANoteException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		});
+	}
+
+	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
+		ICorpus corpus = linaneusConfiguration.getCorpus();
+		ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
+		linaneusConfiguration.setCorpus(corpusServer);
+		final LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
+		taskExecutor.execute(new SpringRunnable() {
+
+			@Override
+			protected void onRun() {
+				try {
+					tagger.executeCorpusNER(linaneusConfiguration);
+				} catch (ANoteException | InvalidConfigurationException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }
