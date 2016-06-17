@@ -37,7 +37,7 @@ public class CorpusCreationServerExecutor {
 	}
 
 	public void executeCorpusCreation(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
-		Set<IPublication> documents = configuration.getDocuments();
+		Set<Long> documents = configuration.getDocumentsIDs();
 		if(documents != null && !documents.isEmpty())
 			new CorpusCreationServerRunExtention(corpusService, publictionService).createCorpus(configuration);
 		else
