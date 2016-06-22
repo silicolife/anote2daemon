@@ -2,6 +2,8 @@ package com.silicolife.anote2daemon.controller.runserverprocesses;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
@@ -30,8 +32,8 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
@@ -54,12 +56,14 @@ import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearc
 @ResponseBody
 @Controller
 public class RunServerProcessesController {
+	
+	final static Logger logger = LoggerFactory.getLogger(RunServerProcessesController.class);
 
 	@Autowired
 	private Permissions permissions;
 
 	@Autowired
-	private QueriesService queriesService;
+	private IQueriesService queriesService;
 
 	@Autowired
 	private IPublicationsService publicationsService;
@@ -77,7 +81,7 @@ public class RunServerProcessesController {
 	private IResourcesElementService resourcesElementService;
 
 	@Autowired
-	private ClassesService classesService;
+	private IClassesService classesService;
 
 	@Autowired 
 	private TaskExecutor taskExecutor;
@@ -123,15 +127,17 @@ public class RunServerProcessesController {
 
 	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
-		final PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
 		taskExecutor.execute(new SpringRunnable(){
 
 			@Override
 			protected void onRun() {
 				try {
+					queriesService.setUserLogged(getUserLogged());
+					publicationsService.setUserLogged(getUserLogged());
+					PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
 					pubmedSearch.search(searchConfiguration);
 				} catch (ANoteException | InternetConnectionProblemException | InvalidConfigurationException e) {
-					e.printStackTrace();
+					logger.error("Exception",e);;
 				}
 			}
 		});
@@ -140,15 +146,18 @@ public class RunServerProcessesController {
 	private void executeBackgroundThreadForCorpusCreation(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
-		final CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
+
 		taskExecutor.execute(new SpringRunnable() {
 
 			@Override
 			protected void onRun() {
 				try {
+					corpusService.setUserLogged(getUserLogged());
+					publicationsService.setUserLogged(getUserLogged());
+					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
 					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
 				} catch (ANoteException | IOException e) {
-					e.printStackTrace();
+					logger.error("Exception",e);
 				}
 			}
 
@@ -160,15 +169,20 @@ public class RunServerProcessesController {
 		ICorpus corpus = linaneusConfiguration.getCorpus();
 		ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
 		linaneusConfiguration.setCorpus(corpusServer);
-		final LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
 		taskExecutor.execute(new SpringRunnable() {
 
 			@Override
 			protected void onRun() {
 				try {
+					corpusService.setUserLogged(getUserLogged());
+					resourcesElementService.setUserLogged(getUserLogged());
+					classesService.setUserLogged(getUserLogged());
+					processService.setUserLogged(getUserLogged());
+					annotationService.setUserLogged(getUserLogged());
+					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
 					tagger.executeCorpusNER(linaneusConfiguration);
 				} catch (ANoteException | InvalidConfigurationException e) {
-					e.printStackTrace();
+					logger.error("Exception",e);
 				}
 			}
 		});
