@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ClassException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.general.AnoteClass;
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 
@@ -38,7 +38,7 @@ public class ClassesController {
 	@Autowired
 	private Permissions permissions;
 	@Autowired
-	private ClassesService classesService;
+	private IClassesService classesService;
 
 	/**
 	 * create new class

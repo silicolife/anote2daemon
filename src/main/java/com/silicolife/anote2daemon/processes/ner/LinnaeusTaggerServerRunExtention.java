@@ -6,7 +6,7 @@ import com.silicolife.anote2daemon.controller.resources.ClassPropertiesManagemen
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.process.ner.ElementToNer;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
@@ -23,12 +23,12 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	
 	private ICorpusService corpusService;
 	private IResourcesElementService resourceService;
-	private ClassesService classesService;
+	private IClassesService classesService;
 	private IProcessesService processService;
 	private IAnnotationService annotationService;
 	
 
-	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesElementService resourceService, ClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
+	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesElementService resourceService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
 		this.corpusService=corpusService;
 		this.resourceService=resourceService;
 		this.classesService=classesService;

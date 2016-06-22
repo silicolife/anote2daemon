@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.QueriesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
@@ -29,11 +29,11 @@ public class PubMedSearchServerRunExtension extends PubMedSearch {
 	
 	private long starttime;
 	
-	private QueriesService queriesService;
+	private IQueriesService queriesService;
 	
 	private IPublicationsService publicationsService;
 
-	public PubMedSearchServerRunExtension(QueriesService queriesService, IPublicationsService publicationsService) {
+	public PubMedSearchServerRunExtension(IQueriesService queriesService, IPublicationsService publicationsService) {
 		super();
 		this.queriesService=queriesService;
 		this.publicationsService=publicationsService;

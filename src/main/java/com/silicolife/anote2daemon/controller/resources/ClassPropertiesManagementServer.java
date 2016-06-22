@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ClassesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 
@@ -14,7 +14,7 @@ public class ClassPropertiesManagementServer{
 	private static Map<Long,IAnoteClass> classIDAnoteClass = new HashMap<>();
 	private static Map<String,IAnoteClass> classNameAnoteClass = new HashMap<>();
 	
-	private static void refreshClasses(ClassesService classesService) throws ANoteException {
+	private static void refreshClasses(IClassesService classesService) throws ANoteException {
 		if(classesService != null){
 			Set<IAnoteClass> classes = classesService.getClasses();
 			classIDAnoteClass = new HashMap<Long, IAnoteClass>();
@@ -27,7 +27,7 @@ public class ClassPropertiesManagementServer{
 		}
 	}
 	
-	public static IAnoteClass getClassIDOrinsertIfNotExist(ClassesService classesService, IAnoteClass klass) throws ANoteException
+	public static IAnoteClass getClassIDOrinsertIfNotExist(IClassesService classesService, IAnoteClass klass) throws ANoteException
 	{
 		if(classNameAnoteClass.containsKey(klass.getName().toLowerCase()))
 		{
@@ -48,7 +48,7 @@ public class ClassPropertiesManagementServer{
 		}
 	}
 	
-	public static IAnoteClass getClassGivenClassID(ClassesService classesService, long classID) throws ANoteException
+	public static IAnoteClass getClassGivenClassID(IClassesService classesService, long classID) throws ANoteException
 	{
 		if(classIDAnoteClass.containsKey(classID))
 		{
@@ -61,7 +61,7 @@ public class ClassPropertiesManagementServer{
 		}
 	}
 	
-	public static IAnoteClass getClassIDClassName(ClassesService classesService, String classsName) throws ANoteException
+	public static IAnoteClass getClassIDClassName(IClassesService classesService, String classsName) throws ANoteException
 	{
 		if(classNameAnoteClass.containsKey(classsName.toLowerCase()))
 		{
@@ -74,7 +74,7 @@ public class ClassPropertiesManagementServer{
 		}
 	}
 
-	public static void updateClassName(ClassesService classesService, IAnoteClass klass, String newCLass) throws ANoteException {
+	public static void updateClassName(IClassesService classesService, IAnoteClass klass, String newCLass) throws ANoteException {
 //		classesService.updateClassName(klass,newCLass);
 		refreshClasses(classesService);
 	}
@@ -84,7 +84,7 @@ public class ClassPropertiesManagementServer{
 		return classNameAnoteClass.values();
 	}
 
-	public static boolean containsClass(ClassesService classesService, String newCLass) throws ANoteException {
+	public static boolean containsClass(IClassesService classesService, String newCLass) throws ANoteException {
 		return getClassIDClassName(classesService,newCLass)!=null;
 	}
 }

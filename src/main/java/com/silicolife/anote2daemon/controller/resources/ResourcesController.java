@@ -20,7 +20,7 @@ import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.resources.ResourceImpl;
 import com.silicolife.textmining.core.datastructures.resources.dictionary.loaders.DictionaryImpl;
 import com.silicolife.textmining.core.datastructures.resources.lexiacalwords.LexicalWordsImpl;
@@ -49,7 +49,7 @@ public class ResourcesController {
 	@Autowired
 	private GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericPairSpringSpel;
 	@Autowired
-	private ResourcesService resourcesService;
+	private IResourcesService resourcesService;
 
 	/**
 	 * Create a dictionary resource

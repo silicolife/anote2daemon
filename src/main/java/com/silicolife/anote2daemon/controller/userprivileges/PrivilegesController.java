@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.system.PrivilegesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.system.IPrivilegesService;
 import com.silicolife.textmining.core.interfaces.core.user.IUser;
 import com.silicolife.textmining.core.interfaces.core.user.IUserDataObject;
 import com.silicolife.textmining.core.interfaces.core.utils.IGenericPair;
@@ -34,7 +34,7 @@ import com.silicolife.textmining.core.interfaces.core.utils.IGenericPair;
 public class PrivilegesController {
 
 	@Autowired
-	private PrivilegesService privilegesService;
+	private IPrivilegesService privilegesService;
 
 	/**
 	 * add privilege
