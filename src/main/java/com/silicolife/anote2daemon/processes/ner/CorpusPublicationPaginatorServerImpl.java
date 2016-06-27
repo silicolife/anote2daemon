@@ -10,6 +10,11 @@ public class CorpusPublicationPaginatorServerImpl extends CorpusPublicationPagin
 
 	private ICorpusService corpusService;
 
+	public CorpusPublicationPaginatorServerImpl(ICorpusService corpusService, ICorpus corpus, Integer paginationSize) throws ANoteException {
+		super(corpus, paginationSize);
+		this.corpusService=corpusService;
+	}
+	
 	public CorpusPublicationPaginatorServerImpl(ICorpusService corpusService, ICorpus corpus) throws ANoteException {
 		super(corpus);
 		this.corpusService=corpusService;
