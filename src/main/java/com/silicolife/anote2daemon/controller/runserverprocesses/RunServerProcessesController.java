@@ -136,7 +136,7 @@ public class RunServerProcessesController {
 					publicationsService.setUserLogged(getUserLogged());
 					PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
 					pubmedSearch.search(searchConfiguration);
-				} catch (ANoteException | InternetConnectionProblemException | InvalidConfigurationException e) {
+				} catch (Exception e) {
 					logger.error("Exception",e);;
 				}
 			}
@@ -156,7 +156,7 @@ public class RunServerProcessesController {
 					publicationsService.setUserLogged(getUserLogged());
 					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
 					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
-				} catch (ANoteException | IOException e) {
+				} catch (Exception e) {
 					logger.error("Exception",e);
 				}
 			}
@@ -181,7 +181,7 @@ public class RunServerProcessesController {
 					annotationService.setUserLogged(getUserLogged());
 					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
 					tagger.executeCorpusNER(linaneusConfiguration);
-				} catch (ANoteException | InvalidConfigurationException e) {
+				} catch (Exception e) {
 					logger.error("Exception",e);
 				}
 			}
