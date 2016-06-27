@@ -26,6 +26,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	private IClassesService classesService;
 	private IProcessesService processService;
 	private IAnnotationService annotationService;
+	private Integer paginationSizeInServer = 6000; //get's 6000 documents each batch to be splitted into x threads.
 	
 
 	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesElementService resourceService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
@@ -37,7 +38,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected ICorpusPublicationPaginator getPublicationsPaginator(ICorpus corpus) throws ANoteException {
-		return new CorpusPublicationPaginatorServerImpl(corpusService, corpus);
+		return new CorpusPublicationPaginatorServerImpl(corpusService, corpus, paginationSizeInServer);
 	}
 	
 	protected ElementToNer getElementsToNER(INERLinnaeusConfiguration linnauesConfiguration) throws ANoteException {
