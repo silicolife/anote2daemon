@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-
-import org.xml.sax.SAXException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
@@ -22,10 +20,11 @@ import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusCreateConfi
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
-import com.silicolife.textmining.processes.ir.pubmed.utils.PMSearch;
+import com.silicolife.textmining.processes.ir.pubmed.MedLineReader;
 
 public class CorpusCreationServerExecutor {
 
+	final static Logger logger = LoggerFactory.getLogger(CorpusCreationServerExecutor.class);
 
 	private ICorpusService corpusService;
 	private IPublicationsService publictionService;
@@ -50,36 +49,38 @@ public class CorpusCreationServerExecutor {
 
 		Set<File> files = new HashSet<>();
 		Properties configurationProperties = configuration.getProperties();
+		logger.info("Starting to read directory");
 		if(configurationProperties.containsKey(GlobalNames.serverXMLsDirectory)){
 			File dir = new File(configurationProperties.getProperty(GlobalNames.serverXMLsDirectory));
 			getXMLFiles(dir, files);
 		}
 
+		logger.info("Found " + files.size() + " in the given corpus directory!");
+
 		if(!files.isEmpty())
-			addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files));
+			logger.info("Starting to add corpus in database");
+		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files));
 	}
 
 	private void addPublicationsFromXMLFiles(CorpusCreationInBatchServerRunExtension corpusCreator, ICorpus corpus, List<File> xmlFiles)
 			throws IOException, ANoteException {
-		try{
-			Set<IPublication> publications = new HashSet<>();
-			for(int i=0; i<xmlFiles.size(); i++){
-				InputStream stream = new FileInputStream(xmlFiles.get(i));
-				List<IPublication> pubs = PMSearch.getPublicationsFromXMLStream(stream);
-				publications.addAll(pubs);
-				stream.close();
-				if(i%1000==0 && i!=0){
-					corpusCreator.addPublications(corpus, publications);
-					publications.clear();
-					System.out.println("Inserted the batch nº "+i);
-				}
-			}
-			if(!publications.isEmpty()){
+		Set<IPublication> publications = new HashSet<>();
+		for(int i=0; i<xmlFiles.size(); i++){
+			InputStream stream = new FileInputStream(xmlFiles.get(i));
+			MedLineReader reader = new MedLineReader(stream);
+			List<IPublication> pubs = reader.getMedlinePublications();
+			publications.addAll(pubs);
+			stream.close();
+			if(i%1000==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
+				System.out.println("Inserted the batch nº "+i);
+				logger.info("Inserted the batch nº "+i);
 			}
-		}catch(XPathExpressionException | SAXException | ParserConfigurationException e){
-			new ANoteException(e);
+		}
+		if(!publications.isEmpty()){
+			corpusCreator.addPublications(corpus, publications);
+			publications.clear();
 		}
 	}
 
