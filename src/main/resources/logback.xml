@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %M %-5level %logger{36} - %msg%n</pattern>
-    </encoder>
-  </appender>
-
-
-	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>../logs/anote2daemon_catchedExceptions.log</file>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %M %-5level %logger{36} - %msg%n
+			</pattern>
 		</encoder>
 	</appender>
 
-  <root level="ERROR">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
-  </root>
+	<appender name="FILEINFO" class="ch.qos.logback.core.FileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>/opt/tomcat/logs/anote2daemon_INFOS.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="FILEERRORS" class="ch.qos.logback.core.FileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>/opt/tomcat/logs/anote2daemon_ERRORS.log</file>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILEINFO" />
+		<appender-ref ref="FILEERRORS" />
+	</root>
 
 </configuration>
