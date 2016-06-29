@@ -26,7 +26,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	private IClassesService classesService;
 	private IProcessesService processService;
 	private IAnnotationService annotationService;
-	private Integer paginationSizeInServer = 6000; //get's 6000 documents each batch to be splitted into x threads.
+	private Integer paginationSizeInServer = 50000; //get's 50000 documents each batch to be splitted into x threads.
 	
 
 	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesElementService resourceService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {

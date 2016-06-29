@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.resources.ResourceElementSetImpl;
 import com.silicolife.textmining.core.datastructures.resources.ResourceImpl;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.layer.resources.IResourceManagerReport;
@@ -32,7 +33,18 @@ public class ResourceServerImpl extends ResourceImpl{
 	}
 	
 	public IResourceElementSet<IResourceElement> getResourceElements() throws ANoteException {
-		return resourceService.getResourceElements(this.getId());
+		int index = 0;
+		int size = 100000;
+		IResourceElementSet<IResourceElement> elements = new ResourceElementSetImpl<>();
+		IResourceElementSet<IResourceElement> tempelements = resourceService.getResourceElementsInBatchWithLimit(this.getId(), index, size);
+		while(tempelements.size() != 0){
+			elements.addAllElementResource(tempelements.getResourceElements());
+			index = index + size;
+			tempelements = resourceService.getResourceElementsInBatchWithLimit(this.getId(), index, size);
+		}
+		return elements;
+		//		return InitConfiguration.getDataAccess().getResourceElements(this);
+//		return resourceService.getResourceElements(this.getId());
 	}
 	
 	public Set<IAnoteClass> getResourceClassContent() throws ANoteException{
