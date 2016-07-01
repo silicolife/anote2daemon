@@ -10,6 +10,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.report.corpora.CorpusCreateReportImpl;
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalNames;
+import com.silicolife.textmining.core.datastructures.utils.conf.GlobalOptions;
 import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusCreateConfiguration;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
@@ -77,14 +78,11 @@ public class CorpusCreationServerRunExtention extends CorpusCreation {
 	
 	
 	@Override
-	/**
-	 * Save 
-	 * 
-	 */
 	protected void memoryAndProgress(int step, int total) {
-		// To Save in Database
-		long nowTime = GregorianCalendar.getInstance().getTimeInMillis();
-		super.memoryAndProgress(step, total);
+		if(step%1000==0)
+		{
+			System.out.println((GlobalOptions.decimalformat.format((double)step/ (double) total * 100)) + " %...");
+		}
 	}
 
 }

@@ -9,6 +9,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.process.ner.ElementToNer;
+import com.silicolife.textmining.core.datastructures.utils.conf.GlobalOptions;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.ICorpusPublicationPaginator;
@@ -61,5 +62,12 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	
 	protected IAnoteClass getIAnoteClass(Long classID) throws ANoteException {
 		return ClassPropertiesManagementServer.getClassGivenClassID(classesService, classID);
+	}
+	
+	protected void memoryAndProgress(int step, int total,long startime) {
+		if(step%1000==0)
+		{
+			System.out.println((GlobalOptions.decimalformat.format((double)step/ (double) total * 100)) + " %...");
+		}
 	}
 }
