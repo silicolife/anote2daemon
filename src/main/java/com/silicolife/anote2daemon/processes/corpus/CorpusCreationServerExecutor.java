@@ -30,10 +30,19 @@ public class CorpusCreationServerExecutor {
 	private IPublicationsService publictionService;
 
 	public CorpusCreationServerExecutor(ICorpusService corpusService, IPublicationsService publictionService){
-		super();
 		this.corpusService=corpusService;
 		this.publictionService=publictionService;
 	}
+
+	protected ICorpusService getCorpusService() {
+		return corpusService;
+	}
+
+
+	protected IPublicationsService getPublictionService() {
+		return publictionService;
+	}
+
 
 	public void executeCorpusCreation(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
 		Set<Long> documents = configuration.getDocumentsIDs();
@@ -62,7 +71,7 @@ public class CorpusCreationServerExecutor {
 		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files));
 	}
 
-	private void addPublicationsFromXMLFiles(CorpusCreationInBatchServerRunExtension corpusCreator, ICorpus corpus, List<File> xmlFiles)
+	protected void addPublicationsFromXMLFiles(CorpusCreationInBatchServerRunExtension corpusCreator, ICorpus corpus, List<File> xmlFiles)
 			throws IOException, ANoteException {
 		Set<IPublication> publications = new HashSet<>();
 		for(int i=0; i<xmlFiles.size(); i++){
@@ -84,7 +93,7 @@ public class CorpusCreationServerExecutor {
 		}
 	}
 
-	private void getXMLFiles(File file, Set<File> files){
+	protected void getXMLFiles(File file, Set<File> files){
 		if(file.isDirectory()){
 			for(File childFile : file.listFiles()){
 				getXMLFiles(childFile, files);

@@ -21,11 +21,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerExecutor;
 import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
+import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterServerExecutor;
 import com.silicolife.anote2daemon.processes.ir.PubMedSearchServerRunExtension;
 import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
+import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
@@ -36,7 +38,6 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
-import com.silicolife.textmining.ie.re.relation.configuration.RERelationConfigurationImpl;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
 
@@ -102,11 +103,14 @@ public class RunServerProcessesController {
 			case CorpusCreateConfigurationImpl.configurationUID :
 				executeBackgroundThreadForCorpusCreation(parameters, bla);
 				break;
+			case CorpusUpdateConfigurationImpl.configurationUID :
+				executeBackgroundThreadForCorpusUpdate(parameters, bla);
+				break;
 			case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
 				executeBackgroundThreadForLinneausTagger(parameters, bla);
 				break;
-			case RERelationConfigurationImpl.reRelationUID :
-				RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
+//			case RERelationConfigurationImpl.reRelationUID :
+//				RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
 
 			default :
 				break;
@@ -153,6 +157,27 @@ public class RunServerProcessesController {
 					publicationsService.setUserLogged(getUserLogged());
 					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
 					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
+				} catch (Exception e) {
+					logger.error("Exception",e);
+				}
+			}
+
+		});
+	}
+	
+	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
+			throws IOException, JsonParseException, JsonMappingException {
+		final CorpusUpdateConfigurationImpl corpusupdateConfiguration = bla.readValue(parameters[1],CorpusUpdateConfigurationImpl.class);
+
+		taskExecutor.execute(new SpringRunnable() {
+
+			@Override
+			protected void onRun() {
+				try {
+					corpusService.setUserLogged(getUserLogged());
+					publicationsService.setUserLogged(getUserLogged());
+					CorpusUpdaterServerExecutor corpusUpdate = new CorpusUpdaterServerExecutor(corpusService, publicationsService);
+					corpusUpdate.executeCorpusUpdate(corpusupdateConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
 				}
