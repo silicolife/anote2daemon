@@ -2,6 +2,7 @@ package com.silicolife.anote2daemon.processes.corpus;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
@@ -51,5 +52,10 @@ public class CorpusCreationInBatchServerRunExtension extends CorpusCreationInBat
 	@Override
 	protected Map<String, Long> getAllPublicationExternalIdFromSource(String source) throws ANoteException {
 		return publictionService.getAllPublicationsIdFromSource(source);
+	}
+	
+	@Override
+	protected Set<String> getAllCorpusPublicationExternalIdFromSource(ICorpus corpus, String source) throws ANoteException {
+		return corpusService.getCorpusPublicationsExternalIDFromSource(corpus.getId(), source);
 	}
 }
