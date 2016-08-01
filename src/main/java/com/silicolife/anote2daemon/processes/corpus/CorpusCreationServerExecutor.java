@@ -24,7 +24,7 @@ import com.silicolife.textmining.processes.ir.pubmed.MedLineReader;
 
 public class CorpusCreationServerExecutor {
 
-	final static Logger logger = LoggerFactory.getLogger(CorpusCreationServerExecutor.class);
+	final static Logger creationLogger = LoggerFactory.getLogger(CorpusCreationServerExecutor.class);
 
 	private ICorpusService corpusService;
 	private IPublicationsService publictionService;
@@ -58,16 +58,16 @@ public class CorpusCreationServerExecutor {
 
 		Set<File> files = new HashSet<>();
 		Properties configurationProperties = configuration.getProperties();
-		logger.info("Starting to read directory");
+		creationLogger.info("Starting to read directory");
 		if(configurationProperties.containsKey(GlobalNames.serverXMLsDirectory)){
 			File dir = new File(configurationProperties.getProperty(GlobalNames.serverXMLsDirectory));
 			getXMLFiles(dir, files);
 		}
 
-		logger.info("Found " + files.size() + " in the given corpus directory!");
+		creationLogger.info("Found " + files.size() + " in the given corpus directory!");
 
 		if(!files.isEmpty())
-			logger.info("Starting to add corpus in database");
+			creationLogger.info("Starting to add corpus in database");
 		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files));
 	}
 
@@ -77,14 +77,19 @@ public class CorpusCreationServerExecutor {
 		for(int i=0; i<xmlFiles.size(); i++){
 			InputStream stream = new FileInputStream(xmlFiles.get(i));
 			MedLineReader reader = new MedLineReader(stream);
-			List<IPublication> pubs = reader.getMedlinePublications();
-			publications.addAll(pubs);
+			try{
+				List<IPublication> pubs = reader.getMedlinePublications();
+				publications.addAll(pubs);
+			}catch(ANoteException e){
+				creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
+				throw e;
+			}
 			stream.close();
 			if(i%1000==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
 				System.out.println("Inserted the batch nº "+i);
-				logger.info("Inserted the batch nº "+i);
+				creationLogger.info("Inserted the batch nº "+i);
 			}
 		}
 		if(!publications.isEmpty()){
