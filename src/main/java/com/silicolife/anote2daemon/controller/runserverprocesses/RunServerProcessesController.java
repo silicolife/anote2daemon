@@ -111,7 +111,7 @@ public class RunServerProcessesController {
 				executeBackgroundThreadForLinneausTagger(parameters, bla);
 				break;
 			case NERResumeConfigurationImpl.uid :
-				executeBackgroundThreadForLinneausTagger(parameters, bla);
+				executeBackgroundThreadForResumeLinneausTagger(parameters, bla);
 				break;
 //			case RERelationConfigurationImpl.reRelationUID :
 //				RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
@@ -207,6 +207,30 @@ public class RunServerProcessesController {
 					annotationService.setUserLogged(getUserLogged());
 					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
 					tagger.executeCorpusNER(linaneusConfiguration);
+				} catch (Exception e) {
+					logger.error("Exception",e);
+				}
+			}
+		});
+	}
+	
+	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);
+		ICorpus corpus = configuration.getCorpus();
+		ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
+		configuration.setCorpus(corpusServer);
+		taskExecutor.execute(new SpringRunnable() {
+
+			@Override
+			protected void onRun() {
+				try {
+					corpusService.setUserLogged(getUserLogged());
+					resourcesElementService.setUserLogged(getUserLogged());
+					classesService.setUserLogged(getUserLogged());
+					processService.setUserLogged(getUserLogged());
+					annotationService.setUserLogged(getUserLogged());
+					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
+					tagger.resumeNER(configuration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
 				}
