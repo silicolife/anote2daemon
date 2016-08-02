@@ -8,6 +8,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.documents.UnprocessedPublicationsPaginatorImpl;
 import com.silicolife.textmining.core.datastructures.process.ner.ElementToNer;
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalOptions;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
@@ -70,4 +71,13 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 			System.out.println((GlobalOptions.decimalformat.format((double)step/ (double) total * 100)) + " %...");
 		}
 	}
+	
+	protected IIEProcess getProcessInDatabase(IIEProcess process) throws ANoteException{
+		return processService.getProcessByID(process.getID());
+	}
+	
+	protected ICorpusPublicationPaginator getUnprocessedPublicationsPaginator(IIEProcess process) throws ANoteException {
+		return new UnprocessedPublicationsPaginatorImpl(process);
+	}
+
 }
