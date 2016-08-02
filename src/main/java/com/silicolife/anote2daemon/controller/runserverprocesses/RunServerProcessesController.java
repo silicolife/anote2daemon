@@ -37,6 +37,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
@@ -107,6 +108,9 @@ public class RunServerProcessesController {
 				executeBackgroundThreadForCorpusUpdate(parameters, bla);
 				break;
 			case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
+				executeBackgroundThreadForLinneausTagger(parameters, bla);
+				break;
+			case NERResumeConfigurationImpl.uid :
 				executeBackgroundThreadForLinneausTagger(parameters, bla);
 				break;
 //			case RERelationConfigurationImpl.reRelationUID :
