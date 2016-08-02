@@ -14,7 +14,7 @@
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
-		<file>/opt/tomcat/logs/anote2daemon_INFOS.log</file>
+		<file>${catalina.base}/logs/anote2daemon_INFOS.log</file>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
 			</pattern>
@@ -28,7 +28,7 @@
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
-		<file>/opt/tomcat/logs/anote2daemon_ERRORS.log</file>
+		<file>${catalina.base}/logs/anote2daemon_ERRORS.log</file>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
 			</pattern>
