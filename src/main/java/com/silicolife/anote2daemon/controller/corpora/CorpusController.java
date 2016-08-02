@@ -1,6 +1,7 @@
 package com.silicolife.anote2daemon.controller.corpora;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -119,7 +120,85 @@ public class CorpusController {
 		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
 	}
 	
+	/**
+	 * Count corpus publications
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#id,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusPublicationsCount/{id}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> getCorpusPublicationsCount(@PathVariable Long id) throws CorpusException {
+		DaemonResponse<Long> response = new DaemonResponse<Long>(corpusService.getCorpusPublicationsCount(id));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
 	
+	/**
+	 * get processes from a corpus
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusPublicationsPaginated/{corpusId}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IDocumentSet>> getCorpusPublicationsPaginated(@PathVariable Long corpusId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize) throws CorpusException {
+		DaemonResponse<IDocumentSet> response = new DaemonResponse<IDocumentSet>(corpusService.getCorpusPublicationsPaginated(corpusId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString())));
+		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * Get corpus publications not processed
+	 * 
+	 * @param corpusId
+	 * @param processId
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @return
+	 * @throws CorpusException
+	 */
+	@PreAuthorize("isAuthenticated()"
+			+ " and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))"
+			+ " and hasPermission(#processId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusPublicationsPaginated/{corpusId}/{processId}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IDocumentSet>> getCorpusPublicationsNotProcessedPaginated(@PathVariable Long corpusId, @PathVariable Long processId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize) throws CorpusException {
+		DaemonResponse<IDocumentSet> response = new DaemonResponse<IDocumentSet>(corpusService.getCorpusPublicationsNotProcessedPaginated(corpusId, processId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString())));
+		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Count corpus publications not Processed
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusPublicationsCount/{corpusId}/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> countCorpusPublicationsNotProcessed(@PathVariable Long corpusId, @PathVariable Long processId) throws CorpusException {
+		DaemonResponse<Long> response = new DaemonResponse<Long>(corpusService.countCorpusPublicationsNotProcessed(corpusId, processId));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * get processes from a corpus
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */	
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
@@ -129,7 +208,22 @@ public class CorpusController {
 		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
 	}
 	
-	
+	/**
+	 * 
+	 * Get publications from corpus with a specific source.
+	 * 
+	 * @param corpusId
+	 * @param source
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusPublicationsExternalIDFromSource/{corpusId}/{source}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Set<String>>> getCorpusPublicationsExternalIDFromSource(@PathVariable Long corpusId, @PathVariable String source) {
+		DaemonResponse<Set<String>> response = new DaemonResponse<Set<String>>(corpusService.getCorpusPublicationsExternalIDFromSource(corpusId, source));
+		return new ResponseEntity<DaemonResponse<Set<String>>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Register corpus to a process
