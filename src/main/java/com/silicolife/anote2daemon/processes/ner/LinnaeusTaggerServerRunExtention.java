@@ -8,6 +8,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.documents.UnprocessedPublicationsPaginatorImpl;
 import com.silicolife.textmining.core.datastructures.process.ner.ElementToNer;
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalOptions;
@@ -18,22 +19,27 @@ import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
+import com.silicolife.textmining.core.interfaces.resource.IResource;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.INERLinnaeusConfiguration;
 
 public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	
 	private ICorpusService corpusService;
-	private IResourcesElementService resourceService;
+	private IResourcesService resourcesService;
+	private IResourcesElementService resourcesElementService;
 	private IClassesService classesService;
 	private IProcessesService processService;
 	private IAnnotationService annotationService;
 	private Integer paginationSizeInServer = 50000; //get's 50000 documents each batch to be splitted into x threads.
 	
+	
 
-	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesElementService resourceService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
+	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesService resourcesService, IResourcesElementService resourcesElementService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
 		this.corpusService=corpusService;
-		this.resourceService=resourceService;
+		this.resourcesService = resourcesService;
+		this.resourcesElementService=resourcesElementService;
 		this.classesService=classesService;
 		this.processService=processService;
 		this.annotationService=annotationService;
@@ -44,7 +50,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected ElementToNer getElementsToNER(INERLinnaeusConfiguration linnauesConfiguration) throws ANoteException {
-		ElementToNerServer elementsToNER = new ElementToNerServer(resourceService, linnauesConfiguration.getResourceToNER(), linnauesConfiguration.isNormalized());
+		ElementToNerServer elementsToNER = new ElementToNerServer(resourcesElementService, linnauesConfiguration.getResourceToNER(), linnauesConfiguration.isNormalized());
 		elementsToNER.processingINfo();
 		return elementsToNER;
 	}
@@ -79,5 +85,10 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	protected ICorpusPublicationPaginator getUnprocessedPublicationsPaginator(IIEProcess process) throws ANoteException {
 		return new UnprocessedPublicationsPaginatorImpl(process);
 	}
+	
+	protected IResource<IResourceElement> getResourceFromDatabase(Long resourceId) throws ANoteException{
+		return resourcesService.getResourcesById(resourceId);
+	}
+
 
 }

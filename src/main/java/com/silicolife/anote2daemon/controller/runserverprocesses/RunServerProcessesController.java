@@ -37,6 +37,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
@@ -75,6 +76,9 @@ public class RunServerProcessesController {
 
 	@Autowired
 	private IAnnotationService annotationService;
+	
+	@Autowired
+	private IResourcesService resourcesService;
 
 	@Autowired
 	private IResourcesElementService resourcesElementService;
@@ -201,11 +205,12 @@ public class RunServerProcessesController {
 			protected void onRun() {
 				try {
 					corpusService.setUserLogged(getUserLogged());
+					resourcesService.setUserLogged(getUserLogged());
 					resourcesElementService.setUserLogged(getUserLogged());
 					classesService.setUserLogged(getUserLogged());
 					processService.setUserLogged(getUserLogged());
 					annotationService.setUserLogged(getUserLogged());
-					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
+					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
 					tagger.executeCorpusNER(linaneusConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
@@ -225,11 +230,12 @@ public class RunServerProcessesController {
 			protected void onRun() {
 				try {
 					corpusService.setUserLogged(getUserLogged());
+					resourcesService.setUserLogged(getUserLogged());
 					resourcesElementService.setUserLogged(getUserLogged());
 					classesService.setUserLogged(getUserLogged());
 					processService.setUserLogged(getUserLogged());
 					annotationService.setUserLogged(getUserLogged());
-					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesElementService, classesService, processService, annotationService);
+					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
 					tagger.resumeNER(configuration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
