@@ -239,6 +239,8 @@ public class RunServerProcessesController {
 					tagger.resumeNER(configuration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
+					System.out.println(e);
+					e.printStackTrace();
 				}
 			}
 		});
