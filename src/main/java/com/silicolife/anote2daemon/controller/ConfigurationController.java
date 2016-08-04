@@ -18,7 +18,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 public class ConfigurationController {
 
 	private final String title = "@note2daemon - The best Text Mining Tool :d (Silicolife)";
-	private final String version = "Version: 2.1.2";
+	private final String version = "Version: 2.1.3";
 	
 	@RequestMapping(value = "/getVersion", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<String>> getVersion() {
