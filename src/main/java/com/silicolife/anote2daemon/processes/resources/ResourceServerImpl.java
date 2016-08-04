@@ -3,6 +3,9 @@ package com.silicolife.anote2daemon.processes.resources;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.resources.ResourceElementSetImpl;
 import com.silicolife.textmining.core.datastructures.resources.ResourceImpl;
@@ -18,6 +21,8 @@ import com.silicolife.textmining.core.interfaces.resource.content.IResourceConte
 public class ResourceServerImpl extends ResourceImpl{
 
 	private IResourcesElementService resourceService;
+	
+	final static Logger resourceServerlogger = LoggerFactory.getLogger(ResourceImpl.class);
 
 	public ResourceServerImpl(IResourcesElementService resourceService, IResource<IResourceElement> resource){
 		super(resource.getId(), resource.getName(),resource.getInfo(), resource.getType(), resource.isActive());
@@ -36,11 +41,13 @@ public class ResourceServerImpl extends ResourceImpl{
 		int index = 0;
 		int size = 100000;
 		IResourceElementSet<IResourceElement> elements = new ResourceElementSetImpl<>();
+		resourceServerlogger.info("Obtaining resource elements from resource: " +this.getId() + " position: " + index);
 		IResourceElementSet<IResourceElement> tempelements = resourceService.getResourceElementsInBatchWithLimit(this.getId(), index, size);
 		while(tempelements.size() != 0){
 			elements.addAllElementResource(tempelements.getResourceElements());
 			index = index + size;
 			tempelements = resourceService.getResourceElementsInBatchWithLimit(this.getId(), index, size);
+			resourceServerlogger.info("Obtaining resource elements from resource: " +this.getId() + " position: " + index);
 		}
 		return elements;
 		//		return InitConfiguration.getDataAccess().getResourceElements(this);
