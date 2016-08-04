@@ -2,6 +2,9 @@ package com.silicolife.anote2daemon.processes.ner;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.silicolife.anote2daemon.controller.resources.ClassPropertiesManagementServer;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
@@ -9,7 +12,6 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
-import com.silicolife.textmining.core.datastructures.documents.UnprocessedPublicationsPaginatorImpl;
 import com.silicolife.textmining.core.datastructures.process.ner.ElementToNer;
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalOptions;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
@@ -34,7 +36,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	private IAnnotationService annotationService;
 	private Integer paginationSizeInServer = 50000; //get's 50000 documents each batch to be splitted into x threads.
 	
-	
+	final static Logger serverNerlogger = LoggerFactory.getLogger(LinnaeusTaggerServerRunExtention.class);
 
 	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesService resourcesService, IResourcesElementService resourcesElementService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
 		this.corpusService=corpusService;
@@ -75,6 +77,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 		if(step%1000==0)
 		{
 			System.out.println((GlobalOptions.decimalformat.format((double)step/ (double) total * 100)) + " %...");
+			serverNerlogger.info((GlobalOptions.decimalformat.format((double)step/ (double) total * 100)) + " %...");
 		}
 	}
 	
