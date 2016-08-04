@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.silicolife.anote2daemon.controller.resources.ClassPropertiesManagementServer;
+import com.silicolife.anote2daemon.processes.resources.LexicalWordsServerImpl;
+import com.silicolife.anote2daemon.processes.resources.ResourceServerImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
@@ -23,6 +25,7 @@ import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
+import com.silicolife.textmining.core.interfaces.resource.lexicalwords.ILexicalWords;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.INERLinnaeusConfiguration;
 
@@ -94,4 +97,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 
 
+	protected ILexicalWords getStopWords(INERLinnaeusConfiguration linnauesConfiguration){
+		return new LexicalWordsServerImpl(new ResourceServerImpl(resourcesElementService, linnauesConfiguration.getStopWords()));
+	}
 }
