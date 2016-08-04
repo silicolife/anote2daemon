@@ -44,7 +44,7 @@ public class PubMedSearchServerRunExtension extends PubMedSearch {
 		return super.search(searchConfiguration);
 	}
 
-	public List<IPublication> searchPublicationMetaInfoUsingPMID(List<String> pmids, ISimpleTimeLeft progress) throws InternetConnectionProblemException {
+	public Set<IPublication> searchPublicationMetaInfoUsingPMID(List<String> pmids, ISimpleTimeLeft progress) throws InternetConnectionProblemException {
 		return super.searchPublicationMetaInfoUsingPMID(pmids);
 	}
 	
@@ -64,12 +64,12 @@ public class PubMedSearchServerRunExtension extends PubMedSearch {
 	}
 	
 	@Override
-	protected  void insertPublications(List<IPublication> documentsToInsert)throws ANoteException {
+	protected  void insertPublications(Set<IPublication> documentsToInsert)throws ANoteException {
 		publicationsService.create(documentsToInsert);
 	}
 	
 	@Override
-	protected void insertQueryPublications(IQuery query,List<IPublication> publicationToAdd) throws ANoteException {
+	protected void insertQueryPublications(IQuery query,Set<IPublication> publicationToAdd) throws ANoteException {
 		Set<Long> publicationsIds = new HashSet<Long>();
 		for (IPublication pub : publicationToAdd)
 			publicationsIds.add(pub.getId());

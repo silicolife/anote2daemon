@@ -1,6 +1,5 @@
 package com.silicolife.anote2daemon.processes.corpus;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,7 +34,7 @@ public class CorpusCreationInBatchServerRunExtension extends CorpusCreationInBat
 	}
 	
 	@Override
-	protected void addPublicationToDatabase(List<IPublication> documentToadd)throws ANoteException {
+	protected void addPublicationToDatabase(Set<IPublication> documentToadd)throws ANoteException {
 		publictionService.create(documentToadd);
 	}
 	

@@ -1,8 +1,9 @@
 package com.silicolife.anote2daemon.controller.publications;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,8 +95,8 @@ public class PublicationsController {
 	 */
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/createPublications", method = RequestMethod.POST, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody List<PublicationImpl> publications) {
-		List<IPublication> publicationsList = new ArrayList<IPublication>();
+	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody Set<PublicationImpl> publications) {
+		Set<IPublication> publicationsList = new HashSet<>();
 		for (PublicationImpl pub : publications)
 			publicationsList.add(pub);
 

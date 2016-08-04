@@ -1,7 +1,6 @@
 package com.silicolife.anote2daemon.processes.corpus;
 
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -72,7 +71,7 @@ public class CorpusCreationServerRunExtention extends CorpusCreation {
 	}
 	
 	@Override
-	protected void addPublicationToDatabase(List<IPublication> documentToadd)throws ANoteException {
+	protected void addPublicationToDatabase(Set<IPublication> documentToadd)throws ANoteException {
 		publictionService.create(documentToadd);
 	}
 	
