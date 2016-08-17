@@ -89,7 +89,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected ICorpusPublicationPaginator getUnprocessedPublicationsPaginator(IIEProcess process) throws ANoteException {
-		return new UnprocessedPublicationsPaginatorServerImpl(corpusService, process, paginationSizeInServer);
+		return new UnprocessedPublicationsStackPaginatorServerImpl(corpusService, process, paginationSizeInServer);
 	}
 	
 	protected IResource<IResourceElement> getResourceFromDatabase(Long resourceId) throws ANoteException{
