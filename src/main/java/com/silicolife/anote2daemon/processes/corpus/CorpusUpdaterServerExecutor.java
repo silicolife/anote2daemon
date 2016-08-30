@@ -35,7 +35,7 @@ public class CorpusUpdaterServerExecutor extends CorpusCreationServerExecutor{
 		}
 		updaterLogger.info("Found " + files.size() + " in the given corpus directory!");
 		
-		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files));
+		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files), corpusupdateConfiguration.getProperties());
 	}
 	
 	
