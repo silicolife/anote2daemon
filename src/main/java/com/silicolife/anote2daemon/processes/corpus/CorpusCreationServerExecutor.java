@@ -2,6 +2,7 @@ package com.silicolife.anote2daemon.processes.corpus;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANote
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.ir.pubmed.MedLineReader;
+import com.silicolife.textmining.processes.ir.pubmed.PMCReader;
 
 public class CorpusCreationServerExecutor {
 
@@ -66,25 +68,22 @@ public class CorpusCreationServerExecutor {
 
 		creationLogger.info("Found " + files.size() + " in the given corpus directory!");
 
-		if(!files.isEmpty())
+		if(!files.isEmpty()){
 			creationLogger.info("Starting to add corpus in database");
-		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files));
+			addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files), configurationProperties);
+		}
 	}
 
-	protected void addPublicationsFromXMLFiles(CorpusCreationInBatchServerRunExtension corpusCreator, ICorpus corpus, List<File> xmlFiles)
+	protected void addPublicationsFromXMLFiles(CorpusCreationInBatchServerRunExtension corpusCreator, ICorpus corpus, List<File> xmlFiles, Properties configurationProperties)
 			throws IOException, ANoteException {
 		Set<IPublication> publications = new HashSet<>();
 		for(int i=0; i<xmlFiles.size(); i++){
-			InputStream stream = new FileInputStream(xmlFiles.get(i));
-			MedLineReader reader = new MedLineReader(stream);
-			try{
-				List<IPublication> pubs = reader.getMedlinePublications();
-				publications.addAll(pubs);
-			}catch(ANoteException e){
-				creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
-				throw e;
+			if(configurationProperties.containsKey(GlobalNames.readPMCFiles) && configurationProperties.getProperty(GlobalNames.readPMCFiles).equals("true")){
+				addUsingPMCReader(xmlFiles, publications, i);
+			}else{
+				addUsingMedlineReader(xmlFiles, publications, i);
 			}
-			stream.close();
+			
 			if(i%1000==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
@@ -98,13 +97,41 @@ public class CorpusCreationServerExecutor {
 		}
 	}
 
+	private void addUsingMedlineReader(List<File> xmlFiles, Set<IPublication> publications, int i)
+			throws FileNotFoundException, ANoteException, IOException {
+		InputStream stream = new FileInputStream(xmlFiles.get(i));
+		MedLineReader reader = new MedLineReader(stream);
+		try{
+			List<IPublication> pubs = reader.getMedlinePublications();
+			publications.addAll(pubs);
+		}catch(ANoteException e){
+			creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
+			throw e;
+		}
+		stream.close();
+	}
+	
+
+	private void addUsingPMCReader(List<File> xmlFiles, Set<IPublication> publications, int i) throws ANoteException {
+		File pmcFile = xmlFiles.get(i);
+		PMCReader reader = new PMCReader();
+		try{
+			List<IPublication> pubs = reader.getPublications(pmcFile);
+			publications.addAll(pubs);
+		}catch(ANoteException e){
+			creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
+			throw e;
+		}
+	}
+
 	protected void getXMLFiles(File file, Set<File> files){
 		if(file.isDirectory()){
 			for(File childFile : file.listFiles()){
 				getXMLFiles(childFile, files);
 			}
-		}else if(file.getAbsolutePath().endsWith(".xml")){
+		}else if(file.getAbsolutePath().endsWith(".xml") || file.getAbsolutePath().endsWith(".nxml")){
 			files.add(file);
 		}
+		
 	}
 }

@@ -57,4 +57,9 @@ public class CorpusCreationInBatchServerRunExtension extends CorpusCreationInBat
 	protected Set<String> getAllCorpusPublicationExternalIdFromSource(ICorpus corpus, String source) throws ANoteException {
 		return corpusService.getCorpusPublicationsExternalIDFromSource(corpus.getId(), source);
 	}
+	
+	@Override
+	protected String getPublicationFullTextOnDatabase(IPublication publication) throws ANoteException{
+		return publictionService.getFullText(publication.getId());
+	}
 }
