@@ -62,4 +62,9 @@ public class CorpusCreationInBatchServerRunExtension extends CorpusCreationInBat
 	protected String getPublicationFullTextOnDatabase(IPublication publication) throws ANoteException{
 		return publictionService.getFullText(publication.getId());
 	}
+	
+	@Override
+	protected void updatePublicationOnDatabase(IPublication publication) throws ANoteException {
+		publictionService.update(publication);
+	}
 }
