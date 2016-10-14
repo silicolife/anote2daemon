@@ -197,7 +197,7 @@ public class RunServerProcessesController {
 	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
 		ICorpus corpus = linaneusConfiguration.getCorpus();
-		ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
+		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
 		linaneusConfiguration.setCorpus(corpusServer);
 		taskExecutor.execute(new SpringRunnable() {
 
@@ -210,7 +210,7 @@ public class RunServerProcessesController {
 					classesService.setUserLogged(getUserLogged());
 					processService.setUserLogged(getUserLogged());
 					annotationService.setUserLogged(getUserLogged());
-					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
+					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
 					tagger.executeCorpusNER(linaneusConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
@@ -222,7 +222,7 @@ public class RunServerProcessesController {
 	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);
 		ICorpus corpus = configuration.getCorpus();
-		ICorpus corpusServer = new CorpusServerImpl(corpusService, corpus);
+		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
 		configuration.setCorpus(corpusServer);
 		taskExecutor.execute(new SpringRunnable() {
 
@@ -235,7 +235,7 @@ public class RunServerProcessesController {
 					classesService.setUserLogged(getUserLogged());
 					processService.setUserLogged(getUserLogged());
 					annotationService.setUserLogged(getUserLogged());
-					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
+					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
 					tagger.resumeNER(configuration);
 				} catch (Exception e) {
 					logger.error("Exception",e);

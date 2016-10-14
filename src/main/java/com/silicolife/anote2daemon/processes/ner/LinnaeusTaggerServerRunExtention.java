@@ -11,6 +11,7 @@ import com.silicolife.anote2daemon.processes.resources.ResourceServerImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
@@ -19,18 +20,22 @@ import com.silicolife.textmining.core.datastructures.utils.conf.GlobalOptions;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.ICorpusPublicationPaginator;
+import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
+import com.silicolife.textmining.core.interfaces.process.IE.ner.INERConfiguration;
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 import com.silicolife.textmining.core.interfaces.resource.lexicalwords.ILexicalWords;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
+import com.silicolife.textmining.processes.ie.ner.linnaeus.adapt.uk.ac.man.documentparser.input.DocumentIterator;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.INERLinnaeusConfiguration;
 
 public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	
+	private IPublicationsService publicationService;
 	private ICorpusService corpusService;
 	private IResourcesService resourcesService;
 	private IResourcesElementService resourcesElementService;
@@ -41,7 +46,8 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	
 	final static Logger serverNerlogger = LoggerFactory.getLogger(LinnaeusTaggerServerRunExtention.class);
 
-	public LinnaeusTaggerServerRunExtention(ICorpusService corpusService, IResourcesService resourcesService, IResourcesElementService resourcesElementService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
+	public LinnaeusTaggerServerRunExtention(IPublicationsService publicationService,ICorpusService corpusService, IResourcesService resourcesService, IResourcesElementService resourcesElementService, IClassesService classesService, IProcessesService processService, IAnnotationService annotationService) {
+		this.publicationService=publicationService;
 		this.corpusService=corpusService;
 		this.resourcesService = resourcesService;
 		this.resourcesElementService=resourcesElementService;
@@ -51,7 +57,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected ICorpusPublicationPaginator getPublicationsPaginator(ICorpus corpus) throws ANoteException {
-		return new CorpusPublicationPaginatorServerImpl(corpusService, corpus, paginationSizeInServer);
+		return new CorpusPublicationPaginatorServerImpl(corpusService,publicationService, corpus, paginationSizeInServer);
 	}
 	
 	protected ElementToNer getElementsToNER(INERLinnaeusConfiguration linnauesConfiguration) throws ANoteException {
@@ -65,11 +71,11 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected void associateIEProcessToCorpusONDataAccess(ICorpus corpus, IIEProcess processToRun)throws ANoteException {
-		corpusService.registerCorpusProcess(corpus.getId(), processToRun.getID());
+		corpusService.registerCorpusProcess(corpus.getId(), processToRun.getId());
 	}
 	
 	protected void addAnnotatedDocumentEntities(IIEProcess processToRun,List<IEntityAnnotation> entityAnnotations, IPublication document)throws ANoteException {
-		annotationService.addCorpusProcessDocumentEntityAnootations(processToRun.getCorpus().getId(), processToRun.getID(), document.getId(), entityAnnotations);
+		annotationService.addCorpusProcessDocumentEntityAnootations(processToRun.getCorpus().getId(), processToRun.getId(), document.getId(), entityAnnotations);
 	}
 	
 	protected IAnoteClass getIAnoteClass(Long classID) throws ANoteException {
@@ -85,11 +91,11 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected IIEProcess getProcessInDatabase(IIEProcess process) throws ANoteException{
-		return processService.getProcessByID(process.getID());
+		return processService.getProcessByID(process.getId());
 	}
 	
 	protected ICorpusPublicationPaginator getUnprocessedPublicationsPaginator(IIEProcess process) throws ANoteException {
-		return new UnprocessedPublicationsStackPaginatorServerImpl(corpusService, process, paginationSizeInServer);
+		return new UnprocessedPublicationsStackPaginatorServerImpl(publicationService,corpusService, process, paginationSizeInServer);
 	}
 	
 	protected IResource<IResourceElement> getResourceFromDatabase(Long resourceId) throws ANoteException{
@@ -99,5 +105,11 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 
 	protected ILexicalWords getStopWords(INERLinnaeusConfiguration linnauesConfiguration){
 		return new LexicalWordsServerImpl(new ResourceServerImpl(resourcesElementService, linnauesConfiguration.getStopWords()));
+	}
+	
+	protected DocumentIterator getDocumentIterator(INERConfiguration configuration, IIEProcess processToRun,
+			IDocumentSet documentSet) throws ANoteException {
+		DocumentIterator documents = new PublicationServerIt(publicationService,configuration.getCorpus(), documentSet, processToRun);
+		return documents;
 	}
 }
