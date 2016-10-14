@@ -13,7 +13,7 @@ public class PublicationServerImpl extends PublicationImpl{
 	
 	public PublicationServerImpl(IPublicationsService publicationService,IPublication pub) {
 		super(pub.getId(), pub.getTitle(), pub.getAuthors(), pub.getType(), pub.getYeardate(), pub.getFulldate(), pub.getStatus(), pub.getJournal(), pub.getVolume(),
-				pub.getIssue(), pub.getPages(), pub.getAbstractSection(), pub.getExternalLink(), pub.isAvailableFreeFullText(), pub.getNotes(), pub.getRelativePath(), pub
+				pub.getIssue(), pub.getPages(), pub.getAbstractSection(), pub.getExternalLink(), pub.isFreeFullText(), pub.getNotes(), pub.getRelativePath(), pub
 						.getPublicationExternalIDSource(), pub.getPublicationFields(), pub.getPublicationLabels());
 		setSourceURL(pub.getSourceURL());
 		this.publicationService=publicationService;
