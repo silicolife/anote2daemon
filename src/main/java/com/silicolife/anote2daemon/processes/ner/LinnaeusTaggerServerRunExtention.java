@@ -65,11 +65,11 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected void associateIEProcessToCorpusONDataAccess(ICorpus corpus, IIEProcess processToRun)throws ANoteException {
-		corpusService.registerCorpusProcess(corpus.getId(), processToRun.getID());
+		corpusService.registerCorpusProcess(corpus.getId(), processToRun.getId());
 	}
 	
 	protected void addAnnotatedDocumentEntities(IIEProcess processToRun,List<IEntityAnnotation> entityAnnotations, IPublication document)throws ANoteException {
-		annotationService.addCorpusProcessDocumentEntityAnootations(processToRun.getCorpus().getId(), processToRun.getID(), document.getId(), entityAnnotations);
+		annotationService.addCorpusProcessDocumentEntityAnootations(processToRun.getCorpus().getId(), processToRun.getId(), document.getId(), entityAnnotations);
 	}
 	
 	protected IAnoteClass getIAnoteClass(Long classID) throws ANoteException {
@@ -85,7 +85,7 @@ public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	}
 	
 	protected IIEProcess getProcessInDatabase(IIEProcess process) throws ANoteException{
-		return processService.getProcessByID(process.getID());
+		return processService.getProcessByID(process.getId());
 	}
 	
 	protected ICorpusPublicationPaginator getUnprocessedPublicationsPaginator(IIEProcess process) throws ANoteException {

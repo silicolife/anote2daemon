@@ -21,11 +21,11 @@ public class UnprocessedPublicationsPaginatorServerImpl extends UnprocessedPubli
 	}
 	
 	protected Long getUnprocessdCorpusPublicationCountOnDatabase(IIEProcess process) throws ANoteException {
-		return corpusService.countCorpusPublicationsNotProcessed(process.getCorpus().getId(), process.getID());
+		return corpusService.countCorpusPublicationsNotProcessed(process.getCorpus().getId(), process.getId());
 	}
 	
 	protected IDocumentSet getCorpusPublicationsNotProcessedPaginatedOnDatabase(IIEProcess process, Integer paginationIndex, Integer paginationSize) throws ANoteException {
-		return corpusService.getCorpusPublicationsNotProcessedPaginated(process.getCorpus().getId(), process.getID(), paginationIndex, paginationSize);
+		return corpusService.getCorpusPublicationsNotProcessedPaginated(process.getCorpus().getId(), process.getId(), paginationIndex, paginationSize);
 	}
 
 }
