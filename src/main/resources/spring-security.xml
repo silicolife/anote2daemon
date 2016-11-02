@@ -3,11 +3,11 @@
 	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
-                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
                         http://www.springframework.org/schema/aop
-						http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+						http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
 
 
 
@@ -21,10 +21,17 @@
 	<!-- Http entry point to login -->
 	<http entry-point-ref="restAuthenticationEntryPoint" authentication-manager-ref="authenticationManager">
 		<intercept-url pattern="/**" />
-		<form-login authentication-success-handler-ref="restAuthenticationSuccessHandler" authentication-failure-handler-ref="restAuthenticationFailureHandler" />
+		<form-login login-processing-url="/j_spring_security_check" login-page="/j_spring_security_check" authentication-success-handler-ref="restAuthenticationSuccessHandler" authentication-failure-handler-ref="restAuthenticationFailureHandler" />
 		<logout logout-url="/j_spring_security_logout" invalidate-session="true" delete-cookies="JSESSIONID" success-handler-ref="logoutSuccessHandler" />
+		<csrf token-repository-ref="csrfTokenRepository"/>
 	</http>
-
+	
+	<!-- CSRF Repository Configuration (enables read the cookie with JavaScript directly) -->
+	<beans:bean id="csrfTokenRepository"
+		class="com.silicolife.anote2daemon.security.CustomCookieCsrfTokenRepository">
+		<beans:property name="cookieHttpOnly" value="false"></beans:property>
+		<beans:property name="cookiePath" value="/"></beans:property>
+	</beans:bean>
 
 	<!-- Entry point for REST service. -->
 	<beans:bean id="restAuthenticationEntryPoint"
@@ -92,6 +99,5 @@
 <!--  	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
 	<context:component-scan
 		base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model" /> -->
-
 
 </beans:beans>
