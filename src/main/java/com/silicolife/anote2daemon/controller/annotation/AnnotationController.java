@@ -30,6 +30,7 @@ import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotati
 import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
 import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
+import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 
 /**
  * The goal of this class is to expose for the web all annotation functionalities of
@@ -250,5 +251,19 @@ public class AnnotationController {
 		}
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.updateEntityAnnotations(entityAnnotationList));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Update entity annotations
+	 * 
+	 * @param entityAnnotations
+	 * @return
+	 * @throws AnnotationException
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationByResourceElement", method = RequestMethod.PUT)
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationByResourceElement(@RequestBody Long resourceElementID) throws AnnotationException{
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(annotationService.getPublicationByResourceElement(resourceElementID));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
 }
