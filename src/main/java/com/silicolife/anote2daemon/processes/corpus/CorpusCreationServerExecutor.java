@@ -81,7 +81,7 @@ public class CorpusCreationServerExecutor {
 			if(configurationProperties.containsKey(GlobalNames.readPMCFiles) && configurationProperties.getProperty(GlobalNames.readPMCFiles).equals("true")){
 				addUsingPMCReader(xmlFiles, publications, i);
 			}else{
-				addUsingMedlineReader(xmlFiles, publications, i);
+				addUsingPubmedReader(xmlFiles, publications, i);
 			}
 			
 			if(i%1000==0 && i!=0){
@@ -97,7 +97,7 @@ public class CorpusCreationServerExecutor {
 		}
 	}
 
-	private void addUsingMedlineReader(List<File> xmlFiles, Set<IPublication> publications, int i)
+	private void addUsingPubmedReader(List<File> xmlFiles, Set<IPublication> publications, int i)
 			throws FileNotFoundException, ANoteException, IOException {
 		InputStream stream = new FileInputStream(xmlFiles.get(i));
 		PubmedReader reader = new PubmedReader();
