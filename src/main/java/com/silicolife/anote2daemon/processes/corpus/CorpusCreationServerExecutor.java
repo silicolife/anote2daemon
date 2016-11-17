@@ -21,8 +21,8 @@ import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusCreateConfi
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
-import com.silicolife.textmining.processes.ir.pubmed.MedLineReader;
-import com.silicolife.textmining.processes.ir.pubmed.PMCReader;
+import com.silicolife.textmining.processes.ir.pubmed.PubmedReader;
+import com.silicolife.textmining.processes.ir.pubmed.reader.PMCReader;
 
 public class CorpusCreationServerExecutor {
 
@@ -100,9 +100,9 @@ public class CorpusCreationServerExecutor {
 	private void addUsingMedlineReader(List<File> xmlFiles, Set<IPublication> publications, int i)
 			throws FileNotFoundException, ANoteException, IOException {
 		InputStream stream = new FileInputStream(xmlFiles.get(i));
-		MedLineReader reader = new MedLineReader(stream);
+		PubmedReader reader = new PubmedReader();
 		try{
-			List<IPublication> pubs = reader.getMedlinePublications();
+			List<IPublication> pubs = reader.getPublications(stream);
 			publications.addAll(pubs);
 		}catch(ANoteException e){
 			creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
