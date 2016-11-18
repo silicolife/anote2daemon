@@ -1,7 +1,5 @@
 package com.silicolife.anote2daemon.controller;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -24,7 +22,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 @Controller
 public class ConfigurationController {
 
-	private final String version = "Version: 2.2.3";
+	private final String version = "Version: 2.3.0";
 	private final String title = "@note2daemon - The best Text Mining Tool :d (Silicolife) "+version;
 	
 	@RequestMapping(value = "/getVersion", method = RequestMethod.GET)

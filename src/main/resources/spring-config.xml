@@ -15,6 +15,6 @@
 		<beans:property name="WaitForTasksToCompleteOnShutdown"><beans:value>true</beans:value></beans:property>
 	</beans:bean>
 	
-	<beans:bean class="com.silicolife.textmining.core.datastructures.dataaccess.server.SpringInjectedServicesAccess" />
+	<beans:bean class="com.silicolife.anote2daemon.dataaccess.SpringInjectedServicesAccess" />
 
 </beans:beans>
