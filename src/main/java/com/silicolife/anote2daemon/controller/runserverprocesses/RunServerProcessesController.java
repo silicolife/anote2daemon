@@ -29,6 +29,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
@@ -38,9 +39,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
-import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
-import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
@@ -90,7 +89,21 @@ public class RunServerProcessesController {
 
 	@Autowired 
 	private TaskExecutor taskExecutor;
+	
+	@Autowired
+	private ILuceneService luceneService;
 
+	/**
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/rebuildLuceneIndex", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Boolean>> rebuildLuceneIndex(){
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(luceneService.rebuildLuceneIndex());
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
 	/**
 	 * 
 	 * 
