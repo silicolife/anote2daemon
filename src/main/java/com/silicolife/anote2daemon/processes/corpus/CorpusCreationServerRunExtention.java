@@ -1,6 +1,5 @@
 package com.silicolife.anote2daemon.processes.corpus;
 
-import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.Set;
 
@@ -19,8 +18,6 @@ import com.silicolife.textmining.core.interfaces.core.report.corpora.ICorpusCrea
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreation;
 
 public class CorpusCreationServerRunExtention extends CorpusCreation {
-	
-	private long starttime;
 
 	private ICorpusService corpusService;
 	private IPublicationsService publictionService;
@@ -35,7 +32,6 @@ public class CorpusCreationServerRunExtention extends CorpusCreation {
 	@Override
 	public ICorpusCreateReport createCorpus(ICorpusCreateConfiguration configuration) throws ANoteException
 	{
-		starttime = GregorianCalendar.getInstance().getTimeInMillis();
 		Properties properties = configuration.getProperties();
 		properties.put(GlobalNames.textType, CorpusTextType.convertCorpusTetTypeToString(configuration.getCorpusTextType()));
 		ICorpus newCorpus = new CorpusImpl(configuration.getCorpusName(), configuration.getCorpusNotes(), configuration.getProperties());

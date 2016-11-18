@@ -14,5 +14,7 @@
 		<beans:property name="maxPoolSize"><beans:value>10</beans:value></beans:property>
 		<beans:property name="WaitForTasksToCompleteOnShutdown"><beans:value>true</beans:value></beans:property>
 	</beans:bean>
+	
+	<beans:bean class="com.silicolife.textmining.core.datastructures.dataaccess.server.SpringInjectedServicesAccess" />
 
 </beans:beans>
