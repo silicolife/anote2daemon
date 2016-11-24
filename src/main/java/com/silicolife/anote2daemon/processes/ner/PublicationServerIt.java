@@ -19,6 +19,7 @@ import com.silicolife.textmining.processes.ie.ner.linnaeus.adapt.uk.ac.man.docum
 import com.silicolife.textmining.processes.ie.ner.linnaeus.adapt.uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.adapt.uk.ac.man.documentparser.input.DocumentIterator;
 
+@Deprecated
 public class PublicationServerIt implements DocumentIterator{
 	
 	protected Document nextDocument;

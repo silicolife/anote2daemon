@@ -247,39 +247,15 @@ public class RunServerProcessesController {
 		});
 	}
 
-//	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
-//		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
-//		taskExecutor.execute(new SpringRunnable() {
-//
-//			@Override
-//			protected void onRun() {
-//				try {
-//					LinnaeusTagger tagger = new LinnaeusTagger();
-//					tagger.executeCorpusNER(linaneusConfiguration);
-//				} catch (Exception e) {
-//					logger.error("Exception",e);
-//				}
-//			}
-//		});
-//	}
-	
 	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
-		ICorpus corpus = linaneusConfiguration.getCorpus();
-		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
-		linaneusConfiguration.setCorpus(corpusServer);
 		taskExecutor.execute(new SpringRunnable() {
 
 			@Override
 			protected void onRun() {
 				try {
-					corpusService.setUserLogged(getUserLogged());
-					resourcesService.setUserLogged(getUserLogged());
-					resourcesElementService.setUserLogged(getUserLogged());
-					classesService.setUserLogged(getUserLogged());
-					processService.setUserLogged(getUserLogged());
-					annotationService.setUserLogged(getUserLogged());
-					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
+					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
+					LinnaeusTagger tagger = new LinnaeusTagger();
 					tagger.executeCorpusNER(linaneusConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
@@ -287,6 +263,31 @@ public class RunServerProcessesController {
 			}
 		});
 	}
+	
+//	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+//		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
+//		ICorpus corpus = linaneusConfiguration.getCorpus();
+//		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
+//		linaneusConfiguration.setCorpus(corpusServer);
+//		taskExecutor.execute(new SpringRunnable() {
+//
+//			@Override
+//			protected void onRun() {
+//				try {
+//					corpusService.setUserLogged(getUserLogged());
+//					resourcesService.setUserLogged(getUserLogged());
+//					resourcesElementService.setUserLogged(getUserLogged());
+//					classesService.setUserLogged(getUserLogged());
+//					processService.setUserLogged(getUserLogged());
+//					annotationService.setUserLogged(getUserLogged());
+//					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
+//					tagger.executeCorpusNER(linaneusConfiguration);
+//				} catch (Exception e) {
+//					logger.error("Exception",e);
+//				}
+//			}
+//		});
+//	}
 	
 	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);

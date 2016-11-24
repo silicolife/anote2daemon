@@ -10,6 +10,7 @@ import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
 
+@Deprecated
 public class UnprocessedPublicationsStackPaginatorServerImpl extends UnprocessedPublicationsStackPaginatorImpl{
 
 	private IPublicationsService publicationService;

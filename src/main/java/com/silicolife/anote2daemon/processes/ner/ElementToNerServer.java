@@ -11,6 +11,7 @@ import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANote
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 
+@Deprecated
 public class ElementToNerServer extends ElementToNer{
 
 	private IResourcesElementService resourceService;

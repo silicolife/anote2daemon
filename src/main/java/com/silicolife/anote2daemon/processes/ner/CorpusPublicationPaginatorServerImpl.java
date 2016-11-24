@@ -10,6 +10,7 @@ import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 
+@Deprecated
 public class CorpusPublicationPaginatorServerImpl extends CorpusPublicationPaginatorImpl{
 
 	private ICorpusService corpusService;

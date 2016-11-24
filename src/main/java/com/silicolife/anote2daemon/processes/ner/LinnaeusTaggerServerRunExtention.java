@@ -33,6 +33,7 @@ import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.adapt.uk.ac.man.documentparser.input.DocumentIterator;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.INERLinnaeusConfiguration;
 
+@Deprecated
 public class LinnaeusTaggerServerRunExtention extends LinnaeusTagger{
 	
 	private IPublicationsService publicationService;
