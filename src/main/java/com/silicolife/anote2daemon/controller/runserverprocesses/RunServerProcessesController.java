@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerExecutor;
 import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
 import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterServerExecutor;
-import com.silicolife.anote2daemon.processes.ir.PubMedSearchServerRunExtension;
 import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
@@ -39,9 +38,11 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
+import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
+import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
 
 /**
@@ -148,7 +149,7 @@ public class RunServerProcessesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-
+	
 	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
 		taskExecutor.execute(new SpringRunnable(){
@@ -156,9 +157,8 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					queriesService.setUserLogged(getUserLogged());
-					publicationsService.setUserLogged(getUserLogged());
-					PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
+					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
+					PubMedSearch pubmedSearch = new PubMedSearch();
 					pubmedSearch.search(searchConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);;
@@ -166,6 +166,24 @@ public class RunServerProcessesController {
 			}
 		});
 	}
+
+//	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+//		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
+//		taskExecutor.execute(new SpringRunnable(){
+//
+//			@Override
+//			protected void onRun() {
+//				try {
+//					queriesService.setUserLogged(getUserLogged());
+//					publicationsService.setUserLogged(getUserLogged());
+//					PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
+//					pubmedSearch.search(searchConfiguration);
+//				} catch (Exception e) {
+//					logger.error("Exception",e);;
+//				}
+//			}
+//		});
+//	}
 
 	private void executeBackgroundThreadForCorpusCreation(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
@@ -176,6 +194,8 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
+					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
+
 					corpusService.setUserLogged(getUserLogged());
 					publicationsService.setUserLogged(getUserLogged());
 					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
@@ -187,6 +207,27 @@ public class RunServerProcessesController {
 
 		});
 	}
+	
+//	private void executeBackgroundThreadForCorpusCreation(String[] parameters, ObjectMapper bla)
+//			throws IOException, JsonParseException, JsonMappingException {
+//		final CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
+//
+//		taskExecutor.execute(new SpringRunnable() {
+//
+//			@Override
+//			protected void onRun() {
+//				try {
+//					corpusService.setUserLogged(getUserLogged());
+//					publicationsService.setUserLogged(getUserLogged());
+//					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
+//					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
+//				} catch (Exception e) {
+//					logger.error("Exception",e);
+//				}
+//			}
+//
+//		});
+//	}
 	
 	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
