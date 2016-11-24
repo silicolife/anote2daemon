@@ -18,6 +18,7 @@ import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElementSet;
 import com.silicolife.textmining.core.interfaces.resource.content.IResourceContent;
 
+@Deprecated
 public class ResourceServerImpl extends ResourceImpl{
 
 	private IResourcesElementService resourceService;

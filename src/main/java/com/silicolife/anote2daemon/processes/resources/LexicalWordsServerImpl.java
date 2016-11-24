@@ -10,6 +10,7 @@ import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANote
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 
+@Deprecated
 public class LexicalWordsServerImpl extends LexicalWordsImpl{
 	
 	private IResource<IResourceElement> serverResource;

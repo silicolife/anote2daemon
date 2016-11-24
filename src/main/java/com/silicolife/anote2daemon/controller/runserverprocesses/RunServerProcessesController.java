@@ -20,9 +20,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationExecutorServer;
-import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
 import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterExecutorServer;
-import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
@@ -39,7 +37,6 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
-import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
@@ -311,21 +308,13 @@ public class RunServerProcessesController {
 	
 	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);
-		ICorpus corpus = configuration.getCorpus();
-		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
-		configuration.setCorpus(corpusServer);
 		taskExecutor.execute(new SpringRunnable() {
 
 			@Override
 			protected void onRun() {
 				try {
-					corpusService.setUserLogged(getUserLogged());
-					resourcesService.setUserLogged(getUserLogged());
-					resourcesElementService.setUserLogged(getUserLogged());
-					classesService.setUserLogged(getUserLogged());
-					processService.setUserLogged(getUserLogged());
-					annotationService.setUserLogged(getUserLogged());
-					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
+					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
+					LinnaeusTagger tagger = new LinnaeusTagger();
 					tagger.resumeNER(configuration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
@@ -335,4 +324,31 @@ public class RunServerProcessesController {
 			}
 		});
 	}
+	
+//	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+//		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);
+//		ICorpus corpus = configuration.getCorpus();
+//		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
+//		configuration.setCorpus(corpusServer);
+//		taskExecutor.execute(new SpringRunnable() {
+//
+//			@Override
+//			protected void onRun() {
+//				try {
+//					corpusService.setUserLogged(getUserLogged());
+//					resourcesService.setUserLogged(getUserLogged());
+//					resourcesElementService.setUserLogged(getUserLogged());
+//					classesService.setUserLogged(getUserLogged());
+//					processService.setUserLogged(getUserLogged());
+//					annotationService.setUserLogged(getUserLogged());
+//					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
+//					tagger.resumeNER(configuration);
+//				} catch (Exception e) {
+//					logger.error("Exception",e);
+//					System.out.println(e);
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }
