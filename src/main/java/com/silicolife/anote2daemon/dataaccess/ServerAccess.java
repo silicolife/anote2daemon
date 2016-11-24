@@ -51,6 +51,8 @@ public class ServerAccess implements IDataAccess{
 	
 	public ServerAccess() {
 	}
+	
+
 
 	@Override
 	public List<IPublication> getQueryPublications(IQuery query) throws ANoteException {
@@ -962,6 +964,12 @@ public class ServerAccess implements IDataAccess{
 			IResourceElement originalElem, List<String> synonymsToAdd) throws ANoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	public void setUserLoggedOnServices(UsersLogged userLogged)
+	{
+		SpringInjectedServicesAccess.setUserLoggedOnServices(userLogged);
 	}
 
 

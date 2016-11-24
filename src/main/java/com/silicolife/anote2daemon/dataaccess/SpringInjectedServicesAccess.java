@@ -61,6 +61,21 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 				
 		initServerAccess();
 	}
+	
+	public static void setUserLoggedOnServices(UsersLogged userLogged)
+	{
+		if(queriesService!=null) queriesService.setUserLogged(userLogged);
+		if(publicationsService!=null) publicationsService.setUserLogged(userLogged);
+		if(privilegesService!=null) privilegesService.setUserLogged(userLogged);
+		if(resourcesService!=null) resourcesService.setUserLogged(userLogged);
+		if(classesService!=null) classesService.setUserLogged(userLogged);
+		if(resourcesElementService!=null) resourcesElementService.setUserLogged(userLogged);
+		if(corpusService!=null) corpusService.setUserLogged(userLogged);
+		if(processesService!=null) processesService.setUserLogged(userLogged);
+		if(annotationService!=null) annotationService.setUserLogged(userLogged);
+		if(clusteringService!=null) clusteringService.setUserLogged(userLogged);
+		if(hyperLinkService!=null) hyperLinkService.setUserLogged(userLogged);
+	}
 
 
 	private void initServerAccess() {
