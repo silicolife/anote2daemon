@@ -17,6 +17,7 @@ import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.report.corpora.ICorpusCreateReport;
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreation;
 
+@Deprecated
 public class CorpusCreationServerRunExtention extends CorpusCreation {
 
 	private ICorpusService corpusService;

@@ -14,49 +14,36 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalNames;
 import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusCreateConfiguration;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
+import com.silicolife.textmining.processes.corpora.loaders.CorpusCreation;
+import com.silicolife.textmining.processes.corpora.loaders.CorpusCreationInBatch;
 import com.silicolife.textmining.processes.ir.pubmed.PubmedReader;
 import com.silicolife.textmining.processes.ir.pubmed.reader.PMCReader;
 
-@Deprecated
-public class CorpusCreationServerExecutor {
+public class CorpusCreationExecutorServer {
 
-	final static Logger creationLogger = LoggerFactory.getLogger(CorpusCreationServerExecutor.class);
+	final static Logger creationLogger = LoggerFactory.getLogger(CorpusCreationExecutorServer.class);
 
-	private ICorpusService corpusService;
-	private IPublicationsService publictionService;
 
-	public CorpusCreationServerExecutor(ICorpusService corpusService, IPublicationsService publictionService){
-		this.corpusService=corpusService;
-		this.publictionService=publictionService;
+	public CorpusCreationExecutorServer(){
 	}
 
-	protected ICorpusService getCorpusService() {
-		return corpusService;
-	}
-
-
-	protected IPublicationsService getPublictionService() {
-		return publictionService;
-	}
 
 
 	public void executeCorpusCreation(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
 		Set<Long> documents = configuration.getDocumentsIDs();
 		if(documents != null && !documents.isEmpty())
-			new CorpusCreationServerRunExtention(corpusService, publictionService).createCorpus(configuration);
+			new CorpusCreation().createCorpus(configuration);
 		else
 			corpusCreationBatchExecution(configuration);
 	}
 
 	private void corpusCreationBatchExecution(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
-		CorpusCreationInBatchServerRunExtension corpusCreator = new CorpusCreationInBatchServerRunExtension(corpusService, publictionService);
+		CorpusCreationInBatch corpusCreator = new CorpusCreationInBatch();
 		ICorpus corpus = corpusCreator.startCorpusCreation(configuration);
 
 		Set<File> files = new HashSet<>();
@@ -75,7 +62,7 @@ public class CorpusCreationServerExecutor {
 		}
 	}
 
-	protected void addPublicationsFromXMLFiles(CorpusCreationInBatchServerRunExtension corpusCreator, ICorpus corpus, List<File> xmlFiles, Properties configurationProperties)
+	protected void addPublicationsFromXMLFiles(CorpusCreationInBatch corpusCreator, ICorpus corpus, List<File> xmlFiles, Properties configurationProperties)
 			throws IOException, ANoteException {
 		Set<IPublication> publications = new HashSet<>();
 		for(int i=0; i<xmlFiles.size(); i++){

@@ -24,6 +24,7 @@ import com.silicolife.textmining.core.interfaces.core.document.structure.ISenten
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
 
+@Deprecated
 public class AnnotationDocumentServerImpl extends PublicationServerImpl implements IAnnotatedDocument{
 	
 	private List<IEntityAnnotation> entities;

@@ -6,6 +6,7 @@ import com.silicolife.textmining.core.datastructures.documents.PublicationImpl;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 
+@Deprecated
 public class PublicationServerImpl extends PublicationImpl{
 	
 	private IPublicationsService publicationService;

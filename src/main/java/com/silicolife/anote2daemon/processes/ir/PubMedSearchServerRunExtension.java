@@ -25,6 +25,7 @@ import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
  * @author Hugo Costa
  *
  */
+@Deprecated
 public class PubMedSearchServerRunExtension extends PubMedSearch {
 	
 	private long starttime;

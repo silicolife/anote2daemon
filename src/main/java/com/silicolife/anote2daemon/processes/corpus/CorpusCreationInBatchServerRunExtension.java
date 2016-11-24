@@ -10,6 +10,7 @@ import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreationInBatch;
 
+@Deprecated
 public class CorpusCreationInBatchServerRunExtension extends CorpusCreationInBatch{
 
 	private ICorpusService corpusService;

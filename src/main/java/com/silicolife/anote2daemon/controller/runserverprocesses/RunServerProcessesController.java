@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.silicolife.anote2daemon.processes.corpus.CorpusCreationServerExecutor;
+import com.silicolife.anote2daemon.processes.corpus.CorpusCreationExecutorServer;
 import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
 import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterServerExecutor;
 import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
@@ -34,13 +34,13 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
+import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
@@ -64,8 +64,8 @@ public class RunServerProcessesController {
 	@Autowired
 	private Permissions permissions;
 
-	@Autowired
-	private IQueriesService queriesService;
+//	@Autowired
+//	private IQueriesService queriesService;
 
 	@Autowired
 	private IPublicationsService publicationsService;
@@ -195,10 +195,7 @@ public class RunServerProcessesController {
 			protected void onRun() {
 				try {
 					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
-
-					corpusService.setUserLogged(getUserLogged());
-					publicationsService.setUserLogged(getUserLogged());
-					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
+					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
 					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
@@ -250,6 +247,22 @@ public class RunServerProcessesController {
 		});
 	}
 
+//	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+//		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
+//		taskExecutor.execute(new SpringRunnable() {
+//
+//			@Override
+//			protected void onRun() {
+//				try {
+//					LinnaeusTagger tagger = new LinnaeusTagger();
+//					tagger.executeCorpusNER(linaneusConfiguration);
+//				} catch (Exception e) {
+//					logger.error("Exception",e);
+//				}
+//			}
+//		});
+//	}
+	
 	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
 		ICorpus corpus = linaneusConfiguration.getCorpus();
