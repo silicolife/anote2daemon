@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationExecutorServer;
 import com.silicolife.anote2daemon.processes.corpus.CorpusServerImpl;
-import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterServerExecutor;
+import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterExecutorServer;
 import com.silicolife.anote2daemon.processes.ner.LinnaeusTaggerServerRunExtention;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
@@ -235,9 +235,8 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					corpusService.setUserLogged(getUserLogged());
-					publicationsService.setUserLogged(getUserLogged());
-					CorpusUpdaterServerExecutor corpusUpdate = new CorpusUpdaterServerExecutor(corpusService, publicationsService);
+					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
+					CorpusUpdaterExecutorServer corpusUpdate = new CorpusUpdaterExecutorServer();
 					corpusUpdate.executeCorpusUpdate(corpusupdateConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
@@ -246,6 +245,27 @@ public class RunServerProcessesController {
 
 		});
 	}
+	
+//	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
+//			throws IOException, JsonParseException, JsonMappingException {
+//		final CorpusUpdateConfigurationImpl corpusupdateConfiguration = bla.readValue(parameters[1],CorpusUpdateConfigurationImpl.class);
+//
+//		taskExecutor.execute(new SpringRunnable() {
+//
+//			@Override
+//			protected void onRun() {
+//				try {
+//					corpusService.setUserLogged(getUserLogged());
+//					publicationsService.setUserLogged(getUserLogged());
+//					CorpusUpdaterServerExecutor corpusUpdate = new CorpusUpdaterServerExecutor(corpusService, publicationsService);
+//					corpusUpdate.executeCorpusUpdate(corpusupdateConfiguration);
+//				} catch (Exception e) {
+//					logger.error("Exception",e);
+//				}
+//			}
+//
+//		});
+//	}
 
 	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
