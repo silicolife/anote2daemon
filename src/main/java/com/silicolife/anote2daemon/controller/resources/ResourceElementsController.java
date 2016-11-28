@@ -628,29 +628,29 @@ public class ResourceElementsController {
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getResourceElementsByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByPartialExternalID(@RequestParam String externalId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsByPartialExternalID(externalId));
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByPartialExternalID(@RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsByPartialExternalID(partialExternalId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getResourceElementsFromSourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromSourceByPartialExternalID(@RequestParam String externalId, @RequestParam Long sourceId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromSourceByPartialExternalID(externalId, sourceId));
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromSourceByPartialExternalID(@RequestParam String partialExteralId, @RequestParam Long sourceId) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromSourceByPartialExternalID(partialExteralId, sourceId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getResourceElementsFromResourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialExternalID(@RequestParam String externalId, @RequestParam Long resourceId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialExternalID(externalId, resourceId));
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialExternalID(@RequestParam String partialExternalId, @RequestParam Long resourceId) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialExternalID(partialExternalId, resourceId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getResourceElementsFromResourceAndSourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceAndSourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String externalId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceAndSourceByPartialExternalID(externalId, sourceId, resourceId));
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceAndSourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, sourceId, resourceId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
