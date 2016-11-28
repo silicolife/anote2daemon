@@ -543,7 +543,7 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialTerm", method = RequestMethod.GET)
+	@RequestMapping(value = "/getResourceElementsByPartialTermPaginated", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByPartialTermPaginated(@RequestParam String partialTerm, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
 		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsByPartialTermPaginated(partialTerm, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	

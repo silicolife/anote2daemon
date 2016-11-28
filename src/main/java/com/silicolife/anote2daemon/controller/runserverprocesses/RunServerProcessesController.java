@@ -27,14 +27,6 @@ import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigu
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IClassesService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
@@ -58,32 +50,32 @@ public class RunServerProcessesController {
 	
 	final static Logger logger = LoggerFactory.getLogger(RunServerProcessesController.class);
 
-	@Autowired
-	private Permissions permissions;
-
+//	@Autowired
+//	private Permissions permissions;
+//
 //	@Autowired
 //	private IQueriesService queriesService;
-
-	@Autowired
-	private IPublicationsService publicationsService;
-
-	@Autowired
-	private ICorpusService corpusService;
-
-	@Autowired
-	private IProcessesService processService;
-
-	@Autowired
-	private IAnnotationService annotationService;
-	
-	@Autowired
-	private IResourcesService resourcesService;
-
-	@Autowired
-	private IResourcesElementService resourcesElementService;
-
-	@Autowired
-	private IClassesService classesService;
+//
+//	@Autowired
+//	private IPublicationsService publicationsService;
+//
+//	@Autowired
+//	private ICorpusService corpusService;
+//
+//	@Autowired
+//	private IProcessesService processService;
+//
+//	@Autowired
+//	private IAnnotationService annotationService;
+//	
+//	@Autowired
+//	private IResourcesService resourcesService;
+//
+//	@Autowired
+//	private IResourcesElementService resourcesElementService;
+//
+//	@Autowired
+//	private IClassesService classesService;
 
 	@Autowired 
 	private TaskExecutor taskExecutor;
@@ -98,7 +90,19 @@ public class RunServerProcessesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/rebuildLuceneIndex", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> rebuildLuceneIndex(){
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(luceneService.rebuildLuceneIndex());
+		taskExecutor.execute(new SpringRunnable(){
+
+			@Override
+			protected void onRun() {
+				try {
+					luceneService.rebuildLuceneIndex();
+				} catch (Exception e) {
+					logger.error("Exception",e);
+				}
+			}
+		});
+				
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
