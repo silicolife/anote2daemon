@@ -85,8 +85,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public void inactiveQuery(IQuery query) throws ANoteException {
-		// TODO Auto-generated method stub
-		
+		SpringInjectedServicesAccess.getQueriesService().inactiveQuery(query.getId());
 	}
 
 	@Override
@@ -141,7 +140,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public void inactivateCluster(IClusterProcess clustering) throws ANoteException {
-		// TODO Auto-generated method stub
+		SpringInjectedServicesAccess.getClusteringService().inactivateClustering(clustering.getId());
 		
 	}
 
@@ -198,8 +197,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public boolean updateClassName(IAnoteClass oldclassName, String newCLass) throws ANoteException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -324,14 +322,12 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public Set<String> getIEStatiticsAllLemmas() throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
 	public SortedSet<IRelationsType> getIEStatiticsAllDefaultRelationsType() throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -366,8 +362,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public void inactiveAnnotations(List<Long> annotation) throws ANoteException {
-		// TODO Auto-generated method stub
-		
+		SpringInjectedServicesAccess.getAnnotationService().inactiveAnnotations(annotation);
 	}
 
 	@Override
@@ -377,8 +372,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public void updateEventsAnnotations(List<IEventAnnotation> list) throws ANoteException {
-		// TODO Auto-generated method stub
-		
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -426,8 +420,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public void inativeResource(IResource<IResourceElement> resource) throws ANoteException {
-		// TODO Auto-generated method stub
-		
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -452,8 +445,7 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public boolean checkResourceHasElements(IResource<IResourceElement> resource) throws ANoteException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -521,8 +513,7 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public long getResourceElementIDMathingByText(IResource<IResourceElement> resource, IResourceElement elemennt,
 			String text, boolean casesensitive) throws ANoteException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -598,14 +589,12 @@ public class ServerAccess implements IDataAccess{
 
 	@Override
 	public int getDatabaseVersion() throws ANoteException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
 	public boolean addDatabaseVersion(int version, String commments) throws ANoteException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new ANoteException("Method not available in Server Access");
 	}
 
 	@Override
@@ -774,126 +763,34 @@ public class ServerAccess implements IDataAccess{
 			throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesElementService().getResourceElementsByExternalID(externalId);
 	}
+	
+	public void setUserLoggedOnServices(UsersLogged userLogged){
+		SpringInjectedServicesAccess.setUserLoggedOnServices(userLogged);
+	}
 
 	@Override
 	public boolean rebuildLuceneIndex() throws ANoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByExactTerm(String term)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTerm(String term)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTermPaginated(String term,
-			int index, int paginationSize) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByExactSynonym(String synonym)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getAllResourceElementsByPartialSynonymUsingLucene(String synonym)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByPartialSynonymUsingLucenePaginated(String synonym,
-			int index, int paginationSize) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialTermPaginated(
-			IResource<IResourceElement> resource,String partialTerm,  int index, int paginationSize)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialSynonymUsingPaginated(
-			String partialSynonym, IResource<IResourceElement> resource, int index, int paginationSize)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalId(String externalId)
-			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactExternalId(
-			String externalId, IResource<IResourceElement> resource) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalIdFromSource(
-			String externalId, ISource source) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalId(
-			String partialExternalId) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromSourceByPartialExternalId(
-			String partialExternalId, ISource source) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getLuceneService().rebuildLuceneIndex();
 	}
 
 	@Override
 	public List<IPublication> getPublicationByResourceElement(IResourceElement resourceElement) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getAnnotationService().getPublicationByResourceElement(resourceElement.getId());
 	}
+
+
 
 	@Override
 	public IResourceManagerReport addResourceElementSynomynsWithoutValidation(IResource<IResourceElement> destiny,
 			IResourceElement originalElem, List<String> synonymsToAdd) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementService().addResourceElementSynonymsWithoutValidation(destiny.getId(), originalElem.getId(), synonymsToAdd);
 	}
 
-	
-	public void setUserLoggedOnServices(UsersLogged userLogged)
-	{
-		SpringInjectedServicesAccess.setUserLoggedOnServices(userLogged);
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByExactTerm(String term) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactTerm(term);
 	}
 
 
@@ -901,8 +798,22 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactTerm(
 			IResource<IResourceElement> resource, String term) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByExactTerm(term, resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTerm(String term) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialTerm(term);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTermPaginated(String term, int index,
+			int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialTermPaginated(term, index, paginationSize);
 	}
 
 
@@ -910,8 +821,24 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialTerm(
 			IResource<IResourceElement> resource, String partialTerm) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialTerm(partialTerm, resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialTermPaginated(
+			IResource<IResourceElement> resource, String partialTerm, int index, int paginationSize)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialTermPaginated(partialTerm, resource.getId(), index, paginationSize);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByExactSynonym(String synonym)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactSynonym(synonym);
 	}
 
 
@@ -919,8 +846,23 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactSynonym(
 			IResource<IResourceElement> resource, String synonym) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByExactSynonym(synonym, resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialSynonym(String synonym)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialSynonym(synonym);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialSynonymPaginated(String synonym, int index,
+			int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialSynonymPaginated(synonym, index, paginationSize);
 	}
 
 
@@ -928,8 +870,40 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialSynonym(
 			IResource<IResourceElement> resource, String partialSynonym) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialSynonym(partialSynonym, resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialSynonymPaginated(
+			String partialSynonym, IResource<IResourceElement> resource, int index, int paginationSize)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialSynonymPaginated(partialSynonym, resource.getId(), index, paginationSize);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalId(String externalId)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactExternalID(externalId);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactExternalId(String externalId,
+			IResource<IResourceElement> resource) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByExactExternalID(externalId, resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalIdFromSource(String externalId,
+			ISource source) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromSourceByExactExternalID(externalId, source.getSourceID());
 	}
 
 
@@ -937,8 +911,15 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactExternalIdAndSource(
 			IResource<IResourceElement> resource, ISource source, String externalId) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceAndSourceByExactExternalID(externalId, source.getSourceID(), resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalId(String partialExternalId)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialExternalID(partialExternalId);
 	}
 
 
@@ -946,8 +927,15 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalId(
 			IResource<IResourceElement> resource, String partialExternalId) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialExternalID(partialExternalId, resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFromSourceByPartialExternalId(
+			String partialExternalId, ISource source) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromSourceByPartialExternalID(partialExternalId, source.getSourceID());
 	}
 
 
@@ -955,8 +943,15 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalIdAndSource(
 			IResource<IResourceElement> resource, ISource source, String partialExternalId) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, source.getSourceID(), resource.getId());
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalIdPaginated(
+			String partialExternalId, int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialExternalIDPaginated(partialExternalId, index, paginationSize);
 	}
 
 
@@ -965,8 +960,7 @@ public class ServerAccess implements IDataAccess{
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalIdPaginated(
 			IResource<IResourceElement> resource, String partialExternalId, int index, int paginationSize)
 			throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialExternalIDPaginated(partialExternalId, resource.getId(), index, paginationSize);
 	}
 
 
@@ -974,8 +968,7 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalIdFromSourcePaginated(
 			ISource source, String partialExternalId, int index, int paginationSize) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromSourceByPartialExternalIDPaginated(partialExternalId, source.getSourceID(), index, paginationSize);
 	}
 
 
@@ -984,19 +977,8 @@ public class ServerAccess implements IDataAccess{
 	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalIdAndSourcePaginated(
 			IResource<IResourceElement> resource, ISource source, String partialExternalId, int index,
 			int paginationSize) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceAndSourceByPartialExternalIDPaginated(partialExternalId, source.getSourceID(), resource.getId(), index, paginationSize);
 	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalIdPaginated(
-			String partialExternalId, int index, int paginationSize) throws ANoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 
 }

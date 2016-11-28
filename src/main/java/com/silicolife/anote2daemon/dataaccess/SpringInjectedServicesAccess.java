@@ -7,6 +7,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesElementLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.IClusteringService;
@@ -39,6 +41,8 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	private static IHyperLinkService hyperLinkService = null;
 	private static ISystemService systemService = null;
 	private static IUserService userService = null;
+	private static ILuceneService luceneService = null;
+	private static IResourcesElementLuceneService resourcesElementLuceneService = null;
 	private static UsersLogged usersLogged = null;
 
 	@Override
@@ -57,6 +61,8 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		hyperLinkService = applicationContext.getBean("hyperLinkServiceImpl", IHyperLinkService.class);
 //		systemService = applicationContext.getBean("systemServiceImpl", ISystemService.class);
 		userService = applicationContext.getBean("userServiceImpl", IUserService.class);
+		luceneService = applicationContext.getBean("luceneServiceImpl", ILuceneService.class);
+		resourcesElementLuceneService = applicationContext.getBean("resourcesElementLuceneServiceImpl", IResourcesElementLuceneService.class);
 		usersLogged = applicationContext.getBean("usersLogged", UsersLogged.class);
 				
 		initServerAccess();
@@ -75,6 +81,8 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		if(annotationService!=null) annotationService.setUserLogged(userLogged);
 		if(clusteringService!=null) clusteringService.setUserLogged(userLogged);
 		if(hyperLinkService!=null) hyperLinkService.setUserLogged(userLogged);
+		if(luceneService!=null) luceneService.setUserLogged(userLogged);
+		if(resourcesElementLuceneService!=null) resourcesElementLuceneService.setUserLogged(userLogged);
 	}
 
 
@@ -143,5 +151,12 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	public static UsersLogged getUsersLogged() {
 		return usersLogged;
 	}
+	
+	public static ILuceneService getLuceneService() {
+		return luceneService;
+	}
 
+	public static IResourcesElementLuceneService getResourcesElementLuceneService() {
+		return resourcesElementLuceneService;
+	}
 }
