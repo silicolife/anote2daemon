@@ -681,4 +681,60 @@ public class ResourceElementsController {
 		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceAndSourceByPartialExternalIDPaginated(partialExternalId, sourceId, resourceId, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsByPartialTerm", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByPartialTerm(@RequestParam String partialTerm) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByPartialTerm(partialTerm));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsFromResourceByPartialTerm", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceByPartialTerm(@RequestParam Long resourceId, @RequestParam String partialTerm) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceByPartialTerm(partialTerm, resourceId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsByPartialSynonym", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByPartialSynonym(@RequestParam String partialSynonym) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByPartialSynonym(partialSynonym));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsFromResourceByPartialSynonym", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceByPartialSynonym(@RequestParam Long resourceId, @RequestParam String partialSynonym) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceByPartialSynonym(partialSynonym, resourceId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsByPartialExternalID", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByPartialExternalID(@RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByPartialExternalID(partialExternalId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsFromSourceByPartialExternalID", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromSourceByPartialExternalID(@RequestParam Long sourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromSourceByPartialExternalID(partialExternalId, sourceId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsFromResourceByPartialExternalID", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceByPartialExternalID(partialExternalId, resourceId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsFromResourceAndSourceByPartialExternalID", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceAndSourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, sourceId, resourceId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
 }
