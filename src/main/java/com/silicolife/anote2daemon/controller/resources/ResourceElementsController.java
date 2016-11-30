@@ -737,4 +737,18 @@ public class ResourceElementsController {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, sourceId, resourceId));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getResourceElementsByPartialTermOrPartialSynonymPaginated", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByPartialTermOrPartialSynonymPaginated(@RequestParam String partialString, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsByPartialTermOrPartialSynonymPaginated(partialString, index, paginationSize));
+		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getResourceElementsCountByPartialTermOrPartialSynonym", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsCountByPartialTermOrPartialSynonym(@RequestParam String partialString) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsCountByPartialTermOrPartialSynonym(partialString));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
 }

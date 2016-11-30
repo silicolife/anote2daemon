@@ -1042,4 +1042,19 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTermOrPartialSynonymPaginated(
+			String partialString, int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialTermOrPartialSynonymPaginated(partialString, index, paginationSize);
+	}
+
+
+
+	@Override
+	public Integer getResourceElementsCountByPartialTermOrPartialSynonym(String partialString) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsCountByPartialTermOrPartialSynonym(partialString);
+	}
+
+
 }
