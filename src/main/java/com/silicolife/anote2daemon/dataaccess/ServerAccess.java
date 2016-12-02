@@ -44,6 +44,7 @@ import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElementSet;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElementsFilter;
 import com.silicolife.textmining.core.interfaces.resource.content.IResourceContent;
 import com.silicolife.textmining.core.interfaces.resource.ontologies.IResourceElementsRelation;
 
@@ -794,15 +795,6 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactTerm(
-			IResource<IResourceElement> resource, String term) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByExactTerm(term, resource.getId());
-	}
-
-
-
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTerm(String term) throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialTerm(term);
@@ -816,39 +808,11 @@ public class ServerAccess implements IDataAccess{
 		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialTermPaginated(term, index, paginationSize);
 	}
 
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialTerm(
-			IResource<IResourceElement> resource, String partialTerm) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialTerm(partialTerm, resource.getId());
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialTermPaginated(
-			IResource<IResourceElement> resource, String partialTerm, int index, int paginationSize)
-			throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialTermPaginated(partialTerm, resource.getId(), index, paginationSize);
-	}
-
-
-
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsByExactSynonym(String synonym)
 			throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactSynonym(synonym);
 	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactSynonym(
-			IResource<IResourceElement> resource, String synonym) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByExactSynonym(synonym, resource.getId());
-	}
-
 
 
 	@Override
@@ -866,54 +830,11 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialSynonym(
-			IResource<IResourceElement> resource, String partialSynonym) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialSynonym(partialSynonym, resource.getId());
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialSynonymPaginated(
-			String partialSynonym, IResource<IResourceElement> resource, int index, int paginationSize)
-			throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialSynonymPaginated(partialSynonym, resource.getId(), index, paginationSize);
-	}
-
-
-
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalId(String externalId)
 			throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactExternalID(externalId);
 	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactExternalId(String externalId,
-			IResource<IResourceElement> resource) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByExactExternalID(externalId, resource.getId());
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalIdFromSource(String externalId,
-			ISource source) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromSourceByExactExternalID(externalId, source.getSourceID());
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByExactExternalIdAndSource(
-			IResource<IResourceElement> resource, ISource source, String externalId) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceAndSourceByExactExternalID(externalId, source.getSourceID(), resource.getId());
-	}
-
 
 
 	@Override
@@ -923,31 +844,6 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalId(
-			IResource<IResourceElement> resource, String partialExternalId) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialExternalID(partialExternalId, resource.getId());
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromSourceByPartialExternalId(
-			String partialExternalId, ISource source) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromSourceByPartialExternalID(partialExternalId, source.getSourceID());
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalIdAndSource(
-			IResource<IResourceElement> resource, ISource source, String partialExternalId) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, source.getSourceID(), resource.getId());
-	}
-
-
-
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalIdPaginated(
 			String partialExternalId, int index, int paginationSize) throws ANoteException {
@@ -955,93 +851,15 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalIdPaginated(
-			IResource<IResourceElement> resource, String partialExternalId, int index, int paginationSize)
-			throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceByPartialExternalIDPaginated(partialExternalId, resource.getId(), index, paginationSize);
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalIdFromSourcePaginated(
-			ISource source, String partialExternalId, int index, int paginationSize) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromSourceByPartialExternalIDPaginated(partialExternalId, source.getSourceID(), index, paginationSize);
-	}
-
-
-
-	@Override
-	public IResourceElementSet<IResourceElement> getResourceElementsFromResourceByPartialExternalIdAndSourcePaginated(
-			IResource<IResourceElement> resource, ISource source, String partialExternalId, int index,
-			int paginationSize) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFromResourceAndSourceByPartialExternalIDPaginated(partialExternalId, source.getSourceID(), resource.getId(), index, paginationSize);
-	}
-
-
-
 	@Override
 	public Integer getResourceElementsCountByPartialTerm(String partialTerm) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsByPartialTerm(partialTerm);
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsCountByPartialTerm(partialTerm);
 	}
-
-
-
-	@Override
-	public Integer getCountResourceElementsFromResourceByPartialTerm(IResource<IResourceElement> resource,
-			String partialTerm) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsFromResourceByPartialTerm(partialTerm, resource.getId());
-	}
-
-
 
 	@Override
 	public Integer getResourceElementsCountByPartialSynonym(String partialSynonym) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsByPartialSynonym(partialSynonym);
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsCountByPartialSynonym(partialSynonym);
 	}
-
-
-
-	@Override
-	public Integer getCountResourceElementsFromResourceByPartialSynonym(IResource<IResourceElement> resource,
-			String partialSynonym) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsFromResourceByPartialSynonym(partialSynonym, resource.getId());
-	}
-
-
-
-	@Override
-	public Integer getCountResourceElementsByPartialExternalID(String partialExternalId) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsByPartialExternalID(partialExternalId);
-	}
-
-
-
-	@Override
-	public Integer getCountResourceElementsFromSourceByPartialExternalID(ISource source, String partialExternalId)
-			throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsFromSourceByPartialExternalID(partialExternalId, source.getSourceID());
-	}
-
-
-
-	@Override
-	public Integer getCountResourceElementsFromResourceByPartialExternalID(IResource<IResourceElement> resource,
-			String partialExternalId) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsFromResourceByPartialExternalID(partialExternalId, resource.getId());
-	}
-
-
-
-	@Override
-	public Integer getCountResourceElementsFromResourceAndSourceByPartialExternalID(
-			IResource<IResourceElement> resource, ISource source, String partialExternalId) throws ANoteException {
-		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, source.getSourceID(), resource.getId());
-	}
-
-
 
 	@Override
 	public IResourceElementSet<IResourceElement> getResourceElementsByPartialTermOrPartialSynonymPaginated(
@@ -1049,11 +867,114 @@ public class ServerAccess implements IDataAccess{
 		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialTermOrPartialSynonymPaginated(partialString, index, paginationSize);
 	}
 
-
-
 	@Override
 	public Integer getResourceElementsCountByPartialTermOrPartialSynonym(String partialString) throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsCountByPartialTermOrPartialSynonym(partialString);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByExactTerm(IResourceElementsFilter filter,
+			String term) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByExactTerm(filter, term);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialTerm(
+			IResourceElementsFilter filter, String partialTerm) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialTerm(filter, partialTerm);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialTermPaginated(
+			IResourceElementsFilter filter, String partialTerm, int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialTermPaginated(filter, partialTerm, index, paginationSize);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByExactSynonym(
+			IResourceElementsFilter filter, String synonym) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByExactSynonym(filter, synonym);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialSynonym(
+			IResourceElementsFilter filter, String partialSynonym) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialSynonym(filter, partialSynonym);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialSynonymPaginated(
+			IResourceElementsFilter filter, String partialSynonym, int index, int paginationSize)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialSynonymPaginated(filter, partialSynonym, index, paginationSize);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByExactExternalId(
+			IResourceElementsFilter filter, String externalId) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByExactExternalID(filter, externalId);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialExternalId(
+			IResourceElementsFilter filter, String partialExternalId) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialExternalID(filter, partialExternalId);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialExternalIdPaginated(
+			IResourceElementsFilter filter, String partialExternalId, int index, int paginationSize)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialExternalIDPaginated(filter, partialExternalId, index, paginationSize);
+	}
+
+
+
+	@Override
+	public Integer getResourceElementsFilteredCountByPartialTerm(IResourceElementsFilter filter, String partialTerm)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredCountByPartialTerm(filter, partialTerm);
+	}
+
+
+
+	@Override
+	public Integer getResourceElementsFilteredCountByPartialSynonym(IResourceElementsFilter filter,
+			String partialSynonym) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredCountByPartialSynonym(filter, partialSynonym);
+	}
+
+
+
+	@Override
+	public Integer getResourceElementsCountByPartialExternalID(String partialExternalId) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsCountByPartialExternalID(partialExternalId);
+	}
+
+
+
+	@Override
+	public Integer getResourceElementsFilteredCountByPartialExternalID(IResourceElementsFilter filter,
+			String partialExternalId) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredCountByPartialExternalID(filter, partialExternalId);
 	}
 
 

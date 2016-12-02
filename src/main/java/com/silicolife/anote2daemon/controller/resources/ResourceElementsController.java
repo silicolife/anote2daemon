@@ -26,6 +26,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
 import com.silicolife.textmining.core.datastructures.general.ExternalIDImpl;
 import com.silicolife.textmining.core.datastructures.resources.ResourceElementImpl;
+import com.silicolife.textmining.core.datastructures.resources.ResourceElementsFilterImpl;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.layer.resources.IResourceManagerReport;
 import com.silicolife.textmining.core.interfaces.core.general.IExternalID;
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
@@ -522,9 +523,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByExactTerm", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByExactTerm(@RequestParam Long resourceId, @RequestParam String term) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByExactTerm(term, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredByExactTerm/{term}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByExactTerm(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String term) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByExactTerm(filter, term));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -536,9 +537,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialTerm", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialTerm(@RequestParam Long resourceId, @RequestParam String partialTerm) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialTerm(partialTerm, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialTerm/{partialTerm}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialTerm(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialTerm) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialTerm(filter, partialTerm));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -550,9 +551,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialTermPaginated", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialTermPaginated(@RequestParam Long resourceId, @RequestParam String partialTerm, @RequestParam int index, @RequestParam int paginationSize) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialTermPaginated(partialTerm, resourceId, index, paginationSize));
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialTermPaginated/{partialTerm}/{index}/{paginationSize}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialTermPaginated(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialTerm, @PathVariable int index, @PathVariable int paginationSize) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialTermPaginated(filter, partialTerm, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -564,9 +565,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByExactSynonym", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByExactSynonym(@RequestParam Long resourceId, @RequestParam String synonym) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByExactSynonym(synonym, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredByExactSynonym/{synonym}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByExactSynonym(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String synonym) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByExactSynonym(filter, synonym));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -578,9 +579,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialSynonym", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialSynonym(@RequestParam Long resourceId, @RequestParam String partialSynonym) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialSynonym(partialSynonym, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialSynonym/{partialSynonym}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialSynonym(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialSynonym) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialSynonym(filter, partialSynonym));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -592,9 +593,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialSynonymPaginated", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialSynonymPaginated(@RequestParam String partialSynonym, @RequestParam Long resourceId, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialSynonymPaginated(partialSynonym, resourceId, index, paginationSize));
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialSynonymPaginated", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialSynonymPaginated(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialSynonym, @PathVariable Integer index, @PathVariable Integer paginationSize) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialSynonymPaginated(filter, partialSynonym, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -606,23 +607,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromSourceByExactExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromSourceByExactExternalID(@RequestParam String externalId, @RequestParam Long sourceId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromSourceByExactExternalID(externalId, sourceId));
-		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByExactExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByExactExternalID(@RequestParam String externalId, @RequestParam Long resourceId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByExactExternalID(externalId, resourceId));
-		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceAndSourceByExactExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceAndSourceByExactExternalID(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String externalId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceAndSourceByExactExternalID(externalId, sourceId, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredByExactExternalID", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByExactExternalID(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String externalId) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByExactExternalID(filter, externalId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -634,23 +621,9 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromSourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromSourceByPartialExternalID(@RequestParam String partialExteralId, @RequestParam Long sourceId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromSourceByPartialExternalID(partialExteralId, sourceId));
-		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialExternalID(@RequestParam String partialExternalId, @RequestParam Long resourceId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialExternalID(partialExternalId, resourceId));
-		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceAndSourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceAndSourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, sourceId, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialExternalID/{partialExternalId}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialExternalID(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialExternalID(filter, partialExternalId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
@@ -662,79 +635,51 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromSourceByPartialExternalIDPaginated", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromSourceByPartialExternalIDPaginated(@RequestParam Long sourceId, @RequestParam String partialExternalId, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromSourceByPartialExternalIDPaginated(partialExternalId, sourceId, index, paginationSize));
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialExternalIDPaginated/{partialExternalId}/{index}/{paginationSize}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialExternalIDPaginated(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialExternalId, @PathVariable Integer index, @PathVariable Integer paginationSize) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialExternalIDPaginated(filter, partialExternalId, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceByPartialExternalIDPaginated", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceByPartialExternalIDPaginated(@RequestParam Long resourceId, @RequestParam String partialExternalId, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceByPartialExternalIDPaginated(partialExternalId, resourceId, index, paginationSize));
-		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFromResourceAndSourceByPartialExternalIDPaginated", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFromResourceAndSourceByPartialExternalIDPaginated(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String partialExternalId, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
-		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFromResourceAndSourceByPartialExternalIDPaginated(partialExternalId, sourceId, resourceId, index, paginationSize));
-		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsByPartialTerm", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByPartialTerm(@RequestParam String partialTerm) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByPartialTerm(partialTerm));
+	@RequestMapping(value = "/getResourceElementsCountByPartialTerm", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsCountByPartialTerm(@RequestParam String partialTerm) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsCountByPartialTerm(partialTerm));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsFromResourceByPartialTerm", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceByPartialTerm(@RequestParam Long resourceId, @RequestParam String partialTerm) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceByPartialTerm(partialTerm, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredCountByPartialTerm/{partialTerm}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsFilteredCountByPartialTerm(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialTerm) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsFilteredCountByPartialTerm(filter, partialTerm));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsByPartialSynonym", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByPartialSynonym(@RequestParam String partialSynonym) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByPartialSynonym(partialSynonym));
+	@RequestMapping(value = "/getResourceElementsCountByPartialSynonym", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsCountByPartialSynonym(@RequestParam String partialSynonym) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsCountByPartialSynonym(partialSynonym));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsFromResourceByPartialSynonym", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceByPartialSynonym(@RequestParam Long resourceId, @RequestParam String partialSynonym) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceByPartialSynonym(partialSynonym, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredCountByPartialSynonym/{partialSynonym}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsFilteredCountByPartialSynonym(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialSynonym) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsFilteredCountByPartialSynonym(filter, partialSynonym));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByPartialExternalID(@RequestParam String partialExternalId) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByPartialExternalID(partialExternalId));
+	@RequestMapping(value = "/getResourceElementsCountByPartialExternalID", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsCountByPartialExternalID(@RequestParam String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsCountByPartialExternalID(partialExternalId));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsFromSourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromSourceByPartialExternalID(@RequestParam Long sourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromSourceByPartialExternalID(partialExternalId, sourceId));
-		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsFromResourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceByPartialExternalID(partialExternalId, resourceId));
-		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getCountResourceElementsFromResourceAndSourceByPartialExternalID", method = RequestMethod.POST)
-	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsFromResourceAndSourceByPartialExternalID(@RequestParam Long resourceId, @RequestParam Long sourceId, @RequestParam String partialExternalId) throws ResourcesExceptions{
-		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsFromResourceAndSourceByPartialExternalID(partialExternalId, sourceId, resourceId));
+	@RequestMapping(value = "/getResourceElementsFilteredCountByPartialExternalID/{partialExternalId}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsFilteredCountByPartialExternalID(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialExternalId) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsFilteredCountByPartialExternalID(filter, partialExternalId));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
 	
