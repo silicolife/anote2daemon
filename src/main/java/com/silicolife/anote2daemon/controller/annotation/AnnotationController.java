@@ -261,8 +261,8 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getPublicationByResourceElement", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationByResourceElement(@RequestBody Long resourceElementID) throws AnnotationException{
+	@RequestMapping(value = "/getPublicationByResourceElement/{resourceElementID}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationByResourceElement(@PathVariable Long resourceElementID) throws AnnotationException{
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(annotationService.getPublicationByResourceElement(resourceElementID));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
