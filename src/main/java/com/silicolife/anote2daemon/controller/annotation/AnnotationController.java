@@ -2,6 +2,7 @@ package com.silicolife.anote2daemon.controller.annotation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotati
 import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
 import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
-import com.silicolife.textmining.core.interfaces.core.document.IPublication;
+import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 
 /**
  * The goal of this class is to expose for the web all annotation functionalities of
@@ -261,9 +262,9 @@ public class AnnotationController {
 	 * @throws AnnotationException
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getPublicationByResourceElement/{resourceElementID}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationByResourceElement(@PathVariable Long resourceElementID) throws AnnotationException{
-		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(annotationService.getPublicationByResourceElement(resourceElementID));
-		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	@RequestMapping(value = "/getPublicationsIdsByResourceElements", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<List<Long>>> getPublicationByResourceElement(@RequestBody Set<Long> resourceElementIds) throws AnnotationException{
+		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByResourceElements(resourceElementIds));
+		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
 	}
 }
