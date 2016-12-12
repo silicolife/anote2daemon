@@ -267,4 +267,11 @@ public class AnnotationController {
 		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByResourceElements(resourceElementIds));
 		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getProcessesIdsByResourceElements", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<List<Long>>> getProcessesIdsByResourceElements(@RequestBody Set<Long> resourceElementIds) throws AnnotationException{
+		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getProcessesIdsByResourceElements(resourceElementIds));
+		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
+	}
 }

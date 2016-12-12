@@ -982,4 +982,15 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public List<Long> getProcessesIdsByResourceElements(Set<IResourceElement> resourceElements) throws ANoteException {
+		Set<Long> resourceElementsIds = new HashSet<>();
+		for(IResourceElement resourceElement : resourceElements){
+			resourceElementsIds.add(resourceElement.getId());
+		}
+		return SpringInjectedServicesAccess.getAnnotationService().getProcessesIdsByResourceElements(resourceElementsIds);
+	}
+
+
 }
