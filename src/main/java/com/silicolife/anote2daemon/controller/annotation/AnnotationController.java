@@ -31,7 +31,6 @@ import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotati
 import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
 import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
-import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 
 /**
  * The goal of this class is to expose for the web all annotation functionalities of

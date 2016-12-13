@@ -111,4 +111,11 @@ public class ProcessesController {
 		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesService.getPrivilegesAllProcessesAdminAccess());
 		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getProcessesByPublicationId/{publicationId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getProcessesByPublicationId(@PathVariable Long publicationId) throws ProcessException{
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesService.getProcessesByPublicationId(publicationId));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
 }

@@ -993,4 +993,11 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public List<IIEProcess> getProcessesByPublication(IPublication publication) throws ANoteException {
+		return SpringInjectedServicesAccess.getProcessesService().getProcessesByPublicationId(publication.getId());
+	}
+
+
 }
