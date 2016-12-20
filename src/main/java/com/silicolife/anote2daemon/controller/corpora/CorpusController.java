@@ -304,4 +304,11 @@ public class CorpusController {
 		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusService.getAllPrivilegesCorpusAdminAccess());
 		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCorpusByPublicationId/{publicationId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Set<ICorpus>>> getCorpusByPublicationId(@PathVariable Long publicationId) throws CorpusException{
+		DaemonResponse<Set<ICorpus>> response = new DaemonResponse<Set<ICorpus>>(corpusService.getCorpusByPublicationId(publicationId));
+		return new ResponseEntity<DaemonResponse<Set<ICorpus>>>(response, HttpStatus.OK);
+	}
 }

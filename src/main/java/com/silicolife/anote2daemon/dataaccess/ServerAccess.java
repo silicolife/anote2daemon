@@ -1000,4 +1000,11 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public Set<ICorpus> getCorpusByPublication(IPublication publication) throws ANoteException {
+		return SpringInjectedServicesAccess.getCorpusService().getCorpusByPublicationId(publication.getId());
+	}
+
+
 }
