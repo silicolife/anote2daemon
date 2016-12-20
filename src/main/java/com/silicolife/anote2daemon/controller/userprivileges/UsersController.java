@@ -58,7 +58,7 @@ public class UsersController {
 	 * @param user
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createUser(@RequestBody AuthUsers user) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.createUser(user));
@@ -71,7 +71,7 @@ public class UsersController {
 	 * @param user
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateUser(@RequestBody AuthUsers user) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.updateUser(user));
@@ -85,7 +85,7 @@ public class UsersController {
 	 * @return
 	 * @throws UserExceptions
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> deleteUser(@RequestParam Long userId) throws UserExceptions {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.removeUser(userId));
@@ -98,7 +98,7 @@ public class UsersController {
 	 * @param userId
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/getAllGroups", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IGroup>>> getAllGroups() {
 		DaemonResponse<List<IGroup>> response = new DaemonResponse<List<IGroup>>(userService.getAllGroups());
@@ -111,7 +111,7 @@ public class UsersController {
 	 * @param email
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/getUserByEmail", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IUser>> getUserByEmail(@RequestParam String email) {
 		IUser user = userService.getByEmail(email);
@@ -127,7 +127,7 @@ public class UsersController {
 	 * @param username
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/getUserByUsername", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<IUser>> getUserByUsername(@RequestParam String username) {
 		IUser user = userService.getByUsername(username);
@@ -142,7 +142,7 @@ public class UsersController {
 	 * 
 	 * @return
 	 */
-	@PreAuthorize("hasRole('role_admin')")
+	@PreAuthorize("hasAuthority('role_admin')")
 	@RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IUser>>> getAllUsers() {
 		List<AuthUsers> authUsers = userService.getAllUsers();
