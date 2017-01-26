@@ -593,7 +593,7 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFilteredByPartialSynonymPaginated", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/getResourceElementsFilteredByPartialSynonymPaginated/{partialSynonym}/{index}/{paginationSize}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByPartialSynonymPaginated(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String partialSynonym, @PathVariable Integer index, @PathVariable Integer paginationSize) throws ResourcesExceptions{
 		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByPartialSynonymPaginated(filter, partialSynonym, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
@@ -607,7 +607,7 @@ public class ResourceElementsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/getResourceElementsFilteredByExactExternalID", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/getResourceElementsFilteredByExactExternalID/{externalId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsFilteredByExactExternalID(@RequestBody ResourceElementsFilterImpl filter, @PathVariable String externalId) throws ResourcesExceptions{
 		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsFilteredByExactExternalID(filter, externalId));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
