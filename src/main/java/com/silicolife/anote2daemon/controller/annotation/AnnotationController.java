@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.annotation.AnnotationsFilterImpl;
 import com.silicolife.textmining.core.datastructures.annotation.log.AnnotationLogImpl;
 import com.silicolife.textmining.core.datastructures.annotation.ner.EntityAnnotationImpl;
 import com.silicolife.textmining.core.datastructures.annotation.re.EventAnnotationImpl;
@@ -272,5 +273,12 @@ public class AnnotationController {
 	public ResponseEntity<DaemonResponse<List<Long>>> getProcessesIdsByResourceElements(@RequestBody Set<Long> resourceElementIds) throws AnnotationException{
 		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getProcessesIdsByResourceElements(resourceElementIds));
 		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsIdsByAnnotationsFilter", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<Long>>> getPublicationsIdsByAnnotationsFilter(@RequestBody AnnotationsFilterImpl filter) throws AnnotationException{
+		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByAnnotationsFilter(filter));
+		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);	
 	}
 }
