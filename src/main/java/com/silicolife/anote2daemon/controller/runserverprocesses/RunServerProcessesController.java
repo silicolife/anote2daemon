@@ -158,7 +158,6 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 					PubMedSearch pubmedSearch = new PubMedSearch();
 					pubmedSearch.search(searchConfiguration);
 				} catch (Exception e) {
@@ -195,7 +194,6 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
 					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
 				} catch (Exception e) {
@@ -236,7 +234,6 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 					CorpusUpdaterExecutorServer corpusUpdate = new CorpusUpdaterExecutorServer();
 					corpusUpdate.executeCorpusUpdate(corpusupdateConfiguration);
 				} catch (Exception e) {
@@ -275,7 +272,6 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 					LinnaeusTagger tagger = new LinnaeusTagger();
 					tagger.executeCorpusNER(linaneusConfiguration);
 				} catch (Exception e) {
@@ -317,7 +313,6 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 					LinnaeusTagger tagger = new LinnaeusTagger();
 					tagger.resumeNER(configuration);
 				} catch (Exception e) {
