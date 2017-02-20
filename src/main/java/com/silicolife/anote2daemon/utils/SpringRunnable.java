@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLoggedImpl;
+import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 
 public abstract class SpringRunnable implements Runnable{
 
@@ -19,7 +20,10 @@ public abstract class SpringRunnable implements Runnable{
 	@Override
 	public void run() {
 		try {
+			InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 			onRun();
+			InitConfiguration.getDataAccess().setUserLoggedOnServices(null);
+			UserLoggedThreadLocal.unset();
 		} finally {
 			cleanAuthenticationAndUser();
 		}
@@ -40,9 +44,11 @@ public abstract class SpringRunnable implements Runnable{
 	protected UsersLogged getUserLogged(){
 		if(getAuthentication() != null){
 			CustomSpringUser customUser = (CustomSpringUser) getAuthentication().getPrincipal();
-			return new UsersLoggedImpl(customUser.getRepositoryUser());
+			UserLoggedThreadLocal.set(new UsersLoggedImpl(customUser.getRepositoryUser()));
+			return UserLoggedThreadLocal.get();
 		}
-		return new UsersLoggedImpl();
+		UserLoggedThreadLocal.set(new UsersLoggedImpl());
+		return UserLoggedThreadLocal.get();
 	}
 
 }
