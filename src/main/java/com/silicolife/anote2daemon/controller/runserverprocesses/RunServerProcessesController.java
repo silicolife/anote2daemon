@@ -27,8 +27,7 @@ import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigu
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
-import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
-import com.silicolife.textmining.core.datastructures.process.ner.NERResumeConfigurationImpl;
+import com.silicolife.textmining.processes.ie.ner.datatstructures.ANERLexicalResources;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
@@ -49,33 +48,6 @@ import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearc
 public class RunServerProcessesController {
 	
 	final static Logger logger = LoggerFactory.getLogger(RunServerProcessesController.class);
-
-//	@Autowired
-//	private Permissions permissions;
-//
-//	@Autowired
-//	private IQueriesService queriesService;
-//
-//	@Autowired
-//	private IPublicationsService publicationsService;
-//
-//	@Autowired
-//	private ICorpusService corpusService;
-//
-//	@Autowired
-//	private IProcessesService processService;
-//
-//	@Autowired
-//	private IAnnotationService annotationService;
-//	
-//	@Autowired
-//	private IResourcesService resourcesService;
-//
-//	@Autowired
-//	private IResourcesElementService resourcesElementService;
-//
-//	@Autowired
-//	private IClassesService classesService;
 
 	@Autowired 
 	private TaskExecutor taskExecutor;
@@ -131,12 +103,6 @@ public class RunServerProcessesController {
 			case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
 				executeBackgroundThreadForLinneausTagger(parameters, bla);
 				break;
-			case NERResumeConfigurationImpl.uid :
-				executeBackgroundThreadForResumeLinneausTagger(parameters, bla);
-				break;
-//			case RERelationConfigurationImpl.reRelationUID :
-//				RERelationConfigurationImpl reRelationConfiguration = bla.readValue(parameters[1],RERelationConfigurationImpl.class);
-
 			default :
 				break;
 			}
@@ -167,24 +133,6 @@ public class RunServerProcessesController {
 		});
 	}
 
-//	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
-//		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
-//		taskExecutor.execute(new SpringRunnable(){
-//
-//			@Override
-//			protected void onRun() {
-//				try {
-//					queriesService.setUserLogged(getUserLogged());
-//					publicationsService.setUserLogged(getUserLogged());
-//					PubMedSearchServerRunExtension pubmedSearch = new PubMedSearchServerRunExtension(queriesService,publicationsService);
-//					pubmedSearch.search(searchConfiguration);
-//				} catch (Exception e) {
-//					logger.error("Exception",e);;
-//				}
-//			}
-//		});
-//	}
-
 	private void executeBackgroundThreadForCorpusCreation(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
@@ -204,27 +152,6 @@ public class RunServerProcessesController {
 		});
 	}
 	
-//	private void executeBackgroundThreadForCorpusCreation(String[] parameters, ObjectMapper bla)
-//			throws IOException, JsonParseException, JsonMappingException {
-//		final CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
-//
-//		taskExecutor.execute(new SpringRunnable() {
-//
-//			@Override
-//			protected void onRun() {
-//				try {
-//					corpusService.setUserLogged(getUserLogged());
-//					publicationsService.setUserLogged(getUserLogged());
-//					CorpusCreationServerExecutor corpusCreation = new CorpusCreationServerExecutor(corpusService, publicationsService);
-//					corpusCreation.executeCorpusCreation(corpuscreationConfiguration);
-//				} catch (Exception e) {
-//					logger.error("Exception",e);
-//				}
-//			}
-//
-//		});
-//	}
-	
 	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusUpdateConfigurationImpl corpusupdateConfiguration = bla.readValue(parameters[1],CorpusUpdateConfigurationImpl.class);
@@ -243,27 +170,6 @@ public class RunServerProcessesController {
 
 		});
 	}
-	
-//	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
-//			throws IOException, JsonParseException, JsonMappingException {
-//		final CorpusUpdateConfigurationImpl corpusupdateConfiguration = bla.readValue(parameters[1],CorpusUpdateConfigurationImpl.class);
-//
-//		taskExecutor.execute(new SpringRunnable() {
-//
-//			@Override
-//			protected void onRun() {
-//				try {
-//					corpusService.setUserLogged(getUserLogged());
-//					publicationsService.setUserLogged(getUserLogged());
-//					CorpusUpdaterServerExecutor corpusUpdate = new CorpusUpdaterServerExecutor(corpusService, publicationsService);
-//					corpusUpdate.executeCorpusUpdate(corpusupdateConfiguration);
-//				} catch (Exception e) {
-//					logger.error("Exception",e);
-//				}
-//			}
-//
-//		});
-//	}
 
 	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
@@ -272,82 +178,13 @@ public class RunServerProcessesController {
 			@Override
 			protected void onRun() {
 				try {
-					LinnaeusTagger tagger = new LinnaeusTagger();
-					tagger.executeCorpusNER(linaneusConfiguration);
+					ANERLexicalResources tagger = new LinnaeusTagger();
+					tagger.execute(linaneusConfiguration);
 				} catch (Exception e) {
 					logger.error("Exception",e);
 				}
 			}
 		});
 	}
-	
-//	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
-//		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
-//		ICorpus corpus = linaneusConfiguration.getCorpus();
-//		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
-//		linaneusConfiguration.setCorpus(corpusServer);
-//		taskExecutor.execute(new SpringRunnable() {
-//
-//			@Override
-//			protected void onRun() {
-//				try {
-//					corpusService.setUserLogged(getUserLogged());
-//					resourcesService.setUserLogged(getUserLogged());
-//					resourcesElementService.setUserLogged(getUserLogged());
-//					classesService.setUserLogged(getUserLogged());
-//					processService.setUserLogged(getUserLogged());
-//					annotationService.setUserLogged(getUserLogged());
-//					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
-//					tagger.executeCorpusNER(linaneusConfiguration);
-//				} catch (Exception e) {
-//					logger.error("Exception",e);
-//				}
-//			}
-//		});
-//	}
-	
-	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
-		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);
-		taskExecutor.execute(new SpringRunnable() {
 
-			@Override
-			protected void onRun() {
-				try {
-					LinnaeusTagger tagger = new LinnaeusTagger();
-					tagger.resumeNER(configuration);
-				} catch (Exception e) {
-					logger.error("Exception",e);
-					System.out.println(e);
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-//	private void executeBackgroundThreadForResumeLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
-//		final NERResumeConfigurationImpl configuration = bla.readValue(parameters[1],NERResumeConfigurationImpl.class);
-//		ICorpus corpus = configuration.getCorpus();
-//		ICorpus corpusServer = new CorpusServerImpl(publicationsService,corpusService, corpus);
-//		configuration.setCorpus(corpusServer);
-//		taskExecutor.execute(new SpringRunnable() {
-//
-//			@Override
-//			protected void onRun() {
-//				try {
-//					corpusService.setUserLogged(getUserLogged());
-//					resourcesService.setUserLogged(getUserLogged());
-//					resourcesElementService.setUserLogged(getUserLogged());
-//					classesService.setUserLogged(getUserLogged());
-//					processService.setUserLogged(getUserLogged());
-//					annotationService.setUserLogged(getUserLogged());
-//					LinnaeusTaggerServerRunExtention tagger = new LinnaeusTaggerServerRunExtention(publicationsService,corpusService, resourcesService, resourcesElementService, classesService, processService, annotationService);
-//					tagger.resumeNER(configuration);
-//				} catch (Exception e) {
-//					logger.error("Exception",e);
-//					System.out.println(e);
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 }
