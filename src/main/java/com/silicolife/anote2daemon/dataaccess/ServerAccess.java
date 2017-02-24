@@ -1015,4 +1015,12 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public Boolean removeAllProcessDocumentAnnotations(IIEProcess process, IPublication document)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().removeAllProcessDocumentAnnotations(process.getId(),document.getId());
+	}
+
+
 }
