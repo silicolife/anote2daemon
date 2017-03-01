@@ -1023,4 +1023,18 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public Long countCorpusPublicationsOutdated(IIEProcess process) throws ANoteException {
+		return SpringInjectedServicesAccess.getCorpusService().countCorpusPublicationsOutdated(process.getCorpus().getId(), process.getId());
+	}
+
+
+
+	@Override
+	public IDocumentSet getCorpusPublicationsOutdatedPaginated(IIEProcess process, Integer paginationIndex, Integer paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getCorpusService().getCorpusPublicationsOutdatedPaginated(process.getCorpus().getId(), process.getId(), paginationIndex, paginationSize);
+	}
+
+
 }
