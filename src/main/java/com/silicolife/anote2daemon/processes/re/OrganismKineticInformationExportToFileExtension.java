@@ -1,6 +1,5 @@
 package com.silicolife.anote2daemon.processes.re;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -150,8 +149,17 @@ public class OrganismKineticInformationExportToFileExtension extends OrganismKin
 		organism.add(ClassPropertiesManagement.getClassIDClassName("Organism"));
 		REKineticConfigurationClasses classConfiguration = new REKineticConfigurationClasses(units, values, kineticParameters, metabolites, enzymes, organism);
 		boolean sentencesToExport = true;;
-		String exportFile = exportDir + String.valueOf(configuration2.getNCBITaxonomy()) + "_" +Utils.formatDate(new Date().toString()) + ".tsv";
+		String exportFile = exportDir + String.valueOf(configuration2.getNCBITaxonomy()) + "_" +getStringDate() + ".tsv";
 		IREKineticREResultsExportConfiguration configutaion =  new REKineticREResultsExportConfigurationImpl(exportFile , null, classConfiguration, sentencesToExport );
 		return 	configutaion;
 	}
+	
+	private static String getStringDate()
+	{
+		int year= Utils.currentYear();
+		int month= Utils.currentMonth()+1;
+		int day= Utils.currentDay();
+		return day+"_"+month+"_"+year;
+	}
+	
 }
