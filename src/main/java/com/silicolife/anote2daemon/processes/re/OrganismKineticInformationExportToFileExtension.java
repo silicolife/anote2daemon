@@ -40,7 +40,7 @@ import com.silicolife.textmining.processes.ie.re.kineticre.io.REKineticREResults
 
 public class OrganismKineticInformationExportToFileExtension extends OrganismKineticInformationExportToFile{
 	
-	private final static String exportDir = "home/hcosta/kineticrepositories/";
+	private final static String exportDir = "/home/hcosta/kineticrepositories/";
 	
 	public OrganismKineticInformationExportToFileExtension(IKineticREPipelineConfiguration configuration) throws ANoteException {
 		super(getProcesses2(), getLinnaeusConfiguration(), getKineticREConfiguration(), getExportConfiguration(configuration));
@@ -149,9 +149,20 @@ public class OrganismKineticInformationExportToFileExtension extends OrganismKin
 		organism.add(ClassPropertiesManagement.getClassIDClassName("Organism"));
 		REKineticConfigurationClasses classConfiguration = new REKineticConfigurationClasses(units, values, kineticParameters, metabolites, enzymes, organism);
 		boolean sentencesToExport = true;;
-		String exportFile = exportDir + String.valueOf(configuration2.getNCBITaxonomy()) + "_" +getStringDate() + ".tsv";
+		String exportFile = exportDir + getHeadFileName(configuration2) + "_" +getStringDate() + ".tsv";
 		IREKineticREResultsExportConfiguration configutaion =  new REKineticREResultsExportConfigurationImpl(exportFile , null, classConfiguration, sentencesToExport );
 		return 	configutaion;
+	}
+	
+	private static String getHeadFileName(IKineticREPipelineConfiguration configuration2)
+	{
+		if(configuration2.getNCBITaxonomy()!=null)
+			return "tx"+configuration2.getNCBITaxonomy();
+		else if(configuration2.getECNumber()!=null)
+			return "ec"+configuration2.getECNumber();
+		else if(configuration2.getChEBI()!=null)
+			return "cb"+configuration2.getChEBI();
+		return null;
 	}
 	
 	private static String getStringDate()

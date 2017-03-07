@@ -130,7 +130,12 @@ public class RunServerProcessesController {
 			protected void onRun() {
 				try {	
 					OrganismKineticInformationExportToFileExtension kparamPipeline = new OrganismKineticInformationExportToFileExtension(kineticrepipelineConfiguration);
-					kparamPipeline.retrieved(kineticrepipelineConfiguration.getNCBITaxonomy());
+					if(kineticrepipelineConfiguration.getNCBITaxonomy()!=null)						
+						kparamPipeline.retrievedByOrganism(kineticrepipelineConfiguration.getNCBITaxonomy());
+					else if(kineticrepipelineConfiguration.getECNumber()!=null)
+						kparamPipeline.retrievedByEnzyme(kineticrepipelineConfiguration.getECNumber());
+					else if(kineticrepipelineConfiguration.getChEBI()!=null)
+						kparamPipeline.retrievedByCompound(kineticrepipelineConfiguration.getChEBI());
 				} catch (Exception e) {
 					logger.error("Exception",e);;
 				}
