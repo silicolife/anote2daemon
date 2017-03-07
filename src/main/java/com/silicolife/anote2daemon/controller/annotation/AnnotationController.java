@@ -246,9 +246,9 @@ public class AnnotationController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
-	@RequestMapping(value = "/removeAllProcessDocumentAnnotations", method = RequestMethod.PUT)
-	public ResponseEntity<DaemonResponse<Boolean>> removeAllProcessDocumentAnnotations(@PathVariable Long processID, @PathVariable Long documentID) throws AnnotationException{
-		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.removeAllProcessDocumentAnnotations(processID,documentID));
+	@RequestMapping(value = "/removeAllProcessDocumentAnnotations/{processId}/{documentId}", method = RequestMethod.PUT)
+	public ResponseEntity<DaemonResponse<Boolean>> removeAllProcessDocumentAnnotations(@PathVariable Long processId, @PathVariable Long documentId) throws AnnotationException{
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(annotationService.removeAllProcessDocumentAnnotations(processId,documentId));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
