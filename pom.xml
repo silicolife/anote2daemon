@@ -192,6 +192,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>anote2daemon</finalName>
+		<finalName>anote2daemondev</finalName>
 	</build>
 </project>
