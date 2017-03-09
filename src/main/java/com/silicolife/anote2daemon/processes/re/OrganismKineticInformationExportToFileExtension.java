@@ -50,8 +50,8 @@ public class OrganismKineticInformationExportToFileExtension extends OrganismKin
 	private static Set<IIEProcess> getProcesses2() throws ANoteException
 	{
 		Set<IIEProcess> processes = new HashSet<>();
-		InitConfiguration.getDataAccess().getProcessByID(4773474653848955523L);
-		InitConfiguration.getDataAccess().getProcessByID(7110377322269597560L);
+		processes.add(InitConfiguration.getDataAccess().getProcessByID(4773474653848955523L));
+		processes.add(InitConfiguration.getDataAccess().getProcessByID(7110377322269597560L));
 		return processes;
 	}
 	
