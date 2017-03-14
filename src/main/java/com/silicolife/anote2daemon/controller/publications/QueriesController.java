@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
 import com.silicolife.textmining.core.datastructures.documents.query.QueryImpl;
+import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.relevance.RelevanceTypeEnum;
 import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
@@ -91,6 +93,10 @@ public class QueriesController {
 		DaemonResponse<IQuery> response = new DaemonResponse<IQuery>(queriesService.getById(queryId));
 		return new ResponseEntity<DaemonResponse<IQuery>>(response, HttpStatus.OK);
 	}
+	
+	
+	
+	
 
 	/**
 	 * Get all publications from a query
@@ -106,6 +112,44 @@ public class QueriesController {
 	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublications(@PathVariable Long queryId) throws PublicationManagerException {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublications(queryId));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * 
+	 * Get query publications paginated
+	 * 
+	 * @param queryId
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @return
+	 * @throws PublicationManagerException
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getQueryByIdPublicationsPaginated/{queryId}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getQueryPublicationsPaginated(@PathVariable Long queryId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize) throws PublicationManagerException {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublicationsPaginated(queryId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString())));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * Count query publications
+	 * 
+	 * @param queryId
+	 * @return
+	 * @throws PublicationManagerException 
+	 */
+	
+	@PreAuthorize("isAuthenticated() and hasPermission(#queryId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getQueryByIdPublicationsCount/{queryId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> getQueryPublicationsCount(@PathVariable Long queryId) throws PublicationManagerException {
+		DaemonResponse<Long> response = new DaemonResponse<Long>(queriesService.getQueryPublicationsCount(queryId));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
 	}
 
 	/**
