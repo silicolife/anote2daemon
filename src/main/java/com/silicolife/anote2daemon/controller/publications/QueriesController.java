@@ -128,9 +128,9 @@ public class QueriesController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#queryId,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).queries.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
-	@RequestMapping(value = "/getQueryByIdPublicationsPaginated/{queryId}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
-	public ResponseEntity<DaemonResponse<List<IPublication>>> getQueryPublicationsPaginated(@PathVariable Long queryId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize) throws PublicationManagerException {
-		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublicationsPaginated(queryId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString())));
+	@RequestMapping(value = "/getQueryByIdPublicationsPaginated/{queryId}/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getQueryPublicationsPaginated(@PathVariable Long queryId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) throws PublicationManagerException {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(queriesService.getQueryPublicationsPaginated(queryId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
 	

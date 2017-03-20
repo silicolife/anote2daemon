@@ -85,6 +85,41 @@ public class PublicationsController {
 		DaemonResponse<IPublication> response = new DaemonResponse<IPublication>(publicationService.getById(id));
 		return new ResponseEntity<DaemonResponse<IPublication>>(response, HttpStatus.OK);
 	}
+	
+	
+	
+	/**
+	 * 
+	 * Get PublicationId by sourceType and sourceInternalId
+	 * 
+	 * @param source
+	 * @param sourceId
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationIdBySourceId", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> getPublicationIdFromSourceId(@RequestParam String source, @RequestParam String sourceId) {
+		DaemonResponse<Long> response = new DaemonResponse<Long>(publicationService.getPublicationIdFromSourceId(source, sourceId));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * Get PublicationId by sourceType and sourceInternalId
+	 * 
+	 * @param source
+	 * @param sourceId
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationFromSourceId", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IPublication>> getPublicationFromSourceId(@RequestParam String source, @RequestParam String sourceId) {
+		DaemonResponse<IPublication> response = new DaemonResponse<IPublication>(publicationService.getPublicationFromSourceId(source, sourceId));
+		return new ResponseEntity<DaemonResponse<IPublication>>(response, HttpStatus.OK);
+	}
+	
+	
+	
 
 	/**
 	 * 
