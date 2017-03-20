@@ -12,8 +12,11 @@
 
 	<beans:import resource="classpath:spring-database.xml" />
  	<beans:import resource="classpath:spring-dao.xml" /> 
-	<beans:import resource="classpath:spring-security.xml" />
 	<beans:import resource="classpath:spring-config.xml" />
+	<beans:import resource="classpath:spring-security.xml" />
+	<!-- Spring security with csrf disabled not for production!! To use disable the previous security xml -->
+	<!-- <beans:import resource="classpath:spring-security-csrf-disabledg.xml" /> -->
+	
 
 
 	<context:component-scan base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security" />
@@ -24,5 +27,7 @@
 	<context:component-scan base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.utils" />
 	<context:component-scan base-package="com.silicolife.anote2daemon.security" />
+	
+	
 
 </beans:beans>

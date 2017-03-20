@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
+                        http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+
+
+	<beans:bean id="usersLogged"
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLoggedImpl"
+		scope="session">
+		<aop:scoped-proxy proxy-target-class="false" />
+	</beans:bean>
+
+
+	<!-- Http entry point to login -->
+	<http entry-point-ref="restAuthenticationEntryPoint" authentication-manager-ref="authenticationManager">
+		<intercept-url pattern="/**" />
+		<form-login login-processing-url="/j_spring_security_check" login-page="/j_spring_security_check" authentication-success-handler-ref="restAuthenticationSuccessHandler" authentication-failure-handler-ref="restAuthenticationFailureHandler" />
+		<logout logout-url="/j_spring_security_logout" invalidate-session="true" delete-cookies="JSESSIONID" success-handler-ref="logoutSuccessHandler" />
+		<csrf disabled="true"/>
+	</http>
+	
+	<!-- CSRF Repository Configuration (enables read the cookie with JavaScript directly) -->
+	<beans:bean id="csrfTokenRepository"
+		class="com.silicolife.anote2daemon.security.CustomCookieCsrfTokenRepository">
+		<beans:property name="cookieHttpOnly" value="false"></beans:property>
+		<beans:property name="cookiePath" value="/"></beans:property>
+	</beans:bean>
+
+	<!-- Entry point for REST service. -->
+	<beans:bean id="restAuthenticationEntryPoint"
+		class="com.silicolife.anote2daemon.security.RestAuthenticationEntryPoint" />
+
+	<!-- Connect the custom authentication success handler -->
+	<beans:bean id="restAuthenticationSuccessHandler"
+		class="com.silicolife.anote2daemon.security.RestAuthenticationSuccessHandler">
+	</beans:bean>
+
+	<!-- Using default failure handler -->
+	<beans:bean id="restAuthenticationFailureHandler"
+		class="com.silicolife.anote2daemon.security.RestAuthenticationFailureHandler" />
+
+	<!-- Logout success -->
+	<beans:bean id="logoutSuccessHandler"
+		class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler" />
+
+
+	<!-- Create object user Spring -->
+	<beans:bean id="userDetailsService"
+		class="com.silicolife.anote2daemon.service.users.UsersServiceImpl"
+		autowire="constructor" />
+		
+	<beans:bean id="resourcesElementService"
+		class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.ResourcesElementServiceImpl"
+		autowire="constructor" />
+
+	<!-- Custom authentication provider -->
+	<beans:bean id="customAuthenticationProvider"
+		class="com.silicolife.anote2daemon.security.RestAuthenticationProvider">
+		<beans:constructor-arg ref="userDetailsService" />
+		<beans:constructor-arg ref="passwordEncoder" />
+	</beans:bean>
+
+	<!-- Password encoder sha256 -->
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<beans:constructor-arg value="256" />
+		<beans:property name="iterations" value="1000000">
+		</beans:property>
+	</beans:bean>
+
+	<!-- Authentication Manager -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="customAuthenticationProvider" />
+	</authentication-manager>
+
+
+	<global-method-security pre-post-annotations="enabled">
+		<expression-handler ref="expressionHandler" />
+	</global-method-security>
+
+	<beans:bean id="expressionHandler"
+		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+		<beans:property name="permissionEvaluator" ref="myPermissionEvaluator" />
+	</beans:bean>
+
+	<beans:bean id="myPermissionEvaluator"
+		class="com.silicolife.anote2daemon.security.RestPermissionsEvaluator">
+		<beans:constructor-arg ref="userDetailsService" />
+		<beans:constructor-arg ref="resourcesElementService" />
+	</beans:bean>
+
+<!--  	<context:component-scan base-package="com.silicolife.anote2daemon.model" />
+	<context:component-scan
+		base-package="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model" /> -->
+
+</beans:beans>
