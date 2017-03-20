@@ -22,7 +22,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 @Controller
 public class ConfigurationController {
 
-	private final String version = "Version: 2.4.2.1";
+	private final String version = "Version: 2.4.2.14";
 	private final String title = "@note2daemon - The best Text Mining Tool :d (Silicolife) "+version;
 	
 	@RequestMapping(value = "/getVersion", method = RequestMethod.GET)

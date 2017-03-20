@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationExecutorServer;
 import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterExecutorServer;
+import com.silicolife.anote2daemon.processes.re.OrganismKineticInformationExportToFileExtension;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
@@ -30,6 +31,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.processes.ie.ner.datatstructures.ANERLexicalResources;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
+import com.silicolife.textmining.processes.ie.pipelines.kineticparameters.configuration.KineticREPipelineConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
 
@@ -103,6 +105,9 @@ public class RunServerProcessesController {
 			case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
 				executeBackgroundThreadForLinneausTagger(parameters, bla);
 				break;
+			case KineticREPipelineConfigurationImpl.processUID :
+				executeBackgroundThreadForKineticREPipeline(parameters, bla);
+				break;
 			default :
 				break;
 			}
@@ -117,6 +122,27 @@ public class RunServerProcessesController {
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
+	private void executeBackgroundThreadForKineticREPipeline(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
+		final KineticREPipelineConfigurationImpl kineticrepipelineConfiguration = bla.readValue(parameters[1],KineticREPipelineConfigurationImpl.class);
+		taskExecutor.execute(new SpringRunnable(){
+
+			@Override
+			protected void onRun() {
+				try {	
+					OrganismKineticInformationExportToFileExtension kparamPipeline = new OrganismKineticInformationExportToFileExtension(kineticrepipelineConfiguration);
+					if(kineticrepipelineConfiguration.getNCBITaxonomy()!=null)						
+						kparamPipeline.retrievedByOrganism(kineticrepipelineConfiguration.getNCBITaxonomy());
+					else if(kineticrepipelineConfiguration.getECNumber()!=null)
+						kparamPipeline.retrievedByEnzyme(kineticrepipelineConfiguration.getECNumber());
+					else if(kineticrepipelineConfiguration.getChEBI()!=null)
+						kparamPipeline.retrievedByCompound(kineticrepipelineConfiguration.getChEBI());
+				} catch (Exception e) {
+					logger.error("Exception",e);;
+				}
+			}
+		});
+	}
+
 	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
 		taskExecutor.execute(new SpringRunnable(){
