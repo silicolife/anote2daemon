@@ -63,6 +63,25 @@ public class QueriesController {
 		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueries());
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
+	
+	
+	/**
+	 * 
+	 * Get all queries from a user paginated
+	 * 
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @param asc
+	 * @param sort
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllQueriesPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
 
 	/**
 	 * get all queries from user logged. if the user has "role_admin" all
@@ -151,6 +170,8 @@ public class QueriesController {
 		DaemonResponse<Long> response = new DaemonResponse<Long>(queriesService.getQueryPublicationsCount(queryId));
 		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
 	}
+	
+	
 
 	/**
 	 * Inactive / remove a query
