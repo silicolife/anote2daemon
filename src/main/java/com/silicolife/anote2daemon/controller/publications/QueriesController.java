@@ -66,6 +66,19 @@ public class QueriesController {
 	
 	
 	/**
+	 * Counts All queries from a user
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllQueries", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllQueries() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesService.countAllQueries());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	
+	/**
 	 * 
 	 * Get all queries from a user paginated
 	 * 
@@ -170,8 +183,8 @@ public class QueriesController {
 		DaemonResponse<Long> response = new DaemonResponse<Long>(queriesService.getQueryPublicationsCount(queryId));
 		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
 	}
-	
-	
+
+		
 
 	/**
 	 * Inactive / remove a query
