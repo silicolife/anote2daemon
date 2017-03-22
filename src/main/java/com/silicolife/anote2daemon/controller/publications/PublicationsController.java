@@ -149,7 +149,7 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/updatePublication", method = RequestMethod.POST, consumes = { "application/json" })
+	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody PublicationImpl publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
