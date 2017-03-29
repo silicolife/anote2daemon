@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.queries.IQueriesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesElementLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
@@ -44,6 +45,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	private static ILuceneService luceneService = null;
 	private static IResourcesElementLuceneService resourcesElementLuceneService = null;
 	private static UsersLogged usersLogged = null;
+	private static IQueriesLuceneService queriesLuceneService = null;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -64,6 +66,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		luceneService = applicationContext.getBean("luceneServiceImpl", ILuceneService.class);
 		resourcesElementLuceneService = applicationContext.getBean("resourcesElementLuceneServiceImpl", IResourcesElementLuceneService.class);
 		usersLogged = applicationContext.getBean("usersLogged", UsersLogged.class);
+		queriesLuceneService = applicationContext.getBean("queriesLuceneServiceImpl", IQueriesLuceneService.class);
 				
 		initServerAccess();
 	}
@@ -83,6 +86,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		if(hyperLinkService!=null) hyperLinkService.setUserLogged(userLogged);
 		if(luceneService!=null) luceneService.setUserLogged(userLogged);
 		if(resourcesElementLuceneService!=null) resourcesElementLuceneService.setUserLogged(userLogged);
+		if(queriesLuceneService!=null) queriesLuceneService.setUserLogged(userLogged);
 	}
 
 
@@ -158,5 +162,9 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 
 	public static IResourcesElementLuceneService getResourcesElementLuceneService() {
 		return resourcesElementLuceneService;
+	}
+	
+	public static IQueriesLuceneService getQueriesLuceneService(){
+		return queriesLuceneService;
 	}
 }
