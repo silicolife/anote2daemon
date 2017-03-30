@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.silicolife.anote2daemon.processes.corpus.CorpusAutoUpdate;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesElementLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
@@ -66,8 +67,13 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		usersLogged = applicationContext.getBean("usersLogged", UsersLogged.class);
 				
 		initServerAccess();
+//		initAutoUpdate();
 	}
 	
+	private void initAutoUpdate() {
+		CorpusAutoUpdate.run();
+	}
+
 	public static void setUserLoggedOnServices(UsersLogged userLogged)
 	{
 		if(queriesService!=null) queriesService.setUserLogged(userLogged);

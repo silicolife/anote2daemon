@@ -22,7 +22,7 @@ public class CorpusUpdaterExecutorServer extends CorpusCreationExecutorServer{
 
 	}
 
-	public void executeCorpusUpdate(ICorpusUpdateConfiguration corpusupdateConfiguration) throws IOException, ANoteException {
+	public int executeCorpusUpdate(ICorpusUpdateConfiguration corpusupdateConfiguration) throws IOException, ANoteException {
 		CorpusCreationInBatch corpusCreator = new CorpusCreationInBatch();
 		ICorpus corpus = corpusupdateConfiguration.getCorpusToUpdate();
 		String publicationsDirectory = corpusupdateConfiguration.getPublicationsDirectory();
@@ -34,6 +34,7 @@ public class CorpusUpdaterExecutorServer extends CorpusCreationExecutorServer{
 		}
 		updaterLogger.info("Found " + files.size() + " in the given corpus directory!");	
 		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files), corpusupdateConfiguration.getProperties());
+		return files.size();
 	}
 	
 	

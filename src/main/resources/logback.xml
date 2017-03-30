@@ -15,7 +15,7 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${catalina.base}/logs/anote2daemon_INFOS_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${catalina.base}/logs/anote2daemon_dev_INFOS_%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
@@ -31,7 +31,7 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${catalina.base}/logs/anote2daemon_ERRORS_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${catalina.base}/logs/anote2daemon_dev_ERRORS_%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
 
 		<encoder>
