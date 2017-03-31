@@ -88,10 +88,20 @@ public class RunServerProcessesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/autoupdate", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> autoupdate(){
-		CorpusAutoUpdate.run();		
+
+		taskExecutor.execute(new SpringRunnable(){
+
+			@Override
+			protected void onRun() {
+				CorpusAutoUpdate.run();		
+			}
+		});
+
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+
+
 	
 	/**
 	 * 
