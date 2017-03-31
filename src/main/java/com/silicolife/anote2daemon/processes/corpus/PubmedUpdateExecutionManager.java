@@ -101,7 +101,7 @@ public class PubmedUpdateExecutionManager {
 
 	public 	ICorpusUpdateConfiguration getCorpusUpdateConfiguration() throws ANoteException
 	{
-		String publicationsDirectory = AutoUpdateConfigurationProperties.getPubmedCorpusToArchiveDir();
+		String publicationsDirectory = AutoUpdateConfigurationProperties.getPubmedCorpusUpdateDir();
 		Properties properties = new Properties();
 		long corpusID = Long.valueOf(AutoUpdateConfigurationProperties.getPubmedCorpusId());
 		ICorpus corpusToUpdate = InitConfiguration.getDataAccess().getCorpusByID(corpusID );

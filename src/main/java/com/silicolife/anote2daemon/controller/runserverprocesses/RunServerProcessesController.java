@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.silicolife.anote2daemon.processes.corpus.CorpusAutoUpdate;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationExecutorServer;
 import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterExecutorServer;
 import com.silicolife.anote2daemon.processes.re.OrganismKineticInformationExportToFileExtension;
@@ -76,6 +77,18 @@ public class RunServerProcessesController {
 			}
 		});
 				
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/autoupdate", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Boolean>> autoupdate(){
+		CorpusAutoUpdate.run();		
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}

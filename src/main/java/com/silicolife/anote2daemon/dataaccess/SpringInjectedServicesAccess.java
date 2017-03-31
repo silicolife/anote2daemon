@@ -48,7 +48,6 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		System.out.println(Arrays.asList(applicationContext.getBeanDefinitionNames()));
 		queriesService = applicationContext.getBean("queriesServiceImpl", IQueriesService.class);
 		publicationsService = applicationContext.getBean("publicationsServiceImpl", IPublicationsService.class);
 		privilegesService = applicationContext.getBean("privilegesServiceImpl", IPrivilegesService.class);
@@ -60,19 +59,14 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		annotationService = applicationContext.getBean("annotationServiceImpl", IAnnotationService.class);
 		clusteringService = applicationContext.getBean("clusteringServiceImpl", IClusteringService.class);
 		hyperLinkService = applicationContext.getBean("hyperLinkServiceImpl", IHyperLinkService.class);
-//		systemService = applicationContext.getBean("systemServiceImpl", ISystemService.class);
 		userService = applicationContext.getBean("userServiceImpl", IUserService.class);
 		luceneService = applicationContext.getBean("luceneServiceImpl", ILuceneService.class);
 		resourcesElementLuceneService = applicationContext.getBean("resourcesElementLuceneServiceImpl", IResourcesElementLuceneService.class);
 		usersLogged = applicationContext.getBean("usersLogged", UsersLogged.class);
 				
 		initServerAccess();
-//		initAutoUpdate();
 	}
-	
-	private void initAutoUpdate() {
-		CorpusAutoUpdate.run();
-	}
+
 
 	public static void setUserLoggedOnServices(UsersLogged userLogged)
 	{

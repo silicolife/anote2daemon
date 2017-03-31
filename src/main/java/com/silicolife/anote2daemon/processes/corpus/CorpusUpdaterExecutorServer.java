@@ -28,6 +28,7 @@ public class CorpusUpdaterExecutorServer extends CorpusCreationExecutorServer{
 		String publicationsDirectory = corpusupdateConfiguration.getPublicationsDirectory();
 		Set<File> files = new HashSet<>();
 		updaterLogger.info("Starting to read directory");
+		updaterLogger.info(publicationsDirectory);
 		if(!publicationsDirectory.isEmpty()){
 			File dir = new File(publicationsDirectory);
 			getXMLFiles(dir, files);
