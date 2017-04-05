@@ -22,7 +22,7 @@ public abstract class SpringRunnable implements Runnable{
 		try {
 			InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 			onRun();
-			InitConfiguration.getDataAccess().setUserLoggedOnServices(null);
+//			InitConfiguration.getDataAccess().setUserLoggedOnServices(null);
 			UserLoggedThreadLocal.unset();
 		} finally {
 			cleanAuthenticationAndUser();

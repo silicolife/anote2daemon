@@ -9,87 +9,66 @@ import org.apache.log4j.Logger;
 
 
 public class AutoUpdateConfigurationProperties {
-	
-	static Logger logger = Logger.getLogger(AutoUpdateConfigurationProperties.class.getName());
+
+	static Logger logger = Logger.getLogger(AutoUpdateConfigurationProperties.class);
 	private static Properties prop = null;
-	
-	private static Properties getPropConfigurations(){
-		prop = new Properties();
-		InputStream inputStream = null;
-		try {
-			String propFileName = "autoupdate.properties";
-			inputStream = AutoUpdateConfigurationProperties.class.getClassLoader().getResourceAsStream(propFileName);
-			if (inputStream != null) {
-				prop.load(inputStream);
-			} else {
-				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-			}
-		} catch (Exception e) {
-			logger.error("Exception: " + e);
-		} finally {
-			if(inputStream != null)
-				try {
-					inputStream.close();
-				} catch (IOException e) {
+
+	private static synchronized Properties getPropConfigurations(){
+		if(prop==null)
+		{
+			prop = new Properties();
+			InputStream inputStream = null;
+			try {
+				String propFileName = "autoupdate.properties";
+				inputStream = AutoUpdateConfigurationProperties.class.getClassLoader().getResourceAsStream(propFileName);
+				if (inputStream != null) {
+					prop.load(inputStream);
+				} else {
+					throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+				}
+			} catch (Exception e) {
+				logger.error("Exception: " + e);
+			} finally {
+				if(inputStream != null)
+					try {
+						inputStream.close();
+					} catch (IOException e) {
+					}
 			}
 		}
 		return prop;
 	}
 	
 	public static String getPubmedCorpusId(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pubmedcorpusid").toString();
+		return getPropConfigurations().getProperty("pubmedcorpusid");
 	}
 	
 	public static String getPubmedCorpusProcessesToResumeIds(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pubmedcorpusprocessestoresumeids").toString();
+		return getPropConfigurations().getProperty("pubmedcorpusprocessestoresumeids");
 	}
 	
 	public static String getPubmedCorpusUpdateDir(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pubmedcorpusupdatedir").toString();
+		return getPropConfigurations().getProperty("pubmedcorpusupdatedir");
 	}
 	
 	public static String getPubmedCorpusToArchiveDir(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pubmedcorpusafterupdatedir").toString();
+		return getPropConfigurations().getProperty("pubmedcorpusafterupdatedir");
 	}
 	
 	public static String getPMCCorpusId(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pmccorpusid").toString();
+		return getPropConfigurations().getProperty("pmccorpusid");
 	}
 	
 	public static String getPMCCorpusProcessesToResumeIds(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pmccorpusprocessestoresumeids").toString();
+		return getPropConfigurations().getProperty("pmccorpusprocessestoresumeids");
 	}
 	
 	public static String getPMCCorpusUpdateDir(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pmccorpusupdatedir").toString();
+		return getPropConfigurations().getProperty("pmccorpusupdatedir");
 	}
 	
 	public static String getPMCCorpusToArchiveDir(){
-		if(prop == null){
-			prop = getPropConfigurations();
-		}
-		return prop.get("pmccorpusafterupdatedir").toString();
+		return getPropConfigurations().getProperty("pmccorpusafterupdatedir");
 	}
 
 }

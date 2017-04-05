@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.silicolife.anote2daemon.utils.AutoUpdateConfigurationProperties;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
@@ -28,7 +28,7 @@ import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinn
 
 public class PMCUpdateExecutionManager {
 	
-	static Logger logger = Logger.getLogger(PMCUpdateExecutionManager.class.getName());
+	final static org.slf4j.Logger logger = LoggerFactory.getLogger(PMCUpdateExecutionManager.class);
 	
 	private boolean execute;
 	
@@ -62,6 +62,7 @@ public class PMCUpdateExecutionManager {
 		{
 			List<IIEProcess> processsesToUpdate = getProcessesToUpdate();
 			movePMCFilesToFinalDirectory();
+			logger.info("Resume Process " +processsesToUpdate.size());
 			for(IIEProcess process:processsesToUpdate)
 			{
 				logger.info("Resume Process start " +process.getName());
@@ -87,14 +88,24 @@ public class PMCUpdateExecutionManager {
 				Long processID = Long.valueOf(itemTrim);
 				IIEProcess process = InitConfiguration.getDataAccess().getProcessByID(processID);
 				if(process==null)
+				{
 					logger.info("Process Id "+processID+ " not found");
+				}
 				else
-					if(!process.getProcessOrigin().equals(LinnaeusTagger.linnausOrigin))
+				{
+					if(!process.getProcessOrigin().getOrigin().equals(LinnaeusTagger.linnausOrigin.getOrigin()))
 					{
 						logger.info("Process Id "+processID+ " is not a Linnaeus Process");
 					}
 					else
+					{
 						out.add(process);
+					}
+				}
+			}
+			else
+			{
+				logger.info("No Processes to update");
 			}
 		}
 		return out;
@@ -128,4 +139,12 @@ public class PMCUpdateExecutionManager {
 		return true;		
 	}
 
+	public static void main(String[] args) {
+		String idsSeparatedByComma = AutoUpdateConfigurationProperties.getPMCCorpusProcessesToResumeIds();
+		String[] list = idsSeparatedByComma.split(",");
+		for(String item:list)
+		{
+			System.out.println(item);
+		}
+	}
 }

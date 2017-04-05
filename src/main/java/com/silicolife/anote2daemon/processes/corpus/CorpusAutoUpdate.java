@@ -2,14 +2,14 @@ package com.silicolife.anote2daemon.processes.corpus;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 
 public class CorpusAutoUpdate {
 	
-	static Logger logger = Logger.getLogger(CorpusAutoUpdate.class.getName());
+	static org.slf4j.Logger logger = LoggerFactory.getLogger(CorpusAutoUpdate.class);
 	
 	private static long ioExceptionProblemSleepingTimeHours = 10;
 	private static long ioExceptionProblemSleepingProblemSleepingTime =  ioExceptionProblemSleepingTimeHours * 60 * 1000;
@@ -70,7 +70,7 @@ public class CorpusAutoUpdate {
 				logger.info("IOException : sleeping "+ioExceptionProblemSleepingTimeHours + " hour(s)",e);
 				Thread.sleep(ioExceptionProblemSleepingProblemSleepingTime);
 			} 
-			logger.info("Delay Cycle "+delayCycleDays  + " day(s)");
+			logger.info("PMC Delay Cycle "+delayCycleDays  + " day(s)");
 			Thread.sleep(delayCycle);
 		}
 	}
@@ -85,7 +85,7 @@ public class CorpusAutoUpdate {
 				logger.info("IOException : sleeping "+ioExceptionProblemSleepingTimeHours + " hour(s)",e);
 				Thread.sleep(ioExceptionProblemSleepingProblemSleepingTime);
 			} 
-			logger.info("Delay Cycle "+delayCycleDays  + " day(s)");
+			logger.info("Pubmed Delay Cycle "+delayCycleDays  + " day(s)");
 			Thread.sleep(delayCycle);
 		}
 	}

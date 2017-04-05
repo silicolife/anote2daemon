@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.silicolife.anote2daemon.utils.AutoUpdateConfigurationProperties;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
@@ -27,7 +27,7 @@ import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinn
 
 public class PubmedUpdateExecutionManager {
 	
-	static Logger logger = Logger.getLogger(PubmedUpdateExecutionManager.class.getName());
+	final static org.slf4j.Logger logger = LoggerFactory.getLogger(PubmedUpdateExecutionManager.class);
 	
 	private boolean execute;
 	
@@ -60,6 +60,7 @@ public class PubmedUpdateExecutionManager {
 		if(updatedFiles>0)
 		{
 			List<IIEProcess> processsesToUpdate = getProcessesToUpdate();
+			logger.info("Resume Process " +processsesToUpdate.size());
 			movePubmedFilesToFinalDirectory();
 			for(IIEProcess process:processsesToUpdate)
 			{
@@ -86,15 +87,23 @@ public class PubmedUpdateExecutionManager {
 				Long processID = Long.valueOf(itemTrim);
 				IIEProcess process = InitConfiguration.getDataAccess().getProcessByID(processID);
 				if(process==null)
+				{
 					logger.info("Process Id "+processID+ " not found");
+				}
 				else
-					if(!process.getProcessOrigin().equals(LinnaeusTagger.linnausOrigin))
+				{
+					if(!process.getProcessOrigin().getOrigin().equals(LinnaeusTagger.linnausOrigin.getOrigin()))
 					{
 						logger.info("Process Id "+processID+ " is not a Linnaeus Process");
 					}
 					else
+					{
 						out.add(process);
+					}
+				}
 			}
+			else
+				logger.info("No Processses to udpate");
 		}
 		return out;
 	}
