@@ -31,10 +31,10 @@ public class CorpusUpdaterExecutorServer extends CorpusCreationExecutorServer{
 		updaterLogger.info(publicationsDirectory);
 		if(!publicationsDirectory.isEmpty()){
 			File dir = new File(publicationsDirectory);
-			getXMLFiles(dir, files);
+			getFiles(dir, files);
 		}
 		updaterLogger.info("Found " + files.size() + " in the given corpus directory!");	
-		addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files), corpusupdateConfiguration.getProperties());
+		addPublicationsFromFiles(corpusCreator, corpus, new ArrayList<>(files), corpusupdateConfiguration.getCorpusSource());
 		return files.size();
 	}
 	

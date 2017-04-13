@@ -15,12 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalNames;
+import com.silicolife.textmining.core.interfaces.core.corpora.CorpusCreateSourceEnum;
 import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusCreateConfiguration;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreation;
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreationInBatch;
+import com.silicolife.textmining.processes.corpora.readers.PatentMetaFilesReader;
 import com.silicolife.textmining.processes.ir.pubmed.PubmedReader;
 import com.silicolife.textmining.processes.ir.pubmed.reader.PMCReader;
 
@@ -51,27 +53,36 @@ public class CorpusCreationExecutorServer {
 		creationLogger.info("Starting to read directory");
 		if(configurationProperties.containsKey(GlobalNames.serverXMLsDirectory)){
 			File dir = new File(configurationProperties.getProperty(GlobalNames.serverXMLsDirectory));
-			getXMLFiles(dir, files);
+			getFiles(dir, files);
 		}
 
 		creationLogger.info("Found " + files.size() + " in the given corpus directory!");
 
 		if(!files.isEmpty()){
 			creationLogger.info("Starting to add corpus in database");
-			addPublicationsFromXMLFiles(corpusCreator, corpus, new ArrayList<>(files), configurationProperties);
+			addPublicationsFromFiles(corpusCreator, corpus, new ArrayList<>(files), configuration.getCorpusSource());
 		}
 	}
 
-	protected void addPublicationsFromXMLFiles(CorpusCreationInBatch corpusCreator, ICorpus corpus, List<File> xmlFiles, Properties configurationProperties)
+	protected void addPublicationsFromFiles(CorpusCreationInBatch corpusCreator, ICorpus corpus, List<File> xmlFiles, CorpusCreateSourceEnum corpusSource)
 			throws IOException, ANoteException {
 		Set<IPublication> publications = new HashSet<>();
 		for(int i=0; i<xmlFiles.size(); i++){
-			if(configurationProperties.containsKey(GlobalNames.readPMCFiles) && configurationProperties.getProperty(GlobalNames.readPMCFiles).equals("true")){
-				addUsingPMCReader(xmlFiles, publications, i);
-			}else{
-				addUsingPubmedReader(xmlFiles, publications, i);
+			if(corpusSource == null)
+				throw new ANoteException("CorpusCreateSourceEnum can not be null");
+			switch (corpusSource) {
+				case Pubmed :
+					publications.addAll(addUsingPubmedReader(xmlFiles.get(i)));
+					break;
+				case PMC :
+					publications.addAll(addUsingPMCReader(xmlFiles.get(i)));
+					break;
+				case USPTO :
+					publications.addAll(addUSPTOReader(xmlFiles.get(i)));
+					break;
+				default :
+					break;
 			}
-			
 			if(i%1000==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
@@ -84,40 +95,59 @@ public class CorpusCreationExecutorServer {
 			publications.clear();
 		}
 	}
-
-	private void addUsingPubmedReader(List<File> xmlFiles, Set<IPublication> publications, int i)
+	
+	private List<IPublication> addUSPTOReader(File usptoMetaFile)
 			throws FileNotFoundException, ANoteException, IOException {
-		InputStream stream = new FileInputStream(xmlFiles.get(i));
+		if(usptoMetaFile.getName().endsWith(".meta"))
+		{
+			InputStream stream = new FileInputStream(usptoMetaFile);
+			PatentMetaFilesReader reader = new PatentMetaFilesReader();
+			try{
+				List<IPublication> pubs = reader.getPatent(stream,usptoMetaFile);
+				stream.close();
+				return pubs;
+			}catch(ANoteException e){
+				creationLogger.error("Failed on file: " + usptoMetaFile.getAbsolutePath());
+				stream.close();
+				throw e;
+			}
+		}
+		return new ArrayList<>();
+	}
+
+	private List<IPublication> addUsingPubmedReader(File pubmedFile)
+			throws FileNotFoundException, ANoteException, IOException {
+		InputStream stream = new FileInputStream(pubmedFile);
 		PubmedReader reader = new PubmedReader();
 		try{
 			List<IPublication> pubs = reader.getPublications(stream);
-			publications.addAll(pubs);
+			stream.close();
+			return pubs;
 		}catch(ANoteException e){
-			creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
+			creationLogger.error("Failed on file: " + pubmedFile.getAbsolutePath());
+			stream.close();
 			throw e;
 		}
-		stream.close();
 	}
 	
 
-	private void addUsingPMCReader(List<File> xmlFiles, Set<IPublication> publications, int i) throws ANoteException {
-		File pmcFile = xmlFiles.get(i);
+	private List<IPublication> addUsingPMCReader(File pmcFile) throws ANoteException {
 		PMCReader reader = new PMCReader();
 		try{
 			List<IPublication> pubs = reader.getPublications(pmcFile);
-			publications.addAll(pubs);
+			return pubs;
 		}catch(ANoteException e){
-			creationLogger.error("Failed on file: " + xmlFiles.get(i).getAbsolutePath());
+			creationLogger.error("Failed on file: " + pmcFile.getAbsolutePath());
 			throw e;
 		}
 	}
 
-	protected void getXMLFiles(File file, Set<File> files){
+	protected void getFiles(File file, Set<File> files){
 		if(file.isDirectory()){
 			for(File childFile : file.listFiles()){
-				getXMLFiles(childFile, files);
+				getFiles(childFile, files);
 			}
-		}else if(file.getAbsolutePath().endsWith(".xml") || file.getAbsolutePath().endsWith(".nxml")){
+		}else if(file.getAbsolutePath().endsWith(".xml") || file.getAbsolutePath().endsWith(".nxml") || file.getAbsolutePath().endsWith(".meta")){
 			files.add(file);
 		}
 		

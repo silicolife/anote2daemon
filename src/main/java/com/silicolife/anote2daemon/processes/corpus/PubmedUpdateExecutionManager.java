@@ -16,6 +16,7 @@ import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigu
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ProcessRunStatusConfigurationEnum;
+import com.silicolife.textmining.core.interfaces.core.corpora.CorpusCreateSourceEnum;
 import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusUpdateConfiguration;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
@@ -114,7 +115,7 @@ public class PubmedUpdateExecutionManager {
 		Properties properties = new Properties();
 		long corpusID = Long.valueOf(AutoUpdateConfigurationProperties.getPubmedCorpusId());
 		ICorpus corpusToUpdate = InitConfiguration.getDataAccess().getCorpusByID(corpusID );
-		CorpusUpdateConfigurationImpl corpusupdateConfiguration = new CorpusUpdateConfigurationImpl(corpusToUpdate, publicationsDirectory, properties);
+		CorpusUpdateConfigurationImpl corpusupdateConfiguration = new CorpusUpdateConfigurationImpl(corpusToUpdate, publicationsDirectory, properties, CorpusCreateSourceEnum.Pubmed);
 		return corpusupdateConfiguration;
 	}
 	
