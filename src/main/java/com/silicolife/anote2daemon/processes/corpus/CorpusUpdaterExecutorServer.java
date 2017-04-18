@@ -33,7 +33,7 @@ public class CorpusUpdaterExecutorServer extends CorpusCreationExecutorServer{
 			File dir = new File(publicationsDirectory);
 			getFiles(dir, files);
 		}
-		updaterLogger.info("Found " + files.size() + " in the given corpus directory!");	
+		updaterLogger.info("Found " + files.size() + " in the given directory! ["+corpusupdateConfiguration.getCorpusToUpdate().getDescription() + "]");	
 		addPublicationsFromFiles(corpusCreator, corpus, new ArrayList<>(files), corpusupdateConfiguration.getCorpusSource());
 		return files.size();
 	}

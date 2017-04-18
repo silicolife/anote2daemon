@@ -70,5 +70,21 @@ public class AutoUpdateConfigurationProperties {
 	public static String getPMCCorpusToArchiveDir(){
 		return getPropConfigurations().getProperty("pmccorpusafterupdatedir");
 	}
+	
+	public static String getPatentCorpusID(){
+		return getPropConfigurations().getProperty("patentcorpusid");
+	}
+
+	public static String getPatentCorpusUpdateDir() {
+		return getPropConfigurations().getProperty("patentcorpusupdatedir");
+	}
+
+	public static String getPatentCorpusProcessesToResumeIds() {
+		return getPropConfigurations().getProperty("patentcorpusprocessestoresumeids");
+	}
+
+	public static String getPatentCorpusToArchiveDir() {
+		return getPropConfigurations().getProperty("patentcorpusafterupdatedir");
+	}
 
 }

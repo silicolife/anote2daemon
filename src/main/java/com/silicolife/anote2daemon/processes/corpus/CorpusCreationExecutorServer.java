@@ -86,8 +86,7 @@ public class CorpusCreationExecutorServer {
 			if(i%1000==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
-				System.out.println("Inserted the batch nº "+i);
-				creationLogger.info("Inserted the batch nº "+i);
+				creationLogger.info("Inserted the batch nº "+i + " ["+corpus.getDescription() + "]");
 			}
 		}
 		if(!publications.isEmpty()){

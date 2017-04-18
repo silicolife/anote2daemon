@@ -20,6 +20,26 @@ public class CorpusAutoUpdate {
 	{
 		pubmedUpdate();
 		pmcUpdate();
+		usptoPatentUpdate();
+	}
+	
+	private static void usptoPatentUpdate() {
+		new Thread() {
+            public void run() {
+				try {
+					usptoPatentCycleUpdate();
+				} catch (ANoteException e) {
+					logger.error("ANoteException" + e.getMessage());
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					logger.error("InterruptedException" + e.getMessage());
+					e.printStackTrace();
+				} catch (InvalidConfigurationException e) {
+					logger.error("InvalidConfigurationException" + e.getMessage());
+					e.printStackTrace();
+				}          
+        	}
+        }.start();				
 	}
 	
 	private static void pmcUpdate() {
@@ -58,6 +78,21 @@ public class CorpusAutoUpdate {
 				}          
         	}
         }.start();				
+	}
+	
+	private static void usptoPatentCycleUpdate() throws ANoteException, InterruptedException, InvalidConfigurationException{
+		boolean keepRunning = true;
+		while(keepRunning)
+		{
+			try {
+				USPTOPatentUpdateExecutionManager.getInstance().startExecution();
+			} catch (IOException e) {
+				logger.info("IOException : sleeping "+ioExceptionProblemSleepingTimeHours + " hour(s)",e);
+				Thread.sleep(ioExceptionProblemSleepingProblemSleepingTime);
+			} 
+			logger.info("USPTO Delay Cycle "+delayCycleDays  + " day(s)");
+			Thread.sleep(delayCycle);
+		}
 	}
 	
 	private static void pmcCycleUpdate() throws ANoteException, InterruptedException, InvalidConfigurationException{
