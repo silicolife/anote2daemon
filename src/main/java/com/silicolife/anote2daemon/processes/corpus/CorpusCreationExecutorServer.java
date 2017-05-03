@@ -83,7 +83,7 @@ public class CorpusCreationExecutorServer {
 				default :
 					break;
 			}
-			if(i%1000==0 && i!=0){
+			if(i%500==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
 				creationLogger.info("Inserted the batch nº "+i + " ["+corpus.getDescription() + "]");
