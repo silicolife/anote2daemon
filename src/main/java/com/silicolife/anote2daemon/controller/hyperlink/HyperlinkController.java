@@ -104,4 +104,32 @@ public class HyperlinkController {
 		DaemonResponse<List<IHyperLinkMenuItem>> response = new DaemonResponse<List<IHyperLinkMenuItem>>(hyperlinkService.getHyperLinkMenuItemsForSource(sourceId));
 		return new ResponseEntity<DaemonResponse<List<IHyperLinkMenuItem>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getNextHyperLinkMenuItemID", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> getNextHyperLinkMenuItemID() throws HyperLinkMenuException {
+		DaemonResponse<Long> response = new DaemonResponse<Long>(hyperlinkService.getNextHyperLinkMenusItemID());
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/addHyperLinkMenuItem", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> addHyperLinkMenuItem(@RequestBody  HyperLinkMenuItemImpl hyperLinkMenuItem) throws HyperLinkMenuException{
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(hyperlinkService.addHyperLinkMenuItem(hyperLinkMenuItem));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/removeHyperLinkMenuItem/{menuId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Boolean>> removeHyperLinkMenuItem(@PathVariable Long menuId) throws HyperLinkMenuException {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(hyperlinkService.removeHyperLinkMenuItem(menuId));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/updateHyperLinkMenuItem", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Boolean>> updateHyperLinkMenuItem(@RequestBody  HyperLinkMenuItemImpl hyperLinkMenuItem) throws HyperLinkMenuException{
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(hyperlinkService.updateHyperLinkMenuItem(hyperLinkMenuItem));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
 }

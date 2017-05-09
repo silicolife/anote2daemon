@@ -1045,4 +1045,32 @@ public class ServerAccess implements IDataAccess{
 	}
 
 
+
+	@Override
+	public Long getNextHyperLinkMenuItemID() throws ANoteException {
+		return SpringInjectedServicesAccess.getHyperLinkService().getNextHyperLinkMenusItemID();
+	}
+
+
+
+	@Override
+	public void addHyperLinkMenuItem(IHyperLinkMenuItem hyperLinkMenuItem) throws ANoteException {
+		SpringInjectedServicesAccess.getHyperLinkService().addHyperLinkMenuItem(hyperLinkMenuItem);
+	}
+
+
+
+	@Override
+	public void removeHyperLinkMenuItem(IHyperLinkMenuItem hyperLinkMenuItem) throws ANoteException {
+		SpringInjectedServicesAccess.getHyperLinkService().removeHyperLinkMenuItem(hyperLinkMenuItem.getId());
+	}
+
+
+
+	@Override
+	public void updateHyperLinkMenuItem(IHyperLinkMenuItem hyperLinkMenuItem) throws ANoteException {
+		SpringInjectedServicesAccess.getHyperLinkService().updateHyperLinkMenuItem(hyperLinkMenuItem);
+	}
+
+
 }
