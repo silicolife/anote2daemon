@@ -112,7 +112,7 @@ public class RunServerProcessesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> executeConfiguration(@RequestBody String[] parameters) throws RunServerProcessesException{
-		System.out.println(parameters[0] + " " + parameters[1]);
+		logger.info(parameters[0] + " " + parameters[1]);
 		ObjectMapper bla = new ObjectMapper();
 		try {
 			switch (parameters[0]) {

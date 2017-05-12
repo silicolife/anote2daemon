@@ -140,12 +140,4 @@ public class PMCUpdateExecutionManager {
 		return true;		
 	}
 
-	public static void main(String[] args) {
-		String idsSeparatedByComma = AutoUpdateConfigurationProperties.getPMCCorpusProcessesToResumeIds();
-		String[] list = idsSeparatedByComma.split(",");
-		for(String item:list)
-		{
-			System.out.println(item);
-		}
-	}
 }
