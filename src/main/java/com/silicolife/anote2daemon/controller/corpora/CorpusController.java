@@ -27,6 +27,7 @@ import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpusStatistics;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
+import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
 
 /**
  * The goal of this class is to expose for the web all Corpus functionalities of
@@ -58,6 +59,36 @@ public class CorpusController {
 	public ResponseEntity<DaemonResponse<List<ICorpus>>> getAllCorpus() {
 		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusService.getAllCorpus());
 		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * Get all corpus from a user paginated
+	 * 
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @param asc
+	 * @param sort
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllCorpusPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<ICorpus>>> getAllCorpusPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) {
+		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusService.getAllCorpusPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
+	}
+	
+
+	/**
+	 * Count all corpus
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllCorpus", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllCorpus() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusService.countAllCorpus());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 
 	/**

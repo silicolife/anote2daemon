@@ -26,6 +26,7 @@ import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumen
 import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
 import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
+import com.silicolife.textmining.core.interfaces.core.document.ISearchProperties;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpusStatistics;
 import com.silicolife.textmining.core.interfaces.core.document.labels.IPublicationLabel;
@@ -1073,6 +1074,37 @@ public class ServerAccess implements IDataAccess{
 		return SpringInjectedServicesAccess.getQueriesLuceneService().getKeywordsOfQueriesByWildCard(subKeyword);
 		//	return null;
 	}
+	
+	
+	@Override
+	public  List<IPublication> getPublicationsByTitle(String title) throws ANoteException{
+		return SpringInjectedServicesAccess.getPublicationsLuceneService().getPublicationsByTitle(title);
+	}
 
+
+
+	@Override
+	public List<IPublication> getPublicationsFromSearch(ISearchProperties searchProperties) throws ANoteException {
+		return SpringInjectedServicesAccess.getPublicationsLuceneService().getPublicationsFromSearch(searchProperties);
+	}
+
+
+
+	@Override
+	public List<IPublication> getPublicationsFromSearchPaginated(ISearchProperties searchProperties, int index,
+			int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getPublicationsLuceneService().getPublicationsFromSearchPaginated(searchProperties, index, paginationSize);
+		
+	}
+
+
+
+	@Override
+	public Integer countGetPublicationsFromSearch(ISearchProperties searchProperties) throws ANoteException {
+		return SpringInjectedServicesAccess.getPublicationsLuceneService().countGetPublicationsFromSearch(searchProperties);
+		
+	}
+	
+	
 
 }

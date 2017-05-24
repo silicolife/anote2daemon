@@ -22,5 +22,6 @@
 	<beans:import resource="classpath:spring-hyperlink-dao.xml" />
 	<beans:import resource="classpath:spring-resources-lucene-dao.xml" />
 	<beans:import resource="classpath:spring-queries-lucene-dao.xml" />
+	<beans:import resource="classpath:spring-publications-lucene-dao.xml" />
 
 </beans:beans>

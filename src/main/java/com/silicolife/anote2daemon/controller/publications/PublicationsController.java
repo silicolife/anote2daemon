@@ -20,11 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.publications.IPublicationsLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.documents.PublicationImpl;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
+import com.silicolife.textmining.core.datastructures.documents.expImpl;
+import com.silicolife.textmining.core.datastructures.general.AnoteClass;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
+import com.silicolife.textmining.core.interfaces.core.document.ISearchProperties;
 import com.silicolife.textmining.core.interfaces.core.document.labels.IPublicationLabel;
 
 /**
@@ -45,6 +50,8 @@ public class PublicationsController {
 	private Permissions permissions;
 	@Autowired
 	private IPublicationsService publicationService;
+	@Autowired
+	private IPublicationsLuceneService publicationsLuceneService;
 
 	/**
 	 * Get all Publication labels from system
@@ -198,4 +205,47 @@ public class PublicationsController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.updatePublicationAFullTextContent(publicationId, fullText));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsFromSearchPaginated/{index}/{paginationSize}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationsFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize)  {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationsLuceneService.getPublicationsFromSearchPaginated(searchProperties, index, paginationSize));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countGetPublicationsFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countGetPublicationsFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationsLuceneService.countGetPublicationsFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationsFromSearch(@RequestBody SearchPropertiesImpl searchProperties)  {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationsLuceneService.getPublicationsFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/expAnoteC", method = RequestMethod.GET , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<String>> expAnoteC(@RequestParam AnoteClass a)  {
+		DaemonResponse<String> response = new DaemonResponse<String>(a.getName());
+		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/exp", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<String>> exp(@RequestBody expImpl a)  {
+		DaemonResponse<String> response = new DaemonResponse<String>(a.toString());
+		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	
 }
