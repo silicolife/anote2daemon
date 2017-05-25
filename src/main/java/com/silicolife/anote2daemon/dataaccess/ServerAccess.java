@@ -64,7 +64,7 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public void updateQueryDocumentRelevance(IPublication publication, IQuery query,
 			IQueryPublicationRelevance iQueryPublicationRelevance) throws ANoteException {
-		SpringInjectedServicesAccess.getQueriesService().updateRelevance(query.getId(), publication.getId(), iQueryPublicationRelevance.getRelevance().name());
+		SpringInjectedServicesAccess.getQueriesService().updateRelevance(query.getId(), publication.getId(), iQueryPublicationRelevance.getRelevance().toString());
 	}
 
 	@Override
