@@ -22,6 +22,7 @@ import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.queries.IQueriesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
 import com.silicolife.textmining.core.datastructures.documents.query.QueryImpl;
@@ -50,7 +51,8 @@ public class QueriesController {
 	private GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericPairSpringSpel;
 	@Autowired
 	private IQueriesService queriesService;
-	
+	@Autowired
+	private IQueriesLuceneService queriesLucineService;
 
 	/**
 	 * Get All queries from a user
@@ -293,4 +295,52 @@ public class QueriesController {
 		DaemonResponse<Set<String>> response = new DaemonResponse<Set<String>>(queriesService.getQueryPublicationsExternalIDFromSource(queryId, source));
 		return new ResponseEntity<DaemonResponse<Set<String>>>(response, HttpStatus.OK);
 	}
+	
+	//Lucine
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getKeyWordsByWildCard/{subKeyword}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<String>>> getKeywordsOfQueriesByWildCard( @PathVariable String subKeyword) {
+		DaemonResponse<List<String>> response = new DaemonResponse<List<String>>(queriesLucineService.getKeywordsOfQueriesByWildCard(subKeyword));
+		return new ResponseEntity<DaemonResponse<List<String>>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesBykeywords/{keywords}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesBykeywords(@PathVariable String keywords) {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesBykeywords(keywords));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesBykeywordsPaginated/{keywords}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesBykeywordsPaginated(@PathVariable String keywords, @PathVariable int paginationIndex, @PathVariable int paginationSize) {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesBykeywordsPaginated(keywords, paginationIndex,paginationSize ));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesByOrganismPaginated/{organism}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesByOrganismPaginated(@PathVariable String organism, @PathVariable int paginationIndex, @PathVariable int paginationSize) {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesByOrganismPaginated(organism, paginationIndex,paginationSize ));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countQueriesBykeywords/{keywords}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countQueriesBykeywords(@PathVariable String keywords) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countQueriesBykeywords(keywords));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countQueriesByOrganism/{organims}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countQueriesByOrganism(@PathVariable String organism) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countQueriesByOrganism(organism));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="anote2daemon">
+    <wb-module deploy-name="anote2daemondev">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
@@ -10,7 +10,7 @@
         <dependent-module archiveName="processes-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/processes/processes">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="anote2daemon"/>
         <property name="java-output-path" value="/anote2daemon/target/classes"/>
+        <property name="context-root" value="anote2daemondev"/>
     </wb-module>
 </project-modules>
