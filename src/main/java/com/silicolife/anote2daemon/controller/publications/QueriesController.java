@@ -260,7 +260,7 @@ public class QueriesController {
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateRelevance", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> updateRelevance(@RequestParam Long queryId, @RequestParam Long publicationId, @RequestParam String relevance) {
-		if (relevance.equals(RelevanceTypeEnum.none.toString()))
+		if (relevance.equals(RelevanceTypeEnum.none.toString())||relevance.isEmpty())
 			relevance = null;
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(queriesService.updateRelevance(queryId, publicationId, relevance));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);

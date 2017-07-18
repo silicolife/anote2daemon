@@ -5,7 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 	
-		<property name="hibernate.connection.url">jdbc:mysql://localhost/todelete3</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/anoterelease25</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">admin</property>
 		
@@ -29,7 +29,7 @@
 		<!--  
 			<property name="hibernate.search.default.directory_provider">filesystem</property>
 		-->
-		<property name="hibernate.search.default.indexBase">/var/lucene/textminingcarbontest</property>		
+		<property name="hibernate.search.default.indexBase">C:/Users/Hugo Costa/Projects/luceneindex/anoterelease25</property>		
 		
 		
 		<mapping
