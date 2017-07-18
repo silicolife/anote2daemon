@@ -56,7 +56,7 @@ public class ProcessesController {
 	 * @return
 	 * @throws ProcessException 
 	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#processes_.getID(), "
+	@PreAuthorize("isAuthenticated() and hasPermission(#processes_.getId(), "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/updateIEProcess", method = RequestMethod.PUT, consumes = { "application/json" })
