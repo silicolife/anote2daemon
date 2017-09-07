@@ -183,6 +183,7 @@ public class CorpusController {
 		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
 	}
 	
+	
 	/**
 	 * getCorpusPublicationsPaginatedWSort
 	 * 
@@ -270,6 +271,7 @@ public class CorpusController {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusService.countCorpusProcesses(corpusId));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
+	
 	
 	/**
 	 * get processes from a corpus paginated
