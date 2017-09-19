@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +28,6 @@ import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
-import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
@@ -60,15 +58,15 @@ import com.silicolife.textmining.processes.resources.export.ResourceExportToCSVI
 @ResponseBody
 @Controller
 public class RunServerProcessesController {
-	
+
 	final static Logger logger = LoggerFactory.getLogger(RunServerProcessesController.class);
 
 	@Autowired 
 	private TaskExecutor taskExecutor;
-	
+
 	@Autowired
 	private ILuceneService luceneService;
-	
+
 	@Autowired
 	private IResourcesService resourcesService;
 
@@ -90,11 +88,11 @@ public class RunServerProcessesController {
 				}
 			}
 		});
-				
+
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -116,7 +114,7 @@ public class RunServerProcessesController {
 	}
 
 
-	
+
 	/**
 	 * 
 	 * 
@@ -130,23 +128,26 @@ public class RunServerProcessesController {
 		ObjectMapper bla = new ObjectMapper();
 		try {
 			switch (parameters[0]) {
-			case IRPubmedSearchConfigurationImpl.pubmedsearchUID :
-				executeBackgroundThreadForPubMedSearch(parameters, bla);
-				break;
-			case CorpusCreateConfigurationImpl.configurationUID :
-				executeBackgroundThreadForCorpusCreation(parameters, bla);
-				break;
-			case CorpusUpdateConfigurationImpl.configurationUID :
-				executeBackgroundThreadForCorpusUpdate(parameters, bla);
-				break;
-			case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
-				executeBackgroundThreadForLinneausTagger(parameters, bla);
-				break;
-			case KineticREPipelineConfigurationImpl.processUID :
-				executeBackgroundThreadForKineticREPipeline(parameters, bla);
-				break;
-			default :
-				break;
+				case IRPubmedSearchConfigurationImpl.pubmedsearchUID :
+					executeBackgroundThreadForPubMedSearch(parameters, bla);
+					break;
+				case CorpusCreateConfigurationImpl.configurationUID :
+					executeBackgroundThreadForCorpusCreation(parameters, bla);
+					break;
+				case CorpusUpdateConfigurationImpl.configurationUID :
+					executeBackgroundThreadForCorpusUpdate(parameters, bla);
+					break;
+				case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
+					executeBackgroundThreadForLinneausTagger(parameters, bla);
+					break;
+				case KineticREPipelineConfigurationImpl.processUID :
+					executeBackgroundThreadForKineticREPipeline(parameters, bla);
+					break;
+				case ResourceExportToCSVImpl.processUID:
+					executeExportResource(parameters, bla);
+					break;
+				default :
+					break;
 			}
 		} catch (JsonParseException e) {
 			throw new RunServerProcessesException(e);
@@ -158,32 +159,28 @@ public class RunServerProcessesController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(true);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/resource/export", method = RequestMethod.GET, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> exportResource(@PathVariable Long resourceId) throws ResourcesExceptions {
-		executeExportResourceTask(resourceId);
-		return new ResponseEntity<DaemonResponse<Boolean>>(HttpStatus.OK);
-	}
-	
-	private void executeExportResourceTask(Long resourceId) {
-		taskExecutor.execute(new SpringRunnable(){
 
+	private void executeExportResource(String[] parameters, ObjectMapper bla) throws JsonParseException, JsonMappingException, IOException {
+		final Long resourceId = bla.readValue(parameters[1],Long.class);
+		taskExecutor.execute(new SpringRunnable(){
 			@Override
 			protected void onRun() {
 				try {
 					IResource<IResourceElement> resource = resourcesService.getResourcesById(resourceId);
 					if(resource!=null)
 					{
+						logger.info("Resource Export Start " + resourceId);
 						IResourceExportToCSV exporter = new ResourceExportToCSVImpl();
-						String filePath = ApplicationConfigurationProperties.getExportResourceDir() + "/resource_" + resourceId + "_" + Utils.currentTimeSimple();
+						String filePath = ApplicationConfigurationProperties.getExportResourceDir() + "/resource_" + resourceId + "_" + Utils.currentTimeSimple().replace("-", "_") + ".tsv";
 						IResourceExportConfiguration configuration = new ResourceExportConfigurationImpl(filePath );
-						exporter.exportCSVFile(resource, configuration );
+						exporter.exportCSVFile(resource, configuration);
+						logger.info("Resource Export End " + resourceId);
 					}
 				} catch (Exception e) {
 					logger.error("Exception",e);;
 				}
 			}
-		});		
+		});
 	}
 
 	private void executeBackgroundThreadForKineticREPipeline(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
@@ -241,7 +238,7 @@ public class RunServerProcessesController {
 
 		});
 	}
-	
+
 	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusUpdateConfigurationImpl corpusupdateConfiguration = bla.readValue(parameters[1],CorpusUpdateConfigurationImpl.class);
