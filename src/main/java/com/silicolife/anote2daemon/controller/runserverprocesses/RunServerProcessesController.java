@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,18 +24,28 @@ import com.silicolife.anote2daemon.processes.corpus.CorpusAutoUpdate;
 import com.silicolife.anote2daemon.processes.corpus.CorpusCreationExecutorServer;
 import com.silicolife.anote2daemon.processes.corpus.CorpusUpdaterExecutorServer;
 import com.silicolife.anote2daemon.processes.re.OrganismKineticInformationExportToFileExtension;
+import com.silicolife.anote2daemon.utils.ApplicationConfigurationProperties;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ResourcesExceptions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
+import com.silicolife.textmining.core.datastructures.resources.export.ResourceExportConfigurationImpl;
+import com.silicolife.textmining.core.datastructures.utils.Utils;
+import com.silicolife.textmining.core.interfaces.resource.IResource;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
+import com.silicolife.textmining.core.interfaces.resource.export.tsv.IResourceExportConfiguration;
+import com.silicolife.textmining.core.interfaces.resource.export.tsv.IResourceExportToCSV;
 import com.silicolife.textmining.processes.ie.ner.datatstructures.ANERLexicalResources;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.LinnaeusTagger;
 import com.silicolife.textmining.processes.ie.ner.linnaeus.configuration.NERLinnaeusConfigurationImpl;
 import com.silicolife.textmining.processes.ie.pipelines.kineticparameters.configuration.KineticREPipelineConfigurationImpl;
 import com.silicolife.textmining.processes.ir.pubmed.PubMedSearch;
 import com.silicolife.textmining.processes.ir.pubmed.configuration.IRPubmedSearchConfigurationImpl;
+import com.silicolife.textmining.processes.resources.export.ResourceExportToCSVImpl;
 
 /**
  * The goal of this class is to expose for the web all Publications
@@ -57,6 +68,9 @@ public class RunServerProcessesController {
 	
 	@Autowired
 	private ILuceneService luceneService;
+	
+	@Autowired
+	private IResourcesService resourcesService;
 
 	/**
 	 * 
@@ -145,6 +159,43 @@ public class RunServerProcessesController {
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param resource
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@RequestMapping(value = "/resource/export", method = RequestMethod.GET, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> updateResource(@PathVariable Long resourceId) throws ResourcesExceptions {
+		executeExportResourceTask(resourceId);
+		return new ResponseEntity<DaemonResponse<Boolean>>(HttpStatus.OK);
+	}
+	
+	private void executeExportResourceTask(Long resourceId) {
+		taskExecutor.execute(new SpringRunnable(){
+
+			@Override
+			protected void onRun() {
+				try {
+					IResource<IResourceElement> resource = resourcesService.getResourcesById(resourceId);
+					if(resource!=null)
+					{
+						IResourceExportToCSV exporter = new ResourceExportToCSVImpl();
+						String filePath = ApplicationConfigurationProperties.getExportResourceDir() + "/resource_" + resourceId + "_" + Utils.currentTimeSimple();
+						IResourceExportConfiguration configuration = new ResourceExportConfigurationImpl(filePath );
+						exporter.exportCSVFile(resource, configuration );
+					}
+				} catch (Exception e) {
+					logger.error("Exception",e);;
+				}
+			}
+		});		
+	}
+
 	private void executeBackgroundThreadForKineticREPipeline(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final KineticREPipelineConfigurationImpl kineticrepipelineConfiguration = bla.readValue(parameters[1],KineticREPipelineConfigurationImpl.class);
 		taskExecutor.execute(new SpringRunnable(){

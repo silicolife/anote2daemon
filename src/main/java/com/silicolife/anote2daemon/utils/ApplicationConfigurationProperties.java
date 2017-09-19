@@ -90,5 +90,9 @@ public class ApplicationConfigurationProperties {
 	public static String getExportKineticREDir() {
 		return getPropConfigurations().getProperty("exportkineticreresult");
 	}
+	
+	public static String getExportResourceDir() {
+		return getPropConfigurations().getProperty("exportresourceresult");
+	}
 
 }

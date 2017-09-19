@@ -148,7 +148,7 @@ public class OrganismKineticInformationExportToFileExtension extends OrganismKin
 		organism.add(ClassPropertiesManagement.getClassIDClassName("Organism"));
 		REKineticConfigurationClasses classConfiguration = new REKineticConfigurationClasses(units, values, kineticParameters, metabolites, enzymes, organism);
 		boolean sentencesToExport = true;;
-		String exportFile = ApplicationConfigurationProperties.getExportKineticREDir() + getHeadFileName(configuration2) + "_" +getStringDate() + ".tsv";
+		String exportFile = ApplicationConfigurationProperties.getExportKineticREDir() +"/"+ getHeadFileName(configuration2) + "_" +getStringDate() + ".tsv";
 		IREKineticREResultsExportConfiguration configutaion =  new REKineticREResultsExportConfigurationImpl(exportFile , null, classConfiguration, sentencesToExport );
 		return 	configutaion;
 	}
