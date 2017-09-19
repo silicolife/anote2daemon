@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.silicolife.anote2daemon.utils.ApplicationConfigurationProperties;
 import com.silicolife.textmining.core.datastructures.general.ClassPropertiesManagement;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ProcessRunStatusConfigurationEnum;
@@ -39,9 +40,7 @@ import com.silicolife.textmining.processes.ie.re.kineticre.io.IREKineticREResult
 import com.silicolife.textmining.processes.ie.re.kineticre.io.REKineticREResultsExportConfigurationImpl;
 
 public class OrganismKineticInformationExportToFileExtension extends OrganismKineticInformationExportToFile{
-	
-	private final static String exportDir = "/home/hcosta/kineticrepositories/";
-	
+		
 	public OrganismKineticInformationExportToFileExtension(IKineticREPipelineConfiguration configuration) throws ANoteException {
 		super(getProcesses2(), getLinnaeusConfiguration(), getKineticREConfiguration(), getExportConfiguration(configuration));
 	}
@@ -149,7 +148,7 @@ public class OrganismKineticInformationExportToFileExtension extends OrganismKin
 		organism.add(ClassPropertiesManagement.getClassIDClassName("Organism"));
 		REKineticConfigurationClasses classConfiguration = new REKineticConfigurationClasses(units, values, kineticParameters, metabolites, enzymes, organism);
 		boolean sentencesToExport = true;;
-		String exportFile = exportDir + getHeadFileName(configuration2) + "_" +getStringDate() + ".tsv";
+		String exportFile = ApplicationConfigurationProperties.getExportKineticREDir() + getHeadFileName(configuration2) + "_" +getStringDate() + ".tsv";
 		IREKineticREResultsExportConfiguration configutaion =  new REKineticREResultsExportConfigurationImpl(exportFile , null, classConfiguration, sentencesToExport );
 		return 	configutaion;
 	}

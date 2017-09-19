@@ -86,5 +86,9 @@ public class ApplicationConfigurationProperties {
 	public static String getPatentCorpusToArchiveDir() {
 		return getPropConfigurations().getProperty("patentcorpusafterupdatedir");
 	}
+	
+	public static String getExportKineticREDir() {
+		return getPropConfigurations().getProperty("exportkineticreresult");
+	}
 
 }
