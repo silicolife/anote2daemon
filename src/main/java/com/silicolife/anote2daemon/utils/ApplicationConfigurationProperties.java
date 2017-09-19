@@ -8,9 +8,9 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 
-public class AutoUpdateConfigurationProperties {
+public class ApplicationConfigurationProperties {
 
-	static Logger logger = Logger.getLogger(AutoUpdateConfigurationProperties.class);
+	static Logger logger = Logger.getLogger(ApplicationConfigurationProperties.class);
 	private static Properties prop = null;
 
 	private static synchronized Properties getPropConfigurations(){
@@ -19,8 +19,8 @@ public class AutoUpdateConfigurationProperties {
 			prop = new Properties();
 			InputStream inputStream = null;
 			try {
-				String propFileName = "autoupdate.properties";
-				inputStream = AutoUpdateConfigurationProperties.class.getClassLoader().getResourceAsStream(propFileName);
+				String propFileName = "application.properties";
+				inputStream = ApplicationConfigurationProperties.class.getClassLoader().getResourceAsStream(propFileName);
 				if (inputStream != null) {
 					prop.load(inputStream);
 				} else {

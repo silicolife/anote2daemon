@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import org.slf4j.LoggerFactory;
 
-import com.silicolife.anote2daemon.utils.AutoUpdateConfigurationProperties;
+import com.silicolife.anote2daemon.utils.ApplicationConfigurationProperties;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
@@ -79,7 +79,7 @@ public class USPTOPatentUpdateExecutionManager {
 	private List<IIEProcess> getProcessesToUpdate() throws ANoteException
 	{
 		List<IIEProcess> out = new ArrayList<>();
-		String idsSeparatedByComma = AutoUpdateConfigurationProperties.getPatentCorpusProcessesToResumeIds();
+		String idsSeparatedByComma = ApplicationConfigurationProperties.getPatentCorpusProcessesToResumeIds();
 		String[] list = idsSeparatedByComma.split(",");
 		for(String item:list)
 		{
@@ -114,17 +114,17 @@ public class USPTOPatentUpdateExecutionManager {
 
 	public 	ICorpusUpdateConfiguration getCorpusUpdateConfiguration() throws ANoteException
 	{
-		String usptoPatentDirectory = AutoUpdateConfigurationProperties.getPatentCorpusUpdateDir();
+		String usptoPatentDirectory = ApplicationConfigurationProperties.getPatentCorpusUpdateDir();
 		Properties properties = new Properties();
-		long corpusID = Long.valueOf(AutoUpdateConfigurationProperties.getPatentCorpusID());
+		long corpusID = Long.valueOf(ApplicationConfigurationProperties.getPatentCorpusID());
 		ICorpus corpusToUpdate = InitConfiguration.getDataAccess().getCorpusByID(corpusID );
 		CorpusUpdateConfigurationImpl corpusupdateConfiguration = new CorpusUpdateConfigurationImpl(corpusToUpdate, usptoPatentDirectory, properties,CorpusCreateSourceEnum.USPTO);
 		return corpusupdateConfiguration;
 	}
 	
 	public static boolean movePMCFilesToFinalDirectory() throws IOException{
-		String tmpDir = AutoUpdateConfigurationProperties.getPatentCorpusUpdateDir();
-		String finalDir = AutoUpdateConfigurationProperties.getPatentCorpusToArchiveDir();
+		String tmpDir = ApplicationConfigurationProperties.getPatentCorpusUpdateDir();
+		String finalDir = ApplicationConfigurationProperties.getPatentCorpusToArchiveDir();
 		File finalDirFile = new File(finalDir);
 		if(!finalDirFile.exists())
 			finalDirFile.mkdir();

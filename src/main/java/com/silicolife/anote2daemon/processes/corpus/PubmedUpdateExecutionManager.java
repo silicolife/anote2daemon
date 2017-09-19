@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import org.slf4j.LoggerFactory;
 
-import com.silicolife.anote2daemon.utils.AutoUpdateConfigurationProperties;
+import com.silicolife.anote2daemon.utils.ApplicationConfigurationProperties;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
@@ -78,7 +78,7 @@ public class PubmedUpdateExecutionManager {
 	private List<IIEProcess> getProcessesToUpdate() throws ANoteException
 	{
 		List<IIEProcess> out = new ArrayList<>();
-		String idsSeparatedByComma = AutoUpdateConfigurationProperties.getPubmedCorpusProcessesToResumeIds();
+		String idsSeparatedByComma = ApplicationConfigurationProperties.getPubmedCorpusProcessesToResumeIds();
 		String[] list = idsSeparatedByComma.split(",");
 		for(String item:list)
 		{
@@ -111,17 +111,17 @@ public class PubmedUpdateExecutionManager {
 
 	public 	ICorpusUpdateConfiguration getCorpusUpdateConfiguration() throws ANoteException
 	{
-		String publicationsDirectory = AutoUpdateConfigurationProperties.getPubmedCorpusUpdateDir();
+		String publicationsDirectory = ApplicationConfigurationProperties.getPubmedCorpusUpdateDir();
 		Properties properties = new Properties();
-		long corpusID = Long.valueOf(AutoUpdateConfigurationProperties.getPubmedCorpusId());
+		long corpusID = Long.valueOf(ApplicationConfigurationProperties.getPubmedCorpusId());
 		ICorpus corpusToUpdate = InitConfiguration.getDataAccess().getCorpusByID(corpusID );
 		CorpusUpdateConfigurationImpl corpusupdateConfiguration = new CorpusUpdateConfigurationImpl(corpusToUpdate, publicationsDirectory, properties, CorpusCreateSourceEnum.Pubmed);
 		return corpusupdateConfiguration;
 	}
 	
 	private static boolean movePubmedFilesToFinalDirectory() throws IOException{
-		String tmpDir = AutoUpdateConfigurationProperties.getPubmedCorpusUpdateDir();
-		String finalDir = AutoUpdateConfigurationProperties.getPubmedCorpusToArchiveDir();
+		String tmpDir = ApplicationConfigurationProperties.getPubmedCorpusUpdateDir();
+		String finalDir = ApplicationConfigurationProperties.getPubmedCorpusToArchiveDir();
 		File finalDirFile = new File(finalDir);
 		if(!finalDirFile.exists())
 			finalDirFile.mkdir();
