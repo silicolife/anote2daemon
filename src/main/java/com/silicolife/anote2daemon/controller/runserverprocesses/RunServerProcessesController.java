@@ -159,18 +159,8 @@ public class RunServerProcessesController {
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
-	/**
-	 * 
-	 * 
-	 * @param resource
-	 * @return
-	 * @throws ResourcesExceptions
-	 */
-	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
-			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
-			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
 	@RequestMapping(value = "/resource/export", method = RequestMethod.GET, consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<Boolean>> updateResource(@PathVariable Long resourceId) throws ResourcesExceptions {
+	public ResponseEntity<DaemonResponse<Boolean>> exportResource(@PathVariable Long resourceId) throws ResourcesExceptions {
 		executeExportResourceTask(resourceId);
 		return new ResponseEntity<DaemonResponse<Boolean>>(HttpStatus.OK);
 	}
