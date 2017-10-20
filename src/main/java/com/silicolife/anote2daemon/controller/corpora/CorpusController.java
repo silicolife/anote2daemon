@@ -168,7 +168,7 @@ public class CorpusController {
 	}
 	
 	/**
-	 * get processes from a corpus
+	 * getCorpusPublicationsPaginated
 	 * 
 	 * @param id
 	 * @return
@@ -180,6 +180,23 @@ public class CorpusController {
 	@RequestMapping(value = "/getCorpusPublicationsPaginated/{corpusId}/{paginationIndex}/{paginationSize}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IDocumentSet>> getCorpusPublicationsPaginated(@PathVariable Long corpusId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize) throws CorpusException {
 		DaemonResponse<IDocumentSet> response = new DaemonResponse<IDocumentSet>(corpusService.getCorpusPublicationsPaginated(corpusId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString())));
+		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * getCorpusPublicationsPaginatedWSort
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusPublicationsPaginatedWSort/{corpusId}/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IDocumentSet>> getCorpusPublicationsPaginatedWSort(@PathVariable Long corpusId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) throws CorpusException {
+		DaemonResponse<IDocumentSet> response = new DaemonResponse<IDocumentSet>(corpusService.getCorpusPublicationsPaginatedWSort(corpusId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
 		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
 	}
 	
@@ -236,6 +253,39 @@ public class CorpusController {
 	@RequestMapping(value = "/getCorpusProcesses/{corpusId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getCorpusProcesses(@PathVariable Long corpusId) throws CorpusException{
 		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(corpusService.getCorpusProcesses(corpusId));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * get number of processes from a corpus
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */	
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/countCorpusProcesses/{corpusId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countCorpusProcesses(@PathVariable Long corpusId) throws CorpusException{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusService.countCorpusProcesses(corpusId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * get processes from a corpus paginated
+	 * 
+	 * @param id
+	 * @return
+	 * @throws CorpusException 
+	 */	
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getCorpusProcessesPaginated/{corpusId}/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getCorpusProcessesPaginated(@PathVariable Long corpusId , @PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) throws CorpusException{
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(corpusService.getCorpusProcessesPaginated(corpusId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
 		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
 	}
 	
