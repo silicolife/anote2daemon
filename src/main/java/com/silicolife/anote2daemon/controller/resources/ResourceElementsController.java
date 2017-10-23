@@ -696,4 +696,20 @@ public class ResourceElementsController {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getResourceElementsCountByPartialTermOrPartialSynonym(partialString));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
 	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getResourceElementsByExactTermOrExactSynonymPaginated", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsByExactTermOrExactSynonymPaginated(@RequestParam String exactString, @RequestParam Integer index, @RequestParam Integer paginationSize) throws ResourcesExceptions{
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsByExactTermOrExactSynonymPaginated(exactString, index, paginationSize));
+		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCountResourceElementsByExactTermOrExactSynonymPaginated", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<Integer>> getCountResourceElementsByExactTermOrExactSynonymPaginated(@RequestParam String exactString) throws ResourcesExceptions{
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.getCountResourceElementsByExactTermOrExactSynonymPaginated(exactString));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);	
+	}
+	
 }

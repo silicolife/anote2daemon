@@ -22,6 +22,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PublicationManagerException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.publications.IPublicationsLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.documents.PublicationImpl;
 import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
@@ -52,6 +53,8 @@ public class PublicationsController {
 	private IPublicationsService publicationService;
 	@Autowired
 	private IPublicationsLuceneService publicationsLuceneService;
+	@Autowired
+	private IAnnotationService annotationService;
 
 	/**
 	 * Get all Publication labels from system
@@ -207,6 +210,13 @@ public class PublicationsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsFromResourcesQuery", method = RequestMethod.POST) 
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationsFromResourcesQuery(@RequestParam String query)  {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationService.getPublicationsFromResourcesQuery(query, annotationService));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getPublicationsFromSearchPaginated/{index}/{paginationSize}", method = RequestMethod.POST , consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationsFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize)  {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationsLuceneService.getPublicationsFromSearchPaginated(searchProperties, index, paginationSize));
@@ -229,6 +239,8 @@ public class PublicationsController {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationsLuceneService.getPublicationsFromSearch(searchProperties));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
+	
+
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/expAnoteC", method = RequestMethod.GET , consumes = { "application/json" })
