@@ -32,6 +32,13 @@
 		<beans:property name="cookieHttpOnly" value="false"></beans:property>
 		<beans:property name="cookiePath" value="/"></beans:property>
 	</beans:bean>
+	
+	<!--
+	<beans:bean id="csrfTokenRepository"
+	class="org.springframework.security.web.csrf.CookieCsrfTokenRepository">
+	<beans:property name="cookieHttpOnly" value="false"/>
+	</beans:bean>
+	-->
 
 	<!-- Entry point for REST service. -->
 	<beans:bean id="restAuthenticationEntryPoint"
