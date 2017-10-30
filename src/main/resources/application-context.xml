@@ -13,9 +13,9 @@
 	<beans:import resource="classpath:spring-database.xml" />
  	<beans:import resource="classpath:spring-dao.xml" /> 
 	<beans:import resource="classpath:spring-config.xml" />
-	<beans:import resource="classpath:spring-security.xml" />
+	<!--<beans:import resource="classpath:spring-security.xml" /> -->
 	<!-- Spring security with csrf disabled not for production!! To use disable the previous security xml -->
-	 <!--<beans:import resource="classpath:spring-security-csrf-disabled.xml" />-->  
+	 <beans:import resource="classpath:spring-security-csrf-disabled.xml" /> 
 	
 
 

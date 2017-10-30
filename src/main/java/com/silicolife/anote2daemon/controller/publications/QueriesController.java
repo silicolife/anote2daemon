@@ -25,6 +25,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.queries.IQueriesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.queries.IQueriesService;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.datastructures.documents.query.QueryImpl;
 import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
@@ -76,6 +77,18 @@ public class QueriesController {
 	@RequestMapping(value = "/countAllQueries", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Integer>> countAllQueries() {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesService.countAllQueries());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Counts All queries from a user
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllActiveQueries", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllActiveQueries() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesService.countAllActiveQueries());
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 	
@@ -326,6 +339,20 @@ public class QueriesController {
 	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesByOrganismPaginated(@PathVariable String organism, @PathVariable int paginationIndex, @PathVariable int paginationSize) {
 		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesByOrganismPaginated(organism, paginationIndex,paginationSize ));
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesFromSearchPaginated/{index}/{paginationSize}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize)  {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesFromSearchPaginated(searchProperties, index, paginationSize));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countQueriesFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countQueriesFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countQueriesFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 	
 	

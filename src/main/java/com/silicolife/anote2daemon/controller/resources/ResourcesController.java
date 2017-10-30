@@ -129,6 +129,37 @@ public class ResourcesController {
 		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getResourcesByType(type));
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * 
+	 * 
+	 * @param type
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @param asc
+	 * @param sortBy
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getResourcesByTypePaginated", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getResourcesByTypePaginated(@RequestParam String type,@RequestParam Integer paginationIndex,@RequestParam Integer paginationSize,@RequestParam boolean asc,@RequestParam String sortBy) throws ResourcesExceptions {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getResourcesByTypePaginated(type, paginationIndex, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Count tResourcesByType
+	 * 
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countResourcesByType", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countResourcesByType(@RequestParam String type) throws ResourcesExceptions {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesService.countResourcesByType(type));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * 
