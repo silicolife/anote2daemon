@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.UserExceptions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.users.IUserService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.GeneratePassword;
 import com.silicolife.textmining.core.interfaces.core.user.IGroup;
 import com.silicolife.textmining.core.interfaces.core.user.IUser;
 
@@ -64,7 +66,21 @@ public class UsersController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.createUser(user));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
-
+	
+	
+	/**
+	 * Create a new user encoding password given
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@PreAuthorize("hasAuthority('role_admin')")
+	@RequestMapping(value = "/createUserFromWeb", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> createUserFromWeb(@RequestBody AuthUsers user) {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.createUserFromWeb(user));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
 	/**
 	 * Update an user
 	 * 
