@@ -131,6 +131,24 @@ public class PrivilegesController {
 				resource));
 		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
 	}
+	
+	
+	
+	/**
+	 * Get all users and permission that user to a resource
+	 * 
+	 * @param resourceId
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getUsersAndPermissionsPaginated", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>> getUsersAndPermissionsPaginated(@RequestParam Long resourceId, @RequestParam String resource, 
+			@RequestParam Integer paginationIndex,@RequestParam Integer paginationSize,@RequestParam boolean asc,@RequestParam String sortBy) {
+		DaemonResponse<List<IGenericPair<IUser, String>>> response = new DaemonResponse<List<IGenericPair<IUser, String>>>(privilegesService.getUsersAndPermissionsPaginated(resourceId,
+				resource, paginationIndex, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Check if user has permission to that resource
