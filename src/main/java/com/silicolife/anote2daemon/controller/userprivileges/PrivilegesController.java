@@ -132,6 +132,21 @@ public class PrivilegesController {
 		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
 	}
 	
+	/**
+	 * Count all users and permission that user to a resource
+	 * 
+	 * @param resourceId
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countUsersAndPrivilegers", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countUsersAndPrivilegers(@RequestParam Long resourceId, @RequestParam String resource) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(privilegesService.countUsersAndPermissions(resourceId,
+				resource));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 	
 	
 	/**
