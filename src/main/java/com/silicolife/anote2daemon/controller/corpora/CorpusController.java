@@ -21,13 +21,15 @@ import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.CorpusException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.corpus.ICorpusLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpusStatistics;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
-import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
+//import com.silicolife.textmining.core.interfaces.process.IR.ICorpus;
 
 /**
  * The goal of this class is to expose for the web all Corpus functionalities of
@@ -48,6 +50,8 @@ public class CorpusController {
 	private GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericPairSpringSpel;
 	@Autowired
 	private ICorpusService corpusService;
+	@Autowired
+	private ICorpusLuceneService corpusluceneService;
 
 	/**
 	 * Get all corpus
@@ -433,5 +437,21 @@ public class CorpusController {
 	public ResponseEntity<DaemonResponse<IDocumentSet>> getCorpusPublicationsOutdatedPaginated(@PathVariable Long corpusId, @PathVariable Long processId, @PathVariable Long paginationIndex, @PathVariable Long paginationSize) throws CorpusException {
 		DaemonResponse<IDocumentSet> response = new DaemonResponse<IDocumentSet>(corpusService.getCorpusPublicationsOutdatedPaginated(corpusId, processId, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString())));
 		return new ResponseEntity<DaemonResponse<IDocumentSet>>(response, HttpStatus.OK);
+	}
+	
+	//Lucene
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCorpusFromSearchPaginated/{index}/{paginationSize}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<ICorpus>>> getCorpusFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize)  {
+		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusluceneService.getCorpusFromSearchPaginated(searchProperties, index, paginationSize));
+		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countCorpusFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countCorpusFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusluceneService.countCorpusFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 }

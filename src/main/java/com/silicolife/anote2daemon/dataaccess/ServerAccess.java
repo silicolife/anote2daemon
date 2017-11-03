@@ -1136,5 +1136,23 @@ public class ServerAccess implements IDataAccess{
 		return SpringInjectedServicesAccess.getPublicationsLuceneService().countGetPublicationsFromSearch(searchProperties);
 		
 	}
+
+
+
+	@Override
+	public Integer countGetCorpusFrom(ISearchProperties searchProperties) throws ANoteException {
+		// TODO Auto-generated method stub
+		return SpringInjectedServicesAccess.getCorpusLuceneService().countCorpusFromSearch(searchProperties);
+		
+	}
+
+
+
+	@Override
+	public List<ICorpus> getCorpusFromSearchPaginated(ISearchProperties searchProperties, int index, int paginationSize)
+			throws ANoteException {
+		// TODO Auto-generated method stub
+		 return SpringInjectedServicesAccess.getCorpusLuceneService().getCorpusFromSearchPaginated(searchProperties, index, paginationSize);
+	}
 	
 }
