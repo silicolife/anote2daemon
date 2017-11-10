@@ -108,6 +108,19 @@ public class UsersController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.updateCurrentUserFromWeb(pair.getX(), pair.getY()));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * Update an user
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/postAvatar", method = RequestMethod.POST )
+	public ResponseEntity<DaemonResponse<byte[]>> postAvatar(@RequestBody String image) {
+		DaemonResponse<byte[]> response = new DaemonResponse<byte[]>(userService.postAvatar(image));
+		return new ResponseEntity<DaemonResponse<byte[]>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Delete an user
