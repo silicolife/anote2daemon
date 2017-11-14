@@ -454,4 +454,11 @@ public class CorpusController {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusluceneService.countCorpusFromSearch(searchProperties));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getCorpusFromSearchWPrivileges", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<ICorpus>>> getCorpusFromSearchWPrivileges(@RequestBody SearchPropertiesImpl searchProperties)  {
+		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusluceneService.getCorpusFromSearchWPrivileges(searchProperties));
+		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
+	}
 }
