@@ -16,11 +16,11 @@ public class CorsFilterAnoteWeb extends GenericFilterBean {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;       
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080, http://127.0.0.1:8080, http://localhost:4200, http://127.0.0.1:4200"); 
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+//        response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:4200"/*"http://localhost:8080, http://127.0.0.1:8080, http://localhost:4200, http://127.0.0.1:4200", http://127.0.0.1:8081*/); 
+        response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, XSRF-TOKEN");
+        response.setHeader("Access-Control-Allow-Headers", "X-XSRF-TOKEN, content-type, Origin");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
@@ -30,3 +30,5 @@ public class CorsFilterAnoteWeb extends GenericFilterBean {
         }           
     }
 }
+// Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, 
+//, X-SECURYTY ,  XSRF-TOKEN, x-xsrf-token,
