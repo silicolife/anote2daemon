@@ -355,6 +355,15 @@ public class QueriesController {
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesFromSearchPaginatedWAuthAndSort/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesFromSearchPaginatedWAuthAndSort(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize,@PathVariable boolean asc, @PathVariable String sortBy)  {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesFromSearchPaginatedWAuthAndSort(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	
+	
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/countQueriesFromSearchWAuth", method = RequestMethod.POST , consumes = { "application/json" })

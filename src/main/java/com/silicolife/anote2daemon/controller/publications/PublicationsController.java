@@ -194,6 +194,36 @@ public class PublicationsController {
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
 	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllPublicationsPaginated/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getAllPublicationsPaginated(@PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc,@PathVariable String sortBy)  {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationService.getAllPublicationsPaginated( index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/findAllDistinctColumnValuesFromPublicationsPaginated/{column}/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<List<String>>> findAllDistinctColumnValuesFromPublicationsPaginated(@PathVariable String column,@PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc,@PathVariable String sortBy)  {
+		DaemonResponse<List<String>> response = new DaemonResponse<List<String>>(publicationService.findAllDistinctColumnValuesFromPublicationsPaginated(column, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<String>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllDistinctColumnValuesFromPublications/{column}", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<Integer>> countAllDistinctColumnValuesFromPublications(@PathVariable String column) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationService.countAllDistinctColumnValuesFromPublications(column));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllPublications", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<Integer>> countAllPublications() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationService.countAllPublications());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 	/**
 	 * Update publication full text content
 	 * 
@@ -222,6 +252,15 @@ public class PublicationsController {
 		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationsLuceneService.getPublicationsFromSearchPaginated(searchProperties, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsFromSearchPaginatedWSort/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IPublication>>> getPublicationsFromSearchPaginatedWSort(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc,@PathVariable String sortBy)  {
+		DaemonResponse<List<IPublication>> response = new DaemonResponse<List<IPublication>>(publicationsLuceneService.getPublicationsFromSearchPaginatedWSort(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
+	}
+
+	
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/countGetPublicationsFromSearch", method = RequestMethod.POST , consumes = { "application/json" })

@@ -112,6 +112,32 @@ public class ProcessesController {
 		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
 	}
 	
+	/**
+	 * Get All Processes paginated with privileges
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllProcessesPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getAllProcessesPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy){
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesService.getAllProcessesPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
+	
+	
+	
+	/**
+	 * Count all Processes
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllProcesses", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllProcesses() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(processesService.countAllProcesses());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getProcessesByPublicationId/{publicationId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getProcessesByPublicationId(@PathVariable Long publicationId) throws ProcessException{
