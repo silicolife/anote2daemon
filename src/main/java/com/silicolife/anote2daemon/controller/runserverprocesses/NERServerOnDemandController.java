@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.controller.runserverprocesses;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,7 +50,26 @@ public class NERServerOnDemandController{
 //	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/ner/{textStream}", method = RequestMethod.GET)
 	public ResponseEntity<List<AnnotationExportA1Format>> runner(@PathVariable String textStream){
-		logger.info("NER Text Stream "+textStream);
+		logger.info("NER Text Stream GET :"+textStream);
+		try {
+			textStream = URLDecoder.decode(textStream,"UTF-8");
+			if(!LinnauesTaggerByDocumentSingleton.getInstance().isInit())
+				LinnauesTaggerByDocumentSingleton.getInstance().initConfiguration(defaultConfiguration());
+			List<IEntityAnnotation> entities = LinnauesTaggerByDocumentSingleton.getInstance().execute(textStream);
+			logger.info("To Convert Result"+entities.size());
+			List<AnnotationExportA1Format> out = EntityAnnotationToAnnoationExportA1Format.convert(entities);
+			logger.info("Result "+out.size());
+			return new ResponseEntity<List<AnnotationExportA1Format>>(out,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return new ResponseEntity<List<AnnotationExportA1Format>>(new ArrayList<>(),HttpStatus.OK);
+	}
+	
+//	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/ner", method = RequestMethod.POST,consumes = { "application/json" })
+	public ResponseEntity<List<AnnotationExportA1Format>> runnerpost(@RequestBody String textStream){
+		logger.info("NER Text Stream POST :"+textStream);
 		try {
 			if(!LinnauesTaggerByDocumentSingleton.getInstance().isInit())
 				LinnauesTaggerByDocumentSingleton.getInstance().initConfiguration(defaultConfiguration());
@@ -62,6 +83,7 @@ public class NERServerOnDemandController{
 		}
 		return new ResponseEntity<List<AnnotationExportA1Format>>(new ArrayList<>(),HttpStatus.OK);
 	}
+
 
 	private INERLinnaeusConfiguration defaultConfiguration() throws ANoteException {
 		// Resources
