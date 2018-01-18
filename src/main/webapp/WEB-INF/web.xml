@@ -61,18 +61,19 @@
 	    <url-pattern>/*</url-pattern>  
 	</filter-mapping> 
 
+	<!-- 
 	<filter>
 		<filter-name>CorsFilter</filter-name>
 		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
 	</filter>
-	
+	 -->
 
-	 <!-- 
+	 
 	<filter>
 		<filter-name>CorsFilter</filter-name>
 		<filter-class>com.silicolife.anote2daemon.security.CorsFilter</filter-class>
 	</filter>
-	 -->
+	 
 	 
 	<filter-mapping>
 		<filter-name>CorsFilter</filter-name>
