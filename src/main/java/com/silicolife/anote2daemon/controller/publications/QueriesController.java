@@ -349,6 +349,30 @@ public class QueriesController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesFromSearchPaginatedWAuth/{index}/{paginationSize}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesFromSearchPaginatedWAuth(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize)  {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesFromSearchPaginatedWAuth(searchProperties, index, paginationSize));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getQueriesFromSearchPaginatedWAuthAndSort/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getQueriesFromSearchPaginatedWAuthAndSort(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize,@PathVariable boolean asc, @PathVariable String sortBy)  {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getQueriesFromSearchPaginatedWAuthAndSort(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countQueriesFromSearchWAuth", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countQueriesFromSearchWAuth(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countQueriesFromSearchWAuth(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/countQueriesFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Integer>> countQueriesFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countQueriesFromSearch(searchProperties));

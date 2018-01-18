@@ -116,6 +116,23 @@ public class ResourceElementsController {
 				resourcesElementService.getResourceElementsInBatchWithLimit(resourceId, index, pagination));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * Get count of elements by resource
+	 * 
+	 * @param resourceId
+	 * @return count
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/countResourceElements", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> getResourceElementsInBatchWithLimit(@RequestParam Long resourceId) throws ResourcesExceptions {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(
+				resourcesElementService.countResourceElements(resourceId));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Get resource elements by class

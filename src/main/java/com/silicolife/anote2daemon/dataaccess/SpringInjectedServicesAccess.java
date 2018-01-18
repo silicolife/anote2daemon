@@ -13,6 +13,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.publications.IPublicationsLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.queries.IQueriesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesElementLuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.IClusteringService;
@@ -51,6 +52,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	private static IQueriesLuceneService queriesLuceneService = null;
 	private static IPublicationsLuceneService publicationsLuceneService = null;
 	private static ICorpusLuceneService corpusLuceneService = null;
+	private static IResourcesLuceneService resourcesLuceneService = null;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -72,6 +74,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		queriesLuceneService = applicationContext.getBean("queriesLuceneServiceImpl", IQueriesLuceneService.class);
 		publicationsLuceneService = applicationContext.getBean("publicationsLuceneServiceImpl", IPublicationsLuceneService.class);
 		corpusLuceneService = applicationContext.getBean("corpusLuceneServiceImpl",ICorpusLuceneService.class);
+		//resourcesLuceneService = applicationContext.getBean("resourcesLuceneServiceImpl", IResourcesLuceneService.class);
 		initServerAccess();
 	}
 
@@ -94,6 +97,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		if(queriesLuceneService!=null) queriesLuceneService.setUserLogged(userLogged);
 		if(publicationsLuceneService!=null) publicationsLuceneService.setUserLogged(userLogged);
 		if(corpusLuceneService!=null) corpusLuceneService.setUserLogged(userLogged);
+		//if(resourcesLuceneService!=null) resourcesLuceneService.setUserLogged(userLogged);
 	}
 
 
@@ -181,5 +185,9 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	
 	public static ICorpusLuceneService getCorpusLuceneService() {
 		return corpusLuceneService;
+	}
+	
+	public static IResourcesLuceneService getResourcesLuceneService() {
+		return resourcesLuceneService;
 	}
 }
