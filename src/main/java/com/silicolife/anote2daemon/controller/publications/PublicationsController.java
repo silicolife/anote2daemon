@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -218,6 +219,7 @@ public class PublicationsController {
 	
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable("countAllPublications")
 	@RequestMapping(value = "/countAllPublications", method = RequestMethod.GET )
 	public ResponseEntity<DaemonResponse<Integer>> countAllPublications() {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationService.countAllPublications());

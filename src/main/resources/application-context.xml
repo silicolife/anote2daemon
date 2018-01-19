@@ -3,12 +3,26 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/aop
-		http://www.springframework.org/schema/aop/spring-aop.xsd">
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd">
+		
+	<cache:annotation-driven />
+	<beans:bean id="publicationsController" class="com.silicolife.anote2daemon.controller.publications.PublicationsController"></beans:bean> 
+	<beans:bean id="publicationsServiceImpl" class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsServiceImpl"></beans:bean>
+	<beans:bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+	    <beans:property name="caches">
+	    <beans:set>
+	        <beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="countAllPublications"/>
+	    </beans:set>
+	    </beans:property>
+	</beans:bean>
 
 	<beans:import resource="classpath:spring-database.xml" />
  	<beans:import resource="classpath:spring-dao.xml" /> 
