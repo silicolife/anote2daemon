@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -133,6 +135,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpus.getId(),"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@CacheEvict(value = "corpusStatistics", key="#corpus.id")
 	@RequestMapping(value = "/updateCorpus", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updateCorpus(@RequestBody CorpusImpl corpus) throws CorpusException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.updateCorpus(corpus));
@@ -321,6 +324,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@CacheEvict(value = "corpusStatistics", key="#corpusId")
 	@RequestMapping(value = "/registerCorpusProcess", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> registerCorpusProcess(@RequestParam Long corpusId, @RequestParam Long processId) throws CorpusException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.registerCorpusProcess(corpusId, processId));
@@ -337,6 +341,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@CacheEvict(value = "corpusStatistics", key="#corpusId")
 	@RequestMapping(value = "/addCorpusPublication", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> addCorpusPublication(@RequestParam Long corpusId, @RequestParam Long publicationId) throws CorpusException {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.addCorpusPublication(corpusId, publicationId));
@@ -354,6 +359,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@Cacheable(value = "corpusStatistics", key="#corpusId")
 	@RequestMapping(value = "/getCorpusStatistics/{corpusId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<ICorpusStatistics>> getCorpusStatistics(@PathVariable Long corpusId) throws CorpusException{
 		DaemonResponse<ICorpusStatistics> response = new DaemonResponse<ICorpusStatistics>(corpusService.getCorpusStatistics(corpusId));
@@ -371,6 +377,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#corpusId,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@CacheEvict(value = "corpusStatistics", key="#corpusId")
 	@RequestMapping(value = "/inativateCorpus", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<Boolean>> inativateCorpus(@RequestParam Long corpusId) throws CorpusException{
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.inativateCorpus(corpusId));

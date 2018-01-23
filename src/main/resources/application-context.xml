@@ -14,13 +14,18 @@
         http://www.springframework.org/schema/cache/spring-cache.xsd">
 		
 	<cache:annotation-driven />
-	<beans:bean id="publicationsController" class="com.silicolife.anote2daemon.controller.publications.PublicationsController"></beans:bean> 
+	<beans:bean id="publicationsController" class="com.silicolife.anote2daemon.controller.publications.PublicationsController"></beans:bean>
+	<beans:bean id="resourceElementsController" class="com.silicolife.anote2daemon.controller.resources.ResourceElementsController"></beans:bean>  
+	<beans:bean id="corpusController" class="com.silicolife.anote2daemon.controller.corpora.CorpusController"></beans:bean> 
 	<beans:bean id="publicationsServiceImpl" class="com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.PublicationsServiceImpl"></beans:bean>
 	<beans:bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
 	    <beans:property name="caches">
 	    <beans:set>
 	        <beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="countAllPublications"/>
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="countAllDistinctColumnValuesFromPublications"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="resourceContent"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="resourceClassContent"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="corpusStatistics"/>
 	    </beans:set>
 	    </beans:property>
 	</beans:bean>

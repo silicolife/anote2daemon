@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -72,6 +75,12 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@Caching(
+			evict = {
+			@CacheEvict(value="resourceContent", key="#resourceId"),
+			@CacheEvict(value="resourceClassContent", key="#resourceId")
+			}
+	)
 	@RequestMapping(value = "/addResourceElements/{resourceId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElements(@PathVariable Long resourceId, @RequestBody List<ResourceElementImpl> elem)
 			throws ResourcesExceptions {
@@ -164,6 +173,7 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@Cacheable(value="resourceContent", key="#resourceId")
 	@RequestMapping(value = "/getResourceContent/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<IResourceContent>> getResourceContent(@PathVariable Long resourceId) throws ResourcesExceptions {
 		DaemonResponse<IResourceContent> response = new DaemonResponse<IResourceContent>(resourcesElementService.getResourceContent(resourceId));
@@ -181,6 +191,7 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@Cacheable(value="resourceClassContent", key="#resourceId")
 	@RequestMapping(value = "/getResourceClassContent/{resourceId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Set<IAnoteClass>>> getResourceClassContent(@PathVariable Long resourceId) throws ResourcesExceptions {
 		DaemonResponse<Set<IAnoteClass>> response = new DaemonResponse<Set<IAnoteClass>>(resourcesElementService.getResourceClassContent(resourceId));
@@ -214,6 +225,11 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@Caching(
+			evict = {
+			@CacheEvict(value="resourceContent", key="#resourceId"),
+			@CacheEvict(value="resourceClassContent", key="#resourceId")
+			})
 	@RequestMapping(value = "/addResourceElementsWithoutValidation/{resourceId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElementsWithoutValidation(@PathVariable Long resourceId, @RequestBody List<ResourceElementImpl> element)
 			throws ResourcesExceptions {
@@ -257,6 +273,11 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@Caching(
+			evict = {
+			@CacheEvict(value="resourceContent", key="#resourceId"),
+			@CacheEvict(value="resourceClassContent", key="#resourceId")
+			})
 	@RequestMapping(value = "/removeResourceClass/{resourceId}/{classId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> removeResourceClass(@PathVariable Long resourceId, @PathVariable Long classId) throws ResourcesExceptions {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(resourcesElementService.removeResourceClass(resourceId, classId));
@@ -276,6 +297,10 @@ public class ResourceElementsController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#resourceId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).resources.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@Caching(
+			evict = {
+			@CacheEvict(value="resourceContent", key="#resourceId")
+			})
 	@RequestMapping(value = "/addResourceElementSynonyms/{resourceId}/{resourceElmentId}", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<IResourceManagerReport>> addResourceElementSynonyms(@PathVariable Long resourceId, @PathVariable Long resourceElmentId,
 			@RequestBody List<String> newSynonyms) throws ResourcesExceptions {
