@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -140,6 +143,12 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
+	@Caching(
+			evict = {
+			@CacheEvict("countAllPublications"),
+			@CacheEvict(value = "countAllDistinctColumnValuesFromPublications", allEntries=true)
+			}
+	)
 	@RequestMapping(value = "/createPublications", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> createMultiplePublications(@RequestBody Set<PublicationImpl> publications) {
 		Set<IPublication> publicationsList = new HashSet<>();
@@ -151,6 +160,8 @@ public class PublicationsController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(a);
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+	
+
 
 	/**
 	 * 
@@ -160,6 +171,7 @@ public class PublicationsController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
+	@CacheEvict(value = "countAllDistinctColumnValuesFromPublications", allEntries=true)
 	@RequestMapping(value = "/updatePublication", method = RequestMethod.PUT, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> updatePublication(@RequestBody PublicationImpl publication) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(publicationService.update(publication));
@@ -211,6 +223,7 @@ public class PublicationsController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable("countAllDistinctColumnValuesFromPublications")
 	@RequestMapping(value = "/countAllDistinctColumnValuesFromPublications/{column}", method = RequestMethod.GET )
 	public ResponseEntity<DaemonResponse<Integer>> countAllDistinctColumnValuesFromPublications(@PathVariable String column) {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationService.countAllDistinctColumnValuesFromPublications(column));
@@ -223,6 +236,26 @@ public class PublicationsController {
 	@RequestMapping(value = "/countAllPublications", method = RequestMethod.GET )
 	public ResponseEntity<DaemonResponse<Integer>> countAllPublications() {
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationService.countAllPublications());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Caching(
+			evict = {
+			@CacheEvict("countAllPublications"),
+			@CacheEvict(value = "countAllDistinctColumnValuesFromPublications", allEntries=true)
+			}
+	)
+	@RequestMapping(value = "/testCache", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<Integer>> testCache() {
+		ResponseEntity<DaemonResponse<Integer>> res = this.updateCountCache();
+		//DaemonResponse<Integer> response = new DaemonResponse<Integer>(100);
+		return res;
+	}
+	
+	
+	public ResponseEntity<DaemonResponse<Integer>> updateCountCache(){
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(100);
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 	

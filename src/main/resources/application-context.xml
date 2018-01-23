@@ -20,6 +20,7 @@
 	    <beans:property name="caches">
 	    <beans:set>
 	        <beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="countAllPublications"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="countAllDistinctColumnValuesFromPublications"/>
 	    </beans:set>
 	    </beans:property>
 	</beans:bean>

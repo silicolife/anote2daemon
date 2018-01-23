@@ -8,6 +8,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.springframework.cache.annotation.Cacheable;
+
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.PermissionsUtilsEnum;
@@ -1161,5 +1163,11 @@ public class ServerAccess implements IDataAccess{
 	public Integer countResourcesFromSearchWAuth(ISearchProperties searchProperties) throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesLuceneService().countResourcesFromSearchWAuth(searchProperties);
 	}
+	
+	@Override
+	public Integer countAllPublications() throws ANoteException {
+		return SpringInjectedServicesAccess.getPublicationsService().countAllPublications();
+	}
+	
 	
 }
