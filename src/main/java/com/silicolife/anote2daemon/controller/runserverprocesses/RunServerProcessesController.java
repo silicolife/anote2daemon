@@ -77,7 +77,7 @@ public class RunServerProcessesController {
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/rebuildLuceneIndex", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> rebuildLuceneIndex(){
-		taskExecutor.execute(new SpringRunnable(){
+		taskExecutor.execute(new SpringRunnable(false){
 
 			@Override
 			protected void onRun() {
@@ -101,7 +101,7 @@ public class RunServerProcessesController {
 	@RequestMapping(value = "/autoupdate", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> autoupdate(){
 
-		taskExecutor.execute(new SpringRunnable(){
+		taskExecutor.execute(new SpringRunnable(false){
 
 			@Override
 			protected void onRun() {
@@ -162,7 +162,7 @@ public class RunServerProcessesController {
 
 	private void executeExportResource(String[] parameters, ObjectMapper bla) throws JsonParseException, JsonMappingException, IOException {
 		final Long resourceId = bla.readValue(parameters[1],Long.class);
-		taskExecutor.execute(new SpringRunnable(){
+		taskExecutor.execute(new SpringRunnable(false){
 			@Override
 			protected void onRun() {
 				try {
@@ -185,7 +185,7 @@ public class RunServerProcessesController {
 
 	private void executeBackgroundThreadForKineticREPipeline(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final KineticREPipelineConfigurationImpl kineticrepipelineConfiguration = bla.readValue(parameters[1],KineticREPipelineConfigurationImpl.class);
-		taskExecutor.execute(new SpringRunnable(){
+		taskExecutor.execute(new SpringRunnable(false){
 
 			@Override
 			protected void onRun() {
@@ -206,7 +206,7 @@ public class RunServerProcessesController {
 
 	private void executeBackgroundThreadForPubMedSearch(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final IRPubmedSearchConfigurationImpl searchConfiguration = bla.readValue(parameters[1],IRPubmedSearchConfigurationImpl.class);
-		taskExecutor.execute(new SpringRunnable(){
+		taskExecutor.execute(new SpringRunnable(true){
 
 			@Override
 			protected void onRun() {
@@ -224,7 +224,7 @@ public class RunServerProcessesController {
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusCreateConfigurationImpl corpuscreationConfiguration = bla.readValue(parameters[1],CorpusCreateConfigurationImpl.class);
 
-		taskExecutor.execute(new SpringRunnable() {
+		taskExecutor.execute(new SpringRunnable(true) {
 
 			@Override
 			protected void onRun() {
@@ -243,7 +243,7 @@ public class RunServerProcessesController {
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusUpdateConfigurationImpl corpusupdateConfiguration = bla.readValue(parameters[1],CorpusUpdateConfigurationImpl.class);
 
-		taskExecutor.execute(new SpringRunnable() {
+		taskExecutor.execute(new SpringRunnable(false) {
 
 			@Override
 			protected void onRun() {
@@ -260,7 +260,7 @@ public class RunServerProcessesController {
 
 	private void executeBackgroundThreadForLinneausTagger(String[] parameters, ObjectMapper bla) throws IOException, JsonParseException, JsonMappingException {
 		final NERLinnaeusConfigurationImpl linaneusConfiguration = bla.readValue(parameters[1],NERLinnaeusConfigurationImpl.class);
-		taskExecutor.execute(new SpringRunnable() {
+		taskExecutor.execute(new SpringRunnable(true) {
 
 			@Override
 			protected void onRun() {

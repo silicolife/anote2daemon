@@ -110,6 +110,11 @@ public class NERServerOnDemandController{
 		IResource<IResourceElement> kineticParametersResource = InitConfiguration.getDataAccess().getResourceByID(3015756573485045628L);
 		IDictionary kineticParameters = new DictionaryImpl(kineticParametersResource);
 		
+		// Pubchem Subset
+	
+		IResource<IResourceElement> pubchemSubsetResource = InitConfiguration.getDataAccess().getResourceByID(4380564405154527568L);
+		IDictionary pubchemSubset = new DictionaryImpl(pubchemSubsetResource);
+		
 		// Configuraton
 
 		NERCaseSensativeEnum caseSensitive = NERCaseSensativeEnum.INALLWORDS;
@@ -124,6 +129,7 @@ public class NERServerOnDemandController{
 		resourceToNER.addUsingAnoteClasses(linnauesSpecies, linnauesSpecies.getResourceClassContent(), linnauesSpecies.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(biomass, biomass.getResourceClassContent(), biomass.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(kineticParameters, kineticParameters.getResourceClassContent(), kineticParameters.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(pubchemSubset, pubchemSubset.getResourceClassContent(), pubchemSubset.getResourceClassContent());
 
 		boolean usingOtherResourceInfoToImproveRuleAnnotations = false;
 		boolean normalized = true;

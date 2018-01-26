@@ -12,18 +12,23 @@ public abstract class SpringRunnable implements Runnable{
 
 	private Authentication authentication;
 	protected UsersLogged usersLogged;
+	private boolean usingAuthentication;
 
-	public SpringRunnable(){
-		this.authentication = SecurityContextHolder.getContext().getAuthentication();
+	public SpringRunnable(boolean usingAuthentication){
+		this.usingAuthentication=usingAuthentication;
+		if(usingAuthentication)
+		   this.authentication = SecurityContextHolder.getContext().getAuthentication();
 	}
 
 	@Override
 	public void run() {
 		try {
-			InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
+			if(usingAuthentication)
+				InitConfiguration.getDataAccess().setUserLoggedOnServices(getUserLogged());
 			onRun();
 //			InitConfiguration.getDataAccess().setUserLoggedOnServices(null);
-			UserLoggedThreadLocal.unset();
+			if(usingAuthentication)
+				UserLoggedThreadLocal.unset();
 		} finally {
 			cleanAuthenticationAndUser();
 		}
