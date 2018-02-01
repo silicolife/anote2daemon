@@ -84,6 +84,36 @@ public class CorpusController {
 		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * Get all owner or admin paginated
+	 * 
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @param asc
+	 * @param sort
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllPrivilegesCorpusAdminAccessPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<ICorpus>>> getAllPrivilegesCorpusAdminAccessPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) {
+		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusService.getAllPrivilegesCorpusAdminAccessPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * Count all owner or admin 
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllPrivilegesCorpusAdminAccess", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllPrivilegesCorpusAdminAccess() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusService.countAllPrivilegesCorpusAdminAccess());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 
 	/**
 	 * Count all corpus
