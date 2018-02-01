@@ -153,6 +153,37 @@ public class ResourcesController {
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
 	
+	
+	
+	/**
+	 * 
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @param asc
+	 * @param sortBy
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllPrivilegesResourcesAdminAccessPaginated", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getAllPrivilegesResourcesAdminAccessPaginated(@RequestParam Integer paginationIndex,@RequestParam Integer paginationSize,@RequestParam boolean asc,@RequestParam String sortBy) throws ResourcesExceptions {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getAllPrivilegesResourcesAdminAccessPaginated( paginationIndex, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Count AllPrivilegesResourcesAdminAccess
+	 * 
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllPrivilegesResourcesAdminAccess", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllPrivilegesResourcesAdminAccess() throws ResourcesExceptions {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesService.countAllPrivilegesResourcesAdminAccess());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 	/**
 	 * Count tResourcesByType
 	 * 
