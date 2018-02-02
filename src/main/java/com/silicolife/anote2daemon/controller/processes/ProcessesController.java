@@ -113,6 +113,18 @@ public class ProcessesController {
 	}
 	
 	/**
+	 * Get All Processes Paginated with Owner privilges or admin
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPrivilegesAllProcessesAdminAccessPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getPrivilegesAllProcessesAdminAccessPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy){
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesService.getPrivilegesAllProcessesAdminAccessPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
+	
+	/**
 	 * Get All Processes paginated with privileges
 	 * 
 	 * @return
@@ -124,6 +136,18 @@ public class ProcessesController {
 		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * Count Processes with Owner privilges or admin
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countPrivilegesAllProcessesAdminAccess", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countPrivilegesAllProcessesAdminAccess() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(processesService.countPrivilegesAllProcessesAdminAccess());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
 	
 	
 	/**

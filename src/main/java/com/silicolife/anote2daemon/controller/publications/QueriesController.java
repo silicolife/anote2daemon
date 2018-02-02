@@ -394,8 +394,19 @@ public class QueriesController {
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPrivilegesQueriesAdminAccessFromSearchPaginated/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getPrivilegesQueriesAdminAccessFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize,@PathVariable boolean asc, @PathVariable String sortBy)  {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getPrivilegesQueriesAdminAccessFromSearchPaginated(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countPrivilegesQueriesAdminAccessFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countPrivilegesQueriesAdminAccessFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countPrivilegesQueriesAdminAccessFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/countQueriesFromSearchWAuth", method = RequestMethod.POST , consumes = { "application/json" })
