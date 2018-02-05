@@ -498,4 +498,20 @@ public class CorpusController {
 		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusluceneService.getCorpusFromSearchWPrivileges(searchProperties));
 		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
 	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPrivilegesCorpusAdminAccessFromSearchPaginated/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<ICorpus>>> getPrivilegesCorpusAdminAccessFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) {
+		DaemonResponse<List<ICorpus>> response = new DaemonResponse<List<ICorpus>>(corpusluceneService.getPrivilegesCorpusAdminAccessFromSearchPaginated(searchProperties, index, paginationSize, asc,sortBy));
+		return new ResponseEntity<DaemonResponse<List<ICorpus>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countPrivilegesCorpusAdminAccessFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countPrivilegesCorpusAdminAccessFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(corpusluceneService.countPrivilegesCorpusAdminAccessFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 }

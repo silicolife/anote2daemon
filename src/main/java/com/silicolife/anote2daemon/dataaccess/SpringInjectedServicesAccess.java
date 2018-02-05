@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import com.silicolife.anote2daemon.processes.corpus.CorpusAutoUpdate;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.corpus.ICorpusLuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.processes.IProcessesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.publications.IPublicationsLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.queries.IQueriesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesElementLuceneService;
@@ -55,6 +56,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	private static ICorpusLuceneService corpusLuceneService = null;
 	private static IResourcesLuceneService resourcesLuceneService = null;
 	private static IUsersLuceneService usersLuceneService = null;
+	private static IProcessesLuceneService processesLuceneService = null;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

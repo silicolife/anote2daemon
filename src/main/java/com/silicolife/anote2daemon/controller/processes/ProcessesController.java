@@ -18,8 +18,10 @@ import com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum;
 import com.silicolife.anote2daemon.utils.GenericPairSpringSpel;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.ProcessException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.processes.IProcessesLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.datastructures.process.IEProcessImpl;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcessStatistics;
@@ -35,6 +37,8 @@ public class ProcessesController {
 	private GenericPairSpringSpel<RestPermissionsEvaluatorEnum, List<String>> genericPairSpringSpel;
 	@Autowired
 	private IProcessesService processesService;
+	@Autowired
+	private IProcessesLuceneService processesLuceneService;
 
 	/**
 	 * Create IEProcesses
@@ -168,4 +172,56 @@ public class ProcessesController {
 		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesService.getProcessesByPublicationId(publicationId));
 		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
 	}
+	
+	//Lucene
+	
+	/**
+	 * Get Processes From search paginated with privileges
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getProcessesFromSearchPaginatedWAuthAndSort/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getProcessesFromSearchPaginatedWAuthAndSort(@RequestBody SearchPropertiesImpl searchProperties,@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy){
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesLuceneService.getProcessesFromSearchPaginatedWAuthAndSort(searchProperties, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Count Processes of a search with privileges
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countProcessesFromSearchWAuth", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countProcessesFromSearchWAuth(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(processesLuceneService.countProcessesFromSearchWAuth(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Get Processes From search paginated if admin all active else all owner
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPrivilegesProcessesAdminAccessFromSearchPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IIEProcess>>> getPrivilegesProcessesAdminAccessFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties,@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy){
+		DaemonResponse<List<IIEProcess>> response = new DaemonResponse<List<IIEProcess>>(processesLuceneService.getPrivilegesProcessesAdminAccessFromSearchPaginated(searchProperties, Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IIEProcess>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Count Processes of a getPrivilegesProcessesAdminAccessFromSearchPaginated search
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countPrivilegesProcessesAdminAccessFromSearch", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countPrivilegesProcessesAdminAccessFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(processesLuceneService.countPrivilegesProcessesAdminAccessFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	
 }
