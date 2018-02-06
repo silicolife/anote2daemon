@@ -253,6 +253,19 @@ public class PublicationsController {
 		return res;
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationTypesPaginated/{index}/{paginationSize}", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<List<String>>> getPublicationsTypes(@PathVariable int index,@PathVariable int paginationSize) {
+		DaemonResponse<List<String>> response = new DaemonResponse<List<String>>(publicationService.getPublicationTypesPaginated(index, paginationSize));
+		return new ResponseEntity<DaemonResponse<List<String>>>(response, HttpStatus.OK);
+	}
+	
+
+	@RequestMapping(value = "/countPublicationTypes", method = RequestMethod.GET )
+	public ResponseEntity<DaemonResponse<Integer>> countPublicationTypes() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(publicationService.countPublicationTypes());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
 	
 	public ResponseEntity<DaemonResponse<Integer>> updateCountCache(){
 		DaemonResponse<Integer> response = new DaemonResponse<Integer>(100);
