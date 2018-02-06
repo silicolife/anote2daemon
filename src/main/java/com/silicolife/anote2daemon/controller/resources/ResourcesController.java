@@ -254,4 +254,25 @@ public class ResourcesController {
 		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesLuceneService.getResourcesFromSearchPaginatedWAuth(searchProperties, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countPrivilegesResourcesAdminAccessFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countPrivilegesResourcesAdminAccessFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesLuceneService.countPrivilegesResourcesAdminAccessFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getResourcesFromSearchPaginatedWAuthAndSort/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getResourcesFromSearchPaginatedWAuthAndSort(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc, @PathVariable String sortBy)  {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesLuceneService.getResourcesFromSearchPaginatedWAuthAndSort(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPrivilegesResourcesAdminAccessFromSearchPaginated/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getPrivilegesResourcesAdminAccessFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc, @PathVariable String sortBy)  {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesLuceneService.getPrivilegesResourcesAdminAccessFromSearchPaginated(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
+	}
 }
