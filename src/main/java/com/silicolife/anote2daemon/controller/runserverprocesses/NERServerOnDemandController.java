@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.controller.runserverprocesses;
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +61,8 @@ public class NERServerOnDemandController{
 			List<AnnotationExportA1Format> out = EntityAnnotationToAnnoationExportA1Format.convert(entities);
 			logger.info("Result "+out.size());
 			return new ResponseEntity<List<AnnotationExportA1Format>>(out,HttpStatus.OK);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
+		} catch (IOException | ANoteException e) {
+			logger.error(e.getClass().toString() + " " + e.getMessage());
 		}
 		return new ResponseEntity<List<AnnotationExportA1Format>>(new ArrayList<>(),HttpStatus.OK);
 	}
@@ -112,7 +113,7 @@ public class NERServerOnDemandController{
 		
 		// Pubchem Subset
 	
-		IResource<IResourceElement> pubchemSubsetResource = InitConfiguration.getDataAccess().getResourceByID(4380564405154527568L);
+		IResource<IResourceElement> pubchemSubsetResource = InitConfiguration.getDataAccess().getResourceByID(2456123763781987374L);
 		IDictionary pubchemSubset = new DictionaryImpl(pubchemSubsetResource);
 		
 		// Configuraton

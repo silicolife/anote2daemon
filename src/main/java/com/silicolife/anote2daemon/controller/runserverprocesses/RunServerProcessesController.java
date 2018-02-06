@@ -101,7 +101,7 @@ public class RunServerProcessesController {
 	@RequestMapping(value = "/autoupdate", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Boolean>> autoupdate(){
 
-		taskExecutor.execute(new SpringRunnable(false){
+		taskExecutor.execute(new SpringRunnable(true){
 
 			@Override
 			protected void onRun() {
