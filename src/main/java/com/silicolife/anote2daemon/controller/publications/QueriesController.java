@@ -95,7 +95,7 @@ public class QueriesController {
 	
 	/**
 	 * 
-	 * Get all queries from a user paginated
+	 * Get queries a user as permissions to paginated
 	 * 
 	 * @param paginationIndex
 	 * @param paginationSize
@@ -108,6 +108,38 @@ public class QueriesController {
 	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllQueriesPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) {
 		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllQueriesPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * 
+	 * get queries paginated from user logged. if the user has "role_admin" all
+	 * queries are returned. If has another role only the "owner" queries are
+	 * returned
+	 * 
+	 * @param paginationIndex
+	 * @param paginationSize
+	 * @param asc
+	 * @param sort
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllPrivilegesQueriesAdminAccessPaginated/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getAllPrivilegesQueriesAdminAccessPaginated(@PathVariable Long paginationIndex, @PathVariable Long paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesService.getAllPrivilegesQueriesAdminAccessPaginated(Integer.valueOf(paginationIndex.toString()), Integer.valueOf(paginationSize.toString()), asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
+	
+	/**
+	 * Counts All active queries if user has role admin otherwise 
+	 * counts only the queries that he owns 
+	 * 
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countAllPrivilegesQueriesAdminAccess", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Integer>> countAllPrivilegesQueriesAdminAccess() {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesService.countAllPrivilegesQueriesAdminAccess());
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 	
 
@@ -362,8 +394,19 @@ public class QueriesController {
 		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPrivilegesQueriesAdminAccessFromSearchPaginated/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IQuery>>> getPrivilegesQueriesAdminAccessFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize,@PathVariable boolean asc, @PathVariable String sortBy)  {
+		DaemonResponse<List<IQuery>> response = new DaemonResponse<List<IQuery>>(queriesLucineService.getPrivilegesQueriesAdminAccessFromSearchPaginated(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IQuery>>>(response, HttpStatus.OK);
+	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countPrivilegesQueriesAdminAccessFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countPrivilegesQueriesAdminAccessFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(queriesLucineService.countPrivilegesQueriesAdminAccessFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/countQueriesFromSearchWAuth", method = RequestMethod.POST , consumes = { "application/json" })

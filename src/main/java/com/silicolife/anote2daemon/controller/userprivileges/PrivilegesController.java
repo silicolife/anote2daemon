@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.PrivilegesException;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.users.IUsersLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.system.IPrivilegesService;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.interfaces.core.user.IUser;
 import com.silicolife.textmining.core.interfaces.core.user.IUserDataObject;
 import com.silicolife.textmining.core.interfaces.core.utils.IGenericPair;
@@ -35,6 +37,9 @@ public class PrivilegesController {
 
 	@Autowired
 	private IPrivilegesService privilegesService;
+	
+	@Autowired
+	private IUsersLuceneService usersLuceneService;
 
 	/**
 	 * add privilege
@@ -164,6 +169,7 @@ public class PrivilegesController {
 				resource, paginationIndex, paginationSize, asc, sortBy));
 		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
 	}
+	
 
 	/**
 	 * Check if user has permission to that resource
@@ -178,5 +184,23 @@ public class PrivilegesController {
 	public ResponseEntity<DaemonResponse<Boolean>> hasPermission(@PathVariable Long resourceId, @PathVariable String resource, @RequestBody List<String> permissions) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(privilegesService.hasPermission(resourceId, resource, permissions));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	//Lucene
+	
+	/**
+	 * Search users and get them paginated with the permission that user has to a resource 
+	 * 
+	 * @param resourceId
+	 * @param resource
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getUsersAndPermissionsFromSearchPaginated/{resourceId}/{resource}/{paginationIndex}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>> getUsersAndPermissionsFromSearchPaginated(@RequestBody SearchPropertiesImpl searchProperties,@PathVariable Long resourceId, @PathVariable String resource, 
+			@PathVariable Integer paginationIndex,@PathVariable Integer paginationSize,@PathVariable boolean asc,@PathVariable String sortBy) {
+		DaemonResponse<List<IGenericPair<IUser, String>>> response = new DaemonResponse<List<IGenericPair<IUser, String>>>(usersLuceneService.getUsersAndPermissionsFromSearchPaginated(searchProperties, resourceId,
+				resource, paginationIndex, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<List<IGenericPair<IUser, String>>>>(response, HttpStatus.OK);
 	}
 }

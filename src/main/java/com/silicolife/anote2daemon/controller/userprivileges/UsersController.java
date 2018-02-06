@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.UserExceptions;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.users.IUsersLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.users.IUserService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.GeneratePassword;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.datastructures.utils.GenericPairImpl;
 import com.silicolife.textmining.core.interfaces.core.user.IGroup;
 import com.silicolife.textmining.core.interfaces.core.user.IUser;
@@ -42,6 +44,9 @@ public class UsersController {
 
 	@Autowired
 	private IUserService userService;
+	
+	@Autowired
+	private IUsersLuceneService usersLuceneService;
 
 	/**
 	 * Check if login exist
@@ -235,5 +240,14 @@ public class UsersController {
 	public ResponseEntity<DaemonResponse<Boolean>> loadProperties(@RequestBody Properties properties) {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(userService.saveProperties(properties));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
+	
+	//Lucene
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countUsersFromSearch", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countGetPublicationsFromSearch(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(usersLuceneService.countUsersFromSearch(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
 }
