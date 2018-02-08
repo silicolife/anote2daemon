@@ -112,9 +112,12 @@ public class NERServerOnDemandController{
 		IDictionary kineticParameters = new DictionaryImpl(kineticParametersResource);
 		
 		// Pubchem Subset
-	
 		IResource<IResourceElement> pubchemSubsetResource = InitConfiguration.getDataAccess().getResourceByID(2456123763781987374L);
 		IDictionary pubchemSubset = new DictionaryImpl(pubchemSubsetResource);
+		
+		// Kegg Compounds
+		IResource<IResourceElement> keggCompoundsResource = InitConfiguration.getDataAccess().getResourceByID(6313536102811386987L);
+		IDictionary keggCompounds = new DictionaryImpl(keggCompoundsResource);
 		
 		// Configuraton
 
@@ -124,13 +127,14 @@ public class NERServerOnDemandController{
 		NERLinnaeusPreProcessingEnum preprocessing = NERLinnaeusPreProcessingEnum.StopWords;
 		int sizeOfSmallWordsToBeNotAnnotated = 2;
 		ResourcesToNerAnote resourceToNER = new ResourcesToNerAnote(caseSensitive,false,sizeOfSmallWordsToBeNotAnnotated);
+		resourceToNER.addUsingAnoteClasses(pubchemSubset, pubchemSubset.getResourceClassContent(), pubchemSubset.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(keggCompounds, keggCompounds.getResourceClassContent(), keggCompounds.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(metabolitesChebi, metabolitesChebi.getResourceClassContent(), metabolitesChebi.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(reactionsSTangingare, reactionsSTangingare.getResourceClassContent(), reactionsSTangingare.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(enzymesBrenda, enzymesBrenda.getResourceClassContent(), enzymesBrenda.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(linnauesSpecies, linnauesSpecies.getResourceClassContent(), linnauesSpecies.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(biomass, biomass.getResourceClassContent(), biomass.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(kineticParameters, kineticParameters.getResourceClassContent(), kineticParameters.getResourceClassContent());
-		resourceToNER.addUsingAnoteClasses(pubchemSubset, pubchemSubset.getResourceClassContent(), pubchemSubset.getResourceClassContent());
 
 		boolean usingOtherResourceInfoToImproveRuleAnnotations = false;
 		boolean normalized = true;
