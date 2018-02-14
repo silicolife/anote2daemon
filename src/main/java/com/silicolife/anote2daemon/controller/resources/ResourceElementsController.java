@@ -27,6 +27,7 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.resources.IResourcesElementLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesElementService;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.datastructures.general.ExternalIDImpl;
 import com.silicolife.textmining.core.datastructures.resources.ResourceElementImpl;
 import com.silicolife.textmining.core.datastructures.resources.ResourceElementsFilterImpl;
@@ -731,6 +732,21 @@ public class ResourceElementsController {
 		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsByPartialTermOrPartialSynonymPaginated(partialString, index, paginationSize));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);	
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getResourceElementsPaginated/{index}/{paginationSize}/{asc}/{sortBy}", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>> getResourceElementsPaginated(@RequestBody SearchPropertiesImpl searchProperties, @PathVariable int index,@PathVariable int paginationSize, @PathVariable boolean asc, @PathVariable String sortBy) throws ResourcesExceptions  {
+		DaemonResponse<IResourceElementSet<IResourceElement>> response = new DaemonResponse<IResourceElementSet<IResourceElement>>(resourcesElementLuceneService.getResourceElementsPaginated(searchProperties, index, paginationSize, asc, sortBy));
+		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countResourceElementsWAuthAndSort", method = RequestMethod.POST , consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Integer>> countResourceElementsWAuthAndSort(@RequestBody SearchPropertiesImpl searchProperties) {
+		DaemonResponse<Integer> response = new DaemonResponse<Integer>(resourcesElementLuceneService.countResourceElements(searchProperties));
+		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
+	}
+	
 	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/getResourceElementsCountByPartialTermOrPartialSynonym", method = RequestMethod.POST)
