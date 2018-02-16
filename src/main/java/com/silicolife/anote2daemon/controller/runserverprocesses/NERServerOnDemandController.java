@@ -119,6 +119,10 @@ public class NERServerOnDemandController{
 		IResource<IResourceElement> keggCompoundsResource = InitConfiguration.getDataAccess().getResourceByID(6313536102811386987L);
 		IDictionary keggCompounds = new DictionaryImpl(keggCompoundsResource);
 		
+		// Diseases
+		IResource<IResourceElement> diseasesResource = InitConfiguration.getDataAccess().getResourceByID(180173838987053627L);
+		IOntology diseasesDiseasesOntology= new OntologyImpl(diseasesResource);
+		
 		// Configuraton
 
 		NERCaseSensativeEnum caseSensitive = NERCaseSensativeEnum.INALLWORDS;
@@ -135,7 +139,8 @@ public class NERServerOnDemandController{
 		resourceToNER.addUsingAnoteClasses(linnauesSpecies, linnauesSpecies.getResourceClassContent(), linnauesSpecies.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(biomass, biomass.getResourceClassContent(), biomass.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(kineticParameters, kineticParameters.getResourceClassContent(), kineticParameters.getResourceClassContent());
-
+		resourceToNER.addUsingAnoteClasses(diseasesDiseasesOntology, diseasesDiseasesOntology.getResourceClassContent(), diseasesDiseasesOntology.getResourceClassContent());
+		
 		boolean usingOtherResourceInfoToImproveRuleAnnotations = false;
 		boolean normalized = true;
 		boolean useabreviation = true;
