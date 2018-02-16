@@ -171,6 +171,25 @@ public class CorpusController {
 		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.updateCorpus(corpus));
 		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * Update corpus status
+	 * 
+	 * @param corpus
+	 * @param status
+	 * @return
+	 * @throws CorpusException 
+	 */
+	
+	@PreAuthorize("isAuthenticated() and hasPermission(#corpus.getId(),"
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getWritegrant()))")
+	@CacheEvict(value = "corpusStatistics", key="#corpus.id")
+	@RequestMapping(value = "/updateCorpusStatus", method = RequestMethod.POST, consumes = { "application/json" })
+	public ResponseEntity<DaemonResponse<Boolean>> updateCorpusStatus(@PathVariable boolean status,@RequestBody CorpusImpl corpus) throws CorpusException {
+		DaemonResponse<Boolean> response = new DaemonResponse<Boolean>(corpusService.updateCorpusStatus(corpus, status));
+		return new ResponseEntity<DaemonResponse<Boolean>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * get processes from a corpus

@@ -43,6 +43,14 @@ public class CorpusCreationExecutorServer {
 		else
 			corpusCreationBatchExecution(configuration);
 	}
+	
+	public void executeCorpusCreationByIds(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
+			new CorpusCreation().createCorpusByIds(configuration);	
+	}
+	
+	public void executeCorpusCreationByLuceneSearch(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
+		new CorpusCreation().createCorpusByLuceneSearch(configuration);	
+	}
 
 	private void corpusCreationBatchExecution(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
 		CorpusCreationInBatch corpusCreator = new CorpusCreationInBatch();
@@ -86,7 +94,7 @@ public class CorpusCreationExecutorServer {
 			if(i%500==0 && i!=0){
 				corpusCreator.addPublications(corpus, publications);
 				publications.clear();
-				creationLogger.info("Inserted the batch nº "+i + " ["+corpus.getDescription() + "]");
+				creationLogger.info("Inserted the batch nï¿½ "+i + " ["+corpus.getDescription() + "]");
 			}
 		}
 		if(!publications.isEmpty()){

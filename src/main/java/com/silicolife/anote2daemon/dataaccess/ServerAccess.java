@@ -231,6 +231,12 @@ public class ServerAccess implements IDataAccess{
 		SpringInjectedServicesAccess.getCorpusService().updateCorpus(corpus);
 		
 	}
+	
+	@Override
+	public void updateCorpusStatus(ICorpus corpus, boolean status) throws ANoteException {
+		SpringInjectedServicesAccess.getCorpusService().updateCorpusStatus(corpus, status);
+		
+	}
 
 	@Override
 	public void inactivateCorpus(ICorpus corpus) throws ANoteException {
@@ -1168,6 +1174,7 @@ public class ServerAccess implements IDataAccess{
 	public Integer countAllPublications() throws ANoteException {
 		return SpringInjectedServicesAccess.getPublicationsService().countAllPublications();
 	}
+
 	
 	
 }

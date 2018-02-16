@@ -1,6 +1,7 @@
 package com.silicolife.anote2daemon.controller.runserverprocesses;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,14 @@ import com.silicolife.anote2daemon.processes.re.OrganismKineticInformationExport
 import com.silicolife.anote2daemon.utils.ApplicationConfigurationProperties;
 import com.silicolife.anote2daemon.utils.SpringRunnable;
 import com.silicolife.anote2daemon.webservice.DaemonResponse;
+import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationGlobalImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
+import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationLuceneSearchImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
 import com.silicolife.textmining.core.datastructures.resources.export.ResourceExportConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.utils.Utils;
@@ -69,6 +74,12 @@ public class RunServerProcessesController {
 
 	@Autowired
 	private IResourcesService resourcesService;
+	
+	@Autowired
+	private IAnnotationService annotationService;
+	
+	@Autowired
+	private IPublicationsService publicationService;
 
 	/**
 	 * 
@@ -136,6 +147,12 @@ public class RunServerProcessesController {
 					break;
 				case CorpusUpdateConfigurationImpl.configurationUID :
 					executeBackgroundThreadForCorpusUpdate(parameters, bla);
+					break;
+				case CorpusCreateConfigurationGlobalImpl.configurationUID:
+					executeBackgroundThreadForGlobalCorpusCreation(parameters, bla);
+					break;
+				case CorpusCreateConfigurationLuceneSearchImpl.configurationUID:
+					executeBackgroundThreadForLuceneSearchCorpusCreation(parameters, bla);
 					break;
 				case NERLinnaeusConfigurationImpl.nerLinnaeusUID :
 					executeBackgroundThreadForLinneausTagger(parameters, bla);
@@ -238,6 +255,48 @@ public class RunServerProcessesController {
 
 		});
 	}
+	
+	private void executeBackgroundThreadForGlobalCorpusCreation(String[] parameters, ObjectMapper bla)
+			throws IOException, JsonParseException, JsonMappingException {
+		final CorpusCreateConfigurationGlobalImpl corpuscreationConfigurationGlobal = bla.readValue(parameters[1],CorpusCreateConfigurationGlobalImpl.class);
+
+		taskExecutor.execute(new SpringRunnable(true) {
+
+			@Override
+			protected void onRun() {
+				try {
+					Set<Long> documentsIDs = publicationService.getPublicationsIdsFromResourcesQuery(corpuscreationConfigurationGlobal.getSearchString(), annotationService);
+					corpuscreationConfigurationGlobal.setDocumentsIDs(documentsIDs);
+					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
+					corpusCreation.executeCorpusCreationByIds(corpuscreationConfigurationGlobal);
+				} catch (Exception e) {
+					logger.error("Exception",e);
+				}
+			}
+
+		});
+	}
+	
+	private void executeBackgroundThreadForLuceneSearchCorpusCreation(String[] parameters, ObjectMapper bla)
+			throws IOException, JsonParseException, JsonMappingException {
+		final CorpusCreateConfigurationLuceneSearchImpl corpuscreationConfigurationLuceneSearch = bla.readValue(parameters[1],CorpusCreateConfigurationLuceneSearchImpl.class);
+
+		taskExecutor.execute(new SpringRunnable(true) {
+
+			@Override
+			protected void onRun() {
+				try {
+					
+					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
+					corpusCreation.executeCorpusCreationByLuceneSearch(corpuscreationConfigurationLuceneSearch);
+				} catch (Exception e) {
+					logger.error("Exception",e);
+				}
+			}
+
+		});
+	} 
+
 
 	private void executeBackgroundThreadForCorpusUpdate(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
