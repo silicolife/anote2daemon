@@ -20,6 +20,7 @@
  	<beans:import resource="classpath:spring-resources-dao.xml" />
 	<beans:import resource="classpath:spring-annotation-dao.xml" />
 	<beans:import resource="classpath:spring-hyperlink-dao.xml" />
+	<beans:import resource="classpath:spring-dataProcessStatus-dao.xml" />
 	<beans:import resource="classpath:spring-resources-lucene-dao.xml" />
 	<beans:import resource="classpath:spring-queries-lucene-dao.xml" />
 	<beans:import resource="classpath:spring-publications-lucene-dao.xml" />
