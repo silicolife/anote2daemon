@@ -20,6 +20,8 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.clustering.IClusteringService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.corpora.ICorpusService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.dataProcessStatus.DataProcessStatusServiceImpl;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.dataProcessStatus.IDataProcessStatusService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.hyperlink.IHyperLinkService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.processes.IProcessesService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
@@ -48,6 +50,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 	private static IHyperLinkService hyperLinkService = null;
 	private static ISystemService systemService = null;
 	private static IUserService userService = null;
+	private static IDataProcessStatusService processStatusService = null;
 	private static ILuceneService luceneService = null;
 	private static IResourcesElementLuceneService resourcesElementLuceneService = null;
 	private static UsersLogged usersLogged = null;
@@ -72,6 +75,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		clusteringService = applicationContext.getBean("clusteringServiceImpl", IClusteringService.class);
 		hyperLinkService = applicationContext.getBean("hyperLinkServiceImpl", IHyperLinkService.class);
 		userService = applicationContext.getBean("userServiceImpl", IUserService.class);
+		processStatusService = applicationContext.getBean("dataProcessStatusServiceImpl", DataProcessStatusServiceImpl.class);
 		luceneService = applicationContext.getBean("luceneServiceImpl", ILuceneService.class);
 		resourcesElementLuceneService = applicationContext.getBean("resourcesElementLuceneServiceImpl", IResourcesElementLuceneService.class);
 		usersLogged = applicationContext.getBean("usersLogged", UsersLogged.class);
@@ -169,6 +173,10 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 
 	public static UsersLogged getUsersLogged() {
 		return usersLogged;
+	}
+	
+	public static IDataProcessStatusService getDataProcessStatusService() {
+		return processStatusService;
 	}
 	
 	public static ILuceneService getLuceneService() {

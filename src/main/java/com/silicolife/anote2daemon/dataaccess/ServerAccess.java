@@ -1,6 +1,7 @@
 package com.silicolife.anote2daemon.dataaccess;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpusStatistics;
 import com.silicolife.textmining.core.interfaces.core.document.labels.IPublicationLabel;
 import com.silicolife.textmining.core.interfaces.core.document.relevance.IQueryPublicationRelevance;
+import com.silicolife.textmining.core.interfaces.core.general.IDataProcessStatus;
 import com.silicolife.textmining.core.interfaces.core.general.IExternalID;
 import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
 import com.silicolife.textmining.core.interfaces.core.general.source.ISource;
@@ -1173,6 +1175,36 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public Integer countAllPublications() throws ANoteException {
 		return SpringInjectedServicesAccess.getPublicationsService().countAllPublications();
+	}
+
+
+
+	@Override
+	public void addDataProcessStatus(IDataProcessStatus dataprocessStatus) throws ANoteException {
+		SpringInjectedServicesAccess.getDataProcessStatusService().addDataProcessStatus(dataprocessStatus);
+	}
+
+
+
+	@Override
+	public void updateDataProcessStatus(IDataProcessStatus dataProcessStatus) throws ANoteException {
+		SpringInjectedServicesAccess.getDataProcessStatusService().updateDataProcessStatus(dataProcessStatus);
+		
+	}
+
+
+
+	@Override
+	public List<IDataProcessStatus> getAllDataProcessStatus() throws ANoteException {
+		return SpringInjectedServicesAccess.getDataProcessStatusService().getAllDataProcessStatus();
+	}
+
+
+
+	@Override
+	public List<IDataProcessStatus> getDataProcessStatusByUserAndDateRange(IUser user, Date startDateRange,
+			Date endDateRange) throws ANoteException {
+		return null;
 	}
 
 	
