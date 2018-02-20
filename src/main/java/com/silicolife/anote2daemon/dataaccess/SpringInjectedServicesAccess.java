@@ -75,7 +75,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		clusteringService = applicationContext.getBean("clusteringServiceImpl", IClusteringService.class);
 		hyperLinkService = applicationContext.getBean("hyperLinkServiceImpl", IHyperLinkService.class);
 		userService = applicationContext.getBean("userServiceImpl", IUserService.class);
-		processStatusService = applicationContext.getBean("dataProcessStatusServiceImpl", DataProcessStatusServiceImpl.class);
+		processStatusService = applicationContext.getBean("dataProcessStatusServiceImpl", IDataProcessStatusService.class);
 		luceneService = applicationContext.getBean("luceneServiceImpl", ILuceneService.class);
 		resourcesElementLuceneService = applicationContext.getBean("resourcesElementLuceneServiceImpl", IResourcesElementLuceneService.class);
 		usersLogged = applicationContext.getBean("usersLogged", UsersLogged.class);
@@ -97,6 +97,7 @@ public class SpringInjectedServicesAccess implements ApplicationContextAware{
 		if(resourcesElementService!=null) resourcesElementService.setUserLogged(userLogged);
 		if(corpusService!=null) corpusService.setUserLogged(userLogged);
 		if(processesService!=null) processesService.setUserLogged(userLogged);
+		if(processStatusService!=null)processStatusService.setUserLogged(userLogged);
 		if(annotationService!=null) annotationService.setUserLogged(userLogged);
 		if(clusteringService!=null) clusteringService.setUserLogged(userLogged);
 		if(hyperLinkService!=null) hyperLinkService.setUserLogged(userLogged);

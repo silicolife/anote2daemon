@@ -270,6 +270,7 @@ public class RunServerProcessesController {
 					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
 					corpusCreation.executeCorpusCreationByIds(corpuscreationConfigurationGlobal);
 				} catch (Exception e) {
+					//System.out.println(e);
 					logger.error("Exception",e);
 				}
 			}
