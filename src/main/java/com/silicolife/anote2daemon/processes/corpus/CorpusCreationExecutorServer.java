@@ -20,6 +20,7 @@ import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusCreateConfi
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
+import com.silicolife.textmining.core.interfaces.core.general.IDataProcessStatus;
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreation;
 import com.silicolife.textmining.processes.corpora.loaders.CorpusCreationInBatch;
 import com.silicolife.textmining.processes.corpora.readers.PatentMetaFilesReader;
@@ -48,8 +49,8 @@ public class CorpusCreationExecutorServer {
 			new CorpusCreation().createCorpusByIds(configuration);	
 	}
 	
-	public void executeCorpusCreationByLuceneSearch(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
-		new CorpusCreation().createCorpusByLuceneSearch(configuration);	
+	public int executeCorpusCreationByLuceneSearch(ICorpusCreateConfiguration configuration, ICorpus newCorpus,IDataProcessStatus dataprocessStatus, int step, int total) throws ANoteException, IOException{
+		return new CorpusCreation().createCorpusByLuceneSearch(configuration, newCorpus, dataprocessStatus, step, total);	
 	}
 
 	private void corpusCreationBatchExecution(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{

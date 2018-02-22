@@ -1,6 +1,9 @@
 package com.silicolife.anote2daemon.controller.runserverprocesses;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -30,14 +33,24 @@ import com.silicolife.anote2daemon.webservice.DaemonResponse;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationGlobalImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusCreateConfigurationLuceneSearchImpl;
+import com.silicolife.textmining.core.datastructures.corpora.CorpusImpl;
 import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.RunServerProcessesException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.ILuceneService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.lucene.service.publications.IPublicationsLuceneService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ProcessStatusResourceTypesEnum;
+import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
+import com.silicolife.textmining.core.datastructures.general.DataProcessStatusImpl;
 import com.silicolife.textmining.core.datastructures.resources.export.ResourceExportConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.utils.Utils;
+import com.silicolife.textmining.core.datastructures.utils.conf.GlobalNames;
+import com.silicolife.textmining.core.interfaces.core.document.IPublication;
+import com.silicolife.textmining.core.interfaces.core.document.corpus.CorpusTextType;
+import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
+import com.silicolife.textmining.core.interfaces.core.general.IDataProcessStatus;
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 import com.silicolife.textmining.core.interfaces.resource.export.tsv.IResourceExportConfiguration;
@@ -80,6 +93,9 @@ public class RunServerProcessesController {
 	
 	@Autowired
 	private IPublicationsService publicationService;
+	
+	@Autowired
+	private IPublicationsLuceneService publicationsLuceneService;
 
 	/**
 	 * 
@@ -281,15 +297,29 @@ public class RunServerProcessesController {
 	private void executeBackgroundThreadForLuceneSearchCorpusCreation(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
 		final CorpusCreateConfigurationLuceneSearchImpl corpuscreationConfigurationLuceneSearch = bla.readValue(parameters[1],CorpusCreateConfigurationLuceneSearchImpl.class);
-
+		final SearchPropertiesImpl searchProperties = bla.readValue(parameters[2],SearchPropertiesImpl.class);
+		
 		taskExecutor.execute(new SpringRunnable(true) {
 
 			@Override
 			protected void onRun() {
 				try {
-					
+					int step = 0;
+					int paginationSize = 100;
+					int total = publicationsLuceneService.countGetPublicationsFromSearch(searchProperties);
+					ICorpus newCorpus = null;
+					Properties properties = corpuscreationConfigurationLuceneSearch.getProperties();
+					properties.put(GlobalNames.textType, CorpusTextType.convertCorpusTetTypeToString(corpuscreationConfigurationLuceneSearch.getCorpusTextType()));
+					newCorpus = new CorpusImpl(corpuscreationConfigurationLuceneSearch.getCorpusName(), corpuscreationConfigurationLuceneSearch.getCorpusNotes(), corpuscreationConfigurationLuceneSearch.getProperties());
+					IDataProcessStatus dataprocessStatus = null;
+					dataprocessStatus = new DataProcessStatusImpl(newCorpus.getId(),ProcessStatusResourceTypesEnum.corpus);
 					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
-					corpusCreation.executeCorpusCreationByLuceneSearch(corpuscreationConfigurationLuceneSearch);
+					while(step<total) {
+						List<IPublication> publications = publicationsLuceneService.getPublicationsFromSearchPaginated(searchProperties, step, paginationSize);
+						Set<IPublication> publicationsSet = new HashSet<IPublication>(publications);
+						corpuscreationConfigurationLuceneSearch.setDocuments(publicationsSet);
+						step = corpusCreation.executeCorpusCreationByLuceneSearch(corpuscreationConfigurationLuceneSearch, newCorpus, dataprocessStatus, step, total);
+					}
 				} catch (Exception e) {
 					logger.error("Exception",e);
 				}

@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,4 +36,36 @@ public class DataProcessStatusController {
 		DaemonResponse<List<IDataProcessStatus>> response = new DaemonResponse<List<IDataProcessStatus>>(dataProcessStatusService.getAllDataProcessStatus());
 		return new ResponseEntity<DaemonResponse<List<IDataProcessStatus>>>(response, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getUserDataProcessStatus", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IDataProcessStatus>>> getUserDataProcessStatus() {
+		DaemonResponse<List<IDataProcessStatus>> response = new DaemonResponse<List<IDataProcessStatus>>(dataProcessStatusService.getUserDataProcessStatus());
+		return new ResponseEntity<DaemonResponse<List<IDataProcessStatus>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getUserRecentDataProcessStatus", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IDataProcessStatus>>> getUserRecentDataProcessStatus() {
+		DaemonResponse<List<IDataProcessStatus>> response = new DaemonResponse<List<IDataProcessStatus>>(dataProcessStatusService.getUserRecentDataProcessStatus());
+		return new ResponseEntity<DaemonResponse<List<IDataProcessStatus>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getUserRecentDataProcessStatusSorted", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IDataProcessStatus>>> getUserRecentDataProcessStatusSorted() {
+		DaemonResponse<List<IDataProcessStatus>> response = new DaemonResponse<List<IDataProcessStatus>>(dataProcessStatusService.getUserRecentDataProcessStatusSorted());
+		return new ResponseEntity<DaemonResponse<List<IDataProcessStatus>>>(response, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getUserRecentDataProcessStatusSortedWLimit/{paginationSize}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IDataProcessStatus>>> getUserRecentDataProcessStatusSortedWLimit(@PathVariable Integer paginationSize) {
+		DaemonResponse<List<IDataProcessStatus>> response = new DaemonResponse<List<IDataProcessStatus>>(dataProcessStatusService.getUserRecentDataProcessStatusSortedWLimit(paginationSize));
+		return new ResponseEntity<DaemonResponse<List<IDataProcessStatus>>>(response, HttpStatus.OK);
+	}
+	
+	
+	
 }
