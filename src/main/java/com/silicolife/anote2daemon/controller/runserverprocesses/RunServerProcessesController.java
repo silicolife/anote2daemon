@@ -9,6 +9,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,12 +42,15 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.resources.IResourcesService;
+import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.DataProcessStatusEnum;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ProcessStatusResourceTypesEnum;
 import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
 import com.silicolife.textmining.core.datastructures.general.DataProcessStatusImpl;
+import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.resources.export.ResourceExportConfigurationImpl;
 import com.silicolife.textmining.core.datastructures.utils.Utils;
 import com.silicolife.textmining.core.datastructures.utils.conf.GlobalNames;
+import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.CorpusTextType;
 import com.silicolife.textmining.core.interfaces.core.document.corpus.ICorpus;
@@ -149,6 +153,7 @@ public class RunServerProcessesController {
 	 * @return
 	 */
 	@PreAuthorize("isAuthenticated()")
+	@CacheEvict(value = "corpusStatistics")
 	@RequestMapping(value = "/configuration", method = RequestMethod.POST, consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Boolean>> executeConfiguration(@RequestBody String[] parameters) throws RunServerProcessesException{
 		logger.info(parameters[0] + " " + parameters[1]);
@@ -280,13 +285,29 @@ public class RunServerProcessesController {
 
 			@Override
 			protected void onRun() {
+				Properties properties = corpuscreationConfigurationGlobal.getProperties();
+				properties.put(GlobalNames.textType, CorpusTextType.convertCorpusTetTypeToString(corpuscreationConfigurationGlobal.getCorpusTextType()));
+				ICorpus newCorpus = new CorpusImpl(corpuscreationConfigurationGlobal.getCorpusName(), corpuscreationConfigurationGlobal.getCorpusNotes(), corpuscreationConfigurationGlobal.getProperties());
+				IDataProcessStatus dataprocessStatus = new DataProcessStatusImpl(newCorpus.getId(),ProcessStatusResourceTypesEnum.corpus);
+				try {
+					InitConfiguration.getDataAccess().addDataProcessStatus(dataprocessStatus);
+				} catch (ANoteException e) {
+					logger.error("Exception",e);
+				}
 				try {
 					Set<Long> documentsIDs = publicationService.getPublicationsIdsFromResourcesQuery(corpuscreationConfigurationGlobal.getSearchString(), annotationService);
 					corpuscreationConfigurationGlobal.setDocumentsIDs(documentsIDs);
 					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
-					corpusCreation.executeCorpusCreationByIds(corpuscreationConfigurationGlobal);
+					corpusCreation.executeCorpusCreationByIds(corpuscreationConfigurationGlobal, newCorpus, dataprocessStatus);
 				} catch (Exception e) {
-					//System.out.println(e);
+					dataprocessStatus.setReport("Error "+e);
+					dataprocessStatus.setProgress(100);
+					dataprocessStatus.setStatus(DataProcessStatusEnum.error);;
+					try {
+						InitConfiguration.getDataAccess().updateDataProcessStatus(dataprocessStatus);
+					} catch (ANoteException e1) {
+						logger.error("Exception",e1);
+					}
 					logger.error("Exception",e);
 				}
 			}
@@ -296,23 +317,27 @@ public class RunServerProcessesController {
 	
 	private void executeBackgroundThreadForLuceneSearchCorpusCreation(String[] parameters, ObjectMapper bla)
 			throws IOException, JsonParseException, JsonMappingException {
-		final CorpusCreateConfigurationLuceneSearchImpl corpuscreationConfigurationLuceneSearch = bla.readValue(parameters[1],CorpusCreateConfigurationLuceneSearchImpl.class);
+		 CorpusCreateConfigurationLuceneSearchImpl corpuscreationConfigurationLuceneSearch = bla.readValue(parameters[1],CorpusCreateConfigurationLuceneSearchImpl.class);
 		final SearchPropertiesImpl searchProperties = bla.readValue(parameters[2],SearchPropertiesImpl.class);
-		
 		taskExecutor.execute(new SpringRunnable(true) {
 
 			@Override
-			protected void onRun() {
+			protected void onRun() {		
+				corpuscreationConfigurationLuceneSearch.setSearchProperties(searchProperties);
+				Properties properties = corpuscreationConfigurationLuceneSearch.getProperties();
+				properties.put(GlobalNames.textType, CorpusTextType.convertCorpusTetTypeToString(corpuscreationConfigurationLuceneSearch.getCorpusTextType()));
+				ICorpus newCorpus = new CorpusImpl(corpuscreationConfigurationLuceneSearch.getCorpusName(), corpuscreationConfigurationLuceneSearch.getCorpusNotes(), corpuscreationConfigurationLuceneSearch.getProperties());
+				 IDataProcessStatus dataprocessStatus = null;
+				dataprocessStatus = new DataProcessStatusImpl(newCorpus.getId(),ProcessStatusResourceTypesEnum.corpus);
+				try {
+					InitConfiguration.getDataAccess().addDataProcessStatus(dataprocessStatus);
+				} catch (ANoteException e1) {
+					logger.error("Exception",e1);
+				}
 				try {
 					int step = 0;
 					int paginationSize = 100;
 					int total = publicationsLuceneService.countGetPublicationsFromSearch(searchProperties);
-					ICorpus newCorpus = null;
-					Properties properties = corpuscreationConfigurationLuceneSearch.getProperties();
-					properties.put(GlobalNames.textType, CorpusTextType.convertCorpusTetTypeToString(corpuscreationConfigurationLuceneSearch.getCorpusTextType()));
-					newCorpus = new CorpusImpl(corpuscreationConfigurationLuceneSearch.getCorpusName(), corpuscreationConfigurationLuceneSearch.getCorpusNotes(), corpuscreationConfigurationLuceneSearch.getProperties());
-					IDataProcessStatus dataprocessStatus = null;
-					dataprocessStatus = new DataProcessStatusImpl(newCorpus.getId(),ProcessStatusResourceTypesEnum.corpus);
 					CorpusCreationExecutorServer corpusCreation = new CorpusCreationExecutorServer();
 					while(step<total) {
 						List<IPublication> publications = publicationsLuceneService.getPublicationsFromSearchPaginated(searchProperties, step, paginationSize);
@@ -321,6 +346,14 @@ public class RunServerProcessesController {
 						step = corpusCreation.executeCorpusCreationByLuceneSearch(corpuscreationConfigurationLuceneSearch, newCorpus, dataprocessStatus, step, total);
 					}
 				} catch (Exception e) {
+					dataprocessStatus.setReport("Error "+e);
+					dataprocessStatus.setProgress(100);
+					dataprocessStatus.setStatus(DataProcessStatusEnum.error);;
+					try {
+						InitConfiguration.getDataAccess().updateDataProcessStatus(dataprocessStatus);
+					} catch (ANoteException e1) {
+						logger.error("Exception",e1);
+					}
 					logger.error("Exception",e);
 				}
 			}

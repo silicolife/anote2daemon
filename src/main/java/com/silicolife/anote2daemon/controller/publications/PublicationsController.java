@@ -327,24 +327,5 @@ public class PublicationsController {
 		return new ResponseEntity<DaemonResponse<List<IPublication>>>(response, HttpStatus.OK);
 	}
 	
-
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/expAnoteC", method = RequestMethod.GET , consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<String>> expAnoteC(@RequestParam AnoteClass a)  {
-		DaemonResponse<String> response = new DaemonResponse<String>(a.getName());
-		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
-	}
-	
-	@PreAuthorize("isAuthenticated()")
-	@RequestMapping(value = "/exp", method = RequestMethod.POST , consumes = { "application/json" })
-	public ResponseEntity<DaemonResponse<String>> exp(@RequestBody expImpl a)  {
-		DaemonResponse<String> response = new DaemonResponse<String>(a.toString());
-		return new ResponseEntity<DaemonResponse<String>>(response, HttpStatus.OK);
-	}
-	
-	
-	
-	
 	
 }

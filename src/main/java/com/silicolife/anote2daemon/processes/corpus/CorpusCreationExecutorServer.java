@@ -45,8 +45,9 @@ public class CorpusCreationExecutorServer {
 			corpusCreationBatchExecution(configuration);
 	}
 	
-	public void executeCorpusCreationByIds(ICorpusCreateConfiguration configuration) throws ANoteException, IOException{
-			new CorpusCreation().createCorpusByIds(configuration);	
+	public void executeCorpusCreationByIds(ICorpusCreateConfiguration configuration,
+			ICorpus newCorpus, IDataProcessStatus dataprocessStatus) throws ANoteException, IOException{
+			new CorpusCreation().createCorpusByIds(configuration, newCorpus, dataprocessStatus);	
 	}
 	
 	public int executeCorpusCreationByLuceneSearch(ICorpusCreateConfiguration configuration, ICorpus newCorpus,IDataProcessStatus dataprocessStatus, int step, int total) throws ANoteException, IOException{
