@@ -169,6 +169,22 @@ public class UsersController {
 		DaemonResponse<IUser> response = new DaemonResponse<IUser>(user);
 		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
 	}
+	
+	/**
+	 * Get user by email
+	 * 
+	 * @param email
+	 * @return
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getLoggedUser", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<IUser>> getLoggedUser() {
+		IUser user = userService.getLoggedUser();
+		if(user != null)
+			user.setAuPassword(null);
+		DaemonResponse<IUser> response = new DaemonResponse<IUser>(user);
+		return new ResponseEntity<DaemonResponse<IUser>>(response, HttpStatus.OK);
+	}
 
 	/**
 	 * Get user by username
