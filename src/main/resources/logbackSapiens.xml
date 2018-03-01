@@ -9,7 +9,7 @@
 	</appender>
 
 	<appender name="FILEINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-	    <file>${catalina.base}/logs/anote2daemon_dev_INFO.log</file>
+	    <file>${catalina.base}/logs/anote2daemon_INFO.log</file>
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>INFO</level>
 			<onMatch>ACCEPT</onMatch>
@@ -26,7 +26,7 @@
 
 
 	<appender name="FILEERRORS" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${catalina.base}/logs/anote2daemon_dev_ERROR.log</file>
+		<file>${catalina.base}/logs/anote2daemon_ERROR.log</file>
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>ERROR</level>
 			<onMatch>ACCEPT</onMatch>
