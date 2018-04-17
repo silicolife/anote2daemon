@@ -16,7 +16,7 @@ public class CorsFilter extends GenericFilterBean {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;       
-        response.setHeader("Access-Control-Allow-Origin", "http://mendel.di.uminho.pt:8080,http://192.168.1.100:8181"/*"http://localhost:8080, http://127.0.0.1:8080, http://localhost:4200, http://127.0.0.1:4200", http://127.0.0.1:8081*/); 
+        response.setHeader("Access-Control-Allow-Origin", "http://mendel.di.uminho.pt:8080,http://192.168.1.100:8181, http://127.0.0.1:8080"/*"http://localhost:8080, http://127.0.0.1:8080, http://localhost:4200, http://127.0.0.1:4200", http://127.0.0.1:8081*/); 
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "X-XSRF-TOKEN, content-type, Origin");
