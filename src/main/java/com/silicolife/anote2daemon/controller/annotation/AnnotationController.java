@@ -113,6 +113,24 @@ public class AnnotationController {
 	}
 	
 	/**
+	 * Get processes document annotations entities filtered by resource element
+	 * 
+	 * @param publicationId
+	 * @param processId
+	 * @param resourceElementId
+	 * @return
+	 * @throws AnnotationException
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getProcessDoumentAnnotationEntitiesFilteredByResourceElement/{publicationId}/{processId}/{resourceId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IEntityAnnotation>>> getProcessDoumentAnnotationEntitiesFilteredByResourceElement(@PathVariable Long publicationId, @PathVariable Long processId, @PathVariable Long resourceId) throws AnnotationException{
+		DaemonResponse<List<IEntityAnnotation>> response = new DaemonResponse<List<IEntityAnnotation>>(annotationService.getProcessDoumentAnnotationEntitiesFilteredByResourceElement(publicationId, processId, resourceId));
+		return new ResponseEntity<DaemonResponse<List<IEntityAnnotation>>>(response, HttpStatus.OK);
+	}
+	
+	/**
 	 * Get process document logs
 	 * 
 	 * @param processId

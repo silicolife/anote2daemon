@@ -1207,6 +1207,14 @@ public class ServerAccess implements IDataAccess{
 		return null;
 	}
 
+
+
+	@Override
+	public List<IEntityAnnotation> getAnnotatedDocumentEntitiesFilteredByResourceElement(IIEProcess process,
+			IPublication publication, IResourceElement resourceElement) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().getProcessDoumentAnnotationEntitiesFilteredByResourceElement(publication.getId(), process.getId(), resourceElement.getId());
+	}
+
 	
 	
 }
