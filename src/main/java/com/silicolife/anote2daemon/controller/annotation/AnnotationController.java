@@ -1,5 +1,6 @@
 package com.silicolife.anote2daemon.controller.annotation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,11 +28,17 @@ import com.silicolife.textmining.core.datastructures.annotation.re.EventAnnotati
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.AnnotationException;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.security.Permissions;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.annotation.IAnnotationService;
+import com.silicolife.textmining.core.datastructures.documents.PublicationFilterImpl;
+import com.silicolife.textmining.core.datastructures.documents.structure.SentenceImpl;
+import com.silicolife.textmining.core.datastructures.utils.GenericPairImpl;
 import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotationLog;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
+import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
+import com.silicolife.textmining.core.interfaces.core.document.IPublicationFilter;
+import com.silicolife.textmining.core.interfaces.core.document.structure.ISentence;
 
 /**
  * The goal of this class is to expose for the web all annotation functionalities of
@@ -130,6 +137,25 @@ public class AnnotationController {
 		return new ResponseEntity<DaemonResponse<List<IEntityAnnotation>>>(response, HttpStatus.OK);
 	}
 	
+	
+	/**
+	 * Get document annotations entities of a sentence related to a process
+	 *  
+	 * @param publicationId
+	 * @param processId
+	 * @param sentence
+	 * @return
+	 * @throws AnnotationException
+	 */
+	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/getProcessDoumentAnnotationEntitiesOfSentence/{publicationId}/{processId}", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<List<IEntityAnnotation>>> getProcessDoumentAnnotationEntitiesOfSentence(@PathVariable Long publicationId, @PathVariable Long processId, @RequestBody SentenceImpl sentence) throws AnnotationException{
+		DaemonResponse<List<IEntityAnnotation>> response = new DaemonResponse<List<IEntityAnnotation>>(annotationService.getProcessDoumentAnnotationEntitiesOfSentence(publicationId, processId, sentence));
+		return new ResponseEntity<DaemonResponse<List<IEntityAnnotation>>>(response, HttpStatus.OK);
+	}
+	
 	/**
 	 * Get process document logs
 	 * 
@@ -203,6 +229,13 @@ public class AnnotationController {
 	public ResponseEntity<DaemonResponse<List<IEventAnnotation>>> getProcessDoumentAnnotationEvents(@PathVariable Long processId, @PathVariable Long publicationId) throws AnnotationException{
 		DaemonResponse<List<IEventAnnotation>> response = new DaemonResponse<List<IEventAnnotation>>(annotationService.getProcessDoumentAnnotationEvents(processId, publicationId));
 		return new ResponseEntity<DaemonResponse<List<IEventAnnotation>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getSentence/{entityAnnotationId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<ISentence>> getSentence(@PathVariable Long entityAnnotationId ) throws ANoteException, IOException{
+		DaemonResponse<ISentence> response = new DaemonResponse<ISentence>(annotationService.getSentence(entityAnnotationId));
+		return new ResponseEntity<DaemonResponse<ISentence>>(response, HttpStatus.OK);
 	}
 	
 	/**
@@ -299,6 +332,13 @@ public class AnnotationController {
 	@RequestMapping(value = "/getPublicationsIdsByResourceElements", method = RequestMethod.POST)
 	public ResponseEntity<DaemonResponse<List<Long>>> getPublicationByResourceElement(@RequestBody Set<Long> resourceElementIds) throws AnnotationException{
 		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByResourceElements(resourceElementIds));
+		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsIdsByResourceElementsFilteredByPublicationFilter", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<List<Long>>> getPublicationByResourceElementFilteredByPublicationFilter(@RequestBody GenericPairImpl<Set<Long>,PublicationFilterImpl> resourceElementIdsAndFilter) throws AnnotationException{
+		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByResourceElementsFilteredByPublicationFilter(resourceElementIdsAndFilter.getX(), resourceElementIdsAndFilter.getY()));
 		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
 	}
 	
