@@ -119,9 +119,21 @@ public class NERServerOnDemandController{
 		IResource<IResourceElement> keggCompoundsResource = InitConfiguration.getDataAccess().getResourceByID(6313536102811386987L);
 		IDictionary keggCompounds = new DictionaryImpl(keggCompoundsResource);
 		
-		// Diseases
+		// Diseases ( Ontology Diseases)
 		IResource<IResourceElement> diseasesResource = InitConfiguration.getDataAccess().getResourceByID(180173838987053627L);
 		IOntology diseasesDiseasesOntology= new OntologyImpl(diseasesResource);
+		
+		// Uniprot
+		IResource<IResourceElement> uniprotProteinsResource = InitConfiguration.getDataAccess().getResourceByID(2083670216605005104L);
+		IDictionary uniprotProteins = new DictionaryImpl(uniprotProteinsResource);
+		
+		// Kegg Genes - Escherichia coli
+		IResource<IResourceElement> keggGenesEcoliResource = InitConfiguration.getDataAccess().getResourceByID(5932361953485982085L);
+		IDictionary keggGenesEcoli = new DictionaryImpl(keggGenesEcoliResource);
+		
+		// Kegg Genes - Saccharomyces cerevisiae
+		IResource<IResourceElement> keggGenesScerevisiaeResource = InitConfiguration.getDataAccess().getResourceByID(8441950794640514315L);
+		IDictionary keggGenesScerevisiae = new DictionaryImpl(keggGenesScerevisiaeResource);
 		
 		// Configuraton
 
@@ -131,15 +143,18 @@ public class NERServerOnDemandController{
 		NERLinnaeusPreProcessingEnum preprocessing = NERLinnaeusPreProcessingEnum.StopWords;
 		int sizeOfSmallWordsToBeNotAnnotated = 2;
 		ResourcesToNerAnote resourceToNER = new ResourcesToNerAnote(caseSensitive,false,sizeOfSmallWordsToBeNotAnnotated);
+		resourceToNER.addUsingAnoteClasses(biomass, biomass.getResourceClassContent(), biomass.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(reactionsSTangingare, reactionsSTangingare.getResourceClassContent(), reactionsSTangingare.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(kineticParameters, kineticParameters.getResourceClassContent(), kineticParameters.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(keggGenesScerevisiae, keggGenesScerevisiae.getResourceClassContent(), keggGenesScerevisiae.getResourceClassContent());		
+		resourceToNER.addUsingAnoteClasses(keggGenesEcoli, keggGenesEcoli.getResourceClassContent(), keggGenesEcoli.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(uniprotProteins, uniprotProteins.getResourceClassContent(), uniprotProteins.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(pubchemSubset, pubchemSubset.getResourceClassContent(), pubchemSubset.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(keggCompounds, keggCompounds.getResourceClassContent(), keggCompounds.getResourceClassContent());
+		resourceToNER.addUsingAnoteClasses(diseasesDiseasesOntology, diseasesDiseasesOntology.getResourceClassContent(), diseasesDiseasesOntology.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(metabolitesChebi, metabolitesChebi.getResourceClassContent(), metabolitesChebi.getResourceClassContent());
-		resourceToNER.addUsingAnoteClasses(reactionsSTangingare, reactionsSTangingare.getResourceClassContent(), reactionsSTangingare.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(enzymesBrenda, enzymesBrenda.getResourceClassContent(), enzymesBrenda.getResourceClassContent());
 		resourceToNER.addUsingAnoteClasses(linnauesSpecies, linnauesSpecies.getResourceClassContent(), linnauesSpecies.getResourceClassContent());
-		resourceToNER.addUsingAnoteClasses(biomass, biomass.getResourceClassContent(), biomass.getResourceClassContent());
-		resourceToNER.addUsingAnoteClasses(kineticParameters, kineticParameters.getResourceClassContent(), kineticParameters.getResourceClassContent());
-		resourceToNER.addUsingAnoteClasses(diseasesDiseasesOntology, diseasesDiseasesOntology.getResourceClassContent(), diseasesDiseasesOntology.getResourceClassContent());
 		
 		boolean usingOtherResourceInfoToImproveRuleAnnotations = false;
 		boolean normalized = true;
