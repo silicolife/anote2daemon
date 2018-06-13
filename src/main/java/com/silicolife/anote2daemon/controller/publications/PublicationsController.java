@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
@@ -30,11 +29,8 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.service.publications.IPublicationsService;
 import com.silicolife.textmining.core.datastructures.documents.PublicationImpl;
 import com.silicolife.textmining.core.datastructures.documents.SearchPropertiesImpl;
-import com.silicolife.textmining.core.datastructures.documents.expImpl;
-import com.silicolife.textmining.core.datastructures.general.AnoteClass;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
-import com.silicolife.textmining.core.interfaces.core.document.ISearchProperties;
 import com.silicolife.textmining.core.interfaces.core.document.labels.IPublicationLabel;
 
 /**
