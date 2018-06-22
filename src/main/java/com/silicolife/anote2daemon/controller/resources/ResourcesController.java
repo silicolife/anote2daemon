@@ -241,6 +241,19 @@ public class ResourcesController {
 		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return
+	 * @throws ResourcesExceptions
+	 */
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getAllPrivilegesResources", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>> getAllPrivilegesResources() throws ResourcesExceptions  {
+		DaemonResponse<List<IResource<IResourceElement>>> response = new DaemonResponse<List<IResource<IResourceElement>>>(resourcesService.getAllPrivilegesResources());
+		return new ResponseEntity<DaemonResponse<List<IResource<IResourceElement>>>>(response, HttpStatus.OK);
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/countResourcesFromSearchWAuth", method = RequestMethod.POST , consumes = { "application/json" })
 	public ResponseEntity<DaemonResponse<Integer>> countResourcesFromSearchWAuth(@RequestBody SearchPropertiesImpl searchProperties) {

@@ -1236,5 +1236,16 @@ public class ServerAccess implements IDataAccess{
 			IPublication publication, ISentence sentence) throws ANoteException {
 		return SpringInjectedServicesAccess.getAnnotationService().getProcessDoumentAnnotationEntitiesOfSentence(publication.getId(), process.getId(), sentence);
 	}
-	
+
+
+	@Override
+	public List<IResource<IResourceElement>> getAllPrivilegesResources() throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesService().getAllPrivilegesResources();
+	}
+
+	@Override
+	public Long countAnnotations(IIEProcess process, IResourceElement resourceElement) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countAnnotations(process.getId(), resourceElement.getId()); 
+	}
+
 }

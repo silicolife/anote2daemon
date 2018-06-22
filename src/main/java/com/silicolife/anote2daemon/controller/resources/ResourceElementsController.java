@@ -143,6 +143,7 @@ public class ResourceElementsController {
 				resourcesElementService.countResourceElements(resourceId));
 		return new ResponseEntity<DaemonResponse<Integer>>(response, HttpStatus.OK);
 	}
+	
 
 	/**
 	 * Get resource elements by class
@@ -162,6 +163,7 @@ public class ResourceElementsController {
 				resourcesElementService.getResourceElementsByClass(resourceId, termClass));
 		return new ResponseEntity<DaemonResponse<IResourceElementSet<IResourceElement>>>(response, HttpStatus.OK);
 	}
+	
 
 	/**
 	 * Get resource content

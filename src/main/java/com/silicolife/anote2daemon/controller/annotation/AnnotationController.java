@@ -173,6 +173,15 @@ public class AnnotationController {
 		return new ResponseEntity<DaemonResponse<SortedSet<IAnnotationLog>>>(response, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
+			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
+			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@RequestMapping(value = "/countAnnotations/{processId}/{resourceElementId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> countAnnotations(@PathVariable Long processId, @PathVariable Long resourceElementId) throws AnnotationException{
+		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotations(processId, resourceElementId));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
+	
 	/**
 	 * Add process corpus to event annotations
 	 * 
