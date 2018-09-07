@@ -74,21 +74,21 @@ public class CorpusCreationExecutorServer {
 		}
 	}
 
-	protected void addPublicationsFromFiles(CorpusCreationInBatch corpusCreator, ICorpus corpus, List<File> xmlFiles, CorpusCreateSourceEnum corpusSource)
+	protected void addPublicationsFromFiles(CorpusCreationInBatch corpusCreator, ICorpus corpus, List<File> files, CorpusCreateSourceEnum corpusSource)
 			throws IOException, ANoteException {
 		Set<IPublication> publications = new HashSet<>();
-		for(int i=0; i<xmlFiles.size(); i++){
+		for(int i=0; i<files.size(); i++){
 			if(corpusSource == null)
 				throw new ANoteException("CorpusCreateSourceEnum can not be null");
 			switch (corpusSource) {
 				case Pubmed :
-					publications.addAll(addUsingPubmedReader(xmlFiles.get(i)));
+					publications.addAll(addUsingPubmedReader(files.get(i)));
 					break;
 				case PMC :
-					publications.addAll(addUsingPMCReader(xmlFiles.get(i)));
+					publications.addAll(addUsingPMCReader(files.get(i)));
 					break;
 				case USPTO :
-					publications.addAll(addUSPTOReader(xmlFiles.get(i)));
+					publications.addAll(addUSPTOReader(files.get(i)));
 					break;
 				default :
 					break;

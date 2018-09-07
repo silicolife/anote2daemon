@@ -16,7 +16,6 @@ import com.silicolife.textmining.core.datastructures.corpora.CorpusUpdateConfigu
 import com.silicolife.textmining.core.datastructures.exceptions.process.InvalidConfigurationException;
 import com.silicolife.textmining.core.datastructures.init.InitConfiguration;
 import com.silicolife.textmining.core.datastructures.process.ProcessRunStatusConfigurationEnum;
-import com.silicolife.textmining.core.datastructures.utils.conf.GlobalNames;
 import com.silicolife.textmining.core.interfaces.core.corpora.CorpusCreateSourceEnum;
 import com.silicolife.textmining.core.interfaces.core.corpora.ICorpusUpdateConfiguration;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
@@ -48,21 +47,43 @@ public class USPTOPatentUpdateExecutionManager {
 	
 	public void startExecution() throws IOException, ANoteException, InvalidConfigurationException{
 		execute = true;
-		execution();
+		executionGrant();
+		executionApplication();
 	}
 	
 	public void stopExecution(){
 		execute = false;
 	}
 	
-	private void execution() throws IOException, ANoteException, InvalidConfigurationException {
-		logger.info("Executing USPTO Patent Corpus and Processes Update");
+	private void executionGrant() throws IOException, ANoteException, InvalidConfigurationException {
+		logger.info("Executing USPTO [Grant] Patent Corpus and Processes Update");
 		CorpusUpdaterExecutorServer corpusUpdaterExecutorServer = new CorpusUpdaterExecutorServer();
-		int updatedFiles = corpusUpdaterExecutorServer.executeCorpusUpdate(getCorpusUpdateConfiguration());
+		int updatedFiles = corpusUpdaterExecutorServer.executeCorpusUpdate(getUSPTOGrantCorpusUpdateConfiguration());
 		if(updatedFiles>0)
 		{
 			List<IIEProcess> processsesToUpdate = getProcessesToUpdate();
-			movePMCFilesToFinalDirectory();
+			moveUSPTOGrantFilesToFinalDirectory();
+			logger.info("Resume Process " +processsesToUpdate.size());
+			for(IIEProcess process:processsesToUpdate)
+			{
+				logger.info("Resume Process start " +process.getName());
+				ANERLexicalResources tagger = new LinnaeusTagger();
+				INERConfiguration linaneusConfiguration = new NERLinnaeusConfigurationImpl(process, ProcessRunStatusConfigurationEnum.resume);
+				tagger.execute(linaneusConfiguration);
+			}
+		}
+		else
+			logger.info("No files to update");
+	}
+	
+	private void executionApplication() throws IOException, ANoteException, InvalidConfigurationException {
+		logger.info("Executing USPTO [Application] PatentCorpus and Processes Update");
+		CorpusUpdaterExecutorServer corpusUpdaterExecutorServer = new CorpusUpdaterExecutorServer();
+		int updatedFiles = corpusUpdaterExecutorServer.executeCorpusUpdate(getUSPTOApplicationCorpusUpdateConfiguration());
+		if(updatedFiles>0)
+		{
+			List<IIEProcess> processsesToUpdate = getProcessesToUpdate();
+			moveUSPTOApplicationFilesToFinalDirectory();
 			logger.info("Resume Process " +processsesToUpdate.size());
 			for(IIEProcess process:processsesToUpdate)
 			{
@@ -112,19 +133,73 @@ public class USPTOPatentUpdateExecutionManager {
 		return out;
 	}
 
-	public 	ICorpusUpdateConfiguration getCorpusUpdateConfiguration() throws ANoteException
+	/**
+	 * Get ICorpusUpdateConfiguration for USPTO Grant Configuration
+	 * 
+	 * @return
+	 * @throws ANoteException
+	 */
+	public 	ICorpusUpdateConfiguration getUSPTOGrantCorpusUpdateConfiguration() throws ANoteException
 	{
-		String usptoPatentDirectory = ApplicationConfigurationProperties.getPatentCorpusUpdateDir();
+		String usptoGrantPatentDirectory = ApplicationConfigurationProperties.getUSPTOGrantPatentCorpusUpdateDir();
+		return getConfiguration(usptoGrantPatentDirectory);
+	}
+	
+	/**
+	 * Get ICorpusUpdateConfiguration for USPTO Application Configuration
+	 * 
+	 * @return
+	 * @throws ANoteException
+	 */
+	public 	ICorpusUpdateConfiguration getUSPTOApplicationCorpusUpdateConfiguration() throws ANoteException
+	{
+		String usptoApplicationPatentDirectory = ApplicationConfigurationProperties.getUSPTOApplicationPatentCorpusUpdateDir();
+		return getConfiguration(usptoApplicationPatentDirectory);
+	}
+
+	/**
+	 * Get ICorpusUpdateConfiguration given base files dir
+	 * 
+	 * @param usptoPatentDirectory
+	 * @return
+	 * @throws ANoteException
+	 */
+	private ICorpusUpdateConfiguration getConfiguration(String basefilesdir) throws ANoteException {
 		Properties properties = new Properties();
 		long corpusID = Long.valueOf(ApplicationConfigurationProperties.getPatentCorpusID());
 		ICorpus corpusToUpdate = InitConfiguration.getDataAccess().getCorpusByID(corpusID );
-		CorpusUpdateConfigurationImpl corpusupdateConfiguration = new CorpusUpdateConfigurationImpl(corpusToUpdate, usptoPatentDirectory, properties,CorpusCreateSourceEnum.USPTO);
+		CorpusUpdateConfigurationImpl corpusupdateConfiguration = new CorpusUpdateConfigurationImpl(corpusToUpdate, basefilesdir, properties,CorpusCreateSourceEnum.USPTO);
 		return corpusupdateConfiguration;
 	}
 	
-	public static boolean movePMCFilesToFinalDirectory() throws IOException{
-		String tmpDir = ApplicationConfigurationProperties.getPatentCorpusUpdateDir();
-		String finalDir = ApplicationConfigurationProperties.getPatentCorpusToArchiveDir();
+	/**
+	 * In the end of process move files to archive dir - USPTOGrant
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	public static boolean moveUSPTOGrantFilesToFinalDirectory() throws IOException{
+		String tmpDir = ApplicationConfigurationProperties.getUSPTOGrantPatentCorpusUpdateDir();
+		String finalDir = ApplicationConfigurationProperties.getUSPTOGrantPatentCorpusToArchiveDir();
+		moveUSPTOFiles(tmpDir,finalDir);
+		return true;		
+	}
+	
+	/**
+	 * In the end of process move files to archive dir - USPTOApplication
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	public static boolean moveUSPTOApplicationFilesToFinalDirectory() throws IOException{
+		String tmpDir = ApplicationConfigurationProperties.getUSPTOApplicationPatentCorpusUpdateDir();
+		String finalDir = ApplicationConfigurationProperties.getUSPTOApplicationPatentCorpusToArchiveDir();
+		moveUSPTOFiles(tmpDir,finalDir);
+		return true;		
+	}
+	
+	private static void moveUSPTOFiles(String tmpDir, String finalDir) throws IOException
+	{
 		File finalDirFile = new File(finalDir);
 		if(!finalDirFile.exists())
 			finalDirFile.mkdir();
@@ -136,7 +211,6 @@ public class USPTOPatentUpdateExecutionManager {
 			Files.move(Paths.get(file.getAbsolutePath()), Paths.get(finalDir+"/"+file.getName()),StandardCopyOption.REPLACE_EXISTING);
 		}
 		logger.info("Finsihed moving files");
-		return true;		
 	}
 
 }

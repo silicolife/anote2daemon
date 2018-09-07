@@ -75,16 +75,25 @@ public class ApplicationConfigurationProperties {
 		return getPropConfigurations().getProperty("patentcorpusid");
 	}
 
-	public static String getPatentCorpusUpdateDir() {
-		return getPropConfigurations().getProperty("patentcorpusupdatedir");
-	}
 
 	public static String getPatentCorpusProcessesToResumeIds() {
 		return getPropConfigurations().getProperty("patentcorpusprocessestoresumeids");
 	}
+	
+	public static String getUSPTOGrantPatentCorpusUpdateDir() {
+		return getPropConfigurations().getProperty("patentcorpusupdatedir");
+	}
 
-	public static String getPatentCorpusToArchiveDir() {
+	public static String getUSPTOGrantPatentCorpusToArchiveDir() {
 		return getPropConfigurations().getProperty("patentcorpusafterupdatedir");
+	}
+	
+	public static String getUSPTOApplicationPatentCorpusUpdateDir() {
+		return getPropConfigurations().getProperty("usptoapplicaitoncorpusupdatedir");
+	}
+
+	public static String getUSPTOApplicationPatentCorpusToArchiveDir() {
+		return getPropConfigurations().getProperty("usptoapplicaitonpatentcorpusafterupdatedir");
 	}
 	
 	public static String getExportKineticREDir() {
