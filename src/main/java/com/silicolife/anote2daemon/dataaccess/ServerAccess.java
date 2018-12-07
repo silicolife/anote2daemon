@@ -10,8 +10,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 
-import org.springframework.cache.annotation.Cacheable;
-
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.PermissionsUtilsEnum;
@@ -1246,6 +1244,160 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public Long countAnnotations(IIEProcess process, IResourceElement resourceElement) throws ANoteException {
 		return SpringInjectedServicesAccess.getAnnotationService().countAnnotations(process.getId(), resourceElement.getId()); 
+	}
+
+
+
+	@Override
+	public List<IPublication> getPublicationsFromSearchPaginatedWSort(ISearchProperties searchProperties, int index,
+			int paginationSize, boolean asc, String sortBy) throws ANoteException {
+		return  SpringInjectedServicesAccess.getPublicationsLuceneService().getPublicationsFromSearchPaginatedWSort(searchProperties, index, paginationSize, asc, sortBy);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByExactExternalID(String externalId)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactExternalID(externalId);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByExactExternalID(
+			IResourceElementsFilter filter, String externalId) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByExactExternalID(filter, externalId);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalID(String partialString)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialExternalID(partialString);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialExternalID(
+			IResourceElementsFilter filter, String partialString) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialExternalID(filter, partialString);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByPartialExternalIDPaginated(String partialString,
+			int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByPartialExternalIDPaginated(partialString, index, paginationSize);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsFilteredByPartialExternalIDPaginated(
+			IResourceElementsFilter filter, String partialString, int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsFilteredByPartialExternalIDPaginated(filter, partialString, index, paginationSize);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsByExactTermOrExactSynonymPaginated(
+			String exactString, int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsByExactTermOrExactSynonymPaginated(exactString,index, paginationSize);
+	}
+
+
+
+	@Override
+	public Integer getCountResourceElementsByExactTermOrExactSynonymPaginated(String exactString)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getCountResourceElementsByExactTermOrExactSynonymPaginated(exactString);
+	}
+
+
+
+	@Override
+	public IResourceElementSet<IResourceElement> getResourceElementsPaginated(ISearchProperties searchProperties,
+			int index, int paginationSize, boolean asc, String sortBy) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().getResourceElementsPaginated(searchProperties, index, paginationSize, asc, sortBy);
+	}
+
+
+
+	@Override
+	public Integer countResourceElements(ISearchProperties searchProperties) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesElementLuceneService().countResourceElements(searchProperties);
+	}
+
+
+
+	@Override
+	public List<IResource<IResourceElement>> getResourcesFromSearchPaginatedWAuth(ISearchProperties searchProperties,
+			int index, int paginationSize) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().getResourcesFromSearchPaginatedWAuth(searchProperties, index, paginationSize);
+	}
+
+
+
+	@Override
+	public Integer countActiveResourcesFromSearch(ISearchProperties searchProperties) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().countActiveResourcesFromSearch(searchProperties);
+	}
+
+
+
+	@Override
+	public Integer countResourcesFromSearchWAuth(ISearchProperties searchProperties, String permission)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().countResourcesFromSearchWAuth(searchProperties, permission);
+	}
+
+
+
+	@Override
+	public List<IResource<IResourceElement>> getActiveResourcesFromSearchPaginatedWSort(
+			ISearchProperties searchProperties, int index, int paginationSize, boolean asc, String sortBy)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().getActiveResourcesFromSearchPaginatedWSort(searchProperties, index, paginationSize, asc, sortBy);
+	}
+
+
+
+	@Override
+	public List<IResource<IResourceElement>> getResourcesFromSearchPaginatedWAuthAndSort(
+			ISearchProperties searchProperties, int index, int paginationSize, boolean asc, String sortBy)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().getResourcesFromSearchPaginatedWAuthAndSort(searchProperties, index, paginationSize, asc, sortBy);
+	}
+
+
+
+	@Override
+	public List<IResource<IResourceElement>> getResourcesFromSearchPaginatedWAuthAndSort(
+			ISearchProperties searchProperties, int index, int paginationSize, boolean asc, String sortBy,
+			String permission) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().getResourcesFromSearchPaginatedWAuthAndSort(searchProperties, index, paginationSize, asc, sortBy, permission);
+	}
+
+
+
+	@Override
+	public List<IResource<IResourceElement>> getPrivilegesResourcesAdminAccessFromSearchPaginated(
+			ISearchProperties searchProperties, Integer paginationIndex, Integer paginationSize, boolean asc,
+			String sortBy) throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().getPrivilegesResourcesAdminAccessFromSearchPaginated(searchProperties, paginationIndex, paginationSize, asc, sortBy);
+	}
+
+
+
+	@Override
+	public Integer countPrivilegesResourcesAdminAccessFromSearch(ISearchProperties searchProperties)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getResourcesLuceneService().countPrivilegesResourcesAdminAccessFromSearch(searchProperties);
 	}
 
 }
