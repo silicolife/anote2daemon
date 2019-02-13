@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.GenericFilterBean;
 
+@Deprecated
+/**
+ * 
+ * COnfiguration is in web.xml on src/main/webapp/WEB-INF/web.xml
+ * 
+ * @author Hugo Costa
+ *
+ */
 public class CorsFilterAnoteWeb extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
