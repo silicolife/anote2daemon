@@ -10,10 +10,13 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 
+import com.silicolife.textmining.core.datastructures.annotation.AnnotationType;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.PermissionsUtilsEnum;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils;
+import com.silicolife.textmining.core.interfaces.core.analysis.IAnnotatedDocumentStatistics;
+import com.silicolife.textmining.core.interfaces.core.analysis.IIEProcessStatistics;
 import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotationLog;
 import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotationsFilter;
@@ -25,7 +28,6 @@ import com.silicolife.textmining.core.interfaces.core.dataaccess.IDataAccess;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.layer.resources.IResourceManagerReport;
 import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocument;
-import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
 import com.silicolife.textmining.core.interfaces.core.document.IDocumentSet;
 import com.silicolife.textmining.core.interfaces.core.document.IPublication;
 import com.silicolife.textmining.core.interfaces.core.document.IPublicationFilter;
@@ -45,7 +47,6 @@ import com.silicolife.textmining.core.interfaces.core.user.IUser;
 import com.silicolife.textmining.core.interfaces.core.user.IUserDataObject;
 import com.silicolife.textmining.core.interfaces.core.utils.IGenericPair;
 import com.silicolife.textmining.core.interfaces.process.IE.IIEProcess;
-import com.silicolife.textmining.core.interfaces.process.IE.IIEProcessStatistics;
 import com.silicolife.textmining.core.interfaces.process.IE.re.IRelationsType;
 import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
 import com.silicolife.textmining.core.interfaces.resource.IResource;
@@ -1242,8 +1243,8 @@ public class ServerAccess implements IDataAccess{
 	}
 
 	@Override
-	public Long countAnnotations(IIEProcess process, IResourceElement resourceElement) throws ANoteException {
-		return SpringInjectedServicesAccess.getAnnotationService().countAnnotations(process.getId(), resourceElement.getId()); 
+	public Long countAnnotationsByResourceElement(IIEProcess process, IResourceElement resourceElement) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByResourceElement(process.getId(), resourceElement.getId()); 
 	}
 
 
@@ -1398,6 +1399,75 @@ public class ServerAccess implements IDataAccess{
 	public Integer countPrivilegesResourcesAdminAccessFromSearch(ISearchProperties searchProperties)
 			throws ANoteException {
 		return SpringInjectedServicesAccess.getResourcesLuceneService().countPrivilegesResourcesAdminAccessFromSearch(searchProperties);
+	}
+
+
+
+	@Override
+	public List<IPublication> getQueryPublicationsPaginated(IQuery query, Integer paginationIndex,
+			Integer paginationSize, Boolean asc, String sortBy) throws ANoteException {
+		return SpringInjectedServicesAccess.getQueriesService().getQueryPublicationsPaginated(query.getId(), paginationIndex, paginationSize, asc, sortBy);
+	}
+
+
+
+	@Override
+	public Long countQueryPublications(IQuery query) throws ANoteException {
+		return SpringInjectedServicesAccess.getQueriesService().getQueryPublicationsCount(query.getId());
+	}
+
+
+
+	@Override
+	public List<Long> getCorpusPublicationsFromExternalID(ICorpus corpus, String source, String internalSourceId)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getCorpusService().getCorpusPublicationsFromExternalID(corpus.getId(), source, internalSourceId);
+	}
+
+
+
+	@Override
+	public Long countAnnotationsByAnnotationType(IIEProcess process, AnnotationType annotType) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByAnnotionType(process.getId(), annotType.name());
+	}
+
+
+
+	@Override
+	public Map<IAnoteClass, Long> countAnnotationsByClassInProcess(IIEProcess process) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByClassInProcess(process.getId());
+	}
+
+
+
+	@Override
+	public Map<IResourceElement, Long> countAnnotationsByResourceElementInProcess(IIEProcess process)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByResourceElementInProcess(process.getId());
+	}
+
+
+
+	@Override
+	public Map<IResourceElement, Long> countAnnotationsByResourceElementInDocument(IAnnotatedDocument document)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByResourceElementInDocument(document.getId(), document.getProcess().getId());
+	}
+
+
+
+	@Override
+	public Long countDocumentsWithResourceElementInProcess(IResourceElement resourceElement, IIEProcess process)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithResourceElementInProcess(resourceElement.getId(), process.getId());
+	}
+
+
+
+	@Override
+	public Map<IResourceElement, Long> countDocumentsWithAnnotationsByResourceElementInProcess(IIEProcess process)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithAnnotationsByResourceElementInProcess(process.getId());
 	}
 
 }

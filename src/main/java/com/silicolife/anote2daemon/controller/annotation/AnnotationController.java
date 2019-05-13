@@ -31,13 +31,12 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.documents.PublicationFilterImpl;
 import com.silicolife.textmining.core.datastructures.documents.structure.SentenceImpl;
 import com.silicolife.textmining.core.datastructures.utils.GenericPairImpl;
+import com.silicolife.textmining.core.interfaces.core.analysis.IAnnotatedDocumentStatistics;
 import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotationLog;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
-import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
-import com.silicolife.textmining.core.interfaces.core.document.IPublicationFilter;
 import com.silicolife.textmining.core.interfaces.core.document.structure.ISentence;
 
 /**
@@ -176,9 +175,9 @@ public class AnnotationController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
-	@RequestMapping(value = "/countAnnotations/{processId}/{resourceElementId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/countAnnotationsByResourceElement/{processId}/{resourceElementId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Long>> countAnnotations(@PathVariable Long processId, @PathVariable Long resourceElementId) throws AnnotationException{
-		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotations(processId, resourceElementId));
+		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotationsByResourceElement(processId, resourceElementId));
 		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
 	}
 	
