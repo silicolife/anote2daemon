@@ -10,6 +10,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+
 import com.silicolife.textmining.core.datastructures.annotation.AnnotationType;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.dao.UsersLogged;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
@@ -1434,16 +1436,16 @@ public class ServerAccess implements IDataAccess{
 
 
 	@Override
-	public Map<IAnoteClass, Long> countAnnotationsByClassInProcess(IIEProcess process) throws ANoteException {
-		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByClassInProcess(process.getId());
+	public Map<IAnoteClass, Long> countEntityAnnotationsByClassInProcess(IIEProcess process) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countEntityAnnotationsByClassInProcess(process.getId());
 	}
 
 
 
 	@Override
-	public Map<IResourceElement, Long> countAnnotationsByResourceElementInProcess(IIEProcess process)
+	public Map<IResourceElement, Long> countEntityAnnotationsByResourceElementInProcess(IIEProcess process)
 			throws ANoteException {
-		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByResourceElementInProcess(process.getId());
+		return SpringInjectedServicesAccess.getAnnotationService().countEntityAnnotationsByResourceElementInProcess(process.getId());
 	}
 
 
@@ -1451,23 +1453,89 @@ public class ServerAccess implements IDataAccess{
 	@Override
 	public Map<IResourceElement, Long> countAnnotationsByResourceElementInDocument(IAnnotatedDocument document)
 			throws ANoteException {
-		return SpringInjectedServicesAccess.getAnnotationService().countAnnotationsByResourceElementInDocument(document.getId(), document.getProcess().getId());
+		return SpringInjectedServicesAccess.getAnnotationService().countEntityAnnotationsByResourceElementInDocument(document.getId(), document.getProcess().getId());
 	}
 
 
 
 	@Override
-	public Long countDocumentsWithResourceElementInProcess(IResourceElement resourceElement, IIEProcess process)
+	public Long countDocumentsWithResourceElementByAnnotationTypeInProcess(IResourceElement resourceElement, IIEProcess process, AnnotationType annotType)
 			throws ANoteException {
-		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithResourceElementInProcess(resourceElement.getId(), process.getId());
+		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithResourceElementByAnnotationTypeInProcess(resourceElement.getId(), process.getId(), annotType.name());
 	}
 
 
 
 	@Override
-	public Map<IResourceElement, Long> countDocumentsWithAnnotationsByResourceElementInProcess(IIEProcess process)
+	public Map<IResourceElement, Long> countDocumentsWithEntityAnnotationsByResourceElementInProcess(IIEProcess process)
 			throws ANoteException {
-		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithAnnotationsByResourceElementInProcess(process.getId());
+		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithEntityAnnotationsByResourceElementInProcess(process.getId());
+	}
+
+
+
+	@Override
+	public Long countPublicationsWithEventsByResourceElements(List<IResourceElement> resourceElements)
+			throws ANoteException {
+		List<Long> resourceElementIds = new ArrayList<>();
+		for(IResourceElement elem : resourceElements)
+			resourceElementIds.add(elem.getId());
+		return SpringInjectedServicesAccess.getAnnotationService().countPublicationsWithEventsByResourceElements(resourceElementIds);
+	}
+
+
+
+	@Override
+	public List<Long> getPublicationsIdsWithEventsByResourceElements(List<IResourceElement> resourceElements)
+			throws ANoteException {
+		List<Long> resourceElementIds = new ArrayList<>();
+		for(IResourceElement elem : resourceElements)
+			resourceElementIds.add(elem.getId());
+		return SpringInjectedServicesAccess.getAnnotationService().getPublicationsIdsWithEventsByResourceElements(resourceElementIds);
+
+	}
+
+
+
+	@Override
+	public Map<ImmutablePair<IAnoteClass, IAnoteClass>, Long> countPublicationsWithEventsByIAnoteClasses(
+			IIEProcess process) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countPublicationsWithEventsByIAnoteClasses(process.getId());
+	}
+
+
+
+	@Override
+	public Map<ImmutablePair<IAnoteClass, IAnoteClass>, Long> countEventAnnotationsByClassInProcess(IIEProcess process)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countEventAnnotationsByClassInProcess(process.getId());
+	}
+
+
+
+	@Override
+	public List<Long> getPublicationsIdsByEventResourceElements(IIEProcess process,
+			Set<ImmutablePair<IResourceElement, IResourceElement>> resElemIds) throws ANoteException {
+		Set<String> resElemConcated = new HashSet<>();
+		for(ImmutablePair<IResourceElement, IResourceElement> resId : resElemIds)
+			resElemConcated.add(String.valueOf(resId.getLeft().getId())+"-"+String.valueOf(resId.getRight().getId()));
+		return SpringInjectedServicesAccess.getAnnotationService().getPublicationsIdsByEventResourceElements(process.getId(), resElemConcated);
+	}
+
+
+
+	@Override
+	public Map<ImmutablePair<IResourceElement, IResourceElement>, Long> countDocumentsWithEventsByResourceElemnts(
+			IIEProcess process) throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countDocumentsWithEventsByResourceElemnts(process.getId());
+	}
+
+
+
+	@Override
+	public Map<ImmutablePair<IResourceElement, IResourceElement>, Long> countEventsByResourceElemnts(IIEProcess process)
+			throws ANoteException {
+		return SpringInjectedServicesAccess.getAnnotationService().countEventsByResourceElemnts(process.getId());
 	}
 
 }

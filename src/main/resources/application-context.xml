@@ -25,6 +25,11 @@
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="resourceContent"/>
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="resourceClassContent"/>
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="corpusStatistics"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEntityByTypeCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEntityByClassCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctDocWithEntityByResourceElmCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEntityByResourceElmCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctCorpusPubsCache"/>
 	    </beans:set>
 	    </beans:property>
 	</beans:bean>

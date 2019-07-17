@@ -1,9 +1,12 @@
 package com.silicolife.anote2daemon.webservice;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.silicolife.anote2daemon.utils.DaemonContentJsonSerializer;
 import com.silicolife.textmining.core.datastructures.dataaccess.daemon.webserviceclient.ExceptionInfo;
 
 public class DaemonResponse<T> {
 
+	@JsonSerialize(using=DaemonContentJsonSerializer.class)
 	private T content;
 	private ExceptionInfo exception;
 
