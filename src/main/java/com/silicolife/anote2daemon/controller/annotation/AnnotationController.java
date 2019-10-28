@@ -370,7 +370,7 @@ public class AnnotationController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@Cacheable(value = "ctEntityByTypeCache", sync = true)
+	@Cacheable(value = "ctAnnotByTypeCache", sync = true)
 	@RequestMapping(value = "/countAnnotationsByAnnotationType/{processId}/{annotationType}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Long>> countAnnotationsByAnnotationType(@PathVariable Long processId, @PathVariable String annotationType) throws AnnotationException{
 		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotationsByAnnotionType(processId, annotationType));
@@ -410,6 +410,7 @@ public class AnnotationController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventDocsByClassCache", sync = true)
 	@RequestMapping(value = "/countPublicationsWithEventsByIAnoteClasses/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>> countPublicationsWithEventsByIAnoteClasses( @PathVariable Long processId) throws AnnotationException{
 		DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>> response = new DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>(annotationService.countPublicationsWithEventsByIAnoteClasses(processId));
@@ -417,6 +418,7 @@ public class AnnotationController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventsByClassCache", sync = true)
 	@RequestMapping(value = "/countEventAnnotationsByClassInProcess/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>> countEventAnnotationsByClassInProcess( @PathVariable Long processId) throws AnnotationException{
 		DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>> response = new DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>(annotationService.countEventAnnotationsByClassInProcess( processId));
@@ -432,6 +434,7 @@ public class AnnotationController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventDocsByResElmCache", sync = true)
 	@RequestMapping(value = "/countDocumentsWithEventsByResourceElemnts/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>> countDocumentsWithEventsByResourceElemnts( @PathVariable Long processId) throws AnnotationException{
 		DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>> response = new DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>(annotationService.countDocumentsWithEventsByResourceElemnts( processId));
@@ -439,6 +442,7 @@ public class AnnotationController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventsByResElmCache", sync = true)
 	@RequestMapping(value = "/countEventsByResourceElemnts/{processId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>> countEventsByResourceElemnts( @PathVariable Long processId) throws AnnotationException{
 		DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>> response = new DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>(annotationService.countEventsByResourceElemnts( processId));
