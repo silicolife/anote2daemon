@@ -29,7 +29,6 @@ import com.silicolife.textmining.core.datastructures.resources.lexiacalwords.Lex
 import com.silicolife.textmining.core.datastructures.resources.lookuptable.LookupTableImpl;
 import com.silicolife.textmining.core.datastructures.resources.ontology.OntologyImpl;
 import com.silicolife.textmining.core.datastructures.resources.rule.RuleSetImpl;
-import com.silicolife.textmining.core.interfaces.process.IR.IQuery;
 import com.silicolife.textmining.core.interfaces.resource.IResource;
 import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 

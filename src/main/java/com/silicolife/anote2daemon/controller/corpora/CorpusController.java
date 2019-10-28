@@ -217,6 +217,7 @@ public class CorpusController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#id,"
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).corpus.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
+	@Cacheable(value = "ctCorpusPubsCache", sync = true)
 	@RequestMapping(value = "/getCorpusPublicationsCount/{id}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Long>> getCorpusPublicationsCount(@PathVariable Long id) throws CorpusException {
 		DaemonResponse<Long> response = new DaemonResponse<Long>(corpusService.getCorpusPublicationsCount(id));

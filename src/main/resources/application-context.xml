@@ -25,6 +25,16 @@
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="resourceContent"/>
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="resourceClassContent"/>
 	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="corpusStatistics"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctAnnotByTypeCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEntityByClassCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctDocWithEntityByResourceElmCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEntityByResourceElmCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctCorpusPubsCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEventsByClassCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEventDocsByClassCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEventDocsByResElmCache"/>
+	       	<beans:bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ctEventsByResElmCache"/>
+	       	
 	    </beans:set>
 	    </beans:property>
 	</beans:bean>

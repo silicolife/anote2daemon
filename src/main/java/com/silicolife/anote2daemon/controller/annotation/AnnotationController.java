@@ -3,10 +3,13 @@ package com.silicolife.anote2daemon.controller.annotation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +34,15 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 import com.silicolife.textmining.core.datastructures.documents.PublicationFilterImpl;
 import com.silicolife.textmining.core.datastructures.documents.structure.SentenceImpl;
 import com.silicolife.textmining.core.datastructures.utils.GenericPairImpl;
+import com.silicolife.textmining.core.interfaces.core.analysis.IAnnotatedDocumentStatistics;
 import com.silicolife.textmining.core.interfaces.core.annotation.IAnnotationLog;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEntityAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IEventAnnotation;
 import com.silicolife.textmining.core.interfaces.core.annotation.IManualCurationAnnotations;
 import com.silicolife.textmining.core.interfaces.core.dataaccess.exception.ANoteException;
-import com.silicolife.textmining.core.interfaces.core.document.IAnnotatedDocumentStatistics;
-import com.silicolife.textmining.core.interfaces.core.document.IPublicationFilter;
 import com.silicolife.textmining.core.interfaces.core.document.structure.ISentence;
+import com.silicolife.textmining.core.interfaces.core.general.classe.IAnoteClass;
+import com.silicolife.textmining.core.interfaces.resource.IResourceElement;
 
 /**
  * The goal of this class is to expose for the web all annotation functionalities of
@@ -176,9 +180,9 @@ public class AnnotationController {
 	@PreAuthorize("isAuthenticated() and hasPermission(#processId, "
 			+ "T(com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.utils.ResourcesTypeUtils).processes.getName(),"
 			+ "@genericPairSpringSpel.getGenericPairSpringSpel(T(com.silicolife.anote2daemon.security.RestPermissionsEvaluatorEnum).default_,@permissions.getFullgrant()))")
-	@RequestMapping(value = "/countAnnotations/{processId}/{resourceElementId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/countAnnotationsByResourceElement/{processId}/{resourceElementId}", method = RequestMethod.GET)
 	public ResponseEntity<DaemonResponse<Long>> countAnnotations(@PathVariable Long processId, @PathVariable Long resourceElementId) throws AnnotationException{
-		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotations(processId, resourceElementId));
+		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotationsByResourceElement(processId, resourceElementId));
 		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
 	}
 	
@@ -364,4 +368,85 @@ public class AnnotationController {
 		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByAnnotationsFilter(filter));
 		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);	
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctAnnotByTypeCache", sync = true)
+	@RequestMapping(value = "/countAnnotationsByAnnotationType/{processId}/{annotationType}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> countAnnotationsByAnnotationType(@PathVariable Long processId, @PathVariable String annotationType) throws AnnotationException{
+		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countAnnotationsByAnnotionType(processId, annotationType));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/countDocumentsWithResourceElementByAnnotationTypeInProcess/{resourceElementId}/{processId}/{annotationType}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Long>> countDocumentsWithResourceElementByAnnotationTypeInProcess(@PathVariable Long resourceElementId, @PathVariable Long processId, @PathVariable String annotationType) throws AnnotationException{
+		DaemonResponse<Long> response = new DaemonResponse<Long>(annotationService.countDocumentsWithResourceElementByAnnotationTypeInProcess(resourceElementId,processId, annotationType));
+		return new ResponseEntity<DaemonResponse<Long>>(response, HttpStatus.OK);
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEntityByClassCache", sync = true)
+	@RequestMapping(value = "/countEntityAnnotationsByClassInProcess/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<IAnoteClass, Long>>> countEntityAnnotationsByClassInProcess(@PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<IAnoteClass, Long>> response = new DaemonResponse<Map<IAnoteClass, Long>>(annotationService.countEntityAnnotationsByClassInProcess(processId));
+		return new ResponseEntity<DaemonResponse<Map<IAnoteClass, Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctDocWithEntityByResourceElmCache", sync = true)
+	@RequestMapping(value = "/countDocumentsWithEntityAnnotationsByResourceElementInProcess/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<IResourceElement, Long>>> countDocumentsWithEntityAnnotationsByResourceElementInProcess(@PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<IResourceElement, Long>> response = new DaemonResponse<Map<IResourceElement, Long>>(annotationService.countDocumentsWithEntityAnnotationsByResourceElementInProcess(processId));
+		return new ResponseEntity<DaemonResponse<Map<IResourceElement, Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEntityByResourceElmCache", sync = true)
+	@RequestMapping(value = "/countEntityAnnotationsByResourceElementInProcess/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<IResourceElement, Long>>> countEntityAnnotationsByResourceElementInProcess(@PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<IResourceElement, Long>> response = new DaemonResponse<Map<IResourceElement, Long>>(annotationService.countEntityAnnotationsByResourceElementInProcess(processId));
+		return new ResponseEntity<DaemonResponse<Map<IResourceElement, Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventDocsByClassCache", sync = true)
+	@RequestMapping(value = "/countPublicationsWithEventsByIAnoteClasses/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>> countPublicationsWithEventsByIAnoteClasses( @PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>> response = new DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>(annotationService.countPublicationsWithEventsByIAnoteClasses(processId));
+		return new ResponseEntity<DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventsByClassCache", sync = true)
+	@RequestMapping(value = "/countEventAnnotationsByClassInProcess/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>> countEventAnnotationsByClassInProcess( @PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>> response = new DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>(annotationService.countEventAnnotationsByClassInProcess( processId));
+		return new ResponseEntity<DaemonResponse<Map<ImmutablePair<IAnoteClass,IAnoteClass>, Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(value = "/getPublicationsIdsByEventResourceElements/{processId}", method = RequestMethod.POST)
+	public ResponseEntity<DaemonResponse<List<Long>>> getPublicationsIdsByEventResourceElements( @PathVariable Long processId, 
+																							@RequestBody Set<String> resElemIds) throws AnnotationException{
+		DaemonResponse<List<Long>> response = new DaemonResponse<List<Long>>(annotationService.getPublicationsIdsByEventResourceElements(processId, resElemIds));
+		return new ResponseEntity<DaemonResponse<List<Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventDocsByResElmCache", sync = true)
+	@RequestMapping(value = "/countDocumentsWithEventsByResourceElemnts/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>> countDocumentsWithEventsByResourceElemnts( @PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>> response = new DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>(annotationService.countDocumentsWithEventsByResourceElemnts( processId));
+		return new ResponseEntity<DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>>(response, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@Cacheable(value = "ctEventsByResElmCache", sync = true)
+	@RequestMapping(value = "/countEventsByResourceElemnts/{processId}", method = RequestMethod.GET)
+	public ResponseEntity<DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>> countEventsByResourceElemnts( @PathVariable Long processId) throws AnnotationException{
+		DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>> response = new DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>(annotationService.countEventsByResourceElemnts( processId));
+		return new ResponseEntity<DaemonResponse<Map<ImmutablePair<IResourceElement,IResourceElement>, Long>>>(response, HttpStatus.OK);
+	}
+	
 }
