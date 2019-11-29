@@ -44,7 +44,7 @@
 	</appender>
 
 	<root level="TRACE">
-		<!-- <appender-ref ref="STDOUT" /> -->
+		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILEINFO" />
 		<appender-ref ref="FILEERRORS" />
 	</root>

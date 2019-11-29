@@ -40,6 +40,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 		if (user == null) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
+
 //		/**
 //		 * Create user salt to add security password
 //		 */

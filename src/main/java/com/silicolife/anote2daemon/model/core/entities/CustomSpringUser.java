@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.model.core.entities.AuthUsers;
 
 
-@Entity
+//@Entity
 public class CustomSpringUser extends User {
 
 	/**
