@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.silicolife.anote2daemon.model.core.entities.CustomSpringUser;
 import com.silicolife.anote2daemon.service.users.UsersService;
 import com.silicolife.textmining.core.datastructures.dataaccess.database.dataaccess.implementation.exceptions.general.ExceptionsCodes;
 
@@ -26,10 +24,10 @@ import com.silicolife.textmining.core.datastructures.dataaccess.database.dataacc
 public class RestAuthenticationProvider implements AuthenticationProvider {
 
 	private UsersService userService;
-	private ShaPasswordEncoder passwordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public RestAuthenticationProvider(UsersService userService, ShaPasswordEncoder passwordEncoder) {
+	public RestAuthenticationProvider(UsersService userService, BCryptPasswordEncoder passwordEncoder) {
 		this.userService = userService;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -42,16 +40,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 		if (user == null) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
-		/**
-		 * Create user salt to add security password
-		 */
-		Long userId = ((CustomSpringUser) user).getRepositoryUser().getAuId();
-		String strUserId = String.valueOf(userId);
-		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-		encoder.setIterations(13);
-		String salt = encoder.encodePassword(strUserId, null);
-
-		if (!passwordEncoder.isPasswordValid(user.getPassword(), password, salt)) {
+		if (!passwordEncoder.matches(password, user.getPassword())) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
 

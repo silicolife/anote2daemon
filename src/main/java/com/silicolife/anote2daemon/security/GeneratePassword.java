@@ -1,24 +1,34 @@
 package com.silicolife.anote2daemon.security;
 
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class GeneratePassword {
 
-	public static String generate(String password, Object salt) {
-		ShaPasswordEncoder pass = new ShaPasswordEncoder(256);
-		pass.setIterations(1000000);
-		String a = pass.encodePassword(password, salt);
-		return a;
+	public static String generate(String rawPassword) {
+		BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+		return pass.encode(rawPassword);
+	}
+	
+	public static Boolean checkPassword(String rawPassword, String hashPassword) {
+		BCryptPasswordEncoder pass = new BCryptPasswordEncoder();
+		return pass.matches(rawPassword, hashPassword);
 	}
 
-	public static void main(String[] args) {
+	//	public static String generate(String password, Object salt) {
+	//		ShaPasswordEncoder pass = new ShaPasswordEncoder(256);
+	//		pass.setIterations(1000000);
+	//		String a = pass.encodePassword(password, salt);
+	//		return a;
+	//	}
 
-		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
-		encoder.setIterations(13);
-		String salt = encoder.encodePassword("1", null);
-		
-		System.out.print(GeneratePassword.generate("admin", salt));
-
-	}
+	//	public static void main(String[] args) {
+	//
+	//		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+	//		encoder.setIterations(13);
+	//		String salt = encoder.encodePassword("1", null);
+	//		
+	//		System.out.print(GeneratePassword.generate("teste", salt));
+	//
+	//	}
 }
+

@@ -66,7 +66,7 @@
 		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
 		<init-param>
 			<param-name>cors.allowed.origins</param-name>
-			<param-value>http://127.0.0.1, http://mendel.di.uminho.pt, http://mendel.bio.di.uminho.pt</param-value>
+			<param-value>http://127.0.0.1, http://localhost, http://mendel.di.uminho.pt, http://mendel.bio.di.uminho.pt, http://gcplatform.bio.di.uminho.pt</param-value>
 		</init-param>
 		<init-param>
 			<param-name>cors.allowed.methods</param-name>
