@@ -74,7 +74,7 @@
 		<beans:constructor-arg ref="passwordEncoder" />
 	</beans:bean>
 
-	<!-- Password encoder BCrypt -->
+	<!-- Password encoder bcrypt -->
 	<beans:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 	</beans:bean>
