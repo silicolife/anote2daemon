@@ -74,12 +74,10 @@
 		<beans:constructor-arg ref="passwordEncoder" />
 	</beans:bean>
 
-	<!-- Password encoder sha256 -->
+	<!-- Password encoder BCrypt strenght 13 -->
 	<beans:bean id="passwordEncoder"
-		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
-		<beans:constructor-arg value="256" />
-		<beans:property name="iterations" value="1000000">
-		</beans:property>
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg value="13"/>
 	</beans:bean>
 
 	<!-- Authentication Manager -->
