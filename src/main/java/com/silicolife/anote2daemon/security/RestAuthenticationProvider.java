@@ -40,7 +40,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 		if (user == null) {
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
-<<<<<<< HEAD
+
 
 //		/**
 //		 * Create user salt to add security password
@@ -52,9 +52,6 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 //		String salt = encoder.encodePassword(strUserId, null);
 
 		if (!passwordEncoder.matches(inputPassword, user.getPassword())) {
-=======
-		if (!passwordEncoder.matches(password, user.getPassword())) {
->>>>>>> branch 'rrodrigues' of https://github.com/silicolife/anote2daemon
 			throw new BadCredentialsException(ExceptionsCodes.msgWrongCredentials);
 		}
 

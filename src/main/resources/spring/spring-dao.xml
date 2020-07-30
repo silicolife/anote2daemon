@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<beans:import resource="classpath:spring/spring-users-dao.xml" />
+ 	<beans:import resource="classpath:spring/spring-clustering-dao.xml" />
+	<beans:import resource="classpath:spring/spring-corpus-dao.xml" />
+	<beans:import resource="classpath:spring/spring-processes-dao.xml" />
+	<beans:import resource="classpath:spring/spring-queries-dao.xml" />
+ 	<beans:import resource="classpath:spring/spring-resources-dao.xml" />
+	<beans:import resource="classpath:spring/spring-annotation-dao.xml" />
+	<beans:import resource="classpath:spring/spring-hyperlink-dao.xml" />
+	<beans:import resource="classpath:spring/spring-dataProcessStatus-dao.xml" />
+	<beans:import resource="classpath:spring/spring-resources-lucene-dao.xml" />
+	<beans:import resource="classpath:spring/spring-queries-lucene-dao.xml" />
+	<beans:import resource="classpath:spring/spring-publications-lucene-dao.xml" />
+	<beans:import resource="classpath:spring/spring-corpus-lucene-dao.xml" />
+	<beans:import resource="classpath:spring/spring-users-lucene-dao.xml" />
+	<beans:import resource="classpath:spring/spring-processes-lucene-dao.xml" />
+
+</beans:beans>

@@ -5,7 +5,6 @@
 <hibernate-configuration>
 	<session-factory>
 	
-	    
 		<property name="hibernate.connection.url">jdbc:h2:file:/home/rrodrigues/work/textmining/cancerdb/src/test/resources/cancerdb/cancerdb;SCHEMA=cancerdb;DATABASE_TO_UPPER=FALSE</property>
 		<property name="hibernate.connection.username">admin</property>
 		<property name="hibernate.connection.password">admin</property>

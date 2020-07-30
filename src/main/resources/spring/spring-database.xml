@@ -20,7 +20,7 @@
 
 	<beans:bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<beans:property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<beans:property name="configLocation" value="classpath:database/hibernate.cfg.xml" />
 	</beans:bean>
 
 
