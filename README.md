@@ -21,10 +21,21 @@ The application settings are at /app/ directory inside docker image.
 
 To change the database settings, please modify the file /app/database/hibernate.cfg.xml
 
+```bash
+docker run -v PATH/MODIFIEDHIBERNATE.cfg.xml:/app/database/hibernate.cfg.xml /app-t bisbii/anote2daemon
+```
+
 To change the spring settings, please modify the files in folder /app/spring
+
+```bash
+docker run -v PATH/MODIFIEDSPRING:/app/database/spring /app-t bisbii/anote2daemon
+```
 
 To change other application settings, please modify the file /app/application.properties
 
+```bash
+docker run -v PATH/MODIFIEDAPPLICATION.properties:/app/application.properties /app-t bisbii/anote2daemon
+```
 
 ## Build from the source
 
