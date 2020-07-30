@@ -11,8 +11,10 @@ This software is part of the [@note2](http://anote-project.org/) developed by [S
 In the latest release its possible to use the @Note Server using the docker command:
 
 ```bash
-docker run -t bisbii/anote2daemon
+docker run -p 8080:8080 -t bisbii/anote2daemon
 ```
+
+The server can now be accessed by http://localhost:8080
 
 ## Usage
 
@@ -26,6 +28,12 @@ To change the database settings, please modify the file /app/database/hibernate.
 
 ```bash
 docker run -v PATH/MODIFIEDHIBERNATE.cfg.xml:/app/database/hibernate.cfg.xml -t bisbii/anote2daemon
+```
+
+Be aware that the database connection can be accessed inside of the anote2daemon container. 
+Sometimes you must add this container to the same network of the database:
+```bash
+docker run -v PATH/MODIFIEDHIBERNATE.cfg.xml:/app/database/hibernate.cfg.xml --network dbnetwork -t bisbii/anote2daemon
 ```
 
 To change the spring settings, please modify the files in folder /app/spring
