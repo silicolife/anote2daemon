@@ -1,7 +1,7 @@
 FROM maven:latest AS build
 COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app
-RUN mvn -f /usr/src/app/pom.xml clean package
+RUN mvn -f /usr/src/app/pom.xml clean package -DskipTests
 
 FROM openjdk:8-jdk-alpine
 
@@ -23,6 +23,6 @@ COPY --from=build /usr/src/app/target/anote2daemon/WEB-INF/classes /app
 RUN mkdir -p ${H2DBPATH} && mkdir -p ${LUCENEPATH}
 RUN java -cp "app:app/lib/*" "com.silicolife.anote2daemon.utils.GenerateIntegratedDB" ${H2DBPATH} ${H2DBSCHEMA} ${H2DBUSER} ${H2DBPASS} 
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["java","-cp","app:app/lib/*","com.silicolife.anote2daemon.Anote2DaemonSpringBoot"]
