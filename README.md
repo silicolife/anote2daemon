@@ -66,3 +66,14 @@ git clone https://github.com/silicolife/anote2daemon
 cd anote2daemon
 docker build -t anote2daemon:latest .
 ```
+
+## Updating anote2daemon DB
+
+Given security updates, the user password hashing algorithm can be changed. 
+Since database must be updated accordingly please generate new hash codes for the passwords using:
+
+```bash
+docker run --entrypoint /bin/sh -it anote2daemon java -cp "app:app/lib/*" "com.silicolife.anote2daemon.utils.GeneratePasswordDBHash" <passoword_to_hash">
+```
+
+The output hash must replace the previous password hash present at aut_users.au_password of the user to be replaced.
